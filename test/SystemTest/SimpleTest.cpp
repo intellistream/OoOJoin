@@ -6,6 +6,8 @@
 
 TEST(SystemTest, SimpleTest) {
   //Setup Logs.
+  setLogLevel(getStringAsDebugLevel("LOG_DEBUG"));
+
   setupLogging("benchmark.log", LOG_DEBUG);
 
   //Run the test here.

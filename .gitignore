@@ -35,3 +35,5 @@
 /cmake-build-debug/_deps/
 /cmake-build-release/
 /cmake-build-release/_deps/
+commit.sh
+commit_notes

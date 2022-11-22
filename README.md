@@ -3,6 +3,7 @@
 Template for C++ 20 project; using CMAKE to manage
 
 ## Requires G++11
+
 ```shell
 sudo add-apt-repository 'deb http://mirrors.kernel.org/ubuntu hirsute main universe'
 sudo apt-get update"
@@ -12,11 +13,13 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
 ```
 
 ## Requires Log4cxx
+
 ```shell
 sudo apt-get install -y liblog4cxx-dev
 ```
 
 ## Code Structure
+
 - benchmark -- application code to use the generated shared library
 - cmake -- cmake configuration files
 - docs -- any documents
@@ -25,7 +28,27 @@ sudo apt-get install -y liblog4cxx-dev
 - test -- test code based on google test
 
 ## How to start?
+
 - Please rename IntelliStream to your desired project name.
 - Implement your core function code in src and include folders.
 - Implement your application code in benchmark folder.
 - Implement your test code in test folder.
+
+### Local generate the documents
+
+You can also re-generate them locally, if you have the doxygen and graphviz. Following are how to install them in ubuntu
+21.10/22.04
+
+```shell
+sudo apt-get install doxygen
+sudo apt-get install graphviz
+```
+
+Then, you can do
+
+```shell
+mkdir doc
+doxygen Doxyfile
+```
+
+to get the documents in doc/html folder, and start at index.html
