@@ -2,7 +2,7 @@
 // Created by tony on 22/11/22.
 //
 
-#include <Common/OoOTuple.h>
+#include <Common/Tuples.h>
 using namespace AllianceDB;
 
 AllianceDB::Tuple::Tuple(AllianceDB::keyType k) { key = k; }
@@ -27,5 +27,12 @@ std::string AllianceDB::OoOTuple::toString() {
   std::string tmp;
   tmp.append(Tuple::toString());
   tmp.append("\t\tarrival time:" + std::to_string(arrivalTime));
+  return tmp;
+}
+
+std::string AllianceDB::TrackTuple::toString() {
+  std::string tmp;
+  tmp.append(OoOTuple::toString());
+  tmp.append("\t\tprocessed time:" + std::to_string(processedTime));
   return tmp;
 }

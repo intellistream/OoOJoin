@@ -1,2 +1,4 @@
 add_subdirectory(Utils)
 add_subdirectory(Common)
+add_subdirectory(JoinAlgos)
+add_subdirectory(Operator)

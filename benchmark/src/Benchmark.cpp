@@ -3,46 +3,157 @@
 /**
  * @brief This is the main entry point of the entire program.
  * We use this as the entry point for benchmarking.
+ *
  */
 #include <Utils/Logger.hpp>
 #include <vector>
 #include <OoOJoin.h>
 using namespace std;
 using namespace AllianceDB;
-void initVec(vector<int> &a)
+vector <tsType> genArrivalTime(vector<tsType>eventTime,vector<tsType>arrivalSkew)
 {
-  size_t i=0;
-  for (i=0;i<a.size();i++)
+  vector<tsType> ru=vector<tsType>(eventTime.size());
+  size_t len=(eventTime.size()>arrivalSkew.size())?arrivalSkew.size():eventTime.size();
+  for(size_t i=0;i<len;i++)
   {
-    a[i]=i;
+    ru[i]=eventTime[i]+arrivalSkew[i];
+  }
+  return ru;
+}
+template <class vecType=int>
+void printVec(vector<vecType> in)
+{
+  printf ("hellow \r\n");
+  size_t len=in.size();
+  printf("len=%s", to_string(in.size()).data());
+  for(size_t i=0;i<len;i++)
+  {
+    printf("%s:%s\r\n", to_string(i).data(),to_string(in[i]).data());
   }
 }
-void printVec(vector<int> &a)
-{
-  size_t i=0;
-  for (i=0;i<a.size();i++)
-  {
-    printf("%d,",a[i]);
-  }
+void bubble_sort(vector<AllianceDB::TrackTuplePtr> &arr) {
+  size_t i, j;
+  TrackTuplePtr temp;
+  size_t len=arr.size();
+  for (i = 0; i < len - 1; i++)
+    for (j = 0; j < len - 1 - i; j++)
+      if (arr[j]->arrivalTime > arr[j + 1]->arrivalTime) {
+        temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
 }
-class haha{
- public:
-  vector <int> a;
-  haha(){}
-  ~haha(){}
-};
+vector<AllianceDB::TrackTuplePtr> genTuples(vector <keyType> keyS, vector <tsType> eventS, vector <tsType> arrivalS)
+{ size_t len=keyS.size();
+  vector<AllianceDB::TrackTuplePtr>ru=vector<AllianceDB::TrackTuplePtr>(len);
+  for (size_t i=0;i<len;i++)
+  {
+    ru[i]=newTrackTuple(keyS[i],0,eventS[i],arrivalS[i]);
+  }
+  bubble_sort(ru);
+  return ru;
+}
+void tempTest()
+{
+  size_t testSize=100;
+  MicroDataSet ms(123456);
+  //gen the S
+  vector <keyType> keyS=ms.genRandInt<keyType>(testSize,testSize/10,0);
+  vector <tsType> eventS=ms.genSmoothTimeStamp<tsType>(testSize,10,10);
+   vector <tsType> arrivalSkew=ms.genRandInt<tsType>(testSize,10,1);
+  vector <tsType> arrivalS=genArrivalTime(eventS,arrivalSkew);
+   vector <TrackTuplePtr> sTuple=genTuples(keyS,eventS,arrivalS);
+
+   //gen R
+  MicroDataSet mr=MicroDataSet(990);
+  vector <keyType> keyR=mr.genRandInt<keyType>(testSize,testSize/10,0);
+  vector <tsType> eventR=mr.genSmoothTimeStamp<tsType>(testSize,10,10);
+  vector <tsType> arrivalRkew=mr.genRandInt<tsType>(testSize,10,1);
+  vector <tsType> arrivalR=genArrivalTime(eventS,arrivalRkew);
+  vector <TrackTuplePtr> rTuple=genTuples(keyR,eventR,arrivalR);
+  //prepare the run
+  struct timeval timeStart;
+  gettimeofday(&timeStart, NULL);
+  AllianceDB::IAWJOperator iawj;
+  iawj.setWindow(200000,200);
+  iawj.setBufferLen(testSize,testSize);
+  iawj.syncTimeStruct(timeStart);
+  iawj.start();
+  size_t rPos=0,sPos=0;
+  size_t tNow=0;
+  size_t tMaxS=sTuple[testSize-1]->arrivalTime;
+  size_t tMaxR=rTuple[testSize-1]->arrivalTime;
+  size_t tMax=(tMaxS>tMaxR)?tMaxS:tMaxR;
+  size_t tNextS=0,tNextR=0;
+  INTELLI_INFO("TMAX=" << tMax);
+  //feed by arrival time
+  tNextS=sTuple[0]->arrivalTime;
+  tNextR=rTuple[0]->arrivalTime;
+  while(tNow<tMax)
+  {
+    tNow=UtilityFunctions::timeLastUs(timeStart)/10;
+    INTELLI_INFO("T=" << tNow);
+    while(tNow>=tNextS)
+    {
+      if(sPos<=testSize-1)
+      {
+        iawj.feedTupleS(sTuple[sPos]);
+        sPos++;
+        if(sPos<=testSize-1)
+        {
+          tNextS=sTuple[sPos]->arrivalTime;
+        }
+        else
+        {
+          tNextS=tMaxS+1;// no more S
+          INTELLI_INFO("NO MORE S");
+          break;
+        }
+
+      }
+
+    }
+    INTELLI_INFO("detect R");
+    while(tNow>=tNextR)
+    {
+      if(rPos<=testSize-1)
+      {
+        iawj.feedTupleR(rTuple[rPos]);
+        rPos++;
+        if(rPos<=testSize-1)
+        {
+          tNextR=rTuple[rPos]->arrivalTime;
+        }
+        else
+        {
+          tNextR=tMaxR+1;// no more R
+          INTELLI_INFO("NO MORE R");
+          break;
+        }
+      }
+    }
+    usleep(10);
+  }
+
+  iawj.stop();
+  INTELLI_INFO("Joined." << iawj.getResult()<<"tuples");
+   //for(size_t i=0;i)
+
+  //printVec<keyType> (arrivalS);
+}
 int main(int argc, char **argv) {
+
+
   //Setup Logs.
   setLogLevel(getStringAsDebugLevel("LOG_DEBUG"));
 
   setupLogging("benchmark.log", LOG_DEBUG);
-  OoOTuple ta(10, 0, 1, 2);
+
+
   //Run the test here.
   INTELLI_INFO("Nothing to run." << argc << argv);
-  INTELLI_INFO(ta.toString());
-  haha h1;
-  h1.a=vector<int>(5);
-  initVec(h1.a);
-  printVec(h1.a);
+
+  tempTest();
+  //TuplePtrQueue tpq=
 }
 

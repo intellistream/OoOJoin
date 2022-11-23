@@ -5,7 +5,9 @@
 
 #ifndef INTELLISTREAM_OOOJOIN_H
 #define INTELLISTREAM_OOOJOIN_H
+
 /**
+ *
  * @mainpage Introduction
  * The OoOJoin project contains the basic ideas and evaluation on a novel join operator that supports error-bounded processing
  * on out-of-order tuples
@@ -17,14 +19,64 @@
  * The code structure aligns well with system design.
  * \image html UML_ALL.png
  */
+/**
+*  @todo try to find an elegant way of deploying testbench class, the current version is putting rotten
+*/
 //The groups of modules
 /**
+ * @mainpage Code Structure
+ *  @section Code_Structure  Code Structure
+ */
+/**
+ * @subsection code_stru_common Common
+ * This folder contains the common definitions of Window, Tuple, etc.
  * * @defgroup INTELLI_COMMON_BASIC Basic Definitions and Data Structures
  * @{
- * We define the classes of Tuple, window, queue, etc. here
+ * We define the classes of Tuple, Window, queue, etc. here
  **/
-#include <Common/OoOTuple.h>
+#include <Common/Tuples.h>
+#include <Common/Window.h>
 /**
  * @}
  */
+/***
+ *  @subsection code_stru_utils Utils
+* This folder contains the public utils shared by INTELISTREAM team and some third party dependencies.
+ * @defgroup INTELLI_UTIL Shared Utils
+ * @{
+ */
+#include <Utils/MicroDataSet.hpp>
+#include <Utils/SPSCQueue.hpp>
+/**
+* @defgroup INTELLI_UTIL_OTHERC20 Other common class or package under C++20 standard
+* @{
+* This package covers some common C++20 new features, such as std::thread to ease the programming
+*/
+#include <Utils/C20Buffers.hpp>
+/**
+ * @}
+ */
+/**
+ *
+ * @}
+ */
+/**
+ *  @defgroup ADB_JOINALGOS The specific join algorithms
+ *  @{
+ */
+#include <JoinAlgos/AbstractJoinAlgo.h>
+#include <JoinAlgos/NestedLoopJoin.h>
+/**
+ * @}
+ */
+/**
+ *  @defgroup ADB_OPERATORS The top entity of join operators
+ *  @{
+ */
+#include <Operator/AbstractOperator.h>
+#include <Operator/IAWJOperator.h>
+ /**
+  * @}
+  */
+
 #endif //INTELLISTREAM_OOOJOIN_H
