@@ -69,8 +69,9 @@ class AbstractJoinAlgo {
     timeBaseStruct = tv;
   }
 };
+
 typedef std::shared_ptr<AbstractJoinAlgo> AbstractJoinAlgoPtr;
-#define  newAbstractJoinAlgo() make_shared<AbstractJoinAlgo>()
+#define  newAbstractJoinAlgo() std::make_shared<AbstractJoinAlgo>()
 /**
  * @}
  * @}

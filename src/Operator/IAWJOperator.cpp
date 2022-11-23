@@ -3,7 +3,25 @@
 //
 
 #include <Operator/IAWJOperator.h>
-#include <JoinAlgos/NestedLoopJoin.h>
+#include <JoinAlgos/JoinAlgoTable.h>
+bool AllianceDB::IAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
+  if(!AllianceDB::AbstractOperator::setConfig(cfg))
+  {
+    return false;
+  }
+  // read the algorithm name
+  if(config->existString("algo"))
+  {
+   algoTag=config->getString("algo");
+  }
+  OP_INFO("selected join algorithm="+algoTag);
+  if(config->existU64("threads"))
+  {
+    joinThreads=config->getU64("threads");
+  }
+  OP_INFO("selected join threads="+ to_string(joinThreads));
+  return true;
+}
 bool AllianceDB::IAWJOperator::start() {
   myWindow.setRange(0, windowLen);
   myWindow.init(sLen, rLen, 1);
@@ -13,8 +31,12 @@ bool AllianceDB::IAWJOperator::start() {
 bool AllianceDB::IAWJOperator::stop() {
   /**
    */
-  NestedLoopJoin nj;
-  intermediateResult = nj.join(myWindow.windowS, myWindow.windowR, 1);
+  JoinAlgoTable jt;
+  AbstractJoinAlgoPtr algo=jt.findAlgo(algoTag);
+  //NestedLoopJoin nj;
+  algo->syncTimeStruct(timeBaseStruct);
+  OP_INFO("Invoke algorithm="+algo->getAlgoName());
+  intermediateResult = algo->join(myWindow.windowS, myWindow.windowR, joinThreads);
   return true;
 }
 bool AllianceDB::IAWJOperator::feedTupleS(AllianceDB::TrackTuplePtr ts) {

@@ -52,7 +52,7 @@ class TestBench {
   */
   size_t inOrderTest(bool additionalSort);
   /**
-  * @brief test the operator under in OoO arrival
+  * @brief test the operator under OoO arrival
   * @param additionalSort whether or not additionally sort the input
   * @return the joined result
   */

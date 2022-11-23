@@ -30,7 +30,7 @@ namespace AllianceDB {
  * "rLen" U64: The length of R buffer
  */
 /**
-* @todo The current parameter configuration is messy, try to fix it as soon as possible.
+* @todo Finish the watermark generator part
 */
 class AbstractOperator {
  protected:

@@ -49,7 +49,15 @@ class NestedLoopJoin : public AbstractJoinAlgo {
                       C20Buffer<AllianceDB::TrackTuplePtr> windR,
                       int threads = 1);
 };
+/**
+ * @cite NestedLoopJoinPtr
+ * @brief The class to describe a shared pointer to @ref NestedLoopJoin
+ */
 typedef std::shared_ptr<NestedLoopJoin> NestedLoopJoinPtr;
-#define  newNestedLoopJoin() make_shared<NestedLoopJoin>()
+/**
+ * @cite newNestedLoopJoin
+ * @brief (Macro) To creat a new @ref newNestedLoop under shared pointer.
+ */
+#define  newNestedLoopJoin std::make_shared<NestedLoopJoin>
 }
 #endif //ALIANCEDB_INCLUDE_JOINALGO_NESTEDLOOPJOIN_H_

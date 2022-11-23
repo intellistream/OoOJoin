@@ -108,7 +108,7 @@ class ConfigMap {
    * @param key
    * @return bool for the result
    */
-  bool existStr(std::string key) {
+  bool existString(std::string key) {
     return (strMap.count(key) == 1);
   }
   /**
@@ -117,7 +117,7 @@ class ConfigMap {
    * @return bool for the result
    */
   bool exist(std::string key) {
-    return existU64(key) || existI64(key) || existDouble(key) || existStr(key);
+    return existU64(key) || existI64(key) || existDouble(key) || existString(key);
   }
   /**
    * @brief To get a U64 value by key

@@ -20,7 +20,7 @@
  * \image html UML_ALL.png
  */
 /**
-*  @todo try to find an elegant way of deploying testbench class, the current version is putting rotten
+*
 */
 //The groups of modules
 /**
@@ -70,6 +70,8 @@
  */
 #include <JoinAlgos/AbstractJoinAlgo.h>
 #include <JoinAlgos/NestedLoopJoin.h>
+#include <JoinAlgos/JoinAlgoTable.h>
+#include <JoinAlgos/NPJ/NPJ.h>
 /**
  * @}
  */
@@ -83,7 +85,7 @@
  * @}
  */
 /**
- * @defgroup ADB_TESTBENCH
+ * @defgroup ADB_TESTBENCH The test bench
  * @{
  */
 #include <TestBench/TestBench.h>

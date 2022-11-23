@@ -6,21 +6,36 @@
 #define INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_
 #include <Operator/AbstractOperator.h>
 #include <Common/Window.h>
+
 namespace AllianceDB {
 /**
  * @class IAWJOperator
  * @ingroup ADB_OPERATORS
  * @class IAWJOperator Operator/IAWJOperator.h
  * @brief The intra window join (IAWJ) operator, only considers a single window
- * @todo The current version of @ref feedTupleS, @ref start, @ref stop is putting rotten, fix it later
+ * @note require configurations:
+ * "windowLen" U64: The length of window
+ * "slideLen" U64: The length of slide
+ * "sLen" U64: The length of S buffer
+ * "rLen" U64: The length of R buffer
+ * "algo" String: The specific join algorithm (optional, default nested loop)
+ * "threads" U64: The threads to conduct intra window join (optional, default 1)
  */
 class IAWJOperator : public AbstractOperator {
  protected:
   Window myWindow;
   size_t intermediateResult = 0;
+  string algoTag="NestedLoopJoin";
+  uint64_t joinThreads=1;
  public:
   IAWJOperator() {}
   ~IAWJOperator() {}
+  /**
+  * @brief Set the config map related to this operator
+  * @param cfg The config map
+   * @return bool whether the config is successfully set
+  */
+  virtual bool setConfig(ConfigMapPtr cfg);
   /**
  * @brief feed a tuple s into the Operator
  * @param ts The tuple
