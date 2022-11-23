@@ -14,12 +14,12 @@ namespace AllianceDB {
  * @class IAWJOperator Operator/IAWJOperator.h
  * @brief The intra window join (IAWJ) operator, only considers a single window
  * @note require configurations:
- * "windowLen" U64: The length of window
- * "slideLen" U64: The length of slide
- * "sLen" U64: The length of S buffer
- * "rLen" U64: The length of R buffer
- * "algo" String: The specific join algorithm (optional, default nested loop)
- * "threads" U64: The threads to conduct intra window join (optional, default 1)
+ * - "windowLen" U64: The length of window
+ * - "slideLen" U64: The length of slide
+ * - "sLen" U64: The length of S buffer
+ * - "rLen" U64: The length of R buffer
+ * - "algo" String: The specific join algorithm (optional, default nested loop)
+ * - "threads" U64: The threads to conduct intra window join (optional, default 1)
  */
 class IAWJOperator : public AbstractOperator {
  protected:

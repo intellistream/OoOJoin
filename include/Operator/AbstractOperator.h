@@ -24,10 +24,10 @@ namespace AllianceDB {
  * @class AbstractOperator Operator/AbstractOperator.h
  * @brief The abstraction to describe a join operator, providing virtual function of using the operation
  * @note require configurations:
- * "windowLen" U64: The length of window
- * "slideLen" U64: The length of slide
- * "sLen" U64: The length of S buffer
- * "rLen" U64: The length of R buffer
+ * - "windowLen" U64: The length of window
+ * - "slideLen" U64: The length of slide
+ * - "sLen" U64: The length of S buffer
+ * - "rLen" U64: The length of R buffer
  */
 /**
 * @todo Finish the watermark generator part
