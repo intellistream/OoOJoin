@@ -14,13 +14,13 @@ namespace AllianceDB {
  * @brief The intra window join (IAWJ) operator, only considers a single window
  * @todo The current version of @ref feedTupleS, @ref start, @ref stop is putting rotten, fix it later
  */
-class IAWJOperator : public AbstractOperator{
+class IAWJOperator : public AbstractOperator {
  protected:
   Window myWindow;
-  size_t intermediateResult=0;
+  size_t intermediateResult = 0;
  public:
-  IAWJOperator(){}
-  ~IAWJOperator(){}
+  IAWJOperator() {}
+  ~IAWJOperator() {}
   /**
  * @brief feed a tuple s into the Operator
  * @param ts The tuple
@@ -36,7 +36,6 @@ class IAWJOperator : public AbstractOperator{
     *  @return bool, whether tuple is fed.
     */
   virtual bool feedTupleR(TrackTuplePtr tr);
-
 
   /**
    * @brief start this operator
@@ -57,5 +56,15 @@ class IAWJOperator : public AbstractOperator{
   virtual size_t getResult();
 
 };
+/**
+ * @cite IAWJOperatorPtr
+ * @brief The class to describe a shared pointer to @ref IAWJOperator
+ */
+typedef std::shared_ptr<class IAWJOperator> IAWJOperatorPtr ;
+/**
+ * @cite newIAWJOperator
+ * @brief (Macro) To creat a new @ref IAWJOperator under shared pointer.
+ */
+#define newIAWJOperator std::make_shared<AllianceDB::IAWJOperator>
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_

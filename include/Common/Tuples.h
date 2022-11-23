@@ -130,7 +130,7 @@ typedef std::shared_ptr<class OoOTuple> OoOTuplePtr;
  */
 class TrackTuple : public OoOTuple {
  public:
-  tsType processedTime=0;
+  tsType processedTime = 0;
   /**
   * @brief construct with key
   * @param k the key

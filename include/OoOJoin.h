@@ -42,12 +42,16 @@
 /***
  *  @subsection code_stru_utils Utils
 * This folder contains the public utils shared by INTELISTREAM team and some third party dependencies.
- * @defgroup INTELLI_UTIL Shared Utils
- * @{
- */
+ **/
+/**
+* @defgroup INTELLI_UTIL Shared Utils
+* @{
+*/
 #include <Utils/MicroDataSet.hpp>
 #include <Utils/SPSCQueue.hpp>
+#include <Utils/ConfigMap.hpp>
 /**
+ * @ingroup INTELLI_UTIL
 * @defgroup INTELLI_UTIL_OTHERC20 Other common class or package under C++20 standard
 * @{
 * This package covers some common C++20 new features, such as std::thread to ease the programming
@@ -75,8 +79,15 @@
  */
 #include <Operator/AbstractOperator.h>
 #include <Operator/IAWJOperator.h>
- /**
-  * @}
-  */
-
+/**
+ * @}
+ */
+/**
+ * @defgroup ADB_TESTBENCH
+ * @{
+ */
+#include <TestBench/TestBench.h>
+/**
+ * @}
+ */
 #endif //INTELLISTREAM_OOOJOIN_H

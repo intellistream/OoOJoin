@@ -1,3 +1,3 @@
 add_sources(
-       AbstractOperator.cpp
+        AbstractOperator.cpp
 )

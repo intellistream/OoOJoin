@@ -152,7 +152,7 @@ class MicroDataSet {
     if (!hasSeed) {
       gen = genType(rd());
     } else {
-      //seed++;
+      seed++;
       gen = genType(seed);
     }
     std::uniform_int_distribution<> dis(minV, maxV);

@@ -24,6 +24,9 @@ namespace INTELLI {
 typedef std::shared_ptr<std::barrier<>> BarrierPtr;
 #define TIME_LAST_UNIT_MS 1000
 #define TIME_LAST_UNIT_US 1000000
+/**
+ * @defgroup
+ */
 class UtilityFunctions {
 
  public:

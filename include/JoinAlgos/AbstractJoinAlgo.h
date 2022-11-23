@@ -65,9 +65,8 @@ class AbstractJoinAlgo {
    * @brief Synchronize the time structure with outside setting
    * @param tv The outside time structure
    */
-  void syncTimeStruct(struct timeval tv)
-  {
-    timeBaseStruct=tv;
+  void syncTimeStruct(struct timeval tv) {
+    timeBaseStruct = tv;
   }
 };
 typedef std::shared_ptr<AbstractJoinAlgo> AbstractJoinAlgoPtr;
