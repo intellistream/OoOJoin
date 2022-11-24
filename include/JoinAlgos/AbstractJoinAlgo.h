@@ -12,10 +12,12 @@
 using namespace INTELLI;
 namespace AllianceDB {
 /**
-* @ingroup ADB_JOINALGOS The specific join algorithms
+* @defgroup ADB_JOINALGOS The specific join algorithms
 * @{
+ * @todo Add latency tracking and throughput evaluation for each algorithms, we use the @ref TrackTuple so just fill in the processedTIme is enough
 * State-of-art joins algorithms. We use a register to table called @ref JoinAlgoTable to manage and access different algos in an unified way, and user-defined
  * new algos should also be registered in that table.
+ *
  * */
 /**
  * @defgroup ADB_JOINALGOS_ABSTRACT Common Abstraction and Interface

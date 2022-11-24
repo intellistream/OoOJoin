@@ -25,7 +25,7 @@ namespace AllianceDB {
 class JoinAlgoTable {
  protected:
   std::vector<AbstractJoinAlgoPtr> algos;
-  std::map<std::string,AbstractJoinAlgoPtr> algoMap;
+  std::map<std::string, AbstractJoinAlgoPtr> algoMap;
  public:
   JoinAlgoTable();
   ~JoinAlgoTable() {
@@ -54,8 +54,7 @@ class JoinAlgoTable {
         return algos[i];
       }
     }*/
-    if(algoMap.count(name))
-    {
+    if (algoMap.count(name)) {
       return algoMap[name];
     }
     return algos[0];

@@ -48,9 +48,8 @@ vector<AllianceDB::TrackTuplePtr> genTuples(vector<keyType> keyS, vector<tsType>
   bubble_sort(ru);
   return ru;
 }
-void runTestBench()
-{
-  IAWJOperatorPtr iawj=newIAWJOperator();
+void runTestBench() {
+  IAWJOperatorPtr iawj = newIAWJOperator();
   size_t testSize = 100;
   MicroDataSet ms(123456);
   //get config
@@ -72,12 +71,12 @@ void runTestBench()
   vector<TrackTuplePtr> rTuple = genTuples(keyR, eventR, arrivalR);
   // test bench
   TestBench tb;
-  cfg->edit("rLen",(uint64_t)testSize);
-  cfg->edit("sLen",(uint64_t)testSize);
-  cfg->edit("windowLen",(uint64_t)10);
-  tb.setOperator(iawj,cfg);
-  tb.setDataSet(rTuple,sTuple);
-  INTELLI_INFO("Joined." <<  tb.OoOTest(false) << "tuples");
+  cfg->edit("rLen", (uint64_t) testSize);
+  cfg->edit("sLen", (uint64_t) testSize);
+  cfg->edit("windowLen", (uint64_t) 10);
+  tb.setOperator(iawj, cfg);
+  tb.setDataSet(rTuple, sTuple);
+  INTELLI_INFO("Joined." << tb.OoOTest(false) << "tuples");
 
 }
 int main(int argc, char **argv) {
@@ -94,7 +93,7 @@ int main(int argc, char **argv) {
 
   //tempTest();
   runTestBench();
- // testConfig();
+  // testConfig();
   //TuplePtrQueue tpq=
 }
 

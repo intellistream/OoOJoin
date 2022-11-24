@@ -16,7 +16,6 @@
 #define OP_ERROR INTELLI_ERROR
 #define OP_WARNNING INTELLI_WARNING
 
-
 using namespace INTELLI;
 namespace AllianceDB {
 /**
@@ -38,9 +37,9 @@ class AbstractOperator {
   size_t windowLen = 0;
   size_t slideLen = 0;
   size_t sLen = 0, rLen = 0;
-  int threads=0;
+  int threads = 0;
  public:
-  ConfigMapPtr config= nullptr;
+  ConfigMapPtr config = nullptr;
   AbstractOperator() {}
   ~AbstractOperator() {}
 
@@ -115,7 +114,7 @@ class AbstractOperator {
  * @cite AbstractOperatorPtr
  * @brief The class to describe a shared pointer to @ref AbstractOperator
  */
-typedef std::shared_ptr<class AbstractOperator> AbstractOperatorPtr ;
+typedef std::shared_ptr<class AbstractOperator> AbstractOperatorPtr;
 /**
  * @cite newAbstractOperator
  * @brief (Macro) To creat a new @ref AbstractOperator under shared pointer.

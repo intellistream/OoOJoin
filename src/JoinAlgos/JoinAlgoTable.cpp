@@ -11,9 +11,9 @@ JoinAlgoTable::JoinAlgoTable() {
           newNPJ(), \
          newNPJSingle()
   };
-  algoMap["Null"]=newAbstractJoinAlgo();
-  algoMap["NestedLoopJoin"]=newNestedLoopJoin();
-  algoMap["NPJ"]= newNPJ();
-  algoMap["NPJSingle"]= newNPJSingle();
+  algoMap["Null"] = newAbstractJoinAlgo();
+  algoMap["NestedLoopJoin"] = newNestedLoopJoin();
+  algoMap["NPJ"] = newNPJ();
+  algoMap["NPJSingle"] = newNPJSingle();
   //cout<<algos[1]->getAlgoName()<<endl;
 }

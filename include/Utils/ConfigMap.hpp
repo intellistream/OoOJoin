@@ -185,19 +185,18 @@ class ConfigMap {
    * @brief clone this config into destination
    * @param dest The clone destination
    */
-  void cloneInto(ConfigMap &dest)
-  {
+  void cloneInto(ConfigMap &dest) {
     for (auto &iter : u64Map) {
-      dest.edit(iter.first,(uint64_t)iter.second);
+      dest.edit(iter.first, (uint64_t) iter.second);
     }
     for (auto &iter : i64Map) {
-      dest.edit(iter.first,(int64_t)iter.second);
+      dest.edit(iter.first, (int64_t) iter.second);
     }
     for (auto &iter : doubleMap) {
-      dest.edit(iter.first,(double)iter.second);
+      dest.edit(iter.first, (double) iter.second);
     }
     for (auto &iter : strMap) {
-      dest.edit(iter.first,(std::string)iter.second);
+      dest.edit(iter.first, (std::string) iter.second);
     }
   }
   /**
@@ -233,7 +232,7 @@ class ConfigMap {
       return false;
     }
     std::string readStr;
-   // cout << "read file\r\n";
+    // cout << "read file\r\n";
     while (std::getline(ins, readStr, newLine.data()[0])) {
       vector<std::string> cols;
       // readStr.erase(readStr.size()-1);
@@ -264,12 +263,14 @@ class ConfigMap {
   }
 };
 /**
- * @cite ConfigMapPtr
+ * @ingroup INTELLI_UTIL_CONFIGS
+ * @typedef ConfigMapPtr
  * @brief The class to describe a shared pointer to @ref ConfigMap
  */
 typedef std::shared_ptr<ConfigMap> ConfigMapPtr;
 /**
- * @cite newConfigMap
+ * @ingroup INTELLI_UTIL_CONFIGS
+ * @def newConfigMap
  * @brief (Macro) To creat a new @ref ConfigMap under shared pointer.
  */
 #define  newConfigMap make_shared<INTELLI::ConfigMap>

@@ -32,10 +32,10 @@ void NPJ_thread::inlineMain() {
 size_t NPJ::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
                  C20Buffer<AllianceDB::TrackTuplePtr> windR, int threads) {
   size_t ru = 0;
-  size_t tsLen=windS.size();
-  size_t trLen=windR.size();
-  NPJTuplePtr *ts=windS.data();
-  NPJTuplePtr *tr=windR.data();
+  size_t tsLen = windS.size();
+  size_t trLen = windR.size();
+  NPJTuplePtr *ts = windS.data();
+  NPJTuplePtr *tr = windR.data();
   //ThreadPerf tp(-1);
   //cout<<this->getAlgoName()+"will run"<<endl;
   //tp.start();
@@ -49,7 +49,8 @@ size_t NPJ::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
   size_t rBegin = 0;
   //creat table
 
-  MultiThreadHashTablePtr table = std::make_shared<MultiThreadHashTable>(tsLen / 2 + 1); // at least there is one element
+  MultiThreadHashTablePtr
+      table = std::make_shared<MultiThreadHashTable>(tsLen / 2 + 1); // at least there is one element
   //tp.end();
   // create barrier
 
@@ -80,10 +81,10 @@ size_t NPJSingle::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
                        C20Buffer<AllianceDB::TrackTuplePtr> windR, int threads) {
   assert(threads > 0);
   size_t result = 0;
-  size_t tsLen=windS.size();
-  size_t trLen=windR.size();
-  NPJTuplePtr *ts=windS.data();
-  NPJTuplePtr *tr=windR.data();
+  size_t tsLen = windS.size();
+  size_t trLen = windR.size();
+  NPJTuplePtr *ts = windS.data();
+  NPJTuplePtr *tr = windR.data();
   MultiThreadHashTable table(tsLen / 2 + 1);
   table.buildTable(ts, tsLen);
   for (size_t i = 0; i < trLen; i++) {

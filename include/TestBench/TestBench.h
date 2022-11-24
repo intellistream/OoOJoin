@@ -14,37 +14,37 @@ namespace AllianceDB {
 * @{
  *
  */
- /**
-  * @class TestBench Common/TestBench
-  * @brief The test bench class to feed data
-  * @ingroup ADB_TESTBENCH
-  */
+/**
+ * @class TestBench Common/TestBench
+ * @brief The test bench class to feed data
+ * @ingroup ADB_TESTBENCH
+ */
 class TestBench {
  protected:
-   void inOrderSort(std::vector<TrackTuplePtr> &arr);
-   void OoOSort(std::vector<TrackTuplePtr> &arr);
-   void inlineTest(void);
-   void forceInOrder(std::vector<TrackTuplePtr> &arr);
+  void inOrderSort(std::vector<TrackTuplePtr> &arr);
+  void OoOSort(std::vector<TrackTuplePtr> &arr);
+  void inlineTest(void);
+  void forceInOrder(std::vector<TrackTuplePtr> &arr);
  public:
   std::vector<TrackTuplePtr> rTuple;
   std::vector<TrackTuplePtr> sTuple;
-  AbstractOperatorPtr testOp= nullptr;
+  AbstractOperatorPtr testOp = nullptr;
   ConfigMapPtr opConfig;
-  TestBench(){}
-  ~TestBench(){}
+  TestBench() {}
+  ~TestBench() {}
 
   /**
    * @brief set the dataset to feed
    * @param _r The r tuples
    * @param _s The s tuples
    */
-  void setDataSet(std::vector<TrackTuplePtr> _r,std::vector<TrackTuplePtr> _s);
+  void setDataSet(std::vector<TrackTuplePtr> _r, std::vector<TrackTuplePtr> _s);
   /**
   * @brief set the operator to test
   * @param op shared pointer to operator
    * @param cfg the config file to operator
   */
-  void setOperator(AbstractOperatorPtr op,ConfigMapPtr cfg);
+  void setOperator(AbstractOperatorPtr op, ConfigMapPtr cfg);
   /**
   * @brief test the operator under in order arrival
   * @param additionalSort whether or not additionally sort the input

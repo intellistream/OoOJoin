@@ -19,7 +19,7 @@ namespace AllianceDB {
 class MtBucket;
 typedef std::shared_ptr<MtBucket> MtBucketPtr;
 //typedef vector<TuplePtr> NPJTuplePtr;
-typedef TrackTuplePtr  NPJTuplePtr;
+typedef TrackTuplePtr NPJTuplePtr;
 /**
  * @class MtBucket Common/MultiThreadHashTable.h
  * @brief The multithread-supported bucket

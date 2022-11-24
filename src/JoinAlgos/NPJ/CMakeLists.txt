@@ -1,4 +1,4 @@
 add_sources(
-       MultiThreadHashTable.cpp
+        MultiThreadHashTable.cpp
         NPJ.cpp
 )

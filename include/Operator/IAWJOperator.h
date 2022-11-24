@@ -25,12 +25,13 @@ class IAWJOperator : public AbstractOperator {
  protected:
   Window myWindow;
   size_t intermediateResult = 0;
-  string algoTag="NestedLoopJoin";
-  uint64_t joinThreads=1;
+  string algoTag = "NestedLoopJoin";
+  uint64_t joinThreads = 1;
  public:
   IAWJOperator() {}
   ~IAWJOperator() {}
   /**
+   * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
   * @brief Set the config map related to this operator
   * @param cfg The config map
    * @return bool whether the config is successfully set
@@ -75,7 +76,7 @@ class IAWJOperator : public AbstractOperator {
  * @cite IAWJOperatorPtr
  * @brief The class to describe a shared pointer to @ref IAWJOperator
  */
-typedef std::shared_ptr<class IAWJOperator> IAWJOperatorPtr ;
+typedef std::shared_ptr<class IAWJOperator> IAWJOperatorPtr;
 /**
  * @cite newIAWJOperator
  * @brief (Macro) To creat a new @ref IAWJOperator under shared pointer.

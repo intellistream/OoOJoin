@@ -92,4 +92,13 @@
 /**
  * @}
  */
+/**
+ * @defgroup ADB_WATERMARKER The watermark generator
+ * This package is the key to the whole operator and generate the watermark to control processing
+ * @{
+ */
+#include <WaterMarker/AbstractWaterMarker.h>
+/**
+ * @}
+ */
 #endif //INTELLISTREAM_OOOJOIN_H

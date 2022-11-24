@@ -22,8 +22,8 @@ void AllianceDB::TestBench::OoOSort(std::vector<TrackTuplePtr> &arr) {
 void AllianceDB::TestBench::forceInOrder(std::vector<TrackTuplePtr> &arr) {
   size_t len = arr.size();
   size_t i;
-  for (i = 0; i < len - 1; i++){
-    arr[i]->arrivalTime=arr[i]->eventTime;
+  for (i = 0; i < len - 1; i++) {
+    arr[i]->arrivalTime = arr[i]->eventTime;
   }
 }
 void AllianceDB::TestBench::inOrderSort(std::vector<TrackTuplePtr> &arr) {
@@ -31,7 +31,7 @@ void AllianceDB::TestBench::inOrderSort(std::vector<TrackTuplePtr> &arr) {
   TrackTuplePtr temp;
   size_t len = arr.size();
   for (i = 0; i < len - 1; i++) {
-    arr[i]->arrivalTime=arr[i]->eventTime;
+    arr[i]->arrivalTime = arr[i]->eventTime;
     for (j = 0; j < len - 1 - i; j++)
       if (arr[j]->eventTime > arr[j + 1]->eventTime) {
         temp = arr[j];
@@ -41,16 +41,16 @@ void AllianceDB::TestBench::inOrderSort(std::vector<TrackTuplePtr> &arr) {
   }
 }
 void AllianceDB::TestBench::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<TrackTuplePtr> _s) {
-  rTuple=_r;
-  sTuple=_s;
+  rTuple = _r;
+  sTuple = _s;
 }
-void AllianceDB::TestBench::setOperator(AllianceDB::AbstractOperatorPtr op,ConfigMapPtr cfg) {
-  testOp=op;
-  opConfig =cfg;
+void AllianceDB::TestBench::setOperator(AllianceDB::AbstractOperatorPtr op, ConfigMapPtr cfg) {
+  testOp = op;
+  opConfig = cfg;
 }
 void AllianceDB::TestBench::inlineTest() {
   struct timeval timeStart;
-  size_t testSize = (rTuple.size()>sTuple.size())?sTuple.size():rTuple.size();
+  size_t testSize = (rTuple.size() > sTuple.size()) ? sTuple.size() : rTuple.size();
   size_t rPos = 0, sPos = 0;
   size_t tNow = 0;
   size_t tMaxS = sTuple[testSize - 1]->arrivalTime;
@@ -100,20 +100,18 @@ void AllianceDB::TestBench::inlineTest() {
   testOp->stop();
 }
 size_t AllianceDB::TestBench::OoOTest(bool additionalSort) {
-   if(additionalSort)
-   {
-     OoOSort(rTuple);
-     OoOSort(sTuple);
-   }
-   inlineTest();
+  if (additionalSort) {
+    OoOSort(rTuple);
+    OoOSort(sTuple);
+  }
+  inlineTest();
   return testOp->getResult();
 }
 
 size_t AllianceDB::TestBench::inOrderTest(bool additionalSort) {
   forceInOrder(rTuple);
   forceInOrder(sTuple);
-  if(additionalSort)
-  {
+  if (additionalSort) {
     inOrderSort(rTuple);
     inOrderSort(sTuple);
   }

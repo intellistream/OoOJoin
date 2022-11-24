@@ -62,7 +62,7 @@ class NPJ_thread : public AbstractC20Thread {
    * @param bar THe barrier used for build phase
    */
   void init(NPJTuplePtr *_ts,
-            NPJTuplePtr  *_tr,
+            NPJTuplePtr *_tr,
             size_t _sLen,
             size_t _rLen,
             int _cpu,
