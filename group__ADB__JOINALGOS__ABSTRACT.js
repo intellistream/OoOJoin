@@ -6,9 +6,12 @@ var group__ADB__JOINALGOS__ABSTRACT =
       [ "getAlgoName", "classAllianceDB_1_1AbstractJoinAlgo.html#a8b49c56b968b910fc1cb295c62a0eacc", null ],
       [ "join", "classAllianceDB_1_1AbstractJoinAlgo.html#a2a8f38bfda3893c5751f803f888e36f4", null ],
       [ "setAlgoName", "classAllianceDB_1_1AbstractJoinAlgo.html#a523bc6fb4dc4817f673764a46b3ce43f", null ],
+      [ "setConfig", "classAllianceDB_1_1AbstractJoinAlgo.html#a8c79b40630ef5d9475d0c41be00a8a06", null ],
       [ "syncTimeStruct", "classAllianceDB_1_1AbstractJoinAlgo.html#a40ece76ac78a79a30e749dfd9ba63c9c", null ],
+      [ "config", "classAllianceDB_1_1AbstractJoinAlgo.html#a2612b3de3b95219659bd7aea66237066", null ],
       [ "nameTag", "classAllianceDB_1_1AbstractJoinAlgo.html#a29ad5148bb90a8611d9af69b1a9f4a48", null ],
-      [ "timeBaseStruct", "classAllianceDB_1_1AbstractJoinAlgo.html#a63ba46f8230745d30b2d84d85125b373", null ]
+      [ "timeBaseStruct", "classAllianceDB_1_1AbstractJoinAlgo.html#a63ba46f8230745d30b2d84d85125b373", null ],
+      [ "timeStep", "classAllianceDB_1_1AbstractJoinAlgo.html#a324918761240febabd7567d72e76b83d", null ]
     ] ],
     [ "JoinAlgoTable", "classAllianceDB_1_1JoinAlgoTable.html", [
       [ "JoinAlgoTable", "classAllianceDB_1_1JoinAlgoTable.html#a811b90c42fac605bbfe99356acca7143", null ],
@@ -16,7 +19,7 @@ var group__ADB__JOINALGOS__ABSTRACT =
       [ "findAlgo", "classAllianceDB_1_1JoinAlgoTable.html#af40feacf13506ab8ecc4d31ecbb16989", null ],
       [ "findAlgo", "classAllianceDB_1_1JoinAlgoTable.html#a2b25e69352f01d19d6cbc4d4899b05c3", null ],
       [ "registerNewAlgo", "classAllianceDB_1_1JoinAlgoTable.html#a36ae29161b31ddeecc74e7e1390c3a3c", null ],
-      [ "algoMap", "classAllianceDB_1_1JoinAlgoTable.html#a2bb30ae66eaed9fd7cf4e9823e5e5436", null ],
+      [ "algoMap", "classAllianceDB_1_1JoinAlgoTable.html#a9d32651a0c370170aba153fea3fa903b", null ],
       [ "algos", "classAllianceDB_1_1JoinAlgoTable.html#a98fa5cc53f9ffa3989b4eb606b43232e", null ]
     ] ],
     [ "join_algo_index_t", "group__ADB__JOINALGOS__ABSTRACT.html#ga68faf6e8578a50174021857c1b8c1410", [

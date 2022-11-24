@@ -95,6 +95,8 @@ $(document).ready(function(){initNavTree('group__ADB__JOINALGOS__ABSTRACT.html',
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Common Abstraction and Interface<div class="ingroups"><a class="el" href="group__ADB__JOINALGOS.html">The specific join algorithms</a></div></div>  </div>
@@ -119,6 +121,18 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The table contains all supported algos.  <a href="classAllianceDB_1_1JoinAlgoTable.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaf4e2fe27dc5a755538b5d0e5a341f7ec"><td class="memItemLeft" align="right" valign="top"><a id="gaf4e2fe27dc5a755538b5d0e5a341f7ec"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>newAbstractJoinAlgo</b>()&#160;&#160;&#160;std::make_shared&lt;AbstractJoinAlgo&gt;()</td></tr>
+<tr class="separator:gaf4e2fe27dc5a755538b5d0e5a341f7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gad037855271725304874266cff3e54e17"><td class="memItemLeft" align="right" valign="top"><a id="gad037855271725304874266cff3e54e17"></a>
+typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1AbstractJoinAlgo.html">AbstractJoinAlgo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>AllianceDB::AbstractJoinAlgoPtr</b></td></tr>
+<tr class="separator:gad037855271725304874266cff3e54e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga68faf6e8578a50174021857c1b8c1410"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__JOINALGOS__ABSTRACT.html#ga68faf6e8578a50174021857c1b8c1410">AllianceDB::join_algo_index_t</a> { <a class="el" href="group__ADB__JOINALGOS__ABSTRACT.html#ga68faf6e8578a50174021857c1b8c1410a6b7e2b4ec0bfe98630164771d36c29c7">AllianceDB::JOINALGO_NULL</a> = 0
@@ -128,15 +142,8 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga68faf6e8578a50174021857c1b8c1410"><td class="mdescLeft">&#160;</td><td class="mdescRight">The system default index for join algorithms.  <a href="group__ADB__JOINALGOS__ABSTRACT.html#ga68faf6e8578a50174021857c1b8c1410">More...</a><br /></td></tr>
 <tr class="separator:ga68faf6e8578a50174021857c1b8c1410"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad037855271725304874266cff3e54e17"><td class="memItemLeft" align="right" valign="top"><a id="gad037855271725304874266cff3e54e17"></a>
-typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1AbstractJoinAlgo.html">AbstractJoinAlgo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>AllianceDB::AbstractJoinAlgoPtr</b></td></tr>
-<tr class="separator:gad037855271725304874266cff3e54e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf4e2fe27dc5a755538b5d0e5a341f7ec"><td class="memItemLeft" align="right" valign="top"><a id="gaf4e2fe27dc5a755538b5d0e5a341f7ec"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>newAbstractJoinAlgo</b>()&#160;&#160;&#160;std::make_shared&lt;AbstractJoinAlgo&gt;()</td></tr>
-<tr class="separator:gaf4e2fe27dc5a755538b5d0e5a341f7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>State-of-art joins algorithms. We use a register to table called <a class="el" href="classAllianceDB_1_1JoinAlgoTable.html">JoinAlgoTable</a> to manage and access different algos in an unified way, and user-defined new algos should also be registered in that table. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Add latency tracking and throughput evaluation for each algorithms, we use the <a class="el" href="classAllianceDB_1_1TrackTuple.html">TrackTuple</a> so just fill in the processedTIme is enough</dd></dl>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga68faf6e8578a50174021857c1b8c1410"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga68faf6e8578a50174021857c1b8c1410">&#9670;&nbsp;</a></span>join_algo_index_t</h2>

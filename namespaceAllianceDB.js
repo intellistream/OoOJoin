@@ -15,7 +15,7 @@ var namespaceAllianceDB =
     [ "AbstractOperator", "classAllianceDB_1_1AbstractOperator.html", "classAllianceDB_1_1AbstractOperator" ],
     [ "IAWJOperator", "classAllianceDB_1_1IAWJOperator.html", "classAllianceDB_1_1IAWJOperator" ],
     [ "TestBench", "classAllianceDB_1_1TestBench.html", "classAllianceDB_1_1TestBench" ],
-    [ "AbstractWaterMarker", "classAllianceDB_1_1AbstractWaterMarker.html", null ],
+    [ "AbstractWaterMarker", "classAllianceDB_1_1AbstractWaterMarker.html", "classAllianceDB_1_1AbstractWaterMarker" ],
     [ "AbstractJoinAlgoPtr", "group__ADB__JOINALGOS__ABSTRACT.html#gad037855271725304874266cff3e54e17", null ],
     [ "AbstractOperatorPtr", "namespaceAllianceDB.html#a34df44731680d5e597e43eb21eaeb4f3", null ],
     [ "IAWJOperatorPtr", "namespaceAllianceDB.html#afbeac89530136f50cea05d0c85935a79", null ],

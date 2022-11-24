@@ -16,7 +16,7 @@ var annotated_dup =
       [ "AbstractOperator", "classAllianceDB_1_1AbstractOperator.html", "classAllianceDB_1_1AbstractOperator" ],
       [ "IAWJOperator", "classAllianceDB_1_1IAWJOperator.html", "classAllianceDB_1_1IAWJOperator" ],
       [ "TestBench", "classAllianceDB_1_1TestBench.html", "classAllianceDB_1_1TestBench" ],
-      [ "AbstractWaterMarker", "classAllianceDB_1_1AbstractWaterMarker.html", null ]
+      [ "AbstractWaterMarker", "classAllianceDB_1_1AbstractWaterMarker.html", "classAllianceDB_1_1AbstractWaterMarker" ]
     ] ],
     [ "INTELLI", null, [
       [ "AbstractC20Thread", "classINTELLI_1_1AbstractC20Thread.html", "classINTELLI_1_1AbstractC20Thread" ],

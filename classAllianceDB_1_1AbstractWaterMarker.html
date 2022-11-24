@@ -93,10 +93,430 @@ $(document).ready(function(){initNavTree('classAllianceDB_1_1AbstractWaterMarker
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="classAllianceDB_1_1AbstractWaterMarker-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">AllianceDB::AbstractWaterMarker Class Reference</div>  </div>
+<div class="title">AllianceDB::AbstractWaterMarker Class Reference<div class="ingroups"><a class="el" href="group__ADB__WATERMARKER.html">The watermark generator</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>The abstraction to describe a watermark generator, providing virtual function of deciding watermark generation.  
+ <a href="classAllianceDB_1_1AbstractWaterMarker.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="AbstractWaterMarker_8h_source.html">WaterMarker/AbstractWaterMarker.h</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for AllianceDB::AbstractWaterMarker:</div>
+<div class="dyncontent">
+<div class="center"><img src="classAllianceDB_1_1AbstractWaterMarker__coll__graph.png" border="0" usemap="#aAllianceDB_1_1AbstractWaterMarker_coll__map" alt="Collaboration graph"/></div>
+<map name="aAllianceDB_1_1AbstractWaterMarker_coll__map" id="aAllianceDB_1_1AbstractWaterMarker_coll__map">
+<area shape="rect" title="The abstraction to describe a watermark generator, providing virtual function of deciding watermark g..." alt="" coords="97,95,290,136"/>
+<area shape="rect" title=" " alt="" coords="5,5,80,32"/>
+<area shape="rect" title=" " alt="" coords="104,5,171,32"/>
+<area shape="rect" title=" " alt="" coords="195,5,304,32"/>
+<area shape="rect" title=" " alt="" coords="329,5,442,32"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ad1279ab04fcf56ea4d81b455422cdda6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#ad1279ab04fcf56ea4d81b455422cdda6">setErrorBound</a> (double err)</td></tr>
+<tr class="memdesc:ad1279ab04fcf56ea4d81b455422cdda6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separately set the errorBound.  <a href="classAllianceDB_1_1AbstractWaterMarker.html#ad1279ab04fcf56ea4d81b455422cdda6">More...</a><br /></td></tr>
+<tr class="separator:ad1279ab04fcf56ea4d81b455422cdda6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f7aef42414649e19ccb70d0eda9bdc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a0f7aef42414649e19ccb70d0eda9bdc0">syncTimeStruct</a> (struct timeval tv)</td></tr>
+<tr class="memdesc:a0f7aef42414649e19ccb70d0eda9bdc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronize the time structure with outside setting.  <a href="classAllianceDB_1_1AbstractWaterMarker.html#a0f7aef42414649e19ccb70d0eda9bdc0">More...</a><br /></td></tr>
+<tr class="separator:a0f7aef42414649e19ccb70d0eda9bdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa24fd7b1600c16ca531b26b73f0eefb1"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#aa24fd7b1600c16ca531b26b73f0eefb1">setConfig</a> (<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</td></tr>
+<tr class="memdesc:aa24fd7b1600c16ca531b26b73f0eefb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the config map related to this operator.  <a href="classAllianceDB_1_1AbstractWaterMarker.html#aa24fd7b1600c16ca531b26b73f0eefb1">More...</a><br /></td></tr>
+<tr class="separator:aa24fd7b1600c16ca531b26b73f0eefb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37ea07f119beda8eab0c032fb5fe2fef"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a37ea07f119beda8eab0c032fb5fe2fef">init</a> (void)</td></tr>
+<tr class="memdesc:a37ea07f119beda8eab0c032fb5fe2fef"><td class="mdescLeft">&#160;</td><td class="mdescRight">init the generator  <a href="classAllianceDB_1_1AbstractWaterMarker.html#a37ea07f119beda8eab0c032fb5fe2fef">More...</a><br /></td></tr>
+<tr class="separator:a37ea07f119beda8eab0c032fb5fe2fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ae0d26689b8f0a5d486ebb5ce945607"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a1ae0d26689b8f0a5d486ebb5ce945607">creatWindow</a> (<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa28f223080720f148b497e59ea711ca8">tsType</a> tBegin, <a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa28f223080720f148b497e59ea711ca8">tsType</a> tEnd)</td></tr>
+<tr class="memdesc:a1ae0d26689b8f0a5d486ebb5ce945607"><td class="mdescLeft">&#160;</td><td class="mdescRight">creat a window  <a href="classAllianceDB_1_1AbstractWaterMarker.html#a1ae0d26689b8f0a5d486ebb5ce945607">More...</a><br /></td></tr>
+<tr class="separator:a1ae0d26689b8f0a5d486ebb5ce945607"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fcba875159095282e20e956cdb6f99c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a9fcba875159095282e20e956cdb6f99c">deleteWindow</a> (size_t wid)</td></tr>
+<tr class="memdesc:a9fcba875159095282e20e956cdb6f99c"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete the window and recycle its id  <a href="classAllianceDB_1_1AbstractWaterMarker.html#a9fcba875159095282e20e956cdb6f99c">More...</a><br /></td></tr>
+<tr class="separator:a9fcba875159095282e20e956cdb6f99c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bd8497744bd1521e4784c0651e04ab0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a8bd8497744bd1521e4784c0651e04ab0">reportTupleS</a> (<a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a> ts, size_t wid=1)</td></tr>
+<tr class="memdesc:a8bd8497744bd1521e4784c0651e04ab0"><td class="mdescLeft">&#160;</td><td class="mdescRight">report a tuple s into the watermark generator  <a href="classAllianceDB_1_1AbstractWaterMarker.html#a8bd8497744bd1521e4784c0651e04ab0">More...</a><br /></td></tr>
+<tr class="separator:a8bd8497744bd1521e4784c0651e04ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b4a51740506bb221d135712b3a1905d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a5b4a51740506bb221d135712b3a1905d">reportTupleR</a> (<a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a> tr, size_t wid=1)</td></tr>
+<tr class="memdesc:a5b4a51740506bb221d135712b3a1905d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report a tuple R into the watermark generator.  <a href="classAllianceDB_1_1AbstractWaterMarker.html#a5b4a51740506bb221d135712b3a1905d">More...</a><br /></td></tr>
+<tr class="separator:a5b4a51740506bb221d135712b3a1905d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a9af03642da110dedc8e58a391b68c4fd"><td class="memItemLeft" align="right" valign="top"><a id="a9af03642da110dedc8e58a391b68c4fd"></a>
+<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>config</b> = nullptr</td></tr>
+<tr class="separator:a9af03642da110dedc8e58a391b68c4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a01c2f1dd732dd8b8ba7872ba779b5ae8"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a01c2f1dd732dd8b8ba7872ba779b5ae8">estimateError</a> (size_t wid=1)</td></tr>
+<tr class="memdesc:a01c2f1dd732dd8b8ba7872ba779b5ae8"><td class="mdescLeft">&#160;</td><td class="mdescRight">estimate the error of a window  <a href="classAllianceDB_1_1AbstractWaterMarker.html#a01c2f1dd732dd8b8ba7872ba779b5ae8">More...</a><br /></td></tr>
+<tr class="separator:a01c2f1dd732dd8b8ba7872ba779b5ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a8545bf8ad4513d00cbcde5a2e2d26e54"><td class="memItemLeft" align="right" valign="top"><a id="a8545bf8ad4513d00cbcde5a2e2d26e54"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a8545bf8ad4513d00cbcde5a2e2d26e54">errorBound</a></td></tr>
+<tr class="memdesc:a8545bf8ad4513d00cbcde5a2e2d26e54"><td class="mdescLeft">&#160;</td><td class="mdescRight">The assigned error bound, read from configuration. <br /></td></tr>
+<tr class="separator:a8545bf8ad4513d00cbcde5a2e2d26e54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d7dc12628005ea8ed7f1c021a554a25"><td class="memItemLeft" align="right" valign="top"><a id="a3d7dc12628005ea8ed7f1c021a554a25"></a>
+<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa28f223080720f148b497e59ea711ca8">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>timeStep</b></td></tr>
+<tr class="separator:a3d7dc12628005ea8ed7f1c021a554a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a773c0fc1fcf160ffb0497afbef900e9d"><td class="memItemLeft" align="right" valign="top"><a id="a773c0fc1fcf160ffb0497afbef900e9d"></a>
+struct timeval&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a773c0fc1fcf160ffb0497afbef900e9d">timeBaseStruct</a></td></tr>
+<tr class="memdesc:a773c0fc1fcf160ffb0497afbef900e9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">the base structure for time <br /></td></tr>
+<tr class="separator:a773c0fc1fcf160ffb0497afbef900e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The abstraction to describe a watermark generator, providing virtual function of deciding watermark generation. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>multi window support is not done yet, left for future, but we do preserve the interfaces </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>require configurations: -"errorBound" Double The assigned error bound<ul>
+<li>"timeStep" U64 The simulation time step in us </li>
+</ul>
+</dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1ae0d26689b8f0a5d486ebb5ce945607"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ae0d26689b8f0a5d486ebb5ce945607">&#9670;&nbsp;</a></span>creatWindow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual size_t AllianceDB::AbstractWaterMarker::creatWindow </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa28f223080720f148b497e59ea711ca8">tsType</a>&#160;</td>
+          <td class="paramname"><em>tBegin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa28f223080720f148b497e59ea711ca8">tsType</a>&#160;</td>
+          <td class="paramname"><em>tEnd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>creat a window </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tBegin</td><td>The begin event time of the window </td></tr>
+    <tr><td class="paramname">tEnd</td><td>The end event time of the window </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the id of created window </dd></dl>
+
+</div>
+</div>
+<a id="a9fcba875159095282e20e956cdb6f99c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fcba875159095282e20e956cdb6f99c">&#9670;&nbsp;</a></span>deleteWindow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool AllianceDB::AbstractWaterMarker::deleteWindow </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>wid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>delete the window and recycle its id </p>
+<dl class="section return"><dt>Returns</dt><dd>bool, whether the window is released </dd></dl>
+
+</div>
+</div>
+<a id="a01c2f1dd732dd8b8ba7872ba779b5ae8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01c2f1dd732dd8b8ba7872ba779b5ae8">&#9670;&nbsp;</a></span>estimateError()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual double AllianceDB::AbstractWaterMarker::estimateError </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>wid</em> = <code>1</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>estimate the error of a window </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wid</td><td>The window id </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The estimated error </dd></dl>
+
+</div>
+</div>
+<a id="a37ea07f119beda8eab0c032fb5fe2fef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37ea07f119beda8eab0c032fb5fe2fef">&#9670;&nbsp;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool AllianceDB::AbstractWaterMarker::init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>init the generator </p>
+<dl class="section return"><dt>Returns</dt><dd>bool whether the generator is successfully inited </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>call before using </dd></dl>
+
+</div>
+</div>
+<a id="a5b4a51740506bb221d135712b3a1905d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b4a51740506bb221d135712b3a1905d">&#9670;&nbsp;</a></span>reportTupleR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool AllianceDB::AbstractWaterMarker::reportTupleR </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a>&#160;</td>
+          <td class="paramname"><em>tr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>wid</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Report a tuple R into the watermark generator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tr</td><td>The tuple </td></tr>
+    <tr><td class="paramname">wid</td><td>The id of window </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool, bool, whether generate watermark after receiving this <a class="el" href="classAllianceDB_1_1Tuple.html" title="The class to describe a normal tuple.">Tuple</a> </dd></dl>
+
+</div>
+</div>
+<a id="a8bd8497744bd1521e4784c0651e04ab0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bd8497744bd1521e4784c0651e04ab0">&#9670;&nbsp;</a></span>reportTupleS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool AllianceDB::AbstractWaterMarker::reportTupleS </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a>&#160;</td>
+          <td class="paramname"><em>ts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>wid</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>report a tuple s into the watermark generator </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ts</td><td>The tuple </td></tr>
+    <tr><td class="paramname">wid</td><td>The id of window </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool, whether generate watermark after receiving this <a class="el" href="classAllianceDB_1_1Tuple.html" title="The class to describe a normal tuple.">Tuple</a> </dd></dl>
+
+</div>
+</div>
+<a id="aa24fd7b1600c16ca531b26b73f0eefb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa24fd7b1600c16ca531b26b73f0eefb1">&#9670;&nbsp;</a></span>setConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool AllianceDB::AbstractWaterMarker::setConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the config map related to this operator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>The config map </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
+
+</div>
+</div>
+<a id="ad1279ab04fcf56ea4d81b455422cdda6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1279ab04fcf56ea4d81b455422cdda6">&#9670;&nbsp;</a></span>setErrorBound()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AllianceDB::AbstractWaterMarker::setErrorBound </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>err</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Separately set the errorBound. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">err</td><td>The errorBound </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0f7aef42414649e19ccb70d0eda9bdc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f7aef42414649e19ccb70d0eda9bdc0">&#9670;&nbsp;</a></span>syncTimeStruct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AllianceDB::AbstractWaterMarker::syncTimeStruct </td>
+          <td>(</td>
+          <td class="paramtype">struct timeval&#160;</td>
+          <td class="paramname"><em>tv</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Synchronize the time structure with outside setting. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tv</td><td>The outside time structure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/WaterMarker/<a class="el" href="AbstractWaterMarker_8h_source.html">AbstractWaterMarker.h</a></li>
 </ul>

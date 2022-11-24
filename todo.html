@@ -98,10 +98,12 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt>Module <a class="el" href="group__ADB__JOINALGOS__ABSTRACT.html">ADB_JOINALGOS_ABSTRACT</a>  </dt>
-<dd><a class="anchor" id="_todo000001"></a>Add latency tracking and throughput evaluation for each algorithms, we use the TrackTuple so just fill in the processedTIme is enough </dd>
+<dt>Module <a class="el" href="group__ADB__JOINALGOS.html">ADB_JOINALGOS</a>  </dt>
+<dd><a class="anchor" id="_todo000001"></a>Add latency tracking and throughput evaluation for each algorithms, we use the TrackTuple so just fill in the processedTIme is enough State-of-art joins algorithms. We use a register to table called JoinAlgoTable to manage and access different algos in an unified way, and user-defined new algos should also be registered in that table. </dd>
 <dt>Class <a class="el" href="classAllianceDB_1_1AbstractOperator.html">AllianceDB::AbstractOperator</a>  </dt>
 <dd><a class="anchor" id="_todo000003"></a>Finish the watermark generator part  </dd>
+<dt>Class <a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html">AllianceDB::AbstractWaterMarker</a>  </dt>
+<dd><a class="anchor" id="_todo000006"></a>multi window support is not done yet, left for future, but we do preserve the interfaces  </dd>
 <dt>Member <a class="el" href="classAllianceDB_1_1IAWJOperator.html#aeaad72fe02aab0944b89ae1bbaa071fa">AllianceDB::IAWJOperator::setConfig</a>  (ConfigMapPtr cfg)</dt>
 <dd><a class="anchor" id="_todo000004"></a>Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R  </dd>
 <dt>Class <a class="el" href="classAllianceDB_1_1MultiThreadHashTable.html">AllianceDB::MultiThreadHashTable</a>  </dt>

@@ -1,12 +1,18 @@
 <map id="include/JoinAlgos/NestedLoopJoin.h" name="include/JoinAlgos/NestedLoopJoin.h">
-<area shape="rect" id="node1" title=" " alt="" coords="213,5,395,47"/>
-<area shape="rect" id="node2" href="$AbstractJoinAlgo_8h.html" title=" " alt="" coords="201,95,407,121"/>
-<area shape="rect" id="node3" href="$Window_8h.html" title=" " alt="" coords="11,169,159,196"/>
-<area shape="rect" id="node6" title=" " alt="" coords="372,319,431,345"/>
-<area shape="rect" id="node7" title=" " alt="" coords="159,319,236,345"/>
-<area shape="rect" id="node10" title=" " alt="" coords="448,169,523,196"/>
-<area shape="rect" id="node4" href="$Tuples_8h.html" title=" " alt="" coords="235,244,373,271"/>
-<area shape="rect" id="node8" href="$C20Buffers_8hpp.html" title=" " alt="" coords="5,244,160,271"/>
-<area shape="rect" id="node5" title=" " alt="" coords="269,319,339,345"/>
-<area shape="rect" id="node9" title=" " alt="" coords="51,319,114,345"/>
+<area shape="rect" id="node1" title=" " alt="" coords="308,5,491,47"/>
+<area shape="rect" id="node2" href="$AbstractJoinAlgo_8h.html" title=" " alt="" coords="297,95,502,121"/>
+<area shape="rect" id="node3" href="$Window_8h.html" title=" " alt="" coords="269,169,417,196"/>
+<area shape="rect" id="node6" title=" " alt="" coords="101,319,159,345"/>
+<area shape="rect" id="node7" title=" " alt="" coords="201,319,278,345"/>
+<area shape="rect" id="node10" title=" " alt="" coords="645,169,719,196"/>
+<area shape="rect" id="node11" href="$ConfigMap_8hpp.html" title=" " alt="" coords="447,244,600,271"/>
+<area shape="rect" id="node16" href="$Logger_8hpp_source.html" title=" " alt="" coords="493,169,620,196"/>
+<area shape="rect" id="node4" href="$Tuples_8h.html" title=" " alt="" coords="54,244,193,271"/>
+<area shape="rect" id="node8" href="$C20Buffers_8hpp.html" title=" " alt="" coords="267,244,422,271"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,319,76,345"/>
+<area shape="rect" id="node9" title=" " alt="" coords="313,319,376,345"/>
+<area shape="rect" id="node12" title=" " alt="" coords="401,319,451,345"/>
+<area shape="rect" id="node13" title=" " alt="" coords="476,319,549,345"/>
+<area shape="rect" id="node14" title=" " alt="" coords="673,319,753,345"/>
+<area shape="rect" id="node15" title=" " alt="" coords="574,319,649,345"/>
 </map>

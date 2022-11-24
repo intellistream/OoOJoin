@@ -1,6 +1,8 @@
 <map id="AllianceDB::NPJ" name="AllianceDB::NPJ">
-<area shape="rect" id="node1" title="The top class package of NPJ, providing a &quot;join function&quot;." alt="" coords="48,171,171,197"/>
-<area shape="rect" id="node2" href="$classAllianceDB_1_1AbstractJoinAlgo.html" title="The abstraction to describe a join algorithm, providing virtual function of join." alt="" coords="5,95,213,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="25,5,84,32"/>
-<area shape="rect" id="node4" title=" " alt="" coords="109,5,222,32"/>
+<area shape="rect" id="node1" title="The top class package of NPJ, providing a &quot;join function&quot;." alt="" coords="151,171,273,197"/>
+<area shape="rect" id="node2" href="$classAllianceDB_1_1AbstractJoinAlgo.html" title="The abstraction to describe a join algorithm, providing virtual function of join." alt="" coords="108,95,316,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,80,32"/>
+<area shape="rect" id="node4" title=" " alt="" coords="104,5,213,32"/>
+<area shape="rect" id="node5" title=" " alt="" coords="237,5,296,32"/>
+<area shape="rect" id="node6" title=" " alt="" coords="321,5,434,32"/>
 </map>

@@ -95,6 +95,7 @@ $(document).ready(function(){initNavTree('classAllianceDB_1_1AbstractJoinAlgo.ht
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classAllianceDB_1_1AbstractJoinAlgo-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -122,14 +123,19 @@ Collaboration diagram for AllianceDB::AbstractJoinAlgo:</div>
 <div class="dyncontent">
 <div class="center"><img src="classAllianceDB_1_1AbstractJoinAlgo__coll__graph.png" border="0" usemap="#aAllianceDB_1_1AbstractJoinAlgo_coll__map" alt="Collaboration graph"/></div>
 <map name="aAllianceDB_1_1AbstractJoinAlgo_coll__map" id="aAllianceDB_1_1AbstractJoinAlgo_coll__map">
-<area shape="rect" title="The abstraction to describe a join algorithm, providing virtual function of join." alt="" coords="5,95,213,121"/>
-<area shape="rect" title=" " alt="" coords="25,5,84,32"/>
-<area shape="rect" title=" " alt="" coords="109,5,222,32"/>
+<area shape="rect" title="The abstraction to describe a join algorithm, providing virtual function of join." alt="" coords="108,95,316,121"/>
+<area shape="rect" title=" " alt="" coords="5,5,80,32"/>
+<area shape="rect" title=" " alt="" coords="104,5,213,32"/>
+<area shape="rect" title=" " alt="" coords="237,5,296,32"/>
+<area shape="rect" title=" " alt="" coords="321,5,434,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a8c79b40630ef5d9475d0c41be00a8a06"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractJoinAlgo.html#a8c79b40630ef5d9475d0c41be00a8a06">setConfig</a> (<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</td></tr>
+<tr class="memdesc:a8c79b40630ef5d9475d0c41be00a8a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the config map related to this Algorithm.  <a href="classAllianceDB_1_1AbstractJoinAlgo.html#a8c79b40630ef5d9475d0c41be00a8a06">More...</a><br /></td></tr>
+<tr class="separator:a8c79b40630ef5d9475d0c41be00a8a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a8f38bfda3893c5751f803f888e36f4"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractJoinAlgo.html#a2a8f38bfda3893c5751f803f888e36f4">join</a> (<a class="el" href="classINTELLI_1_1C20Buffer.html">C20Buffer</a>&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">AllianceDB::TrackTuplePtr</a> &gt; windS, <a class="el" href="classINTELLI_1_1C20Buffer.html">C20Buffer</a>&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">AllianceDB::TrackTuplePtr</a> &gt; windR, int threads=1)</td></tr>
 <tr class="memdesc:a2a8f38bfda3893c5751f803f888e36f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to execute join,.  <a href="classAllianceDB_1_1AbstractJoinAlgo.html#a2a8f38bfda3893c5751f803f888e36f4">More...</a><br /></td></tr>
 <tr class="separator:a2a8f38bfda3893c5751f803f888e36f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,6 +149,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a40ece76ac78a79a30e749dfd9ba63c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronize the time structure with outside setting.  <a href="classAllianceDB_1_1AbstractJoinAlgo.html#a40ece76ac78a79a30e749dfd9ba63c9c">More...</a><br /></td></tr>
 <tr class="separator:a40ece76ac78a79a30e749dfd9ba63c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a2612b3de3b95219659bd7aea66237066"><td class="memItemLeft" align="right" valign="top"><a id="a2612b3de3b95219659bd7aea66237066"></a>
+<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>config</b></td></tr>
+<tr class="separator:a2612b3de3b95219659bd7aea66237066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a29ad5148bb90a8611d9af69b1a9f4a48"><td class="memItemLeft" align="right" valign="top"><a id="a29ad5148bb90a8611d9af69b1a9f4a48"></a>
@@ -151,9 +163,16 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>nameTag</b></t
 <tr class="memitem:a63ba46f8230745d30b2d84d85125b373"><td class="memItemLeft" align="right" valign="top"><a id="a63ba46f8230745d30b2d84d85125b373"></a>
 struct timeval&#160;</td><td class="memItemRight" valign="bottom"><b>timeBaseStruct</b></td></tr>
 <tr class="separator:a63ba46f8230745d30b2d84d85125b373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a324918761240febabd7567d72e76b83d"><td class="memItemLeft" align="right" valign="top"><a id="a324918761240febabd7567d72e76b83d"></a>
+<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa28f223080720f148b497e59ea711ca8">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>timeStep</b></td></tr>
+<tr class="separator:a324918761240febabd7567d72e76b83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The abstraction to describe a join algorithm, providing virtual function of join. </p>
+<dl class="section note"><dt>Note</dt><dd>Required configs<ul>
+<li>"timeStep" U64 The simulation time step in us </li>
+</ul>
+</dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a8b49c56b968b910fc1cb295c62a0eacc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8b49c56b968b910fc1cb295c62a0eacc">&#9670;&nbsp;</a></span>getAlgoName()</h2>
@@ -269,6 +288,41 @@ struct timeval&#160;</td><td class="memItemRight" valign="bottom"><b>timeBaseStr
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a8c79b40630ef5d9475d0c41be00a8a06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c79b40630ef5d9475d0c41be00a8a06">&#9670;&nbsp;</a></span>setConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool AllianceDB::AbstractJoinAlgo::setConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the config map related to this Algorithm. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>The config map </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
 
 </div>
 </div>

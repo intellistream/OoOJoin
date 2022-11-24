@@ -95,7 +95,9 @@ $(document).ready(function(){initNavTree('AbstractJoinAlgo_8h.html',''); initRes
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">AbstractJoinAlgo.h File Reference</div>  </div>
 </div><!--header-->
@@ -104,20 +106,28 @@ $(document).ready(function(){initNavTree('AbstractJoinAlgo_8h.html',''); initRes
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;assert.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="ConfigMap_8hpp_source.html">Utils/ConfigMap.hpp</a>&gt;</code><br />
+<code>#include &lt;Utils/Logger.hpp&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AbstractJoinAlgo.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="AbstractJoinAlgo_8h__incl.png" border="0" usemap="#ainclude_2JoinAlgos_2AbstractJoinAlgo_8h" alt=""/></div>
 <map name="ainclude_2JoinAlgos_2AbstractJoinAlgo_8h" id="ainclude_2JoinAlgos_2AbstractJoinAlgo_8h">
-<area shape="rect" title=" " alt="" coords="209,5,399,47"/>
-<area shape="rect" href="Window_8h.html" title=" " alt="" coords="11,95,159,121"/>
-<area shape="rect" title=" " alt="" coords="372,244,431,271"/>
-<area shape="rect" title=" " alt="" coords="159,244,236,271"/>
-<area shape="rect" title=" " alt="" coords="448,95,523,121"/>
-<area shape="rect" href="Tuples_8h.html" title=" " alt="" coords="235,169,373,196"/>
-<area shape="rect" href="C20Buffers_8hpp.html" title=" " alt="" coords="5,169,160,196"/>
-<area shape="rect" title=" " alt="" coords="269,244,339,271"/>
-<area shape="rect" title=" " alt="" coords="51,244,114,271"/>
+<area shape="rect" title=" " alt="" coords="304,5,495,47"/>
+<area shape="rect" href="Window_8h.html" title=" " alt="" coords="269,95,417,121"/>
+<area shape="rect" title=" " alt="" coords="101,244,159,271"/>
+<area shape="rect" title=" " alt="" coords="201,244,278,271"/>
+<area shape="rect" title=" " alt="" coords="645,95,719,121"/>
+<area shape="rect" href="ConfigMap_8hpp.html" title=" " alt="" coords="447,169,600,196"/>
+<area shape="rect" href="Logger_8hpp_source.html" title=" " alt="" coords="493,95,620,121"/>
+<area shape="rect" href="Tuples_8h.html" title=" " alt="" coords="54,169,193,196"/>
+<area shape="rect" href="C20Buffers_8hpp.html" title=" " alt="" coords="267,169,422,196"/>
+<area shape="rect" title=" " alt="" coords="5,244,76,271"/>
+<area shape="rect" title=" " alt="" coords="313,244,376,271"/>
+<area shape="rect" title=" " alt="" coords="401,244,451,271"/>
+<area shape="rect" title=" " alt="" coords="476,244,549,271"/>
+<area shape="rect" title=" " alt="" coords="673,244,753,271"/>
+<area shape="rect" title=" " alt="" coords="574,244,649,271"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -145,9 +155,24 @@ Classes</h2></td></tr>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceAllianceDB"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAllianceDB.html">AllianceDB</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a956d8181512ab0b56214c3d6ac9a5ccd"><td class="memItemLeft" align="right" valign="top"><a id="a956d8181512ab0b56214c3d6ac9a5ccd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ALGO_INFO</b>&#160;&#160;&#160;INTELLI_INFO</td></tr>
+<tr class="separator:a956d8181512ab0b56214c3d6ac9a5ccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50afd5e64b88d040b06ba17dc63db4e1"><td class="memItemLeft" align="right" valign="top"><a id="a50afd5e64b88d040b06ba17dc63db4e1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ALGO_ERROR</b>&#160;&#160;&#160;INTELLI_ERROR</td></tr>
+<tr class="separator:a50afd5e64b88d040b06ba17dc63db4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a701b619d13437a4e9ba583f4049645d2"><td class="memItemLeft" align="right" valign="top"><a id="a701b619d13437a4e9ba583f4049645d2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ALGO_WARNNING</b>&#160;&#160;&#160;INTELLI_WARNING</td></tr>
+<tr class="separator:a701b619d13437a4e9ba583f4049645d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf4e2fe27dc5a755538b5d0e5a341f7ec"><td class="memItemLeft" align="right" valign="top">
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>newAbstractJoinAlgo</b>()&#160;&#160;&#160;std::make_shared&lt;AbstractJoinAlgo&gt;()</td></tr>
 <tr class="separator:gaf4e2fe27dc5a755538b5d0e5a341f7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
 <tr class="memitem:gad037855271725304874266cff3e54e17"><td class="memItemLeft" align="right" valign="top">
 typedef std::shared_ptr&lt; AbstractJoinAlgo &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>AllianceDB::AbstractJoinAlgoPtr</b></td></tr>
 <tr class="separator:gad037855271725304874266cff3e54e17"><td class="memSeparator" colspan="2">&#160;</td></tr>

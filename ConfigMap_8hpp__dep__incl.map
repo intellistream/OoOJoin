@@ -1,8 +1,12 @@
 <map id="include/Utils/ConfigMap.hpp" name="include/Utils/ConfigMap.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="14,5,218,32"/>
-<area shape="rect" id="node2" href="$OoOJoin_8h.html" title=" " alt="" coords="6,244,143,271"/>
-<area shape="rect" id="node3" href="$AbstractOperator_8h.html" title=" " alt="" coords="22,80,210,121"/>
-<area shape="rect" id="node6" href="$AbstractWaterMarker_8h.html" title=" " alt="" coords="234,80,409,121"/>
-<area shape="rect" id="node4" href="$IAWJOperator_8h_source.html" title=" " alt="" coords="37,169,267,196"/>
-<area shape="rect" id="node5" href="$TestBench_8h.html" title=" " alt="" coords="292,169,513,196"/>
+<area shape="rect" id="node1" title=" " alt="" coords="404,5,608,32"/>
+<area shape="rect" id="node2" href="$AbstractJoinAlgo_8h.html" title=" " alt="" coords="126,80,317,121"/>
+<area shape="rect" id="node4" href="$OoOJoin_8h.html" title=" " alt="" coords="349,348,486,375"/>
+<area shape="rect" id="node7" href="$AbstractOperator_8h.html" title=" " alt="" coords="525,169,713,211"/>
+<area shape="rect" id="node10" href="$AbstractWaterMarker_8h.html" title=" " alt="" coords="766,80,941,121"/>
+<area shape="rect" id="node3" href="$JoinAlgoTable_8h_source.html" title=" " alt="" coords="138,259,329,300"/>
+<area shape="rect" id="node5" href="$NestedLoopJoin_8h.html" title=" " alt="" coords="260,169,442,211"/>
+<area shape="rect" id="node6" href="$NPJ_8h.html" title=" " alt="" coords="25,169,184,211"/>
+<area shape="rect" id="node8" href="$IAWJOperator_8h_source.html" title=" " alt="" coords="506,266,737,293"/>
+<area shape="rect" id="node9" href="$TestBench_8h.html" title=" " alt="" coords="762,266,983,293"/>
 </map>

@@ -9,9 +9,10 @@ var classAllianceDB_1_1TestBench =
     [ "OoOSort", "classAllianceDB_1_1TestBench.html#a5c295878f2ef7d4a49c99bec3225ca88", null ],
     [ "OoOTest", "classAllianceDB_1_1TestBench.html#a29a0d1394efdfb58d38df5de967ec27c", null ],
     [ "setDataSet", "classAllianceDB_1_1TestBench.html#a522f58a5add28fed49b8839f5e4180d2", null ],
-    [ "setOperator", "classAllianceDB_1_1TestBench.html#ad626a396cf14d168dabfa71abe191e84", null ],
+    [ "setOperator", "classAllianceDB_1_1TestBench.html#a7a890963fe5c658e6acf963834e524b2", null ],
     [ "opConfig", "classAllianceDB_1_1TestBench.html#a53422e60ff82f33200d56ff26db0216d", null ],
     [ "rTuple", "classAllianceDB_1_1TestBench.html#a86003a6d673a49a8b3e04f8993969f25", null ],
     [ "sTuple", "classAllianceDB_1_1TestBench.html#a5e5fce725b3f2c2ab41265123199fc53", null ],
-    [ "testOp", "classAllianceDB_1_1TestBench.html#af8802a405a4ac283610d1355a4801a5e", null ]
+    [ "testOp", "classAllianceDB_1_1TestBench.html#af8802a405a4ac283610d1355a4801a5e", null ],
+    [ "timeStep", "classAllianceDB_1_1TestBench.html#a5b52ff75851777fa05033136a1a43fc0", null ]
 ];

@@ -63,7 +63,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AbstractC20Thread_8h.html",
-"dir_4e88733bde07f70aee18672f1ff34c79.html"
+"classINTELLI_1_1SPSCQueue.html#a0405df5662782adc890d587122c324c1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
