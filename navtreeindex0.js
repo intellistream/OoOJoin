@@ -1,6 +1,5 @@
 var NAVTREEINDEX0 =
 {
-"":[3,0,1],
 "AbstractC20Thread_8h.html":[5,0,0,4,0],
 "AbstractC20Thread_8h.html#a9370b2e09eeeec9419a207c190f4992f":[3,0,1,6],
 "AbstractC20Thread_8h.html#a9370b2e09eeeec9419a207c190f4992f":[5,0,0,4,0,0],
@@ -249,5 +248,6 @@ var NAVTREEINDEX0 =
 "classINTELLI_1_1C20Buffer.html#af876d67d22ddc2003c5f4df33eba1d38":[2,2,0,1,0],
 "classINTELLI_1_1ConfigMap.html":[2,2,1,0],
 "classINTELLI_1_1ConfigMap.html":[2,2,3],
-"classINTELLI_1_1MicroDataSet.html":[2,2,2,2]
+"classINTELLI_1_1MicroDataSet.html":[2,2,2,2],
+"classINTELLI_1_1SPSCQueue.html":[4,0,1,4]
 };
