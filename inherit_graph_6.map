@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classAllianceDB_1_1Tuple.html" title="The class to describe a normal tuple." alt="" coords="5,5,140,32"/>
+<area shape="rect" id="node2" href="$classAllianceDB_1_1OoOTuple.html" title="The class to describe a tuple, which allows out&#45;of&#45;order." alt="" coords="188,5,351,32"/>
+<area shape="rect" id="node3" href="$classAllianceDB_1_1TrackTuple.html" title="The class to describe a tuple, which allows out&#45;of&#45;order and tracking processed Time." alt="" coords="399,5,568,32"/>
+</map>

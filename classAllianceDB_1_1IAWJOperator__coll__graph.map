@@ -1,0 +1,12 @@
+<map id="AllianceDB::IAWJOperator" name="AllianceDB::IAWJOperator">
+<area shape="rect" id="node1" title="The intra window join (IAWJ) operator, only considers a single window." alt="" coords="566,243,753,269"/>
+<area shape="rect" id="node2" href="$classAllianceDB_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="155,153,367,180"/>
+<area shape="rect" id="node3" title=" " alt="" coords="206,13,315,39"/>
+<area shape="rect" id="node4" title=" " alt="" coords="399,13,459,39"/>
+<area shape="rect" id="node7" href="$classAllianceDB_1_1Window.html" title="The class to describe a simplest window." alt="" coords="583,153,736,180"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,13,44,39"/>
+<area shape="rect" id="node6" title=" " alt="" coords="68,13,181,39"/>
+<area shape="rect" id="node8" title=" " alt="" coords="743,13,818,39"/>
+<area shape="rect" id="node9" href="$classINTELLI_1_1C20Buffer.html" title=" " alt="" coords="497,5,715,47"/>
+<area shape="rect" id="node10" title=" " alt="" coords="890,153,949,180"/>
+</map>

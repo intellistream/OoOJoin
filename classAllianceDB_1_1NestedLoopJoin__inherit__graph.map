@@ -1,0 +1,4 @@
+<map id="AllianceDB::NestedLoopJoin" name="AllianceDB::NestedLoopJoin">
+<area shape="rect" id="node1" title="The top class package of Nested Loop Join providing a &quot;join function&quot;." alt="" coords="8,80,211,107"/>
+<area shape="rect" id="node2" href="$classAllianceDB_1_1AbstractJoinAlgo.html" title="The abstraction to describe a join algorithm, providing virtual function of join." alt="" coords="5,5,213,32"/>
+</map>
