@@ -9,7 +9,12 @@
 #include <string>
 #include <memory>
 #include <assert.h>
+#include <Utils/ConfigMap.hpp>
+#include <Utils/Logger.hpp>
 using namespace INTELLI;
+#define ALGO_INFO INTELLI_INFO
+#define ALGO_ERROR INTELLI_ERROR
+#define ALGO_WARNNING INTELLI_WARNING
 namespace AllianceDB {
 /**
 * @defgroup ADB_JOINALGOS The specific join algorithms
@@ -27,17 +32,26 @@ namespace AllianceDB {
  * @ingroup ADB_JOINALGOS_ABSTRACT
  * @class AbstractJoinAlgo JoinAlgos/AbstractJoinAlgo.h
  * @brief The abstraction to describe a join algorithm, providing virtual function of join
+ * @note Required configs
+ * - "timeStep" U64 The simulation time step in us
  */
 class AbstractJoinAlgo {
  protected:
   std::string nameTag;
   struct timeval timeBaseStruct;
+  tsType timeStep;
  public:
+  ConfigMapPtr config;
   AbstractJoinAlgo() {
     setAlgoName("NULL");
   }
   ~AbstractJoinAlgo() {}
-
+  /**
+  * @brief Set the config map related to this Algorithm
+  * @param cfg The config map
+   * @return bool whether the config is successfully set
+  */
+  virtual bool setConfig(ConfigMapPtr cfg);
   /**
   * @brief The function to execute join,
   * @param windS The window of S tuples

@@ -44,9 +44,22 @@ void AllianceDB::TestBench::setDataSet(std::vector<TrackTuplePtr> _r, std::vecto
   rTuple = _r;
   sTuple = _s;
 }
-void AllianceDB::TestBench::setOperator(AllianceDB::AbstractOperatorPtr op, ConfigMapPtr cfg) {
+bool AllianceDB::TestBench::setOperator(AllianceDB::AbstractOperatorPtr op, ConfigMapPtr cfg) {
   testOp = op;
   opConfig = cfg;
+  if (opConfig == nullptr) {
+    return false;
+  }
+  if (opConfig->existU64("timeStep")) {
+    timeStep = opConfig->getU64("timeStep");
+    TB_INFO("Feeding time step="+ to_string(timeStep)+"us");
+  }
+  else
+  {
+    TB_WARNNING("No setting of timeStep, use 1\n");
+    timeStep=1;
+  }
+  return true;
 }
 void AllianceDB::TestBench::inlineTest() {
   struct timeval timeStart;
@@ -62,7 +75,7 @@ void AllianceDB::TestBench::inlineTest() {
   testOp->syncTimeStruct(timeStart);
   testOp->start();
   while (tNow < tMax) {
-    tNow = UtilityFunctions::timeLastUs(timeStart) / 40;
+    tNow = UtilityFunctions::timeLastUs(timeStart)/timeStep ;
     //INTELLI_INFO("T=" << tNow);
     while (tNow >= tNextS) {
       if (sPos <= testSize - 1) {

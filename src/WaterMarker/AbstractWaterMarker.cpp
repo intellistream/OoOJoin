@@ -18,6 +18,14 @@ bool AllianceDB::AbstractWaterMarker::setConfig(INTELLI::ConfigMapPtr cfg) {
         WM_WARNNING("NO assigned errorBound, set to 0.01");
     errorBound = 0.01;
   }
+  if (config->existU64("timeStep")) {
+    timeStep = config->getU64("timeStep");
+  }
+  else
+  {
+    WM_WARNNING("No setting of timeStep, use 1\n");
+    timeStep=1;
+  }
   return true;
 }
 size_t AllianceDB::AbstractWaterMarker::creatWindow(AllianceDB::tsType tBegin, AllianceDB::tsType tEnd) {

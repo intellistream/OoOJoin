@@ -31,6 +31,7 @@ bool AllianceDB::IAWJOperator::stop() {
   JoinAlgoTable jt;
   AbstractJoinAlgoPtr algo = jt.findAlgo(algoTag);
   //NestedLoopJoin nj;
+  algo->setConfig(config);
   algo->syncTimeStruct(timeBaseStruct);
       OP_INFO("Invoke algorithm=" + algo->getAlgoName());
   intermediateResult = algo->join(myWindow.windowS, myWindow.windowR, joinThreads);

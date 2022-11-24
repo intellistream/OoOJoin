@@ -26,6 +26,7 @@ namespace AllianceDB {
  * @todo multi window support is not done yet, left for future, but we do preserve the interfaces
  * @note require configurations:
  * -"errorBound" Double The assigned error bound
+ * - "timeStep" U64 The simulation time step in us
  */
 class AbstractWaterMarker {
  protected:
@@ -33,6 +34,7 @@ class AbstractWaterMarker {
    * @brief The assigned error bound, read from configuration
    */
   double errorBound;
+  tsType timeStep;
   /**
    * @brief the base structure for time
    */

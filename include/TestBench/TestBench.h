@@ -7,6 +7,11 @@
 #define INTELLISTREAM_INCLUDE_TESTBENCH_TESTBENCH_H_
 #include <Common/Window.h>
 #include <Operator/AbstractOperator.h>
+#include <Utils/Logger.hpp>
+using namespace INTELLI;
+#define TB_INFO INTELLI_INFO
+#define TB_ERROR INTELLI_ERROR
+#define TB_WARNNING INTELLI_WARNING
 namespace AllianceDB {
 
 /**
@@ -25,6 +30,7 @@ class TestBench {
   void OoOSort(std::vector<TrackTuplePtr> &arr);
   void inlineTest(void);
   void forceInOrder(std::vector<TrackTuplePtr> &arr);
+  tsType timeStep=1;
  public:
   std::vector<TrackTuplePtr> rTuple;
   std::vector<TrackTuplePtr> sTuple;
@@ -43,8 +49,9 @@ class TestBench {
   * @brief set the operator to test
   * @param op shared pointer to operator
    * @param cfg the config file to operator
+   * @return whether the setting is successful
   */
-  void setOperator(AbstractOperatorPtr op, ConfigMapPtr cfg);
+  bool setOperator(AbstractOperatorPtr op, ConfigMapPtr cfg);
   /**
   * @brief test the operator under in order arrival
   * @param additionalSort whether or not additionally sort the input
