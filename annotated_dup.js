@@ -24,5 +24,6 @@ var annotated_dup =
       [ "MicroDataSet", "classINTELLI_1_1MicroDataSet.html", "classINTELLI_1_1MicroDataSet" ],
       [ "SPSCQueue", "classINTELLI_1_1SPSCQueue.html", "classINTELLI_1_1SPSCQueue" ],
       [ "UtilityFunctions", "classINTELLI_1_1UtilityFunctions.html", "classINTELLI_1_1UtilityFunctions" ]
-    ] ]
+    ] ],
+    [ "AbstractWaterMarker", "classAbstractWaterMarker.html", null ]
 ];

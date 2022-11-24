@@ -1,5 +1,6 @@
 var NAVTREEINDEX0 =
 {
+"":[3,0,1],
 "AbstractC20Thread_8h.html":[5,0,0,4,0],
 "AbstractC20Thread_8h.html#a9370b2e09eeeec9419a207c190f4992f":[3,0,1,6],
 "AbstractC20Thread_8h.html#a9370b2e09eeeec9419a207c190f4992f":[5,0,0,4,0,0],
@@ -14,6 +15,8 @@ var NAVTREEINDEX0 =
 "AbstractOperator_8h.html#adc968cca911357b6244da35141b9e963":[5,0,0,2,0,2],
 "AbstractOperator_8h.html#afd083fd1cec9a407e95cf9a8c1141056":[5,0,0,2,0,0],
 "AbstractOperator_8h_source.html":[5,0,0,2,0],
+"AbstractWaterMarker_8h.html":[5,0,0,5,0],
+"AbstractWaterMarker_8h_source.html":[5,0,0,5,0],
 "C20Buffers_8hpp.html":[5,0,0,4,1],
 "C20Buffers_8hpp.html#a6c5472d6c68ba203f5bcb1ce7f550a33":[5,0,0,4,1,0],
 "C20Buffers_8hpp.html#a9d116f405c52381c207ae7963ed2168c":[5,0,0,4,1,1],
@@ -39,15 +42,15 @@ var NAVTREEINDEX0 =
 "NestedLoopJoin_8h.html#a14c9e0659d7546d31549e9e9c73229e8":[5,0,0,1,3,0],
 "NestedLoopJoin_8h.html#a674da2c60df2a926e20cc09f8ce8019c":[5,0,0,1,3,1],
 "NestedLoopJoin_8h_source.html":[5,0,0,1,3],
-"OoOJoin_8h.html":[5,0,0,5],
-"OoOJoin_8h_source.html":[5,0,0,5],
+"OoOJoin_8h.html":[5,0,0,6],
+"OoOJoin_8h_source.html":[5,0,0,6],
 "SPSCQueue_8hpp_source.html":[5,0,0,4,5],
 "TestBench_8h.html":[5,0,0,3,0],
 "TestBench_8h_source.html":[5,0,0,3,0],
 "Tuples_8h.html":[5,0,0,0,0],
 "Tuples_8h.html#a15979ae8bd2777b5d54ddfc3d5c55d4d":[5,0,0,0,0,0],
-"Tuples_8h.html#aacb4051eb899f4d3f5a7574d58bed26c":[5,0,0,0,0,1],
 "Tuples_8h.html#aacb4051eb899f4d3f5a7574d58bed26c":[5,0,0,0,0,2],
+"Tuples_8h.html#aacb4051eb899f4d3f5a7574d58bed26c":[5,0,0,0,0,1],
 "Tuples_8h.html#ga37dd7d1c30132e2380708a68aec5a3ff":[5,0,0,0,0,7],
 "Tuples_8h.html#ga6667d895086b1f4a38425f9ff4ae9f38":[5,0,0,0,0,4],
 "Tuples_8h.html#ga871cec403cf4a824fbc7ec70aabd5198":[5,0,0,0,0,5],
@@ -69,6 +72,7 @@ var NAVTREEINDEX0 =
 "Window_8h.html":[5,0,0,0,1],
 "Window_8h_source.html":[5,0,0,0,1],
 "annotated.html":[4,0],
+"classAbstractWaterMarker.html":[4,0,2],
 "classAllianceDB_1_1AbstractJoinAlgo.html":[2,2,0,0],
 "classAllianceDB_1_1AbstractJoinAlgo.html#a29ad5148bb90a8611d9af69b1a9f4a48":[2,2,0,0,6],
 "classAllianceDB_1_1AbstractJoinAlgo.html#a2a8f38bfda3893c5751f803f888e36f4":[2,2,0,0,3],
@@ -245,9 +249,5 @@ var NAVTREEINDEX0 =
 "classes.html":[4,1],
 "dir_2d1d991c66e7a032b2ab80c11328e79c.html":[5,0,0,4],
 "dir_4e88733bde07f70aee18672f1ff34c79.html":[5,0,0,0],
-"dir_50463932ff48a2071e78a336cd7fc0c8.html":[5,0,0,1],
-"dir_b214e0c6a0fcab9b6183b6ff1abed656.html":[5,0,0,1,0],
-"dir_cdbe9e5a8e7ed711f70c62151cc00382.html":[5,0,0,3],
-"dir_d44c64559bbebec7f509842c48db8b23.html":[5,0,0],
-"dir_fe7106cd8d479bab417ff0baf2ec5f61.html":[5,0,0,2]
+"dir_50463932ff48a2071e78a336cd7fc0c8.html":[5,0,0,1]
 };

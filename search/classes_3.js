@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['joinalgotable_145',['JoinAlgoTable',['../classAllianceDB_1_1JoinAlgoTable.html',1,'AllianceDB']]]
+  ['joinalgotable_148',['JoinAlgoTable',['../classAllianceDB_1_1JoinAlgoTable.html',1,'AllianceDB']]]
 ];
