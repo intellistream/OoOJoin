@@ -15,7 +15,8 @@ var annotated_dup =
       [ "NPJSingle", "classAllianceDB_1_1NPJSingle.html", "classAllianceDB_1_1NPJSingle" ],
       [ "AbstractOperator", "classAllianceDB_1_1AbstractOperator.html", "classAllianceDB_1_1AbstractOperator" ],
       [ "IAWJOperator", "classAllianceDB_1_1IAWJOperator.html", "classAllianceDB_1_1IAWJOperator" ],
-      [ "TestBench", "classAllianceDB_1_1TestBench.html", "classAllianceDB_1_1TestBench" ]
+      [ "TestBench", "classAllianceDB_1_1TestBench.html", "classAllianceDB_1_1TestBench" ],
+      [ "AbstractWaterMarker", "classAllianceDB_1_1AbstractWaterMarker.html", null ]
     ] ],
     [ "INTELLI", null, [
       [ "AbstractC20Thread", "classINTELLI_1_1AbstractC20Thread.html", "classINTELLI_1_1AbstractC20Thread" ],
@@ -24,6 +25,5 @@ var annotated_dup =
       [ "MicroDataSet", "classINTELLI_1_1MicroDataSet.html", "classINTELLI_1_1MicroDataSet" ],
       [ "SPSCQueue", "classINTELLI_1_1SPSCQueue.html", "classINTELLI_1_1SPSCQueue" ],
       [ "UtilityFunctions", "classINTELLI_1_1UtilityFunctions.html", "classINTELLI_1_1UtilityFunctions" ]
-    ] ],
-    [ "AbstractWaterMarker", "classAbstractWaterMarker.html", null ]
+    ] ]
 ];

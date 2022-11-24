@@ -4,7 +4,7 @@ var searchData=
   ['nestedloopjoin_2eh_76',['NestedLoopJoin.h',['../NestedLoopJoin_8h.html',1,'']]],
   ['nestedloopjoinptr_77',['NestedLoopJoinPtr',['../namespaceAllianceDB.html#a674da2c60df2a926e20cc09f8ce8019c',1,'AllianceDB']]],
   ['newabstractoperator_78',['newAbstractOperator',['../AbstractOperator_8h.html#afd083fd1cec9a407e95cf9a8c1141056',1,'AbstractOperator.h']]],
-  ['newconfigmap_79',['newConfigMap',['../group__INTELLI__UTIL.html#ga51f72aea36218fddbbb4b335ce6c0d49',1,'ConfigMap.hpp']]],
+  ['newconfigmap_79',['newConfigMap',['../group__INTELLI__UTIL__CONFIGS.html#ga51f72aea36218fddbbb4b335ce6c0d49',1,'ConfigMap.hpp']]],
   ['newnestedloopjoin_80',['newNestedLoopJoin',['../NestedLoopJoin_8h.html#a14c9e0659d7546d31549e9e9c73229e8',1,'NestedLoopJoin.h']]],
   ['newnpj_81',['newNPJ',['../group__ADB__JOINALGOS__NPJ.html#gafa21d5fc3f2bb1c5382f6acb93b28289',1,'NPJ.h']]],
   ['newnpjsingle_82',['newNPJSingle',['../group__ADB__JOINALGOS__NPJ.html#ga67096c91916ef7ec0d52169b62bb5088',1,'NPJ.h']]],

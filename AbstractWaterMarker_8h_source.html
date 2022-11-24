@@ -102,15 +102,34 @@ $(document).ready(function(){initNavTree('AbstractWaterMarker_8h_source.html',''
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Created by tony on 24/11/22.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef INTELLISTREAM_INCLUDE_WATERMARKER_ABSTRACTWATERMARKER_H_</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define INTELLISTREAM_INCLUDE_WATERMARKER_ABSTRACTWATERMARKER_H_</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classAbstractWaterMarker.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="classAbstractWaterMarker.html">AbstractWaterMarker</a> {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;};</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//INTELLISTREAM_INCLUDE_WATERMARKER_ABSTRACTWATERMARKER_H_</span></div>
-<div class="ttc" id="aclassAbstractWaterMarker_html"><div class="ttname"><a href="classAbstractWaterMarker.html">AbstractWaterMarker</a></div><div class="ttdef"><b>Definition:</b> AbstractWaterMarker.h:9</div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef _INCLUDE_WATERMARKER_ABSTRACTWATERMARKER_H_</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _INCLUDE_WATERMARKER_ABSTRACTWATERMARKER_H_</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="Window_8h.html">Common/Window.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="Tuples_8h.html">Common/Tuples.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="Window_8h.html">Common/Window.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="Tuples_8h.html">Common/Tuples.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="UtilityFunctions_8hpp.html">Utils/UtilityFunctions.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;assert.h&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="ConfigMap_8hpp.html">Utils/ConfigMap.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;Utils/Logger.hpp&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define WM_INFO INTELLI_INFO</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define WM_ERROR INTELLI_ERROR</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define WM_WARNNING INTELLI_WARNING</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">using namespace </span>INTELLI;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceAllianceDB.html">AllianceDB</a> {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classAllianceDB_1_1AbstractWaterMarker.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="classAllianceDB_1_1AbstractWaterMarker.html">AbstractWaterMarker</a> {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;};</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//INTELLISTREAM_INCLUDE_WATERMARKER_ABSTRACTWATERMARKER_H_</span></div>
+<div class="ttc" id="aConfigMap_8hpp_html"><div class="ttname"><a href="ConfigMap_8hpp.html">ConfigMap.hpp</a></div></div>
+<div class="ttc" id="aTuples_8h_html"><div class="ttname"><a href="Tuples_8h.html">Tuples.h</a></div></div>
+<div class="ttc" id="aUtilityFunctions_8hpp_html"><div class="ttname"><a href="UtilityFunctions_8hpp.html">UtilityFunctions.hpp</a></div></div>
+<div class="ttc" id="aWindow_8h_html"><div class="ttname"><a href="Window_8h.html">Window.h</a></div></div>
+<div class="ttc" id="aclassAllianceDB_1_1AbstractWaterMarker_html"><div class="ttname"><a href="classAllianceDB_1_1AbstractWaterMarker.html">AllianceDB::AbstractWaterMarker</a></div><div class="ttdef"><b>Definition:</b> AbstractWaterMarker.h:23</div></div>
+<div class="ttc" id="anamespaceAllianceDB_html"><div class="ttname"><a href="namespaceAllianceDB.html">AllianceDB</a></div><div class="ttdef"><b>Definition:</b> Tuples.h:11</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

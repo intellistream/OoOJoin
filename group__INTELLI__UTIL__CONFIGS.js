@@ -25,5 +25,7 @@ var group__INTELLI__UTIL__CONFIGS =
       [ "i64Map", "group__INTELLI__UTIL.html#gae94133b37f8c0721be55822e5d18ecd3", null ],
       [ "strMap", "group__INTELLI__UTIL.html#gaf109dcedf12fd774b7452102f5ee767d", null ],
       [ "u64Map", "group__INTELLI__UTIL.html#ga5de5bbbc7e8bd613b76e2e36c1e4cb92", null ]
-    ] ]
+    ] ],
+    [ "newConfigMap", "group__INTELLI__UTIL__CONFIGS.html#ga51f72aea36218fddbbb4b335ce6c0d49", null ],
+    [ "ConfigMapPtr", "group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea", null ]
 ];

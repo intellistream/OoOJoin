@@ -29,8 +29,6 @@ var group__INTELLI__UTIL =
       [ "strMap", "group__INTELLI__UTIL.html#gaf109dcedf12fd774b7452102f5ee767d", null ],
       [ "u64Map", "group__INTELLI__UTIL.html#ga5de5bbbc7e8bd613b76e2e36c1e4cb92", null ]
     ] ],
-    [ "newConfigMap", "group__INTELLI__UTIL.html#ga51f72aea36218fddbbb4b335ce6c0d49", null ],
-    [ "ConfigMapPtr", "group__INTELLI__UTIL.html#ga8ca2292cf536f32eac0ded05242b97d7", null ],
     [ "cloneInto", "group__INTELLI__UTIL.html#ga84cc43b298d18b7e4b088b8864caee12", null ],
     [ "edit", "group__INTELLI__UTIL.html#ga8b567ad9340b36a702824776c4e64710", null ],
     [ "edit", "group__INTELLI__UTIL.html#ga4945415b4bc8f275663f7a28f586a2a9", null ],

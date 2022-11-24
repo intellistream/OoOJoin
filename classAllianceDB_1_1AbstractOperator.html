@@ -140,7 +140,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aebe0a58d9f41a3470a705005ea0d5c43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractOperator.html#aebe0a58d9f41a3470a705005ea0d5c43">syncTimeStruct</a> (struct timeval tv)</td></tr>
 <tr class="memdesc:aebe0a58d9f41a3470a705005ea0d5c43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronize the time structure with outside setting.  <a href="classAllianceDB_1_1AbstractOperator.html#aebe0a58d9f41a3470a705005ea0d5c43">More...</a><br /></td></tr>
 <tr class="separator:aebe0a58d9f41a3470a705005ea0d5c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a007f58229c0cfa82704b5a4685fbdc1e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractOperator.html#a007f58229c0cfa82704b5a4685fbdc1e">setConfig</a> (<a class="el" href="group__INTELLI__UTIL.html#ga8ca2292cf536f32eac0ded05242b97d7">ConfigMapPtr</a> cfg)</td></tr>
+<tr class="memitem:a007f58229c0cfa82704b5a4685fbdc1e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractOperator.html#a007f58229c0cfa82704b5a4685fbdc1e">setConfig</a> (<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</td></tr>
 <tr class="memdesc:a007f58229c0cfa82704b5a4685fbdc1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the config map related to this operator.  <a href="classAllianceDB_1_1AbstractOperator.html#a007f58229c0cfa82704b5a4685fbdc1e">More...</a><br /></td></tr>
 <tr class="separator:a007f58229c0cfa82704b5a4685fbdc1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c53ca4e10a7d4d12ca2d0dbb2c28253"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractOperator.html#a4c53ca4e10a7d4d12ca2d0dbb2c28253">feedTupleS</a> (<a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a> ts)</td></tr>
@@ -162,7 +162,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:acc02cafa12d220851b39280f5bde361d"><td class="memItemLeft" align="right" valign="top"><a id="acc02cafa12d220851b39280f5bde361d"></a>
-<a class="el" href="group__INTELLI__UTIL.html#ga8ca2292cf536f32eac0ded05242b97d7">ConfigMapPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>config</b> = nullptr</td></tr>
+<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>config</b> = nullptr</td></tr>
 <tr class="separator:acc02cafa12d220851b39280f5bde361d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -188,7 +188,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>threads</b> =0</td></t
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The abstraction to describe a join operator, providing virtual function of using the operation. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Finish the watermark generator part </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Finish the watermark generator part </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>require configurations:<ul>
 <li>"windowLen" U64: The length of window</li>
 <li>"slideLen" U64: The length of slide</li>
@@ -360,7 +360,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>threads</b> =0</td></t
         <tr>
           <td class="memname">virtual bool AllianceDB::AbstractOperator::setConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__INTELLI__UTIL.html#ga8ca2292cf536f32eac0ded05242b97d7">ConfigMapPtr</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td>
           <td class="paramname"><em>cfg</em></td><td>)</td>
           <td></td>
         </tr>

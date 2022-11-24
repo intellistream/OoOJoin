@@ -11,7 +11,7 @@ var hierarchy =
     [ "AllianceDB::AbstractOperator", "classAllianceDB_1_1AbstractOperator.html", [
       [ "AllianceDB::IAWJOperator", "classAllianceDB_1_1IAWJOperator.html", null ]
     ] ],
-    [ "AbstractWaterMarker", "classAbstractWaterMarker.html", null ],
+    [ "AllianceDB::AbstractWaterMarker", "classAllianceDB_1_1AbstractWaterMarker.html", null ],
     [ "INTELLI::C20Buffer< dataType >", "classINTELLI_1_1C20Buffer.html", null ],
     [ "INTELLI::C20Buffer< AllianceDB::TrackTuplePtr >", "classINTELLI_1_1C20Buffer.html", null ],
     [ "INTELLI::ConfigMap", "classINTELLI_1_1ConfigMap.html", null ],

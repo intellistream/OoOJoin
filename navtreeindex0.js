@@ -1,6 +1,5 @@
 var NAVTREEINDEX0 =
 {
-"":[3,0,1],
 "AbstractC20Thread_8h.html":[5,0,0,4,0],
 "AbstractC20Thread_8h.html#a9370b2e09eeeec9419a207c190f4992f":[3,0,1,6],
 "AbstractC20Thread_8h.html#a9370b2e09eeeec9419a207c190f4992f":[5,0,0,4,0,0],
@@ -16,6 +15,9 @@ var NAVTREEINDEX0 =
 "AbstractOperator_8h.html#afd083fd1cec9a407e95cf9a8c1141056":[5,0,0,2,0,0],
 "AbstractOperator_8h_source.html":[5,0,0,2,0],
 "AbstractWaterMarker_8h.html":[5,0,0,5,0],
+"AbstractWaterMarker_8h.html#a3a5245c0ac465e70d2dd2edf06058d48":[5,0,0,5,0,3],
+"AbstractWaterMarker_8h.html#ad459d350dd2ca426dd72d28c8d5f4b12":[5,0,0,5,0,2],
+"AbstractWaterMarker_8h.html#aff02c6841306f1d971bcc62342b13e96":[5,0,0,5,0,1],
 "AbstractWaterMarker_8h_source.html":[5,0,0,5,0],
 "C20Buffers_8hpp.html":[5,0,0,4,1],
 "C20Buffers_8hpp.html#a6c5472d6c68ba203f5bcb1ce7f550a33":[5,0,0,4,1,0],
@@ -23,7 +25,7 @@ var NAVTREEINDEX0 =
 "C20Buffers_8hpp_source.html":[5,0,0,4,1],
 "ConfigMap_8hpp.html":[5,0,0,4,2],
 "ConfigMap_8hpp.html#ad908d4cd164ea32079c6bd9c30c1704b":[5,0,0,4,2,0],
-"ConfigMap_8hpp.html#ga8ca2292cf536f32eac0ded05242b97d7":[5,0,0,4,2,2],
+"ConfigMap_8hpp.html#gaeb9674f6f5860b687d73f618962dfcea":[5,0,0,4,2,2],
 "ConfigMap_8hpp_source.html":[5,0,0,4,2],
 "IAWJOperator_8h_source.html":[5,0,0,2,1],
 "JoinAlgoTable_8h_source.html":[5,0,0,1,2],
@@ -49,8 +51,8 @@ var NAVTREEINDEX0 =
 "TestBench_8h_source.html":[5,0,0,3,0],
 "Tuples_8h.html":[5,0,0,0,0],
 "Tuples_8h.html#a15979ae8bd2777b5d54ddfc3d5c55d4d":[5,0,0,0,0,0],
-"Tuples_8h.html#aacb4051eb899f4d3f5a7574d58bed26c":[5,0,0,0,0,2],
 "Tuples_8h.html#aacb4051eb899f4d3f5a7574d58bed26c":[5,0,0,0,0,1],
+"Tuples_8h.html#aacb4051eb899f4d3f5a7574d58bed26c":[5,0,0,0,0,2],
 "Tuples_8h.html#ga37dd7d1c30132e2380708a68aec5a3ff":[5,0,0,0,0,7],
 "Tuples_8h.html#ga6667d895086b1f4a38425f9ff4ae9f38":[5,0,0,0,0,4],
 "Tuples_8h.html#ga871cec403cf4a824fbc7ec70aabd5198":[5,0,0,0,0,5],
@@ -72,7 +74,6 @@ var NAVTREEINDEX0 =
 "Window_8h.html":[5,0,0,0,1],
 "Window_8h_source.html":[5,0,0,0,1],
 "annotated.html":[4,0],
-"classAbstractWaterMarker.html":[4,0,2],
 "classAllianceDB_1_1AbstractJoinAlgo.html":[2,2,0,0],
 "classAllianceDB_1_1AbstractJoinAlgo.html#a29ad5148bb90a8611d9af69b1a9f4a48":[2,2,0,0,6],
 "classAllianceDB_1_1AbstractJoinAlgo.html#a2a8f38bfda3893c5751f803f888e36f4":[2,2,0,0,3],
@@ -101,6 +102,7 @@ var NAVTREEINDEX0 =
 "classAllianceDB_1_1AbstractOperator.html#ae7b94812923d2b31ba7ef7d733faae6b":[2,3,0,2],
 "classAllianceDB_1_1AbstractOperator.html#aebe0a58d9f41a3470a705005ea0d5c43":[2,3,0,10],
 "classAllianceDB_1_1AbstractOperator.html#aefb8f87889437ec8fe2c0eea1ac4f265":[2,3,0,14],
+"classAllianceDB_1_1AbstractWaterMarker.html":[4,0,0,15],
 "classAllianceDB_1_1IAWJOperator.html":[2,3,1],
 "classAllianceDB_1_1IAWJOperator.html#a0f0ee8fdc8681909fa1c1bcd8b6f72ef":[2,3,1,0],
 "classAllianceDB_1_1IAWJOperator.html#a17dbb5fff3e123deb331c609363fd10f":[2,3,1,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "classINTELLI_1_1UtilityFunctions.html":[4,0,1,5],
 "classINTELLI_1_1UtilityFunctions.html#a78a11da91b40942cab878e473f43b790":[4,0,1,5,0],
 "classes.html":[4,1],
-"dir_2d1d991c66e7a032b2ab80c11328e79c.html":[5,0,0,4],
-"dir_4e88733bde07f70aee18672f1ff34c79.html":[5,0,0,0],
-"dir_50463932ff48a2071e78a336cd7fc0c8.html":[5,0,0,1]
+"dir_2d1d991c66e7a032b2ab80c11328e79c.html":[5,0,0,4]
 };

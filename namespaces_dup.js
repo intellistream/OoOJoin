@@ -9,6 +9,6 @@ var namespaces_dup =
       [ "SPSCQueue", "classINTELLI_1_1SPSCQueue.html", "classINTELLI_1_1SPSCQueue" ],
       [ "UtilityFunctions", "classINTELLI_1_1UtilityFunctions.html", "classINTELLI_1_1UtilityFunctions" ],
       [ "BarrierPtr", "AbstractC20Thread_8h.html#a9370b2e09eeeec9419a207c190f4992f", null ],
-      [ "ConfigMapPtr", "group__INTELLI__UTIL.html#ga8ca2292cf536f32eac0ded05242b97d7", null ]
+      [ "ConfigMapPtr", "group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea", null ]
     ] ]
 ];

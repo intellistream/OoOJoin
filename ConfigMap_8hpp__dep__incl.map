@@ -1,7 +1,8 @@
 <map id="include/Utils/ConfigMap.hpp" name="include/Utils/ConfigMap.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,209,32"/>
-<area shape="rect" id="node2" href="$OoOJoin_8h.html" title=" " alt="" coords="100,244,237,271"/>
-<area shape="rect" id="node3" href="$AbstractOperator_8h.html" title=" " alt="" coords="116,80,304,121"/>
-<area shape="rect" id="node4" href="$IAWJOperator_8h_source.html" title=" " alt="" coords="131,169,361,196"/>
-<area shape="rect" id="node5" href="$TestBench_8h.html" title=" " alt="" coords="386,169,607,196"/>
+<area shape="rect" id="node1" title=" " alt="" coords="14,5,218,32"/>
+<area shape="rect" id="node2" href="$OoOJoin_8h.html" title=" " alt="" coords="6,244,143,271"/>
+<area shape="rect" id="node3" href="$AbstractOperator_8h.html" title=" " alt="" coords="22,80,210,121"/>
+<area shape="rect" id="node6" href="$AbstractWaterMarker_8h.html" title=" " alt="" coords="234,80,409,121"/>
+<area shape="rect" id="node4" href="$IAWJOperator_8h_source.html" title=" " alt="" coords="37,169,267,196"/>
+<area shape="rect" id="node5" href="$TestBench_8h.html" title=" " alt="" coords="292,169,513,196"/>
 </map>
