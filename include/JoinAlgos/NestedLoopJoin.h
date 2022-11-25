@@ -50,12 +50,14 @@ class NestedLoopJoin : public AbstractJoinAlgo {
                       int threads = 1);
 };
 /**
- * @cite NestedLoopJoinPtr
+ * @typedef NestedLoopJoinPtr
+ * @ingroup ADB_JOINALGOS_NLJ
  * @brief The class to describe a shared pointer to @ref NestedLoopJoin
  */
 typedef std::shared_ptr<NestedLoopJoin> NestedLoopJoinPtr;
 /**
- * @cite newNestedLoopJoin
+ * @def newNestedLoopJoin
+ * @ingroup ADB_JOINALGOS_NLJ
  * @brief (Macro) To creat a new @ref newNestedLoop under shared pointer.
  */
 #define  newNestedLoopJoin std::make_shared<NestedLoopJoin>

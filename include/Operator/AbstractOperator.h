@@ -111,12 +111,14 @@ class AbstractOperator {
 
 };
 /**
- * @cite AbstractOperatorPtr
+ * @ingroup ADB_OPERATORS
+ * @typedef AbstractOperatorPtr
  * @brief The class to describe a shared pointer to @ref AbstractOperator
  */
 typedef std::shared_ptr<class AbstractOperator> AbstractOperatorPtr;
 /**
- * @cite newAbstractOperator
+ * @ingroup ADB_OPERATORS
+ * @def newAbstractOperator
  * @brief (Macro) To creat a new @ref AbstractOperator under shared pointer.
  */
 #define newAbstractOperator std::make_shared<AllianceDB::AbstractOperator>

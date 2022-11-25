@@ -82,12 +82,14 @@ class IAWJOperator : public AbstractOperator {
 
 };
 /**
- * @cite IAWJOperatorPtr
+ * @ingroup ADB_OPERATORS
+ * @typedef IAWJOperatorPtr
  * @brief The class to describe a shared pointer to @ref IAWJOperator
  */
 typedef std::shared_ptr<class IAWJOperator> IAWJOperatorPtr;
 /**
- * @cite newIAWJOperator
+ * @ingroup ADB_OPERATORS
+ * @def newIAWJOperator
  * @brief (Macro) To creat a new @ref IAWJOperator under shared pointer.
  */
 #define newIAWJOperator std::make_shared<AllianceDB::IAWJOperator>

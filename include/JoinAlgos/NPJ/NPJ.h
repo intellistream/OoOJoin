@@ -163,12 +163,12 @@ class NPJSingle : public AbstractJoinAlgo {
 
 };
 /**
- * @cite NPJSinglePtr
+ * @typedef NPJSinglePtr
  * @brief The class to describe a shared pointer to @ref NPJSingle
  */
 typedef std::shared_ptr<NPJSingle> NPJSinglePtr;
 /**
- * @cite newNPJSingle
+ * @def newNPJSingle
  * @brief (Macro) To creat a new @ref NPJSingle under shared pointer.
  */
 #define  newNPJSingle std::make_shared<NPJSingle>

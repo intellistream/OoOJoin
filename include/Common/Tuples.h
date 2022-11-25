@@ -165,12 +165,12 @@ class TrackTuple : public OoOTuple {
   ~TrackTuple() {}
 };
 /**
- * @cite TrackTuplePtr
+ * @typedef TrackTuplePtr
  * @brief The class to describe a shared pointer to @ref TrackTuple
  */
 typedef std::shared_ptr<class TrackTuple> TrackTuplePtr;
 /**
- * @cite newTrackTuple
+ * @def newTrackTuple
  * @brief (Macro) To creat a new @ref TrackTuple under shared pointer.
  */
 #define newTrackTuple std::make_shared<AllianceDB::TrackTuple>
