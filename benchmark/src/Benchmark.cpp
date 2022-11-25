@@ -48,17 +48,18 @@ vector<AllianceDB::TrackTuplePtr> genTuples(vector<keyType> keyS, vector<tsType>
   bubble_sort(ru);
   return ru;
 }
-void runTestBench() {
+void runTestBench(string configName="config.csv",string outPrefix="") {
   IAWJOperatorPtr iawj = newIAWJOperator();
   size_t testSize = 100;
   MicroDataSet ms(123456);
+  size_t OoORu=0, realRu=0;
   //get config
   ConfigMapPtr cfg = newConfigMap();
-  cfg->fromFile("config.csv");
+  cfg->fromFile(configName);
   //gen the S
   vector<keyType> keyS = ms.genRandInt<keyType>(testSize, testSize / 10, 0);
   vector<tsType> eventS = ms.genSmoothTimeStamp<tsType>(testSize, 10, 10);
-  vector<tsType> arrivalSkew = ms.genRandInt<tsType>(testSize, 10, 1);
+  vector<tsType> arrivalSkew = ms.genRandInt<tsType>(testSize, 50, 1);
   vector<tsType> arrivalS = genArrivalTime(eventS, arrivalSkew);
   vector<TrackTuplePtr> sTuple = genTuples(keyS, eventS, arrivalS);
 
@@ -66,17 +67,43 @@ void runTestBench() {
   MicroDataSet mr = MicroDataSet(990);
   vector<keyType> keyR = mr.genRandInt<keyType>(testSize, testSize / 10, 0);
   vector<tsType> eventR = mr.genSmoothTimeStamp<tsType>(testSize, 10, 10);
-  vector<tsType> arrivalRkew = mr.genRandInt<tsType>(testSize, 10, 1);
+  vector<tsType> arrivalRkew = mr.genRandInt<tsType>(testSize, 50, 1);
   vector<tsType> arrivalR = genArrivalTime(eventS, arrivalRkew);
   vector<TrackTuplePtr> rTuple = genTuples(keyR, eventR, arrivalR);
   // test bench
-  TestBench tb;
+  TestBench tb,tbOoO;
   cfg->edit("rLen", (uint64_t) testSize);
   cfg->edit("sLen", (uint64_t) testSize);
-  cfg->edit("windowLen", (uint64_t) 10);
+  //cfg->edit("windowLen", (uint64_t) 100);
+ // cfg->edit("watermarkPeriod", (uint64_t) 100);
+  INTELLI_INFO("/****run OoO test***/");
+  tbOoO.setOperator(iawj, cfg);
+  tbOoO.setDataSet(rTuple, sTuple);
+  OoORu=tbOoO.OoOTest(true);
+  INTELLI_DEBUG("OoO joined " << OoORu );
+  ConfigMap generalStatistics;
+  generalStatistics.edit("AvgLatency",(double)tbOoO.getAvgLatency());
+  generalStatistics.edit("95%Latency",(double)tbOoO.getLatencyPercentage(0.95));
+  generalStatistics.edit("Throughput",(double)tbOoO.getThroughput());
+
+  INTELLI_DEBUG("Average latency (us)=" <<tbOoO.getAvgLatency() );
+  INTELLI_DEBUG("95% latency (us)=" <<tbOoO.getLatencyPercentage(0.95) );
+  INTELLI_DEBUG("Throughput (TPs/s)=" <<tbOoO.getThroughput() );
+  tbOoO.saveRTuplesToFile(outPrefix+"_tuples.csv", true);
+  //OoORu=tbOoO.OoOTest(true);
+  //tbOoO.logRTuples(true);
+  //INTELLI_INFO("/***run in order test***/");
+  cfg->edit("watermarkPeriod", (uint64_t) 110);
   tb.setOperator(iawj, cfg);
   tb.setDataSet(rTuple, sTuple);
-  INTELLI_INFO("Joined." << tb.OoOTest(false) << "tuples");
+  realRu=tb.inOrderTest(true);
+  INTELLI_DEBUG("Expect " << realRu);
+  double err=OoORu;
+  err=(err-realRu)/realRu;
+  generalStatistics.edit("Error",(double)err);
+  INTELLI_DEBUG("Error = " << err);
+  generalStatistics.toFile(outPrefix+"_general.csv");
+
 
 }
 int main(int argc, char **argv) {
@@ -90,9 +117,26 @@ int main(int argc, char **argv) {
 
   //Run the test here.
   INTELLI_INFO("Nothing to run." << argc << argv);
+  string configName="",outPrefix="";
+  if(argc>=2)
+  {
+    configName+=argv[1];
+  }
+  else
+  {
+    configName="config.csv";
+  }
+  if(argc>=3)
+  {
+    outPrefix+=argv[2];
+  }
+  else
+  {
+    outPrefix="default";
+  }
 
   //tempTest();
-  runTestBench();
+  runTestBench(configName,outPrefix);
   // testConfig();
   //TuplePtrQueue tpq=
 }

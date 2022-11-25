@@ -58,6 +58,7 @@ class AbstractJoinAlgo {
    * @param windR The window of R tuples
    * @param threads The threads for executing this join
   * @return The joined tuples
+   * @note Please at least mark the final processed time at rTuples
   */
   virtual size_t join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
                       C20Buffer<AllianceDB::TrackTuplePtr> windR,

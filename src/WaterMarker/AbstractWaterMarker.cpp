@@ -46,3 +46,7 @@ bool AllianceDB::AbstractWaterMarker::reportTupleR(AllianceDB::TrackTuplePtr tr,
   assert(wid);
   return false;
 }
+double AllianceDB::AbstractWaterMarker::estimateError(size_t wid) {
+  assert(wid);
+  return 0;
+}

@@ -23,6 +23,8 @@ namespace AllianceDB {
  * @class TestBench Common/TestBench
  * @brief The test bench class to feed data
  * @ingroup ADB_TESTBENCH
+ * @note Require config if used
+ * -"timeStep" U64 The simulation time step in us
  */
 class TestBench {
  protected:
@@ -64,6 +66,34 @@ class TestBench {
   * @return the joined result
   */
   size_t OoOTest(bool additionalSort);
+  /**
+   * @brief print the rTuples to logging system
+   * @param skipZero Whether skip the tuples whose processed time is zero
+   */
+  void logRTuples(bool skipZero=false);
+  /**
+   * @brief save the  rTuples to a file
+   * @param fname the name of file
+   * @param skipZero Whether skip the tuples whose processed time is zero
+   * @return whether the file is written
+   */
+  bool saveRTuplesToFile(string fname,bool skipZero=false);
+  /**
+   * @brief to compute average latency after run a test
+   * @return the latency in us
+   */
+  double getAvgLatency();
+  /**
+   * @brief to compute the throughput after run a test
+   * @return the throughput in tuples/s
+   */
+  double getThroughput();
+  /**
+   *  @brief to compute the latency t such that fraction of latency is below t
+   *  @param fraction The fraction you want to set
+   * @return the latency in us
+   */
+  double getLatencyPercentage(double fraction);
 };
 /**
  * @}

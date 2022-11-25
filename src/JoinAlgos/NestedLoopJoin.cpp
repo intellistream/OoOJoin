@@ -3,6 +3,7 @@
 //
 
 #include <JoinAlgos/NestedLoopJoin.h>
+#include <Utils/UtilityFunctions.hpp>
 using namespace INTELLI;
 using namespace AllianceDB;
 size_t NestedLoopJoin::join(C20Buffer<AllianceDB::TrackTuplePtr> windS, AllianceDB::TrackTuplePtr tr, int threads) {
@@ -26,6 +27,7 @@ size_t NestedLoopJoin::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
   for (size_t i = 0; i < trLen; i++) {
     AllianceDB::TrackTuplePtr tr = windR.data(i)[0];
     result += join(windS, tr, threads);
+    tr->processedTime= UtilityFunctions::timeLastUs(timeBaseStruct)/timeStep ;
   }
   return result;
 }

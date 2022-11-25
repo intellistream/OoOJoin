@@ -6,7 +6,8 @@
 #define INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_
 #include <Operator/AbstractOperator.h>
 #include <Common/Window.h>
-
+#include <atomic>
+#include <WaterMarker/PeriodicalWM.h>
 namespace AllianceDB {
 /**
  * @class IAWJOperator
@@ -20,6 +21,7 @@ namespace AllianceDB {
  * - "rLen" U64: The length of R buffer
  * - "algo" String: The specific join algorithm (optional, default nested loop)
  * - "threads" U64: The threads to conduct intra window join (optional, default 1)
+ * @note In current version, the computation will block feeding
  */
 class IAWJOperator : public AbstractOperator {
  protected:
@@ -27,6 +29,13 @@ class IAWJOperator : public AbstractOperator {
   size_t intermediateResult = 0;
   string algoTag = "NestedLoopJoin";
   uint64_t joinThreads = 1;
+  /**
+   * @brief if operator is locked by watermark, it will never accept new incoming
+   * @todo current implementation is putting rotten, fix later
+   */
+  atomic_bool lockedByWaterMark=false;
+  AbstractWaterMarkerPtr wmGen= nullptr;
+  void conductComputation();
  public:
   IAWJOperator() {}
   ~IAWJOperator() {}

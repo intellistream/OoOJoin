@@ -98,6 +98,7 @@
  * @{
  */
 #include <WaterMarker/AbstractWaterMarker.h>
+#include <WaterMarker/PeriodicalWM.h>
 /**
  * @}
  */

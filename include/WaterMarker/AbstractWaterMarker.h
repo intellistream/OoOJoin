@@ -25,7 +25,7 @@ namespace AllianceDB {
  * @brief The abstraction to describe a watermark generator, providing virtual function of deciding watermark generation
  * @todo multi window support is not done yet, left for future, but we do preserve the interfaces
  * @note require configurations:
- * -"errorBound" Double The assigned error bound
+ * - "errorBound" Double The assigned error bound
  * - "timeStep" U64 The simulation time step in us
  */
 class AbstractWaterMarker {
@@ -104,5 +104,15 @@ class AbstractWaterMarker {
   virtual bool reportTupleR(TrackTuplePtr tr, size_t wid = 1);
 
 };
+/**
+ * @cite AbstractWaterMarkerPtr
+ * @brief The class to describe a shared pointer to @ref AbstractWaterMarker
+ */
+typedef std::shared_ptr<class AbstractWaterMarker> AbstractWaterMarkerPtr;
+/**
+ * @cite newAbstractWaterMarker
+ * @brief (Macro) To creat a new @ref AbstractWaterMarker under shared pointer.
+ */
+#define newAbstractWaterMarker std::make_shared<AllianceDB::AbstractWaterMarker>
 }
 #endif //INTELLISTREAM_INCLUDE_WATERMARKER_ABSTRACTWATERMARKER_H_

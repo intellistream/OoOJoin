@@ -4,6 +4,7 @@
 
 #include <TestBench/TestBench.h>
 #include <Utils/UtilityFunctions.hpp>
+#include <algorithm>
 using namespace INTELLI;
 using namespace AllianceDB;
 using namespace std;
@@ -22,7 +23,7 @@ void AllianceDB::TestBench::OoOSort(std::vector<TrackTuplePtr> &arr) {
 void AllianceDB::TestBench::forceInOrder(std::vector<TrackTuplePtr> &arr) {
   size_t len = arr.size();
   size_t i;
-  for (i = 0; i < len - 1; i++) {
+  for (i = 0; i < len; i++) {
     arr[i]->arrivalTime = arr[i]->eventTime;
   }
 }
@@ -70,6 +71,10 @@ void AllianceDB::TestBench::inlineTest() {
   size_t tMaxR = rTuple[testSize - 1]->arrivalTime;
   size_t tMax = (tMaxS > tMaxR) ? tMaxS : tMaxR;
   size_t tNextS = 0, tNextR = 0;
+  /*for(size_t i=0;i<testSize;i++)
+  {
+   TB_INFO(sTuple[i]->toString());
+  }*/
   testOp->setConfig(opConfig);
   gettimeofday(&timeStart, NULL);
   testOp->syncTimeStruct(timeStart);
@@ -130,4 +135,100 @@ size_t AllianceDB::TestBench::inOrderTest(bool additionalSort) {
   }
   inlineTest();
   return testOp->getResult();
+}
+void AllianceDB::TestBench::logRTuples(bool skipZero) {
+  TB_INFO("/***Printing the rTuples in the following***/");
+  size_t rLen=rTuple.size();
+  for(size_t i=0;i<rLen;i++)
+  {
+    if(skipZero&&rTuple[i]->processedTime==0)
+    {
+
+    }
+    else
+    {
+      TB_INFO(rTuple[i]->toString());
+    }
+
+  }
+  TB_INFO("/***Done***/");
+}
+bool AllianceDB::TestBench::saveRTuplesToFile(std::string fname, bool skipZero) {
+  ofstream of;
+  of.open(fname);
+  if (of.fail()) {
+    return false;
+  }
+  of<<"key,value,eventTime,arrivalTime,processedTime\n";
+  size_t rLen=rTuple.size();
+  for(size_t i=0;i<rLen;i++)
+  {
+    if(skipZero&&rTuple[i]->processedTime==0)
+    {
+
+    }
+    else
+    {
+      TrackTuplePtr tp=rTuple[i];
+      string line= to_string(tp->key)+","+to_string(tp->payload)+","+to_string(tp->eventTime)+","+to_string(tp->arrivalTime)+","+to_string(tp->processedTime)+"\n";
+      of<<line;
+    }
+
+  }
+  of.close();
+  return true;
+}
+double AllianceDB::TestBench::getAvgLatency() {
+  size_t rLen=rTuple.size();
+  size_t nonZeroCnt=0;
+  double sum=0;
+  for(size_t i=0;i<rLen;i++)
+  {
+    if(rTuple[i]->processedTime>=rTuple[i]->arrivalTime&&rTuple[i]->processedTime!=0) {
+      double temp = rTuple[i]->processedTime - rTuple[i]->arrivalTime;
+      sum += temp;
+      nonZeroCnt++;
+    }
+  }
+  return sum*timeStep/nonZeroCnt;
+}
+double AllianceDB::TestBench::getThroughput() {
+  size_t rLen=rTuple.size();
+  tsType minArrival=rTuple[0]->arrivalTime;
+  tsType maxProcessed=0;
+  for(size_t i=0;i<rLen;i++)
+  {
+    if(rTuple[i]->processedTime>=maxProcessed) {
+      maxProcessed=rTuple[i]->processedTime;
+    }
+    if(rTuple[i]->arrivalTime<=minArrival) {
+      minArrival=rTuple[i]->arrivalTime;
+    }
+  }
+  double elapsedTime=(maxProcessed-minArrival)*timeStep;
+  double thr=rLen;
+  thr=thr*1e6/elapsedTime;
+  return thr;
+}
+double AllianceDB::TestBench::getLatencyPercentage(double fraction) {
+  size_t rLen=rTuple.size();
+  size_t nonZeroCnt=0;
+  vector<tsType>validLatency;
+  for(size_t i=0;i<rLen;i++)
+  {
+    if(rTuple[i]->processedTime>=rTuple[i]->arrivalTime&&rTuple[i]->processedTime!=0) {
+      validLatency.push_back(rTuple[i]->processedTime-rTuple[i]->arrivalTime);
+      nonZeroCnt++;
+    }
+  }
+  std::sort(validLatency.begin(),validLatency.end());
+  double t=nonZeroCnt;
+  t=t*fraction;
+  size_t idx=(size_t)t+1;
+  if(idx>=validLatency.size())
+  {
+    idx=validLatency.size()-1;
+  }
+  return validLatency[idx]*timeStep;
+
 }
