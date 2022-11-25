@@ -109,6 +109,15 @@ $(document).ready(function(){initNavTree('classAllianceDB_1_1AbstractWaterMarker
 
 <p><code>#include &lt;<a class="el" href="AbstractWaterMarker_8h_source.html">WaterMarker/AbstractWaterMarker.h</a>&gt;</code></p>
 <div class="dynheader">
+Inheritance diagram for AllianceDB::AbstractWaterMarker:</div>
+<div class="dyncontent">
+<div class="center"><img src="classAllianceDB_1_1AbstractWaterMarker__inherit__graph.png" border="0" usemap="#aAllianceDB_1_1AbstractWaterMarker_inherit__map" alt="Inheritance graph"/></div>
+<map name="aAllianceDB_1_1AbstractWaterMarker_inherit__map" id="aAllianceDB_1_1AbstractWaterMarker_inherit__map">
+<area shape="rect" title="The abstraction to describe a watermark generator, providing virtual function of deciding watermark g..." alt="" coords="5,5,199,47"/>
+<area shape="rect" href="classAllianceDB_1_1PeriodicalWM.html" title="The class which generates watermark periodically." alt="" coords="7,95,197,121"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
 Collaboration diagram for AllianceDB::AbstractWaterMarker:</div>
 <div class="dyncontent">
 <div class="center"><img src="classAllianceDB_1_1AbstractWaterMarker__coll__graph.png" border="0" usemap="#aAllianceDB_1_1AbstractWaterMarker_coll__map" alt="Collaboration graph"/></div>
@@ -141,10 +150,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9fcba875159095282e20e956cdb6f99c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a9fcba875159095282e20e956cdb6f99c">deleteWindow</a> (size_t wid)</td></tr>
 <tr class="memdesc:a9fcba875159095282e20e956cdb6f99c"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete the window and recycle its id  <a href="classAllianceDB_1_1AbstractWaterMarker.html#a9fcba875159095282e20e956cdb6f99c">More...</a><br /></td></tr>
 <tr class="separator:a9fcba875159095282e20e956cdb6f99c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bd8497744bd1521e4784c0651e04ab0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a8bd8497744bd1521e4784c0651e04ab0">reportTupleS</a> (<a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a> ts, size_t wid=1)</td></tr>
+<tr class="memitem:a8bd8497744bd1521e4784c0651e04ab0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a8bd8497744bd1521e4784c0651e04ab0">reportTupleS</a> (<a class="el" href="group__INTELLI__COMMON__BASIC.html#gadbfe826c4e1fe2e35ac8e31a9f0bbed5">TrackTuplePtr</a> ts, size_t wid=1)</td></tr>
 <tr class="memdesc:a8bd8497744bd1521e4784c0651e04ab0"><td class="mdescLeft">&#160;</td><td class="mdescRight">report a tuple s into the watermark generator  <a href="classAllianceDB_1_1AbstractWaterMarker.html#a8bd8497744bd1521e4784c0651e04ab0">More...</a><br /></td></tr>
 <tr class="separator:a8bd8497744bd1521e4784c0651e04ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b4a51740506bb221d135712b3a1905d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a5b4a51740506bb221d135712b3a1905d">reportTupleR</a> (<a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a> tr, size_t wid=1)</td></tr>
+<tr class="memitem:a5b4a51740506bb221d135712b3a1905d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html#a5b4a51740506bb221d135712b3a1905d">reportTupleR</a> (<a class="el" href="group__INTELLI__COMMON__BASIC.html#gadbfe826c4e1fe2e35ac8e31a9f0bbed5">TrackTuplePtr</a> tr, size_t wid=1)</td></tr>
 <tr class="memdesc:a5b4a51740506bb221d135712b3a1905d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report a tuple R into the watermark generator.  <a href="classAllianceDB_1_1AbstractWaterMarker.html#a5b4a51740506bb221d135712b3a1905d">More...</a><br /></td></tr>
 <tr class="separator:a5b4a51740506bb221d135712b3a1905d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -176,7 +185,7 @@ struct timeval&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The abstraction to describe a watermark generator, providing virtual function of deciding watermark generation. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>multi window support is not done yet, left for future, but we do preserve the interfaces </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>multi window support is not done yet, left for future, but we do preserve the interfaces </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>require configurations:<ul>
 <li>"errorBound" Double The assigned error bound</li>
 <li>"timeStep" U64 The simulation time step in us </li>
@@ -226,6 +235,8 @@ struct timeval&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the id of created window </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classAllianceDB_1_1PeriodicalWM.html#a9e95adc07d9a0afe0ec405b034214c15">AllianceDB::PeriodicalWM</a>.</p>
 
 </div>
 </div>
@@ -335,7 +346,7 @@ struct timeval&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="memname">virtual bool AllianceDB::AbstractWaterMarker::reportTupleR </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__COMMON__BASIC.html#gadbfe826c4e1fe2e35ac8e31a9f0bbed5">TrackTuplePtr</a>&#160;</td>
           <td class="paramname"><em>tr</em>, </td>
         </tr>
         <tr>
@@ -367,6 +378,8 @@ struct timeval&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool, bool, whether generate watermark after receiving this <a class="el" href="classAllianceDB_1_1Tuple.html" title="The class to describe a normal tuple.">Tuple</a> </dd></dl>
 
+<p>Reimplemented in <a class="el" href="classAllianceDB_1_1PeriodicalWM.html#a83705d52d1e60d1ee5b5ddc2cfd326c0">AllianceDB::PeriodicalWM</a>.</p>
+
 </div>
 </div>
 <a id="a8bd8497744bd1521e4784c0651e04ab0"></a>
@@ -381,7 +394,7 @@ struct timeval&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="memname">virtual bool AllianceDB::AbstractWaterMarker::reportTupleS </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__COMMON__BASIC.html#gadbfe826c4e1fe2e35ac8e31a9f0bbed5">TrackTuplePtr</a>&#160;</td>
           <td class="paramname"><em>ts</em>, </td>
         </tr>
         <tr>
@@ -412,6 +425,8 @@ struct timeval&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool, whether generate watermark after receiving this <a class="el" href="classAllianceDB_1_1Tuple.html" title="The class to describe a normal tuple.">Tuple</a> </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classAllianceDB_1_1PeriodicalWM.html#ae53f3a8b8f152ea87d83a6c0b1ed18fa">AllianceDB::PeriodicalWM</a>.</p>
 
 </div>
 </div>
@@ -447,6 +462,8 @@ struct timeval&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classAllianceDB_1_1PeriodicalWM.html#ae91e5a9179313394eab5c81583307611">AllianceDB::PeriodicalWM</a>.</p>
 
 </div>
 </div>

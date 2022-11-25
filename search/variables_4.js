@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['starttime_260',['startTime',['../classAllianceDB_1_1Window.html#acab5a969a6aa2a1812eec53eb6c57842',1,'AllianceDB::Window']]]
+  ['nextwmdelta_283',['nextWMDelta',['../classAllianceDB_1_1PeriodicalWM.html#a460b678a9d5a94cbfce805ff7e39542e',1,'AllianceDB::PeriodicalWM']]]
 ];

@@ -136,7 +136,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8c79b40630ef5d9475d0c41be00a8a06"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractJoinAlgo.html#a8c79b40630ef5d9475d0c41be00a8a06">setConfig</a> (<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</td></tr>
 <tr class="memdesc:a8c79b40630ef5d9475d0c41be00a8a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the config map related to this Algorithm.  <a href="classAllianceDB_1_1AbstractJoinAlgo.html#a8c79b40630ef5d9475d0c41be00a8a06">More...</a><br /></td></tr>
 <tr class="separator:a8c79b40630ef5d9475d0c41be00a8a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a8f38bfda3893c5751f803f888e36f4"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractJoinAlgo.html#a2a8f38bfda3893c5751f803f888e36f4">join</a> (<a class="el" href="classINTELLI_1_1C20Buffer.html">C20Buffer</a>&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">AllianceDB::TrackTuplePtr</a> &gt; windS, <a class="el" href="classINTELLI_1_1C20Buffer.html">C20Buffer</a>&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">AllianceDB::TrackTuplePtr</a> &gt; windR, int threads=1)</td></tr>
+<tr class="memitem:a2a8f38bfda3893c5751f803f888e36f4"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractJoinAlgo.html#a2a8f38bfda3893c5751f803f888e36f4">join</a> (<a class="el" href="classINTELLI_1_1C20Buffer.html">C20Buffer</a>&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gadbfe826c4e1fe2e35ac8e31a9f0bbed5">AllianceDB::TrackTuplePtr</a> &gt; windS, <a class="el" href="classINTELLI_1_1C20Buffer.html">C20Buffer</a>&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gadbfe826c4e1fe2e35ac8e31a9f0bbed5">AllianceDB::TrackTuplePtr</a> &gt; windR, int threads=1)</td></tr>
 <tr class="memdesc:a2a8f38bfda3893c5751f803f888e36f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to execute join,.  <a href="classAllianceDB_1_1AbstractJoinAlgo.html#a2a8f38bfda3893c5751f803f888e36f4">More...</a><br /></td></tr>
 <tr class="separator:a2a8f38bfda3893c5751f803f888e36f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a523bc6fb4dc4817f673764a46b3ce43f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractJoinAlgo.html#a523bc6fb4dc4817f673764a46b3ce43f">setAlgoName</a> (std::string name)</td></tr>
@@ -214,13 +214,13 @@ struct timeval&#160;</td><td class="memItemRight" valign="bottom"><b>timeBaseStr
         <tr>
           <td class="memname">virtual size_t AllianceDB::AbstractJoinAlgo::join </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classINTELLI_1_1C20Buffer.html">C20Buffer</a>&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">AllianceDB::TrackTuplePtr</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classINTELLI_1_1C20Buffer.html">C20Buffer</a>&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gadbfe826c4e1fe2e35ac8e31a9f0bbed5">AllianceDB::TrackTuplePtr</a> &gt;&#160;</td>
           <td class="paramname"><em>windS</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classINTELLI_1_1C20Buffer.html">C20Buffer</a>&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">AllianceDB::TrackTuplePtr</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classINTELLI_1_1C20Buffer.html">C20Buffer</a>&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gadbfe826c4e1fe2e35ac8e31a9f0bbed5">AllianceDB::TrackTuplePtr</a> &gt;&#160;</td>
           <td class="paramname"><em>windR</em>, </td>
         </tr>
         <tr>
@@ -252,6 +252,7 @@ struct timeval&#160;</td><td class="memItemRight" valign="bottom"><b>timeBaseStr
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The joined tuples </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Please at least mark the final processed time at rTuples </dd></dl>
 
 <p>Reimplemented in <a class="el" href="group__ADB__JOINALGOS__NPJ.html#gacf644071866b5a8b5fe658709823f8cb">AllianceDB::NPJSingle</a>, <a class="el" href="group__ADB__JOINALGOS__NPJ.html#gad69dfe1b4e47c0646b3909194237415b">AllianceDB::NPJ</a>, and <a class="el" href="classAllianceDB_1_1NestedLoopJoin.html#a3403f5378822b25c50ccc622f0f6fefc">AllianceDB::NestedLoopJoin</a>.</p>
 

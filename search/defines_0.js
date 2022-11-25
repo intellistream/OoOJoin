@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['newabstractoperator_281',['newAbstractOperator',['../AbstractOperator_8h.html#afd083fd1cec9a407e95cf9a8c1141056',1,'AbstractOperator.h']]],
-  ['newnestedloopjoin_282',['newNestedLoopJoin',['../NestedLoopJoin_8h.html#a14c9e0659d7546d31549e9e9c73229e8',1,'NestedLoopJoin.h']]],
-  ['newtracktuple_283',['newTrackTuple',['../Tuples_8h.html#a15979ae8bd2777b5d54ddfc3d5c55d4d',1,'Tuples.h']]],
-  ['newtuple_284',['newTuple',['../Tuples_8h.html#aacb4051eb899f4d3f5a7574d58bed26c',1,'newTuple():&#160;Tuples.h'],['../Tuples_8h.html#aacb4051eb899f4d3f5a7574d58bed26c',1,'newTuple():&#160;Tuples.h']]]
+  ['newabstractwatermarker_310',['newAbstractWaterMarker',['../AbstractWaterMarker_8h.html#ae03a1dd9ddf191a8267b1b1f25d9c33e',1,'AbstractWaterMarker.h']]],
+  ['newperiodicalwm_311',['newPeriodicalWM',['../PeriodicalWM_8h.html#a64b9881c421263ff05992bfa009101f2',1,'PeriodicalWM.h']]],
+  ['newtracktuple_312',['newTrackTuple',['../Tuples_8h.html#a15979ae8bd2777b5d54ddfc3d5c55d4d',1,'Tuples.h']]],
+  ['newtuple_313',['newTuple',['../Tuples_8h.html#aacb4051eb899f4d3f5a7574d58bed26c',1,'newTuple():&#160;Tuples.h'],['../Tuples_8h.html#aacb4051eb899f4d3f5a7574d58bed26c',1,'newTuple():&#160;Tuples.h']]]
 ];

@@ -152,6 +152,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html">AbstractWaterMarker</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The abstraction to describe a watermark generator, providing virtual function of deciding watermark generation.  <a href="classAllianceDB_1_1AbstractWaterMarker.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1PeriodicalWM.html">PeriodicalWM</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class which generates watermark periodically.  <a href="classAllianceDB_1_1PeriodicalWM.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -161,15 +164,24 @@ typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1AbstractJoinA
 <tr class="memitem:a73757770862eb449c7eb96821e3202e8"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1JoinAlgoTable.html">JoinAlgoTable</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAllianceDB.html#a73757770862eb449c7eb96821e3202e8">JoinAlgoTablePtr</a></td></tr>
 <tr class="memdesc:a73757770862eb449c7eb96821e3202e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1JoinAlgoTable.html">JoinAlgoTable</a>.  <a href="namespaceAllianceDB.html#a73757770862eb449c7eb96821e3202e8">More...</a><br /></td></tr>
 <tr class="separator:a73757770862eb449c7eb96821e3202e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a674da2c60df2a926e20cc09f8ce8019c"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1NestedLoopJoin.html">NestedLoopJoin</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAllianceDB.html#a674da2c60df2a926e20cc09f8ce8019c">NestedLoopJoinPtr</a></td></tr>
-<tr class="memdesc:a674da2c60df2a926e20cc09f8ce8019c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1NestedLoopJoin.html">NestedLoopJoin</a>.  <a href="namespaceAllianceDB.html#a674da2c60df2a926e20cc09f8ce8019c">More...</a><br /></td></tr>
-<tr class="separator:a674da2c60df2a926e20cc09f8ce8019c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34df44731680d5e597e43eb21eaeb4f3"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1AbstractOperator.html">AbstractOperator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAllianceDB.html#a34df44731680d5e597e43eb21eaeb4f3">AbstractOperatorPtr</a></td></tr>
-<tr class="memdesc:a34df44731680d5e597e43eb21eaeb4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1AbstractOperator.html">AbstractOperator</a>.  <a href="namespaceAllianceDB.html#a34df44731680d5e597e43eb21eaeb4f3">More...</a><br /></td></tr>
-<tr class="separator:a34df44731680d5e597e43eb21eaeb4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbeac89530136f50cea05d0c85935a79"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1IAWJOperator.html">IAWJOperator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAllianceDB.html#afbeac89530136f50cea05d0c85935a79">IAWJOperatorPtr</a></td></tr>
-<tr class="memdesc:afbeac89530136f50cea05d0c85935a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1IAWJOperator.html">IAWJOperator</a>.  <a href="namespaceAllianceDB.html#afbeac89530136f50cea05d0c85935a79">More...</a><br /></td></tr>
-<tr class="separator:afbeac89530136f50cea05d0c85935a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3131f3ecaf7ccf347a4abd88a98c5d80"><td class="memItemLeft" align="right" valign="top">
+typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1NestedLoopJoin.html">NestedLoopJoin</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__JOINALGOS__NLJ.html#ga3131f3ecaf7ccf347a4abd88a98c5d80">NestedLoopJoinPtr</a></td></tr>
+<tr class="memdesc:ga3131f3ecaf7ccf347a4abd88a98c5d80"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1NestedLoopJoin.html">NestedLoopJoin</a>. <br /></td></tr>
+<tr class="separator:ga3131f3ecaf7ccf347a4abd88a98c5d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48f0c44bb66669e739d3540bf33eaaa8"><td class="memItemLeft" align="right" valign="top">
+typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1AbstractOperator.html">AbstractOperator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga48f0c44bb66669e739d3540bf33eaaa8">AbstractOperatorPtr</a></td></tr>
+<tr class="memdesc:ga48f0c44bb66669e739d3540bf33eaaa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1AbstractOperator.html">AbstractOperator</a>. <br /></td></tr>
+<tr class="separator:ga48f0c44bb66669e739d3540bf33eaaa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb8a03416f339424c83276988c516ba9"><td class="memItemLeft" align="right" valign="top">
+typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1IAWJOperator.html">IAWJOperator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#gacb8a03416f339424c83276988c516ba9">IAWJOperatorPtr</a></td></tr>
+<tr class="memdesc:gacb8a03416f339424c83276988c516ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1IAWJOperator.html">IAWJOperator</a>. <br /></td></tr>
+<tr class="separator:gacb8a03416f339424c83276988c516ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a719d0245c64bb8f909c7925b7af4dc3e"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html">AbstractWaterMarker</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAllianceDB.html#a719d0245c64bb8f909c7925b7af4dc3e">AbstractWaterMarkerPtr</a></td></tr>
+<tr class="memdesc:a719d0245c64bb8f909c7925b7af4dc3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html">AbstractWaterMarker</a>.  <a href="namespaceAllianceDB.html#a719d0245c64bb8f909c7925b7af4dc3e">More...</a><br /></td></tr>
+<tr class="separator:a719d0245c64bb8f909c7925b7af4dc3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97ace80588e36059f1dd73088769c827"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1PeriodicalWM.html">PeriodicalWM</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceAllianceDB.html#a97ace80588e36059f1dd73088769c827">PeriodicalWMPtr</a></td></tr>
+<tr class="memdesc:a97ace80588e36059f1dd73088769c827"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1PeriodicalWM.html">PeriodicalWM</a>.  <a href="namespaceAllianceDB.html#a97ace80588e36059f1dd73088769c827">More...</a><br /></td></tr>
+<tr class="separator:a97ace80588e36059f1dd73088769c827"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
 <tr class="memitem:gaa1cb1c5d490a60ad48db6a3aab79a222"><td class="memItemLeft" align="right" valign="top">typedef uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa1cb1c5d490a60ad48db6a3aab79a222">keyType</a></td></tr>
 <tr class="separator:gaa1cb1c5d490a60ad48db6a3aab79a222"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,15 +195,16 @@ typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1AbstractJoinA
 <tr class="memitem:ga6667d895086b1f4a38425f9ff4ae9f38"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1OoOTuple.html">OoOTuple</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__INTELLI__COMMON__BASIC.html#ga6667d895086b1f4a38425f9ff4ae9f38">OoOTuplePtr</a></td></tr>
 <tr class="memdesc:ga6667d895086b1f4a38425f9ff4ae9f38"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1OoOTuple.html">OoOTuple</a>.  <a href="group__INTELLI__COMMON__BASIC.html#ga6667d895086b1f4a38425f9ff4ae9f38">More...</a><br /></td></tr>
 <tr class="separator:ga6667d895086b1f4a38425f9ff4ae9f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga871cec403cf4a824fbc7ec70aabd5198"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1TrackTuple.html">TrackTuple</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a></td></tr>
-<tr class="memdesc:ga871cec403cf4a824fbc7ec70aabd5198"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1TrackTuple.html">TrackTuple</a>.  <a href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">More...</a><br /></td></tr>
-<tr class="separator:ga871cec403cf4a824fbc7ec70aabd5198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbfe826c4e1fe2e35ac8e31a9f0bbed5"><td class="memItemLeft" align="right" valign="top">
+typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1TrackTuple.html">TrackTuple</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__INTELLI__COMMON__BASIC.html#gadbfe826c4e1fe2e35ac8e31a9f0bbed5">TrackTuplePtr</a></td></tr>
+<tr class="memdesc:gadbfe826c4e1fe2e35ac8e31a9f0bbed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1TrackTuple.html">TrackTuple</a>. <br /></td></tr>
+<tr class="separator:gadbfe826c4e1fe2e35ac8e31a9f0bbed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
 <tr class="memitem:gab17eca33b49ee65869ec056f2db91a50"><td class="memItemLeft" align="right" valign="top">
 typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1MtBucket.html">MtBucket</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>MtBucketPtr</b></td></tr>
 <tr class="separator:gab17eca33b49ee65869ec056f2db91a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga44f9f0e9bd9ac80ef5dcb807d26ce994"><td class="memItemLeft" align="right" valign="top">
-typedef <a class="el" href="group__INTELLI__COMMON__BASIC.html#ga871cec403cf4a824fbc7ec70aabd5198">TrackTuplePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>NPJTuplePtr</b></td></tr>
+typedef <a class="el" href="group__INTELLI__COMMON__BASIC.html#gadbfe826c4e1fe2e35ac8e31a9f0bbed5">TrackTuplePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>NPJTuplePtr</b></td></tr>
 <tr class="separator:ga44f9f0e9bd9ac80ef5dcb807d26ce994"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad190719c13a23f382e85e56a62d7e2fc"><td class="memItemLeft" align="right" valign="top">
 typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1MultiThreadHashTable.html">MultiThreadHashTable</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>MultiThreadHashTablePtr</b></td></tr>
@@ -200,9 +213,10 @@ typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1MultiThreadHa
 <tr class="memitem:gadecbd0a50fc1d5ab38c674369b67a091"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1NPJ.html">NPJ</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__JOINALGOS__NPJ.html#gadecbd0a50fc1d5ab38c674369b67a091">NPJPtr</a></td></tr>
 <tr class="memdesc:gadecbd0a50fc1d5ab38c674369b67a091"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1NPJ.html">NPJ</a>.  <a href="group__ADB__JOINALGOS__NPJ.html#gadecbd0a50fc1d5ab38c674369b67a091">More...</a><br /></td></tr>
 <tr class="separator:gadecbd0a50fc1d5ab38c674369b67a091"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga890fef07d7942c2ae1fbb64beacf695a"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1NPJSingle.html">NPJSingle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__JOINALGOS__NPJ.html#ga890fef07d7942c2ae1fbb64beacf695a">NPJSinglePtr</a></td></tr>
-<tr class="memdesc:ga890fef07d7942c2ae1fbb64beacf695a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1NPJSingle.html">NPJSingle</a>.  <a href="group__ADB__JOINALGOS__NPJ.html#ga890fef07d7942c2ae1fbb64beacf695a">More...</a><br /></td></tr>
-<tr class="separator:ga890fef07d7942c2ae1fbb64beacf695a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb3bd02ca20f1eb53a82974860872bc1"><td class="memItemLeft" align="right" valign="top">
+typedef std::shared_ptr&lt; <a class="el" href="classAllianceDB_1_1NPJSingle.html">NPJSingle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__JOINALGOS__NPJ.html#gacb3bd02ca20f1eb53a82974860872bc1">NPJSinglePtr</a></td></tr>
+<tr class="memdesc:gacb3bd02ca20f1eb53a82974860872bc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1NPJSingle.html">NPJSingle</a>. <br /></td></tr>
+<tr class="separator:gacb3bd02ca20f1eb53a82974860872bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -217,37 +231,20 @@ Enumerations</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section note"><dt>Note</dt><dd>If new algorithm is added, please change this file and its .cpp add the header of other algorithms here </dd></dl>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a34df44731680d5e597e43eb21eaeb4f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34df44731680d5e597e43eb21eaeb4f3">&#9670;&nbsp;</a></span>AbstractOperatorPtr</h2>
+<a id="a719d0245c64bb8f909c7925b7af4dc3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a719d0245c64bb8f909c7925b7af4dc3e">&#9670;&nbsp;</a></span>AbstractWaterMarkerPtr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::shared_ptr&lt;class <a class="el" href="classAllianceDB_1_1AbstractOperator.html">AbstractOperator</a>&gt; <a class="el" href="namespaceAllianceDB.html#a34df44731680d5e597e43eb21eaeb4f3">AllianceDB::AbstractOperatorPtr</a></td>
+          <td class="memname">typedef std::shared_ptr&lt;class <a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html">AbstractWaterMarker</a>&gt; <a class="el" href="namespaceAllianceDB.html#a719d0245c64bb8f909c7925b7af4dc3e">AllianceDB::AbstractWaterMarkerPtr</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1AbstractOperator.html">AbstractOperator</a>. </p>
-<p><b>[AbstractOperatorPtr]</b> </p>
-
-</div>
-</div>
-<a id="afbeac89530136f50cea05d0c85935a79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbeac89530136f50cea05d0c85935a79">&#9670;&nbsp;</a></span>IAWJOperatorPtr</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::shared_ptr&lt;class <a class="el" href="classAllianceDB_1_1IAWJOperator.html">IAWJOperator</a>&gt; <a class="el" href="namespaceAllianceDB.html#afbeac89530136f50cea05d0c85935a79">AllianceDB::IAWJOperatorPtr</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1IAWJOperator.html">IAWJOperator</a>. </p>
-<p><b>[IAWJOperatorPtr]</b> </p>
+<p>The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1AbstractWaterMarker.html">AbstractWaterMarker</a>. </p>
+<p><b>[AbstractWaterMarkerPtr]</b> </p>
 
 </div>
 </div>
@@ -268,20 +265,20 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="a674da2c60df2a926e20cc09f8ce8019c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a674da2c60df2a926e20cc09f8ce8019c">&#9670;&nbsp;</a></span>NestedLoopJoinPtr</h2>
+<a id="a97ace80588e36059f1dd73088769c827"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97ace80588e36059f1dd73088769c827">&#9670;&nbsp;</a></span>PeriodicalWMPtr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::shared_ptr&lt;<a class="el" href="classAllianceDB_1_1NestedLoopJoin.html">NestedLoopJoin</a>&gt; <a class="el" href="namespaceAllianceDB.html#a674da2c60df2a926e20cc09f8ce8019c">AllianceDB::NestedLoopJoinPtr</a></td>
+          <td class="memname">typedef std::shared_ptr&lt;class <a class="el" href="classAllianceDB_1_1PeriodicalWM.html">PeriodicalWM</a>&gt; <a class="el" href="namespaceAllianceDB.html#a97ace80588e36059f1dd73088769c827">AllianceDB::PeriodicalWMPtr</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1NestedLoopJoin.html">NestedLoopJoin</a>. </p>
-<p><b>[NestedLoopJoinPtr]</b> </p>
+<p>The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1PeriodicalWM.html">PeriodicalWM</a>. </p>
+<p><b>[PeriodicalWMPtr]</b> </p>
 
 </div>
 </div>

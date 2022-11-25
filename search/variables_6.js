@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['windowid_262',['windowID',['../classAllianceDB_1_1Window.html#a8e7c06a450a9d59201afb6747116256d',1,'AllianceDB::Window']]]
+  ['starttime_285',['startTime',['../classAllianceDB_1_1Window.html#acab5a969a6aa2a1812eec53eb6c57842',1,'AllianceDB::Window']]]
 ];
