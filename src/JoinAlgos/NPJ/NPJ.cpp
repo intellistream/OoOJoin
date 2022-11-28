@@ -22,7 +22,7 @@ void NPJ_thread::inlineMain() {
   //tp.start();
   for (size_t i = 0; i < rLen; i++) {
     result += table->probeTuple(tr[i]);
-    tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct) / timeStep;
+    tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct) ;
   }
   //tp.end();
   /*if (cpu == 0) {
@@ -67,7 +67,7 @@ size_t NPJ::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
                     buildBar
     );
     workers[i].syncTimeStruct(timeBaseStruct);
-    workers[i].setTimeStep(timeStep);
+    //workers[i].setTimeStep(timeStep);
     sBegin += partitionS[i];
     rBegin += partitionR[i];
   }
@@ -92,7 +92,7 @@ size_t NPJSingle::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
   table.buildTable(ts, tsLen);
   for (size_t i = 0; i < trLen; i++) {
     result += table.probeTuple(tr[i]);
-    tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct) / timeStep;
+    tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct) ;
   }
   return result;
 }

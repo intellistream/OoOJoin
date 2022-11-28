@@ -214,13 +214,15 @@ class MicroDataSet {
     vector<tsType> ret(len);
     tsType ts = 0;
     for (size_t i = 0; i < len; i++) {
+      ret[i] = ts;
       if (i % (step) == 0) {
         ts += interval;
       }
-      ret[i] = ts;
+
     }
     return ret;
   }
+
   /**
    * @brief The function to generate a vector of timestamp which has zipf distribution
    * @param tsType The data type of time stamp, default is size_t

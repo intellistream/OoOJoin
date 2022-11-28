@@ -78,7 +78,7 @@ void AllianceDB::TestBench::inlineTest() {
   testOp->syncTimeStruct(timeStart);
   testOp->start();
   while (tNow < tMax) {
-    tNow = UtilityFunctions::timeLastUs(timeStart) / timeStep;
+    tNow = UtilityFunctions::timeLastUs(timeStart) ;
     //INTELLI_INFO("T=" << tNow);
     while (tNow >= tNextS) {
       if (sPos <= testSize - 1) {
@@ -121,6 +121,7 @@ size_t AllianceDB::TestBench::OoOTest(bool additionalSort) {
     OoOSort(sTuple);
   }
   inlineTest();
+
   return testOp->getResult();
 }
 
@@ -180,7 +181,7 @@ double AllianceDB::TestBench::getAvgLatency() {
       nonZeroCnt++;
     }
   }
-  return sum * timeStep / nonZeroCnt;
+  return sum  / nonZeroCnt;
 }
 double AllianceDB::TestBench::getThroughput() {
   size_t rLen = rTuple.size();
@@ -194,7 +195,7 @@ double AllianceDB::TestBench::getThroughput() {
       minArrival = rTuple[i]->arrivalTime;
     }
   }
-  double elapsedTime = (maxProcessed - minArrival) * timeStep;
+  double elapsedTime = (maxProcessed - minArrival) ;
   double thr = rLen;
   thr = thr * 1e6 / elapsedTime;
   return thr;
@@ -216,6 +217,6 @@ double AllianceDB::TestBench::getLatencyPercentage(double fraction) {
   if (idx >= validLatency.size()) {
     idx = validLatency.size() - 1;
   }
-  return validLatency[idx] * timeStep;
+  return validLatency[idx] ;
 
 }

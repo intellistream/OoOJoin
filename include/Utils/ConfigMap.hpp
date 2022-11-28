@@ -261,6 +261,7 @@ class ConfigMap {
     ins.close();
     return true;
   }
+
 };
 /**
  * @ingroup INTELLI_UTIL_CONFIGS

@@ -43,7 +43,7 @@ class NPJ_thread : public AbstractC20Thread {
   BarrierPtr buildBar = nullptr;
   std::shared_ptr<std::thread> threadPtr;
   struct timeval timeBaseStruct;
-  tsType timeStep = 1;
+  //tsType timeStep = 1;
  protected:
   /**
    * @brief The 'main' function of NPJ thread
@@ -61,9 +61,9 @@ class NPJ_thread : public AbstractC20Thread {
   void syncTimeStruct(struct timeval tv) {
     timeBaseStruct = tv;
   }
-  void setTimeStep(tsType _timeStep) {
+  /*void setTimeStep(tsType _timeStep) {
     timeStep = _timeStep;
-  }
+  }*/
   /**
    * @brief THe init function
    * @param _ts Memory pointer of S

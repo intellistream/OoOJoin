@@ -32,14 +32,12 @@ namespace AllianceDB {
  * @ingroup ADB_JOINALGOS_ABSTRACT
  * @class AbstractJoinAlgo JoinAlgos/AbstractJoinAlgo.h
  * @brief The abstraction to describe a join algorithm, providing virtual function of join
- * @note Required configs
- * - "timeStep" U64 The simulation time step in us
  */
 class AbstractJoinAlgo {
  protected:
   std::string nameTag;
   struct timeval timeBaseStruct;
-  tsType timeStep;
+  //tsType timeStep;
  public:
   ConfigMapPtr config;
   AbstractJoinAlgo() {

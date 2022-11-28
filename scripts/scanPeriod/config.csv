@@ -1,8 +1,0 @@
-key,value,type
-slideLen,123,U64
-threads,4,U64
-windowLen,999,U64
-Energy,12.3,Double
-algo,NPJSingle,String
-watermarkPeriod,100,U64
-timeStep,40,U64
