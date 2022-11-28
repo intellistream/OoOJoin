@@ -104,6 +104,7 @@ def main():
     os.system("mkdir "+figPath)
     draw2yLine("event rate (KTps/s)",eventVecDisp,lat95Vec,errVec,"95% Latency (ms)","Error","ms","",figPath+"event_lat")
     draw2yLine("event rate (KTps/s)",eventVecDisp,thrVec,errVec,"Throughput (KTp/s)","Error","KTp/s","",figPath+"event_thr")
+    draw2yLine("event rate (KTps/s)",eventVecDisp,thrVec,lat95Vec,"Throughput (KTp/s)","95% Latency (ms)","KTp/s","ms",figPath+"event_thr_lat")
     draw2yLine("event rate (KTps/s)",eventVecDisp,lat95Vec,compVec,"95% Latency (ms)","Completeness","ms","",figPath+"event_comp")
     print(errVec)
     #readResultEvent(50,resultPath)
