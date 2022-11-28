@@ -17,25 +17,25 @@ namespace AllianceDB {
  * - "timeStep" U64 The simulation time step in us
  * - "watermarkPeriod" U64 The watermark period, if not set will equal to window length
  */
-class PeriodicalWM : public AbstractWaterMarker{
+class PeriodicalWM : public AbstractWaterMarker {
  protected:
   /**
   * @brief The period to generate watermark, set by outside configuration
   */
-  tsType watermarkPeriod=0;
+  tsType watermarkPeriod = 0;
   /**
   * @brief The Delta value for next watermark
   */
-  tsType nextWMDelta=0;
+  tsType nextWMDelta = 0;
   /**
    * @note currently only support single window
    */
-  tsType windowLen=0;
-  tsType nextWMPoint=0;
+  tsType windowLen = 0;
+  tsType nextWMPoint = 0;
   bool isReachWMPoint(TrackTuplePtr tp);
  public:
-  PeriodicalWM(){}
-  ~PeriodicalWM(){}
+  PeriodicalWM() {}
+  ~PeriodicalWM() {}
   /**
  * @brief Set the config map related to this operator
  * @param cfg The config map

@@ -48,11 +48,11 @@ vector<AllianceDB::TrackTuplePtr> genTuples(vector<keyType> keyS, vector<tsType>
   bubble_sort(ru);
   return ru;
 }
-void runTestBench(string configName="config.csv",string outPrefix="") {
+void runTestBench(string configName = "config.csv", string outPrefix = "") {
   IAWJOperatorPtr iawj = newIAWJOperator();
   size_t testSize = 100;
   MicroDataSet ms(123456);
-  size_t OoORu=0, realRu=0;
+  size_t OoORu = 0, realRu = 0;
   //get config
   ConfigMapPtr cfg = newConfigMap();
   cfg->fromFile(configName);
@@ -71,39 +71,56 @@ void runTestBench(string configName="config.csv",string outPrefix="") {
   vector<tsType> arrivalR = genArrivalTime(eventS, arrivalRkew);
   vector<TrackTuplePtr> rTuple = genTuples(keyR, eventR, arrivalR);
   // test bench
-  TestBench tb,tbOoO;
+  TestBench tb, tbOoO;
   cfg->edit("rLen", (uint64_t) testSize);
   cfg->edit("sLen", (uint64_t) testSize);
   //cfg->edit("windowLen", (uint64_t) 100);
- // cfg->edit("watermarkPeriod", (uint64_t) 100);
+  // cfg->edit("watermarkPeriod", (uint64_t) 100);
   INTELLI_INFO("/****run OoO test***/");
   tbOoO.setOperator(iawj, cfg);
   tbOoO.setDataSet(rTuple, sTuple);
-  OoORu=tbOoO.OoOTest(true);
-  INTELLI_DEBUG("OoO joined " << OoORu );
+  OoORu = tbOoO.OoOTest(true);
+  INTELLI_DEBUG("OoO joined " << OoORu);
   ConfigMap generalStatistics;
-  generalStatistics.edit("AvgLatency",(double)tbOoO.getAvgLatency());
-  generalStatistics.edit("95%Latency",(double)tbOoO.getLatencyPercentage(0.95));
-  generalStatistics.edit("Throughput",(double)tbOoO.getThroughput());
+  generalStatistics.edit("AvgLatency", (double) tbOoO.getAvgLatency());
+  generalStatistics.edit("95%Latency", (double) tbOoO.getLatencyPercentage(0.95));
+  generalStatistics.edit("Throughput", (double) tbOoO.getThroughput());
 
-  INTELLI_DEBUG("Average latency (us)=" <<tbOoO.getAvgLatency() );
-  INTELLI_DEBUG("95% latency (us)=" <<tbOoO.getLatencyPercentage(0.95) );
-  INTELLI_DEBUG("Throughput (TPs/s)=" <<tbOoO.getThroughput() );
-  tbOoO.saveRTuplesToFile(outPrefix+"_tuples.csv", true);
+  INTELLI_DEBUG("Average latency (us)=" << tbOoO.getAvgLatency());
+  INTELLI_DEBUG("95% latency (us)=" << tbOoO.getLatencyPercentage(0.95));
+  INTELLI_DEBUG("Throughput (TPs/s)=" << tbOoO.getThroughput());
+  tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
   //OoORu=tbOoO.OoOTest(true);
   //tbOoO.logRTuples(true);
   //INTELLI_INFO("/***run in order test***/");
   cfg->edit("watermarkPeriod", (uint64_t) 110);
   tb.setOperator(iawj, cfg);
   tb.setDataSet(rTuple, sTuple);
-  realRu=tb.inOrderTest(true);
+  realRu = tb.inOrderTest(true);
   INTELLI_DEBUG("Expect " << realRu);
-  double err=OoORu;
-  err=(err-realRu)/realRu;
-  generalStatistics.edit("Error",(double)err);
+  double err = OoORu;
+  err = (err - realRu) / realRu;
+  generalStatistics.edit("Error", (double) err);
   INTELLI_DEBUG("Error = " << err);
-  generalStatistics.toFile(outPrefix+"_general.csv");
+  generalStatistics.toFile(outPrefix + "_general.csv");
 
+}
+/**
+ * @brief run the test bench and allow adjusting
+ * @param configName
+ * @param outPrefix
+ * @note Require configs for this function:
+ *
+ */
+void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
+  INTELLI_INFO("Load global config from" + configName + ", output prefix = " + outPrefix + "\n");
+  IAWJOperatorPtr iawj = newIAWJOperator();
+  //size_t testSize = 100;
+  MicroDataSet ms(123456);
+//  size_t OoORu=0, realRu=0;
+  //get config
+  ConfigMapPtr cfg = newConfigMap();
+  cfg->fromFile(configName);
 
 }
 int main(int argc, char **argv) {
@@ -117,26 +134,20 @@ int main(int argc, char **argv) {
 
   //Run the test here.
   INTELLI_INFO("Nothing to run." << argc << argv);
-  string configName="",outPrefix="";
-  if(argc>=2)
-  {
-    configName+=argv[1];
+  string configName = "", outPrefix = "";
+  if (argc >= 2) {
+    configName += argv[1];
+  } else {
+    configName = "config.csv";
   }
-  else
-  {
-    configName="config.csv";
-  }
-  if(argc>=3)
-  {
-    outPrefix+=argv[2];
-  }
-  else
-  {
-    outPrefix="default";
+  if (argc >= 3) {
+    outPrefix += argv[2];
+  } else {
+    outPrefix = "default";
   }
 
   //tempTest();
-  runTestBench(configName,outPrefix);
+  runTestBench(configName, outPrefix);
   // testConfig();
   //TuplePtrQueue tpq=
 }

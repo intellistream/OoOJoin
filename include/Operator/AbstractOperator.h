@@ -23,10 +23,11 @@ namespace AllianceDB {
  * @class AbstractOperator Operator/AbstractOperator.h
  * @brief The abstraction to describe a join operator, providing virtual function of using the operation
  * @note require configurations:
- * - "windowLen" U64: The length of window
- * - "slideLen" U64: The length of slide
+ * - "windowLen" U64: The length of window, real-world time in us
+ * - "slideLen" U64: The length of slide, real world time in us
  * - "sLen" U64: The length of S buffer
  * - "rLen" U64: The length of R buffer
+ * - "timeStep" U64. Internal simulation step in us
  */
 /**
 * @todo Finish the watermark generator part
@@ -38,6 +39,7 @@ class AbstractOperator {
   size_t slideLen = 0;
   size_t sLen = 0, rLen = 0;
   int threads = 0;
+  tsType timeStep = 0;
  public:
   ConfigMapPtr config = nullptr;
   AbstractOperator() {}

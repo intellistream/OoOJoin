@@ -23,17 +23,20 @@ bool AllianceDB::IAWJOperator::start() {
   /**
    * @brief set watermark generator
    */
-  wmGen=newPeriodicalWM();
+  wmGen = newPeriodicalWM();
   wmGen->setConfig(config);
   wmGen->syncTimeStruct(timeBaseStruct);
-  wmGen->creatWindow(0,windowLen);
+  /**
+   * @note:
+  */
+  wmGen->creatWindow(0, windowLen);
   /**
    * @brief set window
    */
   myWindow.setRange(0, windowLen);
   myWindow.init(sLen, rLen, 1);
   intermediateResult = 0;
-  lockedByWaterMark= false;
+  lockedByWaterMark = false;
   return true;
 }
 void AllianceDB::IAWJOperator::conductComputation() {
@@ -48,29 +51,26 @@ void AllianceDB::IAWJOperator::conductComputation() {
 bool AllianceDB::IAWJOperator::stop() {
   /**
    */
-   if(lockedByWaterMark)
-   {
-     WM_INFO("early terminate by watermark, already have results");
-   }
-   if(!lockedByWaterMark) {
-     WM_INFO("No watermark encountered, compute now");
-     //force to flush, if no watermark is given
-     conductComputation();
-   }
+  if (lockedByWaterMark) {
+        WM_INFO("early terminate by watermark, already have results");
+  }
+  if (!lockedByWaterMark) {
+        WM_INFO("No watermark encountered, compute now");
+    //force to flush, if no watermark is given
+    conductComputation();
+  }
   return true;
 }
 bool AllianceDB::IAWJOperator::feedTupleS(AllianceDB::TrackTuplePtr ts) {
   bool shouldGenWM;
-  if(lockedByWaterMark)
-  {
+  if (lockedByWaterMark) {
     return false;
   }
   myWindow.feedTupleS(ts);
-  shouldGenWM=wmGen->reportTupleS(ts,1);
-  if(shouldGenWM)
-  {
-    lockedByWaterMark=true;
-   // run computation
+  shouldGenWM = wmGen->reportTupleS(ts, 1);
+  if (shouldGenWM) {
+    lockedByWaterMark = true;
+    // run computation
     conductComputation();
   }
   return true;
@@ -78,15 +78,13 @@ bool AllianceDB::IAWJOperator::feedTupleS(AllianceDB::TrackTuplePtr ts) {
 
 bool AllianceDB::IAWJOperator::feedTupleR(AllianceDB::TrackTuplePtr tr) {
   bool shouldGenWM;
-  if(lockedByWaterMark)
-  {
+  if (lockedByWaterMark) {
     return false;
   }
   myWindow.feedTupleR(tr);
-  shouldGenWM=wmGen->reportTupleR(tr,1);
-  if(shouldGenWM)
-  {
-    lockedByWaterMark=true;
+  shouldGenWM = wmGen->reportTupleR(tr, 1);
+  if (shouldGenWM) {
+    lockedByWaterMark = true;
     // run computation
     conductComputation();
   }

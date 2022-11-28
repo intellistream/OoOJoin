@@ -49,6 +49,14 @@ bool AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
         OP_ERROR("empty buffer for R stream \n");
     return false;
   }
+  /*if (config->existU64("timeStep")) {
+    timeStep = config->getU64("timeStep");
+  }
+  else
+  {
+    OP_WARNNING("No setting of timeStep, use 1\n");
+    timeStep=1;
+  }*/
   return true;
 }
 

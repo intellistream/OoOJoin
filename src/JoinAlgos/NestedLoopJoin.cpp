@@ -27,7 +27,7 @@ size_t NestedLoopJoin::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
   for (size_t i = 0; i < trLen; i++) {
     AllianceDB::TrackTuplePtr tr = windR.data(i)[0];
     result += join(windS, tr, threads);
-    tr->processedTime= UtilityFunctions::timeLastUs(timeBaseStruct)/timeStep ;
+    tr->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct) / timeStep;
   }
   return result;
 }

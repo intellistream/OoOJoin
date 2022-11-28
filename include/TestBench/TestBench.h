@@ -32,7 +32,7 @@ class TestBench {
   void OoOSort(std::vector<TrackTuplePtr> &arr);
   void inlineTest(void);
   void forceInOrder(std::vector<TrackTuplePtr> &arr);
-  tsType timeStep=1;
+  tsType timeStep = 1;
  public:
   std::vector<TrackTuplePtr> rTuple;
   std::vector<TrackTuplePtr> sTuple;
@@ -70,14 +70,14 @@ class TestBench {
    * @brief print the rTuples to logging system
    * @param skipZero Whether skip the tuples whose processed time is zero
    */
-  void logRTuples(bool skipZero=false);
+  void logRTuples(bool skipZero = false);
   /**
    * @brief save the  rTuples to a file
    * @param fname the name of file
    * @param skipZero Whether skip the tuples whose processed time is zero
    * @return whether the file is written
    */
-  bool saveRTuplesToFile(string fname,bool skipZero=false);
+  bool saveRTuplesToFile(string fname, bool skipZero = false);
   /**
    * @brief to compute average latency after run a test
    * @return the latency in us

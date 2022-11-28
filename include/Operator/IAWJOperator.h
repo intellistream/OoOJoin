@@ -33,8 +33,8 @@ class IAWJOperator : public AbstractOperator {
    * @brief if operator is locked by watermark, it will never accept new incoming
    * @todo current implementation is putting rotten, fix later
    */
-  atomic_bool lockedByWaterMark=false;
-  AbstractWaterMarkerPtr wmGen= nullptr;
+  atomic_bool lockedByWaterMark = false;
+  AbstractWaterMarkerPtr wmGen = nullptr;
   void conductComputation();
  public:
   IAWJOperator() {}

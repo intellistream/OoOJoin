@@ -19,9 +19,9 @@ void AllianceDB::Window::init(size_t sLen, size_t rLen, size_t _sysId) {
   windowID = _sysId;
 }
 bool AllianceDB::Window::feedTupleS(AllianceDB::TrackTuplePtr ts) {
-  /* if (ts->eventTime > endTime || ts->eventTime < startTime) {
-     return false;
-   }*/
+  if (ts->eventTime > endTime || ts->eventTime < startTime) {
+    return false;
+  }
   windowS.append(ts);
   return true;
 }

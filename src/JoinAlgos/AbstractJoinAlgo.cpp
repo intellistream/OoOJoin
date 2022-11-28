@@ -14,17 +14,15 @@ size_t AllianceDB::AbstractJoinAlgo::join(C20Buffer<AllianceDB::TrackTuplePtr> w
   return 0;
 }
 bool AllianceDB::AbstractJoinAlgo::setConfig(INTELLI::ConfigMapPtr cfg) {
-  config=cfg;
+  config = cfg;
   if (config == nullptr) {
     return false;
   }
   if (config->existU64("timeStep")) {
     timeStep = config->getU64("timeStep");
-  }
-  else
-  {
-    ALGO_WARNNING("No setting of timeStep, use 1\n");
-    timeStep=1;
+  } else {
+        ALGO_WARNNING("No setting of timeStep, use 1\n");
+    timeStep = 1;
   }
   return true;
 }

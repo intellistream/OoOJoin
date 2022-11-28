@@ -34,7 +34,7 @@ class AbstractWaterMarker {
    * @brief The assigned error bound, read from configuration
    */
   double errorBound;
-  tsType timeStep;
+  //tsType timeStep;
   /**
    * @brief the base structure for time
    */
