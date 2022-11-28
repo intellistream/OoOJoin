@@ -47,37 +47,37 @@ matplotlib.rcParams['font.family'] = OPT_FONT_NAME
 matplotlib.rcParams['pdf.fonttype'] = 42
 
    
-def runPeriod(exePath,period,resultPath):
+def runKeyRange(exePath,kr,resultPath):
     #resultFolder="periodTests"
-    configFname="config_period_"+str(period)+".csv"
+    configFname="config_keyRange_"+str(kr)+".csv"
     configTemplate="config.csv"
     #clear old files
     os.system("cd "+exePath+"&& rm *.csv")
     #prepare new file
-    editConfig(configTemplate,exePath+configFname,"watermarkPeriodMs",period)
+    editConfig(configTemplate,exePath+configFname,"keyRange",kr)
     #run 
     os.system("cd "+exePath+"&& ./benchmark "+configFname)
     #copy result
-    os.system("rm -rf "+resultPath+"/"+str(period))
-    os.system("mkdir "+resultPath+"/"+str(period))
-    os.system("cd "+exePath+"&& cp *.csv "+resultPath+"/"+str(period))
-def runPeriodVector(exePath,periodVec,resultPath):
-    for i in periodVec:
-        runPeriod(exePath,i,resultPath)
-def readResultPeriod(period,resultPath):
-    resultFname=resultPath+"/"+str(period)+"/default_general.csv"
+    os.system("rm -rf "+resultPath+"/"+str(kr))
+    os.system("mkdir "+resultPath+"/"+str(kr))
+    os.system("cd "+exePath+"&& cp *.csv "+resultPath+"/"+str(kr))
+def runKeyRangeVector(exePath,krVec,resultPath):
+    for i in krVec:
+        runKeyRange(exePath,i,resultPath)
+def readResultPeriod(kr,resultPath):
+    resultFname=resultPath+"/"+str(kr)+"/default_general.csv"
     avgLat=readConfig(resultFname,"AvgLatency")
     lat95=readConfig(resultFname,"95%Latency")
     thr=readConfig(resultFname,"Throughput")
     err=readConfig(resultFname,"Error")
     return avgLat,lat95,thr,err
-def readResultVectorPeriod(periodVec,resultPath):
+def readResultVectorKeyRange(krVec,resultPath):
     avgLatVec=[]
     lat95Vec=[]
     thrVec=[]
     errVec=[]
     compVec=[]
-    for i in periodVec:
+    for i in krVec:
         avgLat,lat95,thr,err=readResultPeriod(i,resultPath)
         avgLatVec.append(float(avgLat)/1000.0)
         lat95Vec.append(float(lat95)/1000.0)
@@ -88,23 +88,22 @@ def readResultVectorPeriod(periodVec,resultPath):
 
 def main():
     exeSpace=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/"
-    resultPath=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/results/periodTest/"
+    resultPath=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/results/keyRangeTest/"
     figPath=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/figures/"
     configTemplate=exeSpace+"config.csv"
-    periodVec=[6,7,8,9,10,11,12,13,14,15]
-    periodVecDisp=np.array(periodVec)
-    periodVecDisp=periodVecDisp
+    krVec=[10,50,100,200,500,1000,2000,5000,10000]
+   
     print(configTemplate)
     #run
     if(len(sys.argv)<2):
         os.system("rm -rf "+resultPath)
         os.system("mkdir "+resultPath)
-        runPeriodVector(exeSpace,periodVec,resultPath)
-    avgLatVec,lat95Vec,thrVec,errVec,compVec=readResultVectorPeriod(periodVec,resultPath)
+        runKeyRangeVector(exeSpace,krVec,resultPath)
+    avgLatVec,lat95Vec,thrVec,errVec,compVec=readResultVectorKeyRange(krVec,resultPath)
     os.system("mkdir "+figPath)
-    draw2yLine("watermark time (ms)",periodVecDisp,lat95Vec,errVec,"95% Latency (ms)","Error","ms","",figPath+"wm_lat")
-    draw2yLine("watermark time (ms)",periodVecDisp,thrVec,errVec,"Throughput (KTp/s)","Error","KTp/s","",figPath+"wm_thr")
-    draw2yLine("watermark time (ms)",periodVecDisp,lat95Vec,compVec,"95% Latency (ms)","Completeness","ms","",figPath+"wm_omp")
+    draw2yLine("#keys",krVec,avgLatVec,errVec,"Average Latency (ms)","Error","ms","",figPath+"key_lat")
+    draw2yLine("#keys",krVec,thrVec,errVec,"Throughput (KTp/s)","Error","KTp/s","",figPath+"key_thr")
+    draw2yLine("#keys",krVec,lat95Vec,compVec,"95% Latency (ms)","Completeness","ms","",figPath+"key_comp")
     print(errVec)
     #readResultPeriod(50,resultPath)
 if __name__ == "__main__":
