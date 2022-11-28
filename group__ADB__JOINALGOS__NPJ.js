@@ -6,7 +6,6 @@ var group__ADB__JOINALGOS__NPJ =
       [ "getResult", "group__ADB__JOINALGOS__NPJ.html#gafaf16e37664a27715feb5d74862ef9e5", null ],
       [ "init", "group__ADB__JOINALGOS__NPJ.html#ga529282a8a54692ad2a49f423bb57b59f", null ],
       [ "inlineMain", "group__ADB__JOINALGOS__NPJ.html#ga0ebd238f932574e80d7b541946c11163", null ],
-      [ "setTimeStep", "group__ADB__JOINALGOS__NPJ.html#ga4ab7854b154ae1df00711f2cd322103a", null ],
       [ "syncTimeStruct", "group__ADB__JOINALGOS__NPJ.html#ga85e8968798ce1fc8f160cf1d8adf7f74", null ],
       [ "waitBuildBar", "group__ADB__JOINALGOS__NPJ.html#ga7a7e265fc27dc3d98c5195198b492895", null ]
     ] ],

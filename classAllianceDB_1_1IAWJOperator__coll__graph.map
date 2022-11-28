@@ -1,14 +1,14 @@
 <map id="AllianceDB::IAWJOperator" name="AllianceDB::IAWJOperator">
-<area shape="rect" id="node1" title="The intra window join (IAWJ) operator, only considers a single window." alt="" coords="771,436,957,463"/>
-<area shape="rect" id="node2" href="$classAllianceDB_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="376,104,588,131"/>
-<area shape="rect" id="node3" title=" " alt="" coords="59,5,169,32"/>
-<area shape="rect" id="node4" title=" " alt="" coords="84,237,144,264"/>
-<area shape="rect" id="node7" href="$classAllianceDB_1_1Window.html" title="The class to describe a simplest window." alt="" coords="405,347,559,373"/>
-<area shape="rect" id="node5" title=" " alt="" coords="95,56,133,83"/>
-<area shape="rect" id="node6" title=" " alt="" coords="57,107,171,133"/>
-<area shape="rect" id="node8" title=" " alt="" coords="77,413,151,440"/>
-<area shape="rect" id="node9" href="$classINTELLI_1_1C20Buffer.html" title=" " alt="" coords="5,325,223,366"/>
-<area shape="rect" id="node10" title=" " alt="" coords="431,497,533,524"/>
-<area shape="rect" id="node11" title=" " alt="" coords="453,548,511,575"/>
-<area shape="rect" id="node12" title=" " alt="" coords="383,599,581,641"/>
+<area shape="rect" id="node1" title="The intra window join (IAWJ) operator, only considers a single window." alt="" coords="771,481,957,508"/>
+<area shape="rect" id="node2" href="$classAllianceDB_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="376,123,588,149"/>
+<area shape="rect" id="node3" title=" " alt="" coords="77,193,151,220"/>
+<area shape="rect" id="node8" href="$classAllianceDB_1_1Window.html" title="The class to describe a simplest window." alt="" coords="405,403,559,429"/>
+<area shape="rect" id="node4" title=" " alt="" coords="59,5,169,32"/>
+<area shape="rect" id="node5" title=" " alt="" coords="84,451,144,477"/>
+<area shape="rect" id="node6" title=" " alt="" coords="95,56,133,83"/>
+<area shape="rect" id="node7" title=" " alt="" coords="57,107,171,133"/>
+<area shape="rect" id="node9" href="$classINTELLI_1_1C20Buffer.html" title=" " alt="" coords="5,385,223,426"/>
+<area shape="rect" id="node10" title=" " alt="" coords="431,543,533,569"/>
+<area shape="rect" id="node11" title=" " alt="" coords="453,593,511,620"/>
+<area shape="rect" id="node12" title=" " alt="" coords="383,645,581,686"/>
 </map>

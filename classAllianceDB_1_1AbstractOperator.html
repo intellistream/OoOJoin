@@ -121,11 +121,12 @@ Collaboration diagram for AllianceDB::AbstractOperator:</div>
 <div class="dyncontent">
 <div class="center"><img src="classAllianceDB_1_1AbstractOperator__coll__graph.png" border="0" usemap="#aAllianceDB_1_1AbstractOperator_coll__map" alt="Collaboration graph"/></div>
 <map name="aAllianceDB_1_1AbstractOperator_coll__map" id="aAllianceDB_1_1AbstractOperator_coll__map">
-<area shape="rect" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="115,139,327,165"/>
-<area shape="rect" title=" " alt="" coords="5,5,115,32"/>
-<area shape="rect" title=" " alt="" coords="139,5,199,32"/>
-<area shape="rect" title=" " alt="" coords="254,5,293,32"/>
-<area shape="rect" title=" " alt="" coords="317,5,430,32"/>
+<area shape="rect" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="146,139,358,165"/>
+<area shape="rect" title=" " alt="" coords="5,5,80,32"/>
+<area shape="rect" title=" " alt="" coords="104,5,213,32"/>
+<area shape="rect" title=" " alt="" coords="238,5,298,32"/>
+<area shape="rect" title=" " alt="" coords="337,5,375,32"/>
+<area shape="rect" title=" " alt="" coords="399,5,513,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -185,15 +186,19 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>rLen</b> = 0</td></
 <tr class="memitem:a99cf5d54a5b14a33392d5ed30bb6b9a9"><td class="memItemLeft" align="right" valign="top"><a id="a99cf5d54a5b14a33392d5ed30bb6b9a9"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>threads</b> = 0</td></tr>
 <tr class="separator:a99cf5d54a5b14a33392d5ed30bb6b9a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba1d4dbafad1ad41c00b556ae675d880"><td class="memItemLeft" align="right" valign="top"><a id="aba1d4dbafad1ad41c00b556ae675d880"></a>
+<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa28f223080720f148b497e59ea711ca8">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>timeStep</b> = 0</td></tr>
+<tr class="separator:aba1d4dbafad1ad41c00b556ae675d880"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The abstraction to describe a join operator, providing virtual function of using the operation. </p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Finish the watermark generator part </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>require configurations:<ul>
-<li>"windowLen" U64: The length of window</li>
-<li>"slideLen" U64: The length of slide</li>
+<li>"windowLen" U64: The length of window, real-world time in us</li>
+<li>"slideLen" U64: The length of slide, real world time in us</li>
 <li>"sLen" U64: The length of S buffer</li>
-<li>"rLen" U64: The length of R buffer </li>
+<li>"rLen" U64: The length of R buffer</li>
+<li>"timeStep" U64. Internal simulation step in us </li>
 </ul>
 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>

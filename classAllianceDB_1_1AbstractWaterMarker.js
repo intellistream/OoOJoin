@@ -13,6 +13,5 @@ var classAllianceDB_1_1AbstractWaterMarker =
     [ "syncTimeStruct", "classAllianceDB_1_1AbstractWaterMarker.html#a0f7aef42414649e19ccb70d0eda9bdc0", null ],
     [ "config", "classAllianceDB_1_1AbstractWaterMarker.html#a9af03642da110dedc8e58a391b68c4fd", null ],
     [ "errorBound", "classAllianceDB_1_1AbstractWaterMarker.html#a8545bf8ad4513d00cbcde5a2e2d26e54", null ],
-    [ "timeBaseStruct", "classAllianceDB_1_1AbstractWaterMarker.html#a773c0fc1fcf160ffb0497afbef900e9d", null ],
-    [ "timeStep", "classAllianceDB_1_1AbstractWaterMarker.html#a3d7dc12628005ea8ed7f1c021a554a25", null ]
+    [ "timeBaseStruct", "classAllianceDB_1_1AbstractWaterMarker.html#a773c0fc1fcf160ffb0497afbef900e9d", null ]
 ];

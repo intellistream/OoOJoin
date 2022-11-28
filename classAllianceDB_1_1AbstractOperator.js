@@ -17,5 +17,6 @@ var classAllianceDB_1_1AbstractOperator =
     [ "slideLen", "classAllianceDB_1_1AbstractOperator.html#aefb8f87889437ec8fe2c0eea1ac4f265", null ],
     [ "threads", "classAllianceDB_1_1AbstractOperator.html#a99cf5d54a5b14a33392d5ed30bb6b9a9", null ],
     [ "timeBaseStruct", "classAllianceDB_1_1AbstractOperator.html#a6cf7b659ae1a007bf6a41cc8b02dfb72", null ],
+    [ "timeStep", "classAllianceDB_1_1AbstractOperator.html#aba1d4dbafad1ad41c00b556ae675d880", null ],
     [ "windowLen", "classAllianceDB_1_1AbstractOperator.html#a00c0ff9b816939e7185e78f9881d1b98", null ]
 ];
