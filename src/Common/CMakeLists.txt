@@ -1,3 +1,4 @@
 add_sources(
-        OoOTuple.cpp
+        Tuples.cpp
+        Window.cpp
 )

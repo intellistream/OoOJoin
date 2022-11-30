@@ -19,6 +19,7 @@ if (BUILD_BENCHMARKS)
     add_executable(benchmark "src/Benchmark.cpp")
     target_link_libraries(benchmark IntelliStream)
 
+
     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/datasets
             DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
     message("---Done building benchmarks")
