@@ -107,5 +107,6 @@ install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStream
 # copy scripts
 file(GLOB allCopyFiles "${PROJECT_SOURCE_DIR}/scripts/*")
 file(COPY ${allCopyFiles} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/benchmark/scripts)
+file(COPY ${allCopyFiles} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/benchmark/scripts)
 #file(COPY ${allCopyFiles} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/scripts)
 

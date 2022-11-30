@@ -18,16 +18,7 @@ vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSk
   }
   return ru;
 }
-/*
-template<class vecType=int>
-void printVec(vector<vecType> in) {
- // printf("hellow \r\n");
-  size_t len = in.size();
-  printf("len=%s", to_string(in.size()).data());
-  for (size_t i = 0; i < len; i++) {
-    printf("%s:%s\r\n", to_string(i).data(), to_string(in[i]).data());
-  }
-}*/
+
 void bubble_sort(vector<AllianceDB::TrackTuplePtr> &arr) {
   size_t i, j;
   TrackTuplePtr temp;
