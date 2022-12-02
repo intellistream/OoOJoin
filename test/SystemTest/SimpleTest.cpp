@@ -7,7 +7,7 @@
 #include <vector>
 #include <OoOJoin.h>
 using namespace std;
-using namespace AllianceDB;
+using namespace OoOJoin;
 
 vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
   vector<tsType> ru = vector<tsType>(eventTime.size());
@@ -18,7 +18,7 @@ vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSk
   return ru;
 }
 
-void bubble_sort(vector<AllianceDB::TrackTuplePtr> &arr) {
+void bubble_sort(vector<OoOJoin::TrackTuplePtr> &arr) {
   size_t i, j;
   TrackTuplePtr temp;
   size_t len = arr.size();
@@ -30,9 +30,9 @@ void bubble_sort(vector<AllianceDB::TrackTuplePtr> &arr) {
         arr[j + 1] = temp;
       }
 }
-vector<AllianceDB::TrackTuplePtr> genTuples(vector<keyType> keyS, vector<tsType> eventS, vector<tsType> arrivalS) {
+vector<OoOJoin::TrackTuplePtr> genTuples(vector<keyType> keyS, vector<tsType> eventS, vector<tsType> arrivalS) {
   size_t len = keyS.size();
-  vector<AllianceDB::TrackTuplePtr> ru = vector<AllianceDB::TrackTuplePtr>(len);
+  vector<OoOJoin::TrackTuplePtr> ru = vector<OoOJoin::TrackTuplePtr>(len);
   for (size_t i = 0; i < len; i++) {
     ru[i] = newTrackTuple(keyS[i], 0, eventS[i], arrivalS[i]);
   }

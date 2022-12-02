@@ -23,7 +23,7 @@
         V++;                                    \
     } while(0)
 #endif
-using namespace AllianceDB;
+using namespace OoOJoin;
 using namespace std;
 void MtBucket::duplicatedInsert(NPJTuplePtr tp) {
   MtBucketPtr nxt;
@@ -43,30 +43,7 @@ void MtBucket::duplicatedInsert(NPJTuplePtr tp) {
     this->tuples[this->count] = tp;
     this->count++;
   }
-  /*if (this->count >= BUCKET_SIZE) {
-    NPJTuplePtr newCell;
-    newCell.push_back(tp);
-    this->tuples.push_back(newCell);
-    this->count++;
-  } else {
-    this->tuples[this->count].push_back(tp);
-    this->count++;
-  }*/
 
-  //this->tuples[0].push_back(tp);
-  /*size_t allLen=this->tuples.size();
-   for(size_t index_ht = 0; index_ht < allLen; index_ht++)
-   {
-       if(this->tuples[index_ht][0]->key==tp->key) {
-         this->tuples[index_ht].push_back(tp);
-         return;
-       }
-   }
-  // cout<<"new key"<<endl;
-   NPJTuplePtr newCell;
-   newCell.push_back(tp);
-   this->tuples.push_back(newCell);*/
-  //this->count++;
 }
 size_t MtBucket::probeTuple(NPJTuplePtr tp) {
 // size_t allLen=this->count;

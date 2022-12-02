@@ -4,7 +4,7 @@
 
 #include <WaterMarker/PeriodicalWM.h>
 
-bool AllianceDB::PeriodicalWM::setConfig(INTELLI::ConfigMapPtr cfg) {
+bool OoOJoin::PeriodicalWM::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!AbstractWaterMarker::setConfig(cfg)) {
     return false;
   }
@@ -17,7 +17,7 @@ bool AllianceDB::PeriodicalWM::setConfig(INTELLI::ConfigMapPtr cfg) {
   return true;
 }
 
-size_t AllianceDB::PeriodicalWM::creatWindow(AllianceDB::tsType tBegin, AllianceDB::tsType tEnd) {
+size_t OoOJoin::PeriodicalWM::creatWindow(OoOJoin::tsType tBegin, OoOJoin::tsType tEnd) {
   windowLen = tEnd - tBegin;
   if (watermarkPeriod == 0) {
     nextWMDelta = windowLen + 1;
@@ -27,7 +27,7 @@ size_t AllianceDB::PeriodicalWM::creatWindow(AllianceDB::tsType tBegin, Alliance
   nextWMPoint = nextWMDelta;
   return 1;
 }
-bool AllianceDB::PeriodicalWM::isReachWMPoint(AllianceDB::TrackTuplePtr tp) {
+bool OoOJoin::PeriodicalWM::isReachWMPoint(OoOJoin::TrackTuplePtr tp) {
   //tsType tNow=UtilityFunctions::UtilityFunctions::timeLastUs(timeBaseStruct)/timeStep;
   if (tp->arrivalTime >= nextWMPoint) {
         WM_INFO("watermark reached at" + tp->toString());
@@ -36,14 +36,14 @@ bool AllianceDB::PeriodicalWM::isReachWMPoint(AllianceDB::TrackTuplePtr tp) {
   }
   return false;
 }
-bool AllianceDB::PeriodicalWM::reportTupleS(AllianceDB::TrackTuplePtr ts, size_t wid) {
+bool OoOJoin::PeriodicalWM::reportTupleS(OoOJoin::TrackTuplePtr ts, size_t wid) {
   if (!wid) {
     return false;
   }
   return isReachWMPoint(ts);
 }
 
-bool AllianceDB::PeriodicalWM::reportTupleR(AllianceDB::TrackTuplePtr tr, size_t wid) {
+bool OoOJoin::PeriodicalWM::reportTupleR(OoOJoin::TrackTuplePtr tr, size_t wid) {
   if (!wid) {
     return false;
   }

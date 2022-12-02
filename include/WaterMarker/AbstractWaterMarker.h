@@ -18,7 +18,7 @@
 #define WM_ERROR INTELLI_ERROR
 #define WM_WARNNING INTELLI_WARNING
 using namespace INTELLI;
-namespace AllianceDB {
+namespace OoOJoin {
 /**
  * @ingroup ADB_WATERMARKER The watermark generator
  *@class AbstractWaterMarker WaterMarker/AbstractWaterMarker.h
@@ -112,6 +112,6 @@ typedef std::shared_ptr<class AbstractWaterMarker> AbstractWaterMarkerPtr;
  * @cite newAbstractWaterMarker
  * @brief (Macro) To creat a new @ref AbstractWaterMarker under shared pointer.
  */
-#define newAbstractWaterMarker std::make_shared<AllianceDB::AbstractWaterMarker>
+#define newAbstractWaterMarker std::make_shared<OoOJoin::AbstractWaterMarker>
 }
 #endif //INTELLISTREAM_INCLUDE_WATERMARKER_ABSTRACTWATERMARKER_H_

@@ -3,34 +3,34 @@
 //
 
 #include <Common/Tuples.h>
-using namespace AllianceDB;
+using namespace OoOJoin;
 
-AllianceDB::Tuple::Tuple(AllianceDB::keyType k) { key = k; }
-AllianceDB::Tuple::Tuple(AllianceDB::keyType k, AllianceDB::valueType v) {
+OoOJoin::Tuple::Tuple(OoOJoin::keyType k) { key = k; }
+OoOJoin::Tuple::Tuple(OoOJoin::keyType k, OoOJoin::valueType v) {
   key = k;
   payload = v;
   eventTime = 0;
 }
-AllianceDB::Tuple::Tuple(AllianceDB::keyType k, AllianceDB::valueType v, tsType et) {
+OoOJoin::Tuple::Tuple(OoOJoin::keyType k, OoOJoin::valueType v, tsType et) {
   key = k;
   payload = v;
   eventTime = et;
 }
-std::string AllianceDB::Tuple::toString() {
+std::string OoOJoin::Tuple::toString() {
   std::string tmp;
   tmp.append("\t\tkey:" + std::to_string(key));
   tmp.append("\t\tvalue:" + std::to_string(payload));
   tmp.append("\t\tevent time:" + std::to_string(eventTime));
   return tmp;
 }
-std::string AllianceDB::OoOTuple::toString() {
+std::string OoOJoin::OoOTuple::toString() {
   std::string tmp;
   tmp.append(Tuple::toString());
   tmp.append("\t\tarrival time:" + std::to_string(arrivalTime));
   return tmp;
 }
 
-std::string AllianceDB::TrackTuple::toString() {
+std::string OoOJoin::TrackTuple::toString() {
   std::string tmp;
   tmp.append(OoOTuple::toString());
   tmp.append("\t\tprocessed time:" + std::to_string(processedTime));

@@ -8,7 +8,7 @@
 #include <stdint.h>
 #include <string>
 #include <memory>
-namespace AllianceDB {
+namespace OoOJoin {
 
 /**
 * @ingroup INTELLI_COMMON_BASIC Basic Definitions and Data Structures
@@ -70,7 +70,7 @@ typedef std::shared_ptr<class Tuple> TuplePtr;
  * @cite newTuple
  * @brief (Macro) To creat a new @ref Tuple under shared pointer.
  */
-#define newTuple std::make_shared<AllianceDB::Tuple>
+#define newTuple std::make_shared<OoOJoin::Tuple>
 /**
 * @class OoOTuple Common/Tuples.h
 * @brief The class to describe a tuple, which allows out-of-order
@@ -121,7 +121,7 @@ typedef std::shared_ptr<class OoOTuple> OoOTuplePtr;
  * @cite newTuple
  * @brief (Macro) To creat a new @ref Tuple under shared pointer.
  */
-#define newTuple std::make_shared<AllianceDB::Tuple>
+#define newTuple std::make_shared<OoOJoin::Tuple>
 /**
 * @class TrackTuple Common/Tuples.h
 * @brief The class to describe a tuple, which allows out-of-order and tracking processed Time
@@ -173,7 +173,7 @@ typedef std::shared_ptr<class TrackTuple> TrackTuplePtr;
  * @def newTrackTuple
  * @brief (Macro) To creat a new @ref TrackTuple under shared pointer.
  */
-#define newTrackTuple std::make_shared<AllianceDB::TrackTuple>
+#define newTrackTuple std::make_shared<OoOJoin::TrackTuple>
 /**
 * @}
 */

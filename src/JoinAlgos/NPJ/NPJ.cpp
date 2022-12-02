@@ -4,7 +4,7 @@
 #include <JoinAlgos/NPJ/NPJ.h>
 #include <Utils/UtilityFunctions.hpp>
 //#include <Utils/ThreadPerf.h>
-using namespace AllianceDB;
+using namespace OoOJoin;
 void NPJ_thread::inlineMain() {
   //first bind to the core
   // UtilityFunctions::bind2Core(cpu);
@@ -30,8 +30,8 @@ void NPJ_thread::inlineMain() {
   }*/
   //result=500;
 }
-size_t NPJ::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
-                 C20Buffer<AllianceDB::TrackTuplePtr> windR, int threads) {
+size_t NPJ::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
+                 C20Buffer<OoOJoin::TrackTuplePtr> windR, int threads) {
   size_t ru = 0;
   size_t tsLen = windS.size();
   size_t trLen = windR.size();
@@ -80,8 +80,8 @@ size_t NPJ::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
   }
   return ru;
 }
-size_t NPJSingle::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
-                       C20Buffer<AllianceDB::TrackTuplePtr> windR, int threads) {
+size_t NPJSingle::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
+                       C20Buffer<OoOJoin::TrackTuplePtr> windR, int threads) {
   assert(threads > 0);
   size_t result = 0;
   size_t tsLen = windS.size();

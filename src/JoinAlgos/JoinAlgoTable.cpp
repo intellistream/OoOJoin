@@ -3,7 +3,7 @@
 //
 #include <JoinAlgos/JoinAlgoTable.h>
 
-using namespace AllianceDB;
+using namespace OoOJoin;
 JoinAlgoTable::JoinAlgoTable() {
 //  NPJ npj;
   algos = {newAbstractJoinAlgo(), \

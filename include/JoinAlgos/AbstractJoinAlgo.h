@@ -15,7 +15,7 @@ using namespace INTELLI;
 #define ALGO_INFO INTELLI_INFO
 #define ALGO_ERROR INTELLI_ERROR
 #define ALGO_WARNNING INTELLI_WARNING
-namespace AllianceDB {
+namespace OoOJoin {
 /**
 * @defgroup ADB_JOINALGOS The specific join algorithms
 * @{
@@ -58,8 +58,8 @@ class AbstractJoinAlgo {
   * @return The joined tuples
    * @note Please at least mark the final processed time at rTuples
   */
-  virtual size_t join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
-                      C20Buffer<AllianceDB::TrackTuplePtr> windR,
+  virtual size_t join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
+                      C20Buffer<OoOJoin::TrackTuplePtr> windR,
                       int threads = 1);
   /**
    * @brief set the name of algorithm

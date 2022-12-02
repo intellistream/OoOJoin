@@ -8,7 +8,7 @@
 #include <Common/Window.h>
 #include <atomic>
 #include <WaterMarker/PeriodicalWM.h>
-namespace AllianceDB {
+namespace OoOJoin {
 /**
  * @class IAWJOperator
  * @ingroup ADB_OPERATORS
@@ -92,6 +92,6 @@ typedef std::shared_ptr<class IAWJOperator> IAWJOperatorPtr;
  * @def newIAWJOperator
  * @brief (Macro) To creat a new @ref IAWJOperator under shared pointer.
  */
-#define newIAWJOperator std::make_shared<AllianceDB::IAWJOperator>
+#define newIAWJOperator std::make_shared<OoOJoin::IAWJOperator>
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_

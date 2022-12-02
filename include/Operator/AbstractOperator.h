@@ -17,7 +17,7 @@
 #define OP_WARNNING INTELLI_WARNING
 
 using namespace INTELLI;
-namespace AllianceDB {
+namespace OoOJoin {
 /**
  * @ingroup ADB_OPERATORS
  * @class AbstractOperator Operator/AbstractOperator.h
@@ -123,6 +123,6 @@ typedef std::shared_ptr<class AbstractOperator> AbstractOperatorPtr;
  * @def newAbstractOperator
  * @brief (Macro) To creat a new @ref AbstractOperator under shared pointer.
  */
-#define newAbstractOperator std::make_shared<AllianceDB::AbstractOperator>
+#define newAbstractOperator std::make_shared<OoOJoin::AbstractOperator>
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_ABSTRACTOPERATOR_H_

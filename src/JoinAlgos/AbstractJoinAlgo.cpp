@@ -3,9 +3,9 @@
 //
 
 #include <JoinAlgos/AbstractJoinAlgo.h>
-using namespace AllianceDB;
-size_t AllianceDB::AbstractJoinAlgo::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
-                                          C20Buffer<AllianceDB::TrackTuplePtr> windR,
+using namespace OoOJoin;
+size_t OoOJoin::AbstractJoinAlgo::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
+                                          C20Buffer<OoOJoin::TrackTuplePtr> windR,
                                           int threads) {
 
   assert(windS.data());
@@ -13,7 +13,7 @@ size_t AllianceDB::AbstractJoinAlgo::join(C20Buffer<AllianceDB::TrackTuplePtr> w
   assert(threads);
   return 0;
 }
-bool AllianceDB::AbstractJoinAlgo::setConfig(INTELLI::ConfigMapPtr cfg) {
+bool OoOJoin::AbstractJoinAlgo::setConfig(INTELLI::ConfigMapPtr cfg) {
   config = cfg;
   if (config == nullptr) {
     return false;
