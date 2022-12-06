@@ -36,5 +36,6 @@
 /cmake-build-release/
 /cmake-build-release/_deps/
 doc
+build
 #commit.sh
 #commit_info
