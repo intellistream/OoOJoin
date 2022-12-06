@@ -1,5 +1,0 @@
-if(EXISTS "/home/tony/project/OoOJoin/build/test/Google_Tests_run[1]_tests.cmake")
-  include("/home/tony/project/OoOJoin/build/test/Google_Tests_run[1]_tests.cmake")
-else()
-  add_test(Google_Tests_run_NOT_BUILT Google_Tests_run_NOT_BUILT)
-endif()
