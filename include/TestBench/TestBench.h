@@ -38,7 +38,7 @@ class TestBench {
   std::vector<TrackTuplePtr> sTuple;
   AbstractOperatorPtr testOp = nullptr;
   ConfigMapPtr opConfig;
-  size_t AQPResult=0;
+  size_t AQPResult = 0;
   TestBench() {}
   ~TestBench() {}
 

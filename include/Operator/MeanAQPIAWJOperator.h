@@ -10,12 +10,12 @@
 #include <atomic>
 #include <WaterMarker/PeriodicalWM.h>
 #include <Common/StateOfKey.h>
-namespace  OoOJoin {
+namespace OoOJoin {
 
 /**
- * @class MeanAQPIAWJOperator
  * @ingroup ADB_OPERATORS
  * @class MeanAQPIAWJOperator Operator/MeanAQPIAWJOperator.h
+ * \image html MeanAQP.png
  * @brief The intra window join (MeanAQPIAWJ) operator under the simplest AQP strategy, only considers a single window and uses
  * exponential weighted moving average for prediction
  * @note require configurations:
@@ -23,39 +23,42 @@ namespace  OoOJoin {
  * - "slideLen" U64: The length of slide
  * - "sLen" U64: The length of S buffer
  * - "rLen" U64: The length of R buffer
- * - "aqpScale" Double: The scaling factor for aqp estimation
  * @warning This implementation is putting rotten, just to explore a basic idea of AQP by using historical mean to predict future
  * @warning The predictor and watermarker are currently NOT seperated in this operator, split them in the future!
  * @note In current version, the computation will block feeding
+ * @note follows the assumption of linear independent arrival and skewness
+ * @note operator tag = "MeanAQP"
  */
 class MeanAQPIAWJOperator : public AbstractOperator {
  protected:
   Window myWindow;
   size_t intermediateResult = 0;
-  size_t confirmedResult=0;
-  uint64_t windowBound=0;
-  double alphaArrivalRate=0.125;
-  double alphaArrivalSkew=0.125;
-  double betaArrivalSkew=0.25;
-  tsType lastTimeS=0,lastTimeR=0;
-  double aqpScale=0.1;
+  size_t confirmedResult = 0;
+  uint64_t windowBound = 0;
+  // double alphaArrivalRate=0.125;
+  double alphaArrivalSkew = 0.125;
+  double betaArrivalSkew = 0.25;
+  tsType lastTimeS = 0, lastTimeR = 0;
+  double aqpScale = 0.1;
   void conductComputation();
   atomic_bool lockedByWaterMark = false;
   AbstractWaterMarkerPtr wmGen = nullptr;
-  StateOfKeyHashTablePtr stateOfKeyTableR,stateOfKeyTableS;
-  class MeanStateOfKey : public AbstractStateOfKey{
+  StateOfKeyHashTablePtr stateOfKeyTableR, stateOfKeyTableS;
+  class MeanStateOfKey : public AbstractStateOfKey {
    public:
-    size_t arrivedTupleCnt=0,unArrivedTupleCnt=0;
-    double arrivalRate=0,arrivalSkew=0,sigmaArrivalSkew=0;
-    MeanStateOfKey(){}
-    ~MeanStateOfKey(){}
+    size_t arrivedTupleCnt = 0;
+    double arrivalSkew = 0, sigmaArrivalSkew = 0;
+    TrackTuplePtr lastEventTuple = nullptr, lastArrivalTuple = nullptr;
+    // tsType  lastSeenTime=0;
+    MeanStateOfKey() {}
+    ~MeanStateOfKey() {}
   };
   typedef std::shared_ptr<MeanStateOfKey> MeanStateOfKeyPtr;
 #define newMeanStateOfKey std::make_shared<MeanStateOfKey>
-  void updateStateOfKeyS(MeanStateOfKeyPtr sk,TrackTuplePtr tp);
-  void updateStateOfKeyR(MeanStateOfKeyPtr sk,TrackTuplePtr tp);
+  void updateStateOfKey(MeanStateOfKeyPtr sk, TrackTuplePtr tp);
+  // void updateStateOfKeyR(MeanStateOfKeyPtr sk,TrackTuplePtr tp);
   void lazyComputeOfAQP();
-
+  double predictUnarrivedTuples(MeanStateOfKeyPtr px);
  public:
   MeanAQPIAWJOperator() {}
   ~MeanAQPIAWJOperator() {}

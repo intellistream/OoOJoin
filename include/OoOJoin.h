@@ -84,6 +84,7 @@
 #include <Operator/AbstractOperator.h>
 #include <Operator/IAWJOperator.h>
 #include <Operator/MeanAQPIAWJOperator.h>
+#include <Operator/OperatorTable.h>
 /**
  * @}
  */

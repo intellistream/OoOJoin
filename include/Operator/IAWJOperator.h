@@ -23,6 +23,7 @@ namespace OoOJoin {
  * - "algo" String: The specific join algorithm (optional, default nested loop)
  * - "threads" U64: The threads to conduct intra window join (optional, default 1)
  * @note In current version, the computation will block feeding
+ * @note operator tag = "IAWJ"
  */
 class IAWJOperator : public AbstractOperator {
  protected:

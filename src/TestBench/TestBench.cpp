@@ -121,7 +121,7 @@ size_t OoOJoin::TestBench::OoOTest(bool additionalSort) {
     OoOSort(sTuple);
   }
   inlineTest();
-  AQPResult=testOp->getAQPResult();
+  AQPResult = testOp->getAQPResult();
   return testOp->getResult();
 }
 

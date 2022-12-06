@@ -79,7 +79,20 @@ class Window {
    *  @return bool, whether reset is done
    */
   bool reset(void);
-
+  /**
+   * @brief get the start time of window
+   * @return the start time
+   */
+  tsType getStart() {
+    return startTime;
+  }
+  /**
+   * @brief get the end time of window
+   * @return the end time
+   */
+  tsType getEnd() {
+    return endTime;
+  }
 };
 /**
  * @}

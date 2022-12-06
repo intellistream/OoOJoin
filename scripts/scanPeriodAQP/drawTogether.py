@@ -91,9 +91,9 @@ def readResultVectorPeriod(periodVec,resultPath):
         compVec.append(1-abs(float(err)))
     return avgLatVec,lat95Vec,thrVec,errVec,compVec,aqpErrVec
 
-def smain(aqpScale=0.1):
+def main():
     exeSpace=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/"
-    resultPath=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/results/aqpPeriodTest/"+str(aqpScale)
+    resultPath=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/results/aqpPeriodTest"
     figPath=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/figures/"
     configTemplate=exeSpace+"config.csv"
     periodVec=[6,7,8,9,10,11,12,13,14,15]
@@ -104,24 +104,15 @@ def smain(aqpScale=0.1):
     if(len(sys.argv)<2):
         os.system("rm -rf "+resultPath)
         os.system("mkdir "+resultPath)
-        runPeriodVector(exeSpace,periodVec,resultPath,aqpScale)
+        runPeriodVector(exeSpace,periodVec,resultPath)
     avgLatVec,lat95Vec,thrVec,errVec,compVec,aqpErrVec=readResultVectorPeriod(periodVec,resultPath)
     os.system("mkdir "+figPath)
     #draw2yLine("watermark time (ms)",periodVecDisp,lat95Vec,errVec,"95% Latency (ms)","Error","ms","",figPath+"wm_lat")
     #draw2yLine("watermark time (ms)",periodVecDisp,thrVec,errVec,"Throughput (KTp/s)","Error","KTp/s","",figPath+"wm_thr")
     #draw2yLine("watermark time (ms)",periodVecDisp,lat95Vec,compVec,"95% Latency (ms)","Completeness","ms","",figPath+"wm_omp")
-    groupLine.DrawFigureYnormal([periodVec,periodVec],[errVec,aqpErrVec],['w/o aqp',"w/ aqp="+str(aqpScale)],"watermark time (ms)","Error",0,1,figPath+"wm_aqp_"+str(aqpScale),True)
+    groupLine.DrawFigureYnormal([periodVec,periodVec],[errVec,aqpErrVec],['w/o aqp',"w/ MeanAqp"],"watermark time (ms)","Error",0,1,figPath+"wm_MeanAqp",True)
     print(errVec)
     print(aqpErrVec)
-def main():
-    aqpScaleVec=[0.1,0.06,0.05,0.04,0.035,0.03]
-    resultPath=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/results/aqpPeriodTest"
-    if(len(sys.argv)<2):
-        os.system("rm -rf "+resultPath)
-        os.system("mkdir "+resultPath)
-    for i in aqpScaleVec:
-        smain(i)
-        time.sleep(0.1)
     #readResultPeriod(50,resultPath)
 if __name__ == "__main__":
     main()
