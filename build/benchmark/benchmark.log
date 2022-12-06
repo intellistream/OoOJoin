@@ -1,0 +1,558 @@
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f1b249b8c00] [INFO] : Nothing to run.20x7ffdd984a788
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f1b249b8c00] [INFO] : Load global config fromconfig_period_6.csv, output prefix = default
+
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1b249b8c00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1b249b8c00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1b249b8c00] [INFO] : watermarkPeriodMs = 6
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1b249b8c00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1b249b8c00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1b249b8c00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f1b249b8c00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f1b249b8c00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f1b249b8c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f1b249b8c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f1b249b8c00] [INFO] : watermarkPeriod=6000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f1b249b8c00] [INFO] : watermark reached at		key:8		value:0		event time:1500		arrival time:6002		processed time:0
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f1b249b8c00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f1b249b8c00] [DEBUG] : OoO Confirmed joined 10770
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f1b249b8c00] [DEBUG] : OoO AQP joined 84147
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f1b249b8c00] [DEBUG] : Average latency (us)=11720.8
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f1b249b8c00] [DEBUG] : 95% latency (us)=14137
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f1b249b8c00] [DEBUG] : Throughput (TPs/s)=65703
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f1b249b8c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f1b249b8c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f1b249b8c00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f1b249b8c00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f1b249b8c00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f1b249b8c00] [DEBUG] : OoO AQP joined 84147
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f1b249b8c00] [DEBUG] : Error = -0.159715
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f68fd8bfc00] [INFO] : Nothing to run.20x7ffe4f5170c8
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f68fd8bfc00] [INFO] : Load global config fromconfig_period_7.csv, output prefix = default
+
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f68fd8bfc00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f68fd8bfc00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f68fd8bfc00] [INFO] : watermarkPeriodMs = 7
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f68fd8bfc00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f68fd8bfc00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f68fd8bfc00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f68fd8bfc00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f68fd8bfc00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f68fd8bfc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f68fd8bfc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f68fd8bfc00] [INFO] : watermarkPeriod=7000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f68fd8bfc00] [INFO] : watermark reached at		key:8		value:0		event time:4500		arrival time:7000		processed time:0
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f68fd8bfc00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f68fd8bfc00] [DEBUG] : OoO Confirmed joined 17988
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f68fd8bfc00] [DEBUG] : OoO AQP joined 93245
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f68fd8bfc00] [DEBUG] : Average latency (us)=11142.1
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f68fd8bfc00] [DEBUG] : 95% latency (us)=13957
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f68fd8bfc00] [DEBUG] : Throughput (TPs/s)=65685.8
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f68fd8bfc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f68fd8bfc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f68fd8bfc00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f68fd8bfc00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f68fd8bfc00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f68fd8bfc00] [DEBUG] : OoO AQP joined 93245
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f68fd8bfc00] [DEBUG] : Error = -0.0688629
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f03cf0d4c00] [INFO] : Nothing to run.20x7ffc493ae3f8
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f03cf0d4c00] [INFO] : Load global config fromconfig_period_8.csv, output prefix = default
+
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f03cf0d4c00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f03cf0d4c00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f03cf0d4c00] [INFO] : watermarkPeriodMs = 8
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f03cf0d4c00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f03cf0d4c00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f03cf0d4c00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f03cf0d4c00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f03cf0d4c00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f03cf0d4c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f03cf0d4c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f03cf0d4c00] [INFO] : watermarkPeriod=8000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f03cf0d4c00] [INFO] : watermark reached at		key:6		value:0		event time:5000		arrival time:8000		processed time:0
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f03cf0d4c00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f03cf0d4c00] [DEBUG] : OoO Confirmed joined 28647
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f03cf0d4c00] [DEBUG] : OoO AQP joined 97181
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f03cf0d4c00] [DEBUG] : Average latency (us)=10585.3
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f03cf0d4c00] [DEBUG] : 95% latency (us)=13765
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f03cf0d4c00] [DEBUG] : Throughput (TPs/s)=65681.4
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f03cf0d4c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f03cf0d4c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f03cf0d4c00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f03cf0d4c00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f03cf0d4c00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f03cf0d4c00] [DEBUG] : OoO AQP joined 97181
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f03cf0d4c00] [DEBUG] : Error = -0.0295583
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7fbdff37ac00] [INFO] : Nothing to run.20x7ffe65c41198
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7fbdff37ac00] [INFO] : Load global config fromconfig_period_9.csv, output prefix = default
+
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fbdff37ac00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fbdff37ac00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fbdff37ac00] [INFO] : watermarkPeriodMs = 9
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fbdff37ac00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fbdff37ac00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fbdff37ac00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7fbdff37ac00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7fbdff37ac00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7fbdff37ac00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7fbdff37ac00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7fbdff37ac00] [INFO] : watermarkPeriod=9000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7fbdff37ac00] [INFO] : watermark reached at		key:7		value:0		event time:8500		arrival time:9008		processed time:0
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7fbdff37ac00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7fbdff37ac00] [DEBUG] : OoO Confirmed joined 38892
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7fbdff37ac00] [DEBUG] : OoO AQP joined 91731
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7fbdff37ac00] [DEBUG] : Average latency (us)=10168.7
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7fbdff37ac00] [DEBUG] : 95% latency (us)=13668
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7fbdff37ac00] [DEBUG] : Throughput (TPs/s)=65634
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7fbdff37ac00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7fbdff37ac00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7fbdff37ac00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7fbdff37ac00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7fbdff37ac00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7fbdff37ac00] [DEBUG] : OoO AQP joined 91731
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7fbdff37ac00] [DEBUG] : Error = -0.0839816
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f3f26a8bc00] [INFO] : Nothing to run.20x7fff2314b398
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f3f26a8bc00] [INFO] : Load global config fromconfig_period_10.csv, output prefix = default
+
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f3f26a8bc00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f3f26a8bc00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f3f26a8bc00] [INFO] : watermarkPeriodMs = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f3f26a8bc00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f3f26a8bc00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f3f26a8bc00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f3f26a8bc00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f3f26a8bc00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f3f26a8bc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f3f26a8bc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f3f26a8bc00] [INFO] : watermarkPeriod=10000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f3f26a8bc00] [INFO] : watermark reached at		key:2		value:0		event time:9000		arrival time:10013		processed time:0
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f3f26a8bc00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f3f26a8bc00] [DEBUG] : OoO Confirmed joined 54422
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f3f26a8bc00] [DEBUG] : OoO AQP joined 99149
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f3f26a8bc00] [DEBUG] : Average latency (us)=9445.32
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f3f26a8bc00] [DEBUG] : 95% latency (us)=13468
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f3f26a8bc00] [DEBUG] : Throughput (TPs/s)=65733.3
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f3f26a8bc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f3f26a8bc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f3f26a8bc00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f3f26a8bc00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f3f26a8bc00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f3f26a8bc00] [DEBUG] : OoO AQP joined 99149
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f3f26a8bc00] [DEBUG] : Error = -0.00990603
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7fe6bc472c00] [INFO] : Nothing to run.20x7ffe047fea78
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7fe6bc472c00] [INFO] : Load global config fromconfig_period_11.csv, output prefix = default
+
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fe6bc472c00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fe6bc472c00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fe6bc472c00] [INFO] : watermarkPeriodMs = 11
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fe6bc472c00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fe6bc472c00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fe6bc472c00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7fe6bc472c00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7fe6bc472c00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7fe6bc472c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7fe6bc472c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7fe6bc472c00] [INFO] : watermarkPeriod=11000
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7fe6bc472c00] [INFO] : watermark reached at		key:9		value:0		event time:9000		arrival time:11013		processed time:0
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7fe6bc472c00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7fe6bc472c00] [DEBUG] : OoO Confirmed joined 68881
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7fe6bc472c00] [DEBUG] : OoO AQP joined 102045
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7fe6bc472c00] [DEBUG] : Average latency (us)=9022.81
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7fe6bc472c00] [DEBUG] : 95% latency (us)=13392
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7fe6bc472c00] [DEBUG] : Throughput (TPs/s)=65728.9
+Dec 06 2022 19:14:00 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7fe6bc472c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7fe6bc472c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7fe6bc472c00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7fe6bc472c00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7fe6bc472c00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7fe6bc472c00] [DEBUG] : OoO AQP joined 102045
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7fe6bc472c00] [DEBUG] : Error = 0.0190132
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f4dd75a5c00] [INFO] : Nothing to run.20x7ffc6dc6c9e8
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f4dd75a5c00] [INFO] : Load global config fromconfig_period_12.csv, output prefix = default
+
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f4dd75a5c00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f4dd75a5c00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f4dd75a5c00] [INFO] : watermarkPeriodMs = 12
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f4dd75a5c00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f4dd75a5c00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f4dd75a5c00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f4dd75a5c00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f4dd75a5c00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f4dd75a5c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f4dd75a5c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f4dd75a5c00] [INFO] : watermarkPeriod=12000
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f4dd75a5c00] [INFO] : watermark reached at		key:9		value:0		event time:8500		arrival time:12034		processed time:0
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f4dd75a5c00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f4dd75a5c00] [DEBUG] : OoO Confirmed joined 80321
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f4dd75a5c00] [DEBUG] : OoO AQP joined 100129
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f4dd75a5c00] [DEBUG] : Average latency (us)=8548.89
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f4dd75a5c00] [DEBUG] : 95% latency (us)=13160
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f4dd75a5c00] [DEBUG] : Throughput (TPs/s)=66058.9
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f4dd75a5c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f4dd75a5c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f4dd75a5c00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f4dd75a5c00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f4dd75a5c00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f4dd75a5c00] [DEBUG] : OoO AQP joined 100129
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f4dd75a5c00] [DEBUG] : Error = -0.000119831
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7fafc25aec00] [INFO] : Nothing to run.20x7ffe8c0ad488
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7fafc25aec00] [INFO] : Load global config fromconfig_period_13.csv, output prefix = default
+
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fafc25aec00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fafc25aec00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fafc25aec00] [INFO] : watermarkPeriodMs = 13
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fafc25aec00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fafc25aec00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fafc25aec00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7fafc25aec00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7fafc25aec00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7fafc25aec00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7fafc25aec00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7fafc25aec00] [INFO] : watermarkPeriod=13000
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7fafc25aec00] [INFO] : watermark reached at		key:7		value:0		event time:8500		arrival time:13012		processed time:0
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7fafc25aec00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7fafc25aec00] [DEBUG] : OoO Confirmed joined 90503
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7fafc25aec00] [DEBUG] : OoO AQP joined 99856
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7fafc25aec00] [DEBUG] : Average latency (us)=8307.91
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7fafc25aec00] [DEBUG] : 95% latency (us)=13184
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7fafc25aec00] [DEBUG] : Throughput (TPs/s)=65889.2
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7fafc25aec00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7fafc25aec00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7fafc25aec00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7fafc25aec00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7fafc25aec00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7fafc25aec00] [DEBUG] : OoO AQP joined 99856
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7fafc25aec00] [DEBUG] : Error = -0.00284599
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f7f2b794c00] [INFO] : Nothing to run.20x7ffdc2945db8
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f7f2b794c00] [INFO] : Load global config fromconfig_period_14.csv, output prefix = default
+
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7f2b794c00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7f2b794c00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7f2b794c00] [INFO] : watermarkPeriodMs = 14
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7f2b794c00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7f2b794c00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7f2b794c00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f7f2b794c00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f7f2b794c00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f7f2b794c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f7f2b794c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f7f2b794c00] [INFO] : watermarkPeriod=14000
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f7f2b794c00] [INFO] : watermark reached at		key:6		value:0		event time:9500		arrival time:14109		processed time:0
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f7f2b794c00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f7f2b794c00] [DEBUG] : OoO Confirmed joined 97600
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f7f2b794c00] [DEBUG] : OoO AQP joined 98582
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f7f2b794c00] [DEBUG] : Average latency (us)=8161.83
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f7f2b794c00] [DEBUG] : 95% latency (us)=13203
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f7f2b794c00] [DEBUG] : Throughput (TPs/s)=65556.6
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f7f2b794c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f7f2b794c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f7f2b794c00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f7f2b794c00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f7f2b794c00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f7f2b794c00] [DEBUG] : OoO AQP joined 98582
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f7f2b794c00] [DEBUG] : Error = -0.015568
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f9a18d2ec00] [INFO] : Nothing to run.20x7fffef447e18
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f9a18d2ec00] [INFO] : Load global config fromconfig_period_15.csv, output prefix = default
+
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f9a18d2ec00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f9a18d2ec00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f9a18d2ec00] [INFO] : watermarkPeriodMs = 15
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f9a18d2ec00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f9a18d2ec00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f9a18d2ec00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f9a18d2ec00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f9a18d2ec00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f9a18d2ec00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f9a18d2ec00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f9a18d2ec00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f9a18d2ec00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f9a18d2ec00] [DEBUG] : OoO Confirmed joined 100141
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f9a18d2ec00] [DEBUG] : OoO AQP joined 100141
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f9a18d2ec00] [DEBUG] : Average latency (us)=8045.91
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f9a18d2ec00] [DEBUG] : 95% latency (us)=13183
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f9a18d2ec00] [DEBUG] : Throughput (TPs/s)=65634
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f9a18d2ec00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f9a18d2ec00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f9a18d2ec00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f9a18d2ec00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f9a18d2ec00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f9a18d2ec00] [DEBUG] : OoO AQP joined 100141
+Dec 06 2022 19:14:01 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f9a18d2ec00] [DEBUG] : Error = 0
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f1dadb0fc00] [INFO] : Nothing to run.20x7fff40818a88
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f1dadb0fc00] [INFO] : Load global config fromconfig_period_6.csv, output prefix = default
+
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1dadb0fc00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1dadb0fc00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1dadb0fc00] [INFO] : watermarkPeriodMs = 6
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1dadb0fc00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1dadb0fc00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1dadb0fc00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f1dadb0fc00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f1dadb0fc00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f1dadb0fc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f1dadb0fc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f1dadb0fc00] [INFO] : watermarkPeriod=6000
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f1dadb0fc00] [INFO] : watermark reached at		key:8		value:0		event time:1500		arrival time:6002		processed time:0
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f1dadb0fc00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f1dadb0fc00] [DEBUG] : OoO Confirmed joined 10770
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f1dadb0fc00] [DEBUG] : OoO AQP joined 84147
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f1dadb0fc00] [DEBUG] : Average latency (us)=11678.7
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f1dadb0fc00] [DEBUG] : 95% latency (us)=14096
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f1dadb0fc00] [DEBUG] : Throughput (TPs/s)=65884.8
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f1dadb0fc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f1dadb0fc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f1dadb0fc00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f1dadb0fc00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f1dadb0fc00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f1dadb0fc00] [DEBUG] : OoO AQP joined 84147
+Dec 06 2022 19:14:22 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f1dadb0fc00] [DEBUG] : Error = -0.159715
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f094824bc00] [INFO] : Nothing to run.20x7fff96aba748
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f094824bc00] [INFO] : Load global config fromconfig_period_7.csv, output prefix = default
+
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f094824bc00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f094824bc00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f094824bc00] [INFO] : watermarkPeriodMs = 7
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f094824bc00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f094824bc00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f094824bc00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f094824bc00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f094824bc00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f094824bc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f094824bc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f094824bc00] [INFO] : watermarkPeriod=7000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f094824bc00] [INFO] : watermark reached at		key:8		value:0		event time:4500		arrival time:7000		processed time:0
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f094824bc00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f094824bc00] [DEBUG] : OoO Confirmed joined 17988
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f094824bc00] [DEBUG] : OoO AQP joined 93245
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f094824bc00] [DEBUG] : Average latency (us)=11187.3
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f094824bc00] [DEBUG] : 95% latency (us)=14002
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f094824bc00] [DEBUG] : Throughput (TPs/s)=65487.9
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f094824bc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f094824bc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f094824bc00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f094824bc00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f094824bc00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f094824bc00] [DEBUG] : OoO AQP joined 93245
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f094824bc00] [DEBUG] : Error = -0.0688629
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f938158cc00] [INFO] : Nothing to run.20x7ffe3021deb8
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f938158cc00] [INFO] : Load global config fromconfig_period_8.csv, output prefix = default
+
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f938158cc00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f938158cc00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f938158cc00] [INFO] : watermarkPeriodMs = 8
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f938158cc00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f938158cc00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f938158cc00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f938158cc00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f938158cc00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f938158cc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f938158cc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f938158cc00] [INFO] : watermarkPeriod=8000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f938158cc00] [INFO] : watermark reached at		key:6		value:0		event time:5000		arrival time:8000		processed time:0
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f938158cc00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f938158cc00] [DEBUG] : OoO Confirmed joined 28647
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f938158cc00] [DEBUG] : OoO AQP joined 97181
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f938158cc00] [DEBUG] : Average latency (us)=10591.7
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f938158cc00] [DEBUG] : 95% latency (us)=13771
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f938158cc00] [DEBUG] : Throughput (TPs/s)=65655.6
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f938158cc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f938158cc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f938158cc00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f938158cc00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f938158cc00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f938158cc00] [DEBUG] : OoO AQP joined 97181
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f938158cc00] [DEBUG] : Error = -0.0295583
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f611702ac00] [INFO] : Nothing to run.20x7ffcefc51658
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f611702ac00] [INFO] : Load global config fromconfig_period_9.csv, output prefix = default
+
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f611702ac00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f611702ac00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f611702ac00] [INFO] : watermarkPeriodMs = 9
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f611702ac00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f611702ac00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f611702ac00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f611702ac00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f611702ac00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f611702ac00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f611702ac00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f611702ac00] [INFO] : watermarkPeriod=9000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f611702ac00] [INFO] : watermark reached at		key:7		value:0		event time:8500		arrival time:9008		processed time:0
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f611702ac00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f611702ac00] [DEBUG] : OoO Confirmed joined 38892
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f611702ac00] [DEBUG] : OoO AQP joined 91731
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f611702ac00] [DEBUG] : Average latency (us)=10136
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f611702ac00] [DEBUG] : 95% latency (us)=13635
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f611702ac00] [DEBUG] : Throughput (TPs/s)=65776.5
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f611702ac00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f611702ac00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f611702ac00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f611702ac00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f611702ac00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f611702ac00] [DEBUG] : OoO AQP joined 91731
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f611702ac00] [DEBUG] : Error = -0.0839816
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f7544e37c00] [INFO] : Nothing to run.20x7fff51ef6bf8
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f7544e37c00] [INFO] : Load global config fromconfig_period_10.csv, output prefix = default
+
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7544e37c00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7544e37c00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7544e37c00] [INFO] : watermarkPeriodMs = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7544e37c00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7544e37c00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f7544e37c00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f7544e37c00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f7544e37c00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f7544e37c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f7544e37c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f7544e37c00] [INFO] : watermarkPeriod=10000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f7544e37c00] [INFO] : watermark reached at		key:2		value:0		event time:9000		arrival time:10013		processed time:0
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f7544e37c00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f7544e37c00] [DEBUG] : OoO Confirmed joined 54422
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f7544e37c00] [DEBUG] : OoO AQP joined 99149
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f7544e37c00] [DEBUG] : Average latency (us)=9404.75
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f7544e37c00] [DEBUG] : 95% latency (us)=13428
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f7544e37c00] [DEBUG] : Throughput (TPs/s)=65910.9
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f7544e37c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f7544e37c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f7544e37c00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f7544e37c00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f7544e37c00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f7544e37c00] [DEBUG] : OoO AQP joined 99149
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f7544e37c00] [DEBUG] : Error = -0.00990603
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f0d17a98c00] [INFO] : Nothing to run.20x7ffc07a1e588
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f0d17a98c00] [INFO] : Load global config fromconfig_period_11.csv, output prefix = default
+
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f0d17a98c00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f0d17a98c00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f0d17a98c00] [INFO] : watermarkPeriodMs = 11
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f0d17a98c00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f0d17a98c00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f0d17a98c00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f0d17a98c00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f0d17a98c00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f0d17a98c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f0d17a98c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f0d17a98c00] [INFO] : watermarkPeriod=11000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f0d17a98c00] [INFO] : watermark reached at		key:9		value:0		event time:9000		arrival time:11013		processed time:0
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f0d17a98c00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f0d17a98c00] [DEBUG] : OoO Confirmed joined 68881
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f0d17a98c00] [DEBUG] : OoO AQP joined 102045
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f0d17a98c00] [DEBUG] : Average latency (us)=8927.56
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f0d17a98c00] [DEBUG] : 95% latency (us)=13297
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f0d17a98c00] [DEBUG] : Throughput (TPs/s)=66141.9
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f0d17a98c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f0d17a98c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f0d17a98c00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f0d17a98c00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f0d17a98c00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f0d17a98c00] [DEBUG] : OoO AQP joined 102045
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f0d17a98c00] [DEBUG] : Error = 0.0190132
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7ff7e79a8c00] [INFO] : Nothing to run.20x7ffe4843a168
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7ff7e79a8c00] [INFO] : Load global config fromconfig_period_12.csv, output prefix = default
+
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7ff7e79a8c00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7ff7e79a8c00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7ff7e79a8c00] [INFO] : watermarkPeriodMs = 12
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7ff7e79a8c00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7ff7e79a8c00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7ff7e79a8c00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7ff7e79a8c00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7ff7e79a8c00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7ff7e79a8c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7ff7e79a8c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7ff7e79a8c00] [INFO] : watermarkPeriod=12000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7ff7e79a8c00] [INFO] : watermark reached at		key:9		value:0		event time:8500		arrival time:12034		processed time:0
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7ff7e79a8c00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7ff7e79a8c00] [DEBUG] : OoO Confirmed joined 80321
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7ff7e79a8c00] [DEBUG] : OoO AQP joined 100129
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7ff7e79a8c00] [DEBUG] : Average latency (us)=8928.52
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7ff7e79a8c00] [DEBUG] : 95% latency (us)=13540
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7ff7e79a8c00] [DEBUG] : Throughput (TPs/s)=64445.4
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7ff7e79a8c00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7ff7e79a8c00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7ff7e79a8c00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7ff7e79a8c00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7ff7e79a8c00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7ff7e79a8c00] [DEBUG] : OoO AQP joined 100129
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7ff7e79a8c00] [DEBUG] : Error = -0.000119831
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f1e9decec00] [INFO] : Nothing to run.20x7ffd55368b68
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f1e9decec00] [INFO] : Load global config fromconfig_period_13.csv, output prefix = default
+
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1e9decec00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1e9decec00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1e9decec00] [INFO] : watermarkPeriodMs = 13
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1e9decec00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1e9decec00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f1e9decec00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f1e9decec00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f1e9decec00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f1e9decec00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f1e9decec00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f1e9decec00] [INFO] : watermarkPeriod=13000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7f1e9decec00] [INFO] : watermark reached at		key:7		value:0		event time:8500		arrival time:13012		processed time:0
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7f1e9decec00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f1e9decec00] [DEBUG] : OoO Confirmed joined 90503
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f1e9decec00] [DEBUG] : OoO AQP joined 99856
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f1e9decec00] [DEBUG] : Average latency (us)=8430.22
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f1e9decec00] [DEBUG] : 95% latency (us)=13288
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f1e9decec00] [DEBUG] : Throughput (TPs/s)=65278.4
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f1e9decec00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f1e9decec00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f1e9decec00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f1e9decec00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f1e9decec00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f1e9decec00] [DEBUG] : OoO AQP joined 99856
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f1e9decec00] [DEBUG] : Error = -0.00284599
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7fc7af2fcc00] [INFO] : Nothing to run.20x7ffde4b49a58
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7fc7af2fcc00] [INFO] : Load global config fromconfig_period_14.csv, output prefix = default
+
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fc7af2fcc00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fc7af2fcc00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fc7af2fcc00] [INFO] : watermarkPeriodMs = 14
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fc7af2fcc00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fc7af2fcc00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7fc7af2fcc00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7fc7af2fcc00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7fc7af2fcc00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7fc7af2fcc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7fc7af2fcc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7fc7af2fcc00] [INFO] : watermarkPeriod=14000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(33)  [0x7fc7af2fcc00] [INFO] : watermark reached at		key:6		value:0		event time:9500		arrival time:14109		processed time:0
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(66)  [0x7fc7af2fcc00] [INFO] : early terminate by watermark, already have results
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7fc7af2fcc00] [DEBUG] : OoO Confirmed joined 97600
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7fc7af2fcc00] [DEBUG] : OoO AQP joined 98582
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7fc7af2fcc00] [DEBUG] : Average latency (us)=8166.31
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7fc7af2fcc00] [DEBUG] : 95% latency (us)=13208
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7fc7af2fcc00] [DEBUG] : Throughput (TPs/s)=65535.1
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7fc7af2fcc00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7fc7af2fcc00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7fc7af2fcc00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7fc7af2fcc00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7fc7af2fcc00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7fc7af2fcc00] [DEBUG] : OoO AQP joined 98582
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7fc7af2fcc00] [DEBUG] : Error = -0.015568
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(189)  [0x7f5fc45fac00] [INFO] : Nothing to run.20x7fff2826b318
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(107)  [0x7f5fc45fac00] [INFO] : Load global config fromconfig_period_15.csv, output prefix = default
+
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f5fc45fac00] [INFO] : windowLenMs = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f5fc45fac00] [INFO] : timeStepUs = 50
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f5fc45fac00] [INFO] : watermarkPeriodMs = 15
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f5fc45fac00] [INFO] : maxArrivalSkewMs = 5
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f5fc45fac00] [INFO] : eventRateKTps = 100
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(69)  [0x7f5fc45fac00] [INFO] : keyRange = 10
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(87)  [0x7f5fc45fac00] [INFO] : operator = MeanAQP
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(145)  [0x7f5fc45fac00] [INFO] : /****run OoO test of 1000 tuples***/
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f5fc45fac00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f5fc45fac00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f5fc45fac00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f5fc45fac00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(149)  [0x7f5fc45fac00] [DEBUG] : OoO Confirmed joined 100141
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(150)  [0x7f5fc45fac00] [DEBUG] : OoO AQP joined 100141
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(156)  [0x7f5fc45fac00] [DEBUG] : Average latency (us)=8025.23
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(157)  [0x7f5fc45fac00] [DEBUG] : 95% latency (us)=13159
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(158)  [0x7f5fc45fac00] [DEBUG] : Throughput (TPs/s)=65720.3
+Dec 06 2022 19:14:23 INTELLI: /home/tony/project/OoOJoin/src/TestBench/TestBench.cpp(56)  [0x7f5fc45fac00] [INFO] : Feeding time step=50us
+Dec 06 2022 19:14:24 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/AbstractWaterMarker.cpp(18)  [0x7f5fc45fac00] [WARN] : NO assigned errorBound, set to 0.01
+Dec 06 2022 19:14:24 INTELLI: /home/tony/project/OoOJoin/src/WaterMarker/PeriodicalWM.cpp(13)  [0x7f5fc45fac00] [INFO] : watermarkPeriod=15000
+Dec 06 2022 19:14:24 INTELLI: /home/tony/project/OoOJoin/src/Operator/MeanAQPIAWJOperator.cpp(69)  [0x7f5fc45fac00] [INFO] : No watermark encountered, compute now
+Dec 06 2022 19:14:24 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(165)  [0x7f5fc45fac00] [DEBUG] : Expect 100141
+Dec 06 2022 19:14:24 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(169)  [0x7f5fc45fac00] [DEBUG] : OoO AQP joined 100141
+Dec 06 2022 19:14:24 INTELLI: /home/tony/project/OoOJoin/benchmark/src/Benchmark.cpp(173)  [0x7f5fc45fac00] [DEBUG] : Error = 0

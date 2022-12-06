@@ -1,0 +1,41 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/IntelliStream.dir/src/Common/StateOfKey.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/Common/StateOfKey.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/Common/Tuples.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/Common/Tuples.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/Common/Window.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/Common/Window.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/JoinAlgos/AbstractJoinAlgo.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/JoinAlgos/AbstractJoinAlgo.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/JoinAlgos/JoinAlgoTable.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/JoinAlgos/JoinAlgoTable.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/JoinAlgos/NPJ/MultiThreadHashTable.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/JoinAlgos/NPJ/MultiThreadHashTable.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/JoinAlgos/NPJ/NPJ.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/JoinAlgos/NPJ/NPJ.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/JoinAlgos/NestedLoopJoin.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/JoinAlgos/NestedLoopJoin.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/Operator/AbstractOperator.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/Operator/AbstractOperator.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/Operator/IAWJOperator.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/Operator/IAWJOperator.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/Operator/MeanAQPIAWJOperator.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/Operator/MeanAQPIAWJOperator.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/Operator/OperatorTable.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/Operator/OperatorTable.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/TestBench/TestBench.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/TestBench/TestBench.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/Utils/UtilityFunctions.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/Utils/UtilityFunctions.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/WaterMarker/AbstractWaterMarker.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/WaterMarker/AbstractWaterMarker.cpp.o.d"
+  "CMakeFiles/IntelliStream.dir/src/WaterMarker/PeriodicalWM.cpp.o"
+  "CMakeFiles/IntelliStream.dir/src/WaterMarker/PeriodicalWM.cpp.o.d"
+  "libIntelliStream.pdb"
+  "libIntelliStream.so"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/IntelliStream.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
