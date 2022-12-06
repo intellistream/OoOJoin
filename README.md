@@ -3,13 +3,14 @@
 Template for C++ 20 project; using CMAKE to manage
 
 ## Requires G++11
-
+For ubuntu older than 21.10, run following first
 ```shell
-sudo add-apt-repository 'deb http://mirrors.kernel.org/ubuntu hirsute main universe'
-sudo apt-get update"
-sudo apt install gcc-11 g++-11"
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
+sudo add-apt-repository 'deb http://mirrors.kernel.org/ubuntu jammy main universe'
+sudo apt-get update
+```
+Then, 
+```shell
+sudo apt-get install gcc g++ cmake python3 python3-pip
 ```
 
 ## Requires Log4cxx
