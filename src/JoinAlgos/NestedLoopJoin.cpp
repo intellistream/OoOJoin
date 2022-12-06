@@ -27,7 +27,7 @@ size_t NestedLoopJoin::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
   for (size_t i = 0; i < trLen; i++) {
     OoOJoin::TrackTuplePtr tr = windR.data(i)[0];
     result += join(windS, tr, threads);
-    tr->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct) ;
+    tr->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
   return result;
 }

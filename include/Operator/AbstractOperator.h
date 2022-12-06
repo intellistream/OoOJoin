@@ -110,7 +110,11 @@ class AbstractOperator {
    * @return The result
    */
   virtual size_t getResult();
-
+  /**
+   * @brief get the joined sum result under AQP estimation
+   * @return The result
+   */
+  virtual size_t getAQPResult();
 };
 /**
  * @ingroup ADB_OPERATORS

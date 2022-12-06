@@ -78,7 +78,7 @@ void OoOJoin::TestBench::inlineTest() {
   testOp->syncTimeStruct(timeStart);
   testOp->start();
   while (tNow < tMax) {
-    tNow = UtilityFunctions::timeLastUs(timeStart) ;
+    tNow = UtilityFunctions::timeLastUs(timeStart);
     //INTELLI_INFO("T=" << tNow);
     while (tNow >= tNextS) {
       if (sPos <= testSize - 1) {
@@ -121,7 +121,7 @@ size_t OoOJoin::TestBench::OoOTest(bool additionalSort) {
     OoOSort(sTuple);
   }
   inlineTest();
-
+  AQPResult=testOp->getAQPResult();
   return testOp->getResult();
 }
 
@@ -181,7 +181,7 @@ double OoOJoin::TestBench::getAvgLatency() {
       nonZeroCnt++;
     }
   }
-  return sum  / nonZeroCnt;
+  return sum / nonZeroCnt;
 }
 double OoOJoin::TestBench::getThroughput() {
   size_t rLen = rTuple.size();
@@ -195,7 +195,7 @@ double OoOJoin::TestBench::getThroughput() {
       minArrival = rTuple[i]->arrivalTime;
     }
   }
-  double elapsedTime = (maxProcessed - minArrival) ;
+  double elapsedTime = (maxProcessed - minArrival);
   double thr = rLen;
   thr = thr * 1e6 / elapsedTime;
   return thr;
@@ -217,6 +217,6 @@ double OoOJoin::TestBench::getLatencyPercentage(double fraction) {
   if (idx >= validLatency.size()) {
     idx = validLatency.size() - 1;
   }
-  return validLatency[idx] ;
+  return validLatency[idx];
 
 }

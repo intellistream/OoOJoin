@@ -6,7 +6,7 @@
 #ifndef _JOINALGO_NPJ_NPJ_H_
 #define _JOINALGO_NPJ_NPJ_H_
 #include <JoinAlgos/NPJ/MultiThreadHashTable.h>
-#include <Utils/AbstractC20Thread.h>
+#include <Utils/AbstractC20Thread.hpp>
 #include <barrier>
 #include <JoinAlgos/AbstractJoinAlgo.h>
 namespace OoOJoin {

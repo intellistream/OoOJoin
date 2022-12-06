@@ -82,7 +82,8 @@ uint64_t tryU64(ConfigMapPtr config,string key,uint64_t defaultValue=0)
  */
 void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   INTELLI_INFO("Load global config from" + configName + ", output prefix = " + outPrefix + "\n");
-  IAWJOperatorPtr iawj = newIAWJOperator();
+  MeanAQPIAWJOperatorPtr iawj = newMeanAQPIAWJOperator();
+  //IAWJOperatorPtr iawj = newIAWJOperator();
   //get config
   ConfigMapPtr cfg = newConfigMap();
   cfg->fromFile(configName);
@@ -113,7 +114,8 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   tbOoO.setOperator(iawj, cfg);
   tbOoO.setDataSet(rTuple, sTuple);
   OoORu = tbOoO.OoOTest(true);
-  INTELLI_DEBUG("OoO joined " << OoORu);
+  INTELLI_DEBUG("OoO Confirmed joined " << OoORu);
+  INTELLI_DEBUG("OoO AQP joined " << tbOoO.AQPResult);
   ConfigMap generalStatistics;
   generalStatistics.edit("AvgLatency", (double) tbOoO.getAvgLatency());
   generalStatistics.edit("95%Latency", (double) tbOoO.getLatencyPercentage(0.95));
@@ -132,12 +134,18 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   double err = OoORu;
   err = (err - realRu) / realRu;
   generalStatistics.edit("Error", (double) err);
+  INTELLI_DEBUG("OoO AQP joined " << tbOoO.AQPResult);
+  err = tbOoO.AQPResult;
+  err = (err - realRu) / realRu;
+  generalStatistics.edit("AQPError", (double) err);
   INTELLI_DEBUG("Error = " << err);
   generalStatistics.toFile(outPrefix + "_general.csv");
   //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
+
 int main(int argc, char **argv) {
 
+   ThreadPerf pef(-1);
 
   //Setup Logs.
   setLogLevel(getStringAsDebugLevel("LOG_TRACE"));
@@ -160,7 +168,11 @@ int main(int argc, char **argv) {
   }
 
   //tempTest();
+  pef.setPerfList();
+  pef.start();
   runTestBenchAdj(configName, outPrefix);
+  pef.end();
+  pef.resultToConfigMap()->toFile("perfRu.csv");
   // testConfig();
   //TuplePtrQueue tpq=
 }
