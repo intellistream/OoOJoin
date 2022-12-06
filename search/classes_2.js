@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iawjoperator_172',['IAWJOperator',['../classAllianceDB_1_1IAWJOperator.html',1,'AllianceDB']]]
+  ['default_5fattrs_216',['default_attrs',['../structdefault__attrs.html',1,'']]]
 ];

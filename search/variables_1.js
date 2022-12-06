@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['endtime_278',['endTime',['../classAllianceDB_1_1Window.html#a467cdb0a9db5d429031832e8184c412d',1,'AllianceDB::Window']]],
-  ['errorbound_279',['errorBound',['../classAllianceDB_1_1AbstractWaterMarker.html#a8545bf8ad4513d00cbcde5a2e2d26e54',1,'AllianceDB::AbstractWaterMarker']]],
-  ['eventtime_280',['eventTime',['../classAllianceDB_1_1Tuple.html#ab5388679a8e07eb12e91b17fd9c1d500',1,'AllianceDB::Tuple']]]
+  ['endtime_353',['endTime',['../classOoOJoin_1_1Window.html#acc902aa97b75ea7b3401068e27e7f2e5',1,'OoOJoin::Window']]],
+  ['errorbound_354',['errorBound',['../classOoOJoin_1_1AbstractWaterMarker.html#af3a2755ed083d075279ea79bed61a745',1,'OoOJoin::AbstractWaterMarker']]],
+  ['eventtime_355',['eventTime',['../classOoOJoin_1_1Tuple.html#a264ac614c9cfd4cc9d079c77ddbb5f6d',1,'OoOJoin::Tuple']]]
 ];

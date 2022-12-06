@@ -1,30 +1,30 @@
 var group__ADB__JOINALGOS__ABSTRACT =
 [
-    [ "AbstractJoinAlgo", "classAllianceDB_1_1AbstractJoinAlgo.html", [
-      [ "AbstractJoinAlgo", "classAllianceDB_1_1AbstractJoinAlgo.html#a44885e206db3722140bd104a81a88b54", null ],
-      [ "~AbstractJoinAlgo", "classAllianceDB_1_1AbstractJoinAlgo.html#a7660de7b6964ec02fc23f6c6305e4257", null ],
-      [ "getAlgoName", "classAllianceDB_1_1AbstractJoinAlgo.html#a8b49c56b968b910fc1cb295c62a0eacc", null ],
-      [ "join", "classAllianceDB_1_1AbstractJoinAlgo.html#a2a8f38bfda3893c5751f803f888e36f4", null ],
-      [ "setAlgoName", "classAllianceDB_1_1AbstractJoinAlgo.html#a523bc6fb4dc4817f673764a46b3ce43f", null ],
-      [ "setConfig", "classAllianceDB_1_1AbstractJoinAlgo.html#a8c79b40630ef5d9475d0c41be00a8a06", null ],
-      [ "syncTimeStruct", "classAllianceDB_1_1AbstractJoinAlgo.html#a40ece76ac78a79a30e749dfd9ba63c9c", null ],
-      [ "config", "classAllianceDB_1_1AbstractJoinAlgo.html#a2612b3de3b95219659bd7aea66237066", null ],
-      [ "nameTag", "classAllianceDB_1_1AbstractJoinAlgo.html#a29ad5148bb90a8611d9af69b1a9f4a48", null ],
-      [ "timeBaseStruct", "classAllianceDB_1_1AbstractJoinAlgo.html#a63ba46f8230745d30b2d84d85125b373", null ]
+    [ "AbstractJoinAlgo", "classOoOJoin_1_1AbstractJoinAlgo.html", [
+      [ "AbstractJoinAlgo", "classOoOJoin_1_1AbstractJoinAlgo.html#ac4a20f37a0440d578979ed3b250c9a98", null ],
+      [ "~AbstractJoinAlgo", "classOoOJoin_1_1AbstractJoinAlgo.html#a624885666005ad15a24776f63800adc3", null ],
+      [ "getAlgoName", "classOoOJoin_1_1AbstractJoinAlgo.html#a74d3cbcd3585f4d54b86585246a2243e", null ],
+      [ "join", "classOoOJoin_1_1AbstractJoinAlgo.html#ac8b5d846704fc3ae5077c24f2016b2db", null ],
+      [ "setAlgoName", "classOoOJoin_1_1AbstractJoinAlgo.html#a25ae0637df10b5c63eecf0db55d9d1b5", null ],
+      [ "setConfig", "classOoOJoin_1_1AbstractJoinAlgo.html#aab908e5f382c553b95d8194ded8d541c", null ],
+      [ "syncTimeStruct", "classOoOJoin_1_1AbstractJoinAlgo.html#a15740ce650db5ccc16d7877c33cfbf7e", null ],
+      [ "config", "classOoOJoin_1_1AbstractJoinAlgo.html#abd296468c112316fd2e0b5a901b7d869", null ],
+      [ "nameTag", "classOoOJoin_1_1AbstractJoinAlgo.html#a7b4283b8f35237d680c81110547e83b0", null ],
+      [ "timeBaseStruct", "classOoOJoin_1_1AbstractJoinAlgo.html#ad2576e4dca18079bbb6073c68f433057", null ]
     ] ],
-    [ "JoinAlgoTable", "classAllianceDB_1_1JoinAlgoTable.html", [
-      [ "JoinAlgoTable", "classAllianceDB_1_1JoinAlgoTable.html#a811b90c42fac605bbfe99356acca7143", null ],
-      [ "~JoinAlgoTable", "classAllianceDB_1_1JoinAlgoTable.html#a885a05f59024fd1ad5cc5e454075bca7", null ],
-      [ "findAlgo", "classAllianceDB_1_1JoinAlgoTable.html#af40feacf13506ab8ecc4d31ecbb16989", null ],
-      [ "findAlgo", "classAllianceDB_1_1JoinAlgoTable.html#a2b25e69352f01d19d6cbc4d4899b05c3", null ],
-      [ "registerNewAlgo", "classAllianceDB_1_1JoinAlgoTable.html#a36ae29161b31ddeecc74e7e1390c3a3c", null ],
-      [ "algoMap", "classAllianceDB_1_1JoinAlgoTable.html#a9d32651a0c370170aba153fea3fa903b", null ],
-      [ "algos", "classAllianceDB_1_1JoinAlgoTable.html#a98fa5cc53f9ffa3989b4eb606b43232e", null ]
+    [ "JoinAlgoTable", "classOoOJoin_1_1JoinAlgoTable.html", [
+      [ "JoinAlgoTable", "classOoOJoin_1_1JoinAlgoTable.html#a0c8a8316fc6cc2c0b5ef156e0dbac6c8", null ],
+      [ "~JoinAlgoTable", "classOoOJoin_1_1JoinAlgoTable.html#ac2eada1f109becd67d547d66ec69edd2", null ],
+      [ "findAlgo", "classOoOJoin_1_1JoinAlgoTable.html#ab88a734996eff6c326977f9a1cc7f9fb", null ],
+      [ "findAlgo", "classOoOJoin_1_1JoinAlgoTable.html#aa6b8d161726acb32fb04deeadb4d4e04", null ],
+      [ "registerNewAlgo", "classOoOJoin_1_1JoinAlgoTable.html#a20f7c21f26085013533b10ef7624ef26", null ],
+      [ "algoMap", "classOoOJoin_1_1JoinAlgoTable.html#a3f413a909de3a4ba80e484b1697964d3", null ],
+      [ "algos", "classOoOJoin_1_1JoinAlgoTable.html#a31d403c4c7e16c9d2e19e2007033669d", null ]
     ] ],
-    [ "join_algo_index_t", "group__ADB__JOINALGOS__ABSTRACT.html#ga68faf6e8578a50174021857c1b8c1410", [
-      [ "JOINALGO_NULL", "namespaceAllianceDB.html#ga68faf6e8578a50174021857c1b8c1410a6b7e2b4ec0bfe98630164771d36c29c7", null ],
-      [ "JOINALGO_NESTEDLOOP", "namespaceAllianceDB.html#ga68faf6e8578a50174021857c1b8c1410ac528b54a6b67c7ba4ed00c85ae1d95c2", null ],
-      [ "JOINALGO_NPJ", "namespaceAllianceDB.html#ga68faf6e8578a50174021857c1b8c1410af91fae6bd5b3d68a1b2c5cab917ddfa6", null ],
-      [ "JOINALGO_NPJ_SINGLE", "namespaceAllianceDB.html#ga68faf6e8578a50174021857c1b8c1410ab44ed028e257204ff59db26e3c23fc1b", null ]
+    [ "join_algo_index_t", "group__ADB__JOINALGOS__ABSTRACT.html#ga049ac3be11e850bb46b1445f1d054443", [
+      [ "JOINALGO_NULL", "namespaceOoOJoin.html#ga049ac3be11e850bb46b1445f1d054443adbfcb2383643950f33d8d1c905b7f469", null ],
+      [ "JOINALGO_NESTEDLOOP", "namespaceOoOJoin.html#ga049ac3be11e850bb46b1445f1d054443a18160a79b0a51b58d9d0c9abd087a3d2", null ],
+      [ "JOINALGO_NPJ", "namespaceOoOJoin.html#ga049ac3be11e850bb46b1445f1d054443add5b2f47c541a22f0336be6c0ae159b6", null ],
+      [ "JOINALGO_NPJ_SINGLE", "namespaceOoOJoin.html#ga049ac3be11e850bb46b1445f1d054443a9e686e7c6753280c980e6dad31b31ce6", null ]
     ] ]
 ];

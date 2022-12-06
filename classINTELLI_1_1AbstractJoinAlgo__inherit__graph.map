@@ -1,4 +1,0 @@
-<map id="INTELLI::AbstractJoinAlgo" name="INTELLI::AbstractJoinAlgo">
-<area shape="rect" id="node1" title="The abstraction to describe a join algorithm, providing virtual function of join." alt="" coords="5,5,191,32"/>
-<area shape="rect" id="node2" href="$classINTELLI_1_1NestedLoopJoin.html" title="The top class package of Nested Loop Join providing a &quot;join function&quot;." alt="" coords="9,80,187,107"/>
-</map>

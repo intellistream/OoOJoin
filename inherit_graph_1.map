@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classAllianceDB_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="5,5,217,32"/>
-<area shape="rect" id="node2" href="$classAllianceDB_1_1IAWJOperator.html" title="The intra window join (IAWJ) operator, only considers a single window." alt="" coords="265,5,452,32"/>
+<area shape="rect" id="node1" href="$classINTELLI_1_1AbstractC20Thread.html" title="The base class and abstraction of C++20 thread, and it can be derived into other threads." alt="" coords="5,5,208,32"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1NPJ__thread.html" title="The thread used by NPJ." alt="" coords="256,5,409,32"/>
 </map>

@@ -1,0 +1,4 @@
+<map id="OoOJoin::IAWJOperator" name="OoOJoin::IAWJOperator">
+<area shape="rect" id="node1" title="The intra window join (IAWJ) operator, only considers a single window." alt="" coords="18,80,186,107"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="5,5,199,32"/>
+</map>

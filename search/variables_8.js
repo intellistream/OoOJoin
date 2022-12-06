@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['watermarkperiod_287',['watermarkPeriod',['../classAllianceDB_1_1PeriodicalWM.html#a0e115942e47f47f82befd17f2c317181',1,'AllianceDB::PeriodicalWM']]],
-  ['windowid_288',['windowID',['../classAllianceDB_1_1Window.html#a8e7c06a450a9d59201afb6747116256d',1,'AllianceDB::Window']]],
-  ['windowlen_289',['windowLen',['../classAllianceDB_1_1PeriodicalWM.html#ac1c1b1922ff000de87e16678fc059025',1,'AllianceDB::PeriodicalWM']]]
+  ['watermarkperiod_363',['watermarkPeriod',['../classOoOJoin_1_1PeriodicalWM.html#a8dbdea930bfd1cb7bf568b68d0d64c28',1,'OoOJoin::PeriodicalWM']]],
+  ['windowid_364',['windowID',['../classOoOJoin_1_1Window.html#ac073e15330c303e5d93a34da5d35e5af',1,'OoOJoin::Window']]],
+  ['windowlen_365',['windowLen',['../classOoOJoin_1_1PeriodicalWM.html#a80a10a439dcd71a3b828809f3428c63f',1,'OoOJoin::PeriodicalWM']]]
 ];

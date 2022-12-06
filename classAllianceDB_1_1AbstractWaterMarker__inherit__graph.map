@@ -1,4 +1,0 @@
-<map id="AllianceDB::AbstractWaterMarker" name="AllianceDB::AbstractWaterMarker">
-<area shape="rect" id="node1" title="The abstraction to describe a watermark generator, providing virtual function of deciding watermark g..." alt="" coords="5,5,199,47"/>
-<area shape="rect" id="node2" href="$classAllianceDB_1_1PeriodicalWM.html" title="The class which generates watermark periodically." alt="" coords="7,95,197,121"/>
-</map>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['valuetype_304',['valueType',['../group__INTELLI__COMMON__BASIC.html#gaa95f232a8af6c9cc856ace1c97471d3c',1,'AllianceDB']]]
+  ['stateofkeybucketptr_381',['StateOfKeyBucketPtr',['../group__INTELLI__COMMON__BASIC__STATE__OF__KEY.html#ga544ccdbebc56338c5f005c8abe2d8513',1,'OoOJoin']]],
+  ['stateofkeyhashtableptr_382',['StateOfKeyHashTablePtr',['../group__INTELLI__COMMON__BASIC__STATE__OF__KEY.html#gad5a7bf32648ca25c40a688537b7d786b',1,'OoOJoin']]]
 ];

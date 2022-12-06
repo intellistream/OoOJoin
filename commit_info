@@ -1,0 +1,4 @@
+1. A toy AQP which manually assign linear coeffcient
+2. Revise the Utils and clean the mountain of shit...
+3. Fix the bugs of a basic MeanAQPOperator
+4. Introduce the Operator Table

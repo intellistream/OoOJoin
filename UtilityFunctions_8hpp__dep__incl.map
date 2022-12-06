@@ -1,9 +1,11 @@
 <map id="include/Utils/UtilityFunctions.hpp" name="include/Utils/UtilityFunctions.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="279,5,516,32"/>
-<area shape="rect" id="node2" href="$AbstractOperator_8h.html" title=" " alt="" coords="182,169,370,211"/>
-<area shape="rect" id="node6" href="$AbstractWaterMarker_8h.html" title=" " alt="" coords="407,80,582,121"/>
-<area shape="rect" id="node3" href="$OoOJoin_8h.html" title=" " alt="" coords="349,333,486,360"/>
-<area shape="rect" id="node4" href="$IAWJOperator_8h_source.html" title=" " alt="" coords="302,259,533,285"/>
-<area shape="rect" id="node5" href="$TestBench_8h.html" title=" " alt="" coords="5,259,227,285"/>
-<area shape="rect" id="node7" href="$PeriodicalWM_8h.html" title=" " alt="" coords="417,169,573,211"/>
+<area shape="rect" id="node1" title=" " alt="" coords="260,5,498,32"/>
+<area shape="rect" id="node2" href="$AbstractOperator_8h.html" title=" " alt="" coords="141,169,329,211"/>
+<area shape="rect" id="node8" href="$AbstractWaterMarker_8h.html" title=" " alt="" coords="434,80,609,121"/>
+<area shape="rect" id="node3" href="$OoOJoin_8h.html" title=" " alt="" coords="356,423,493,449"/>
+<area shape="rect" id="node4" href="$IAWJOperator_8h.html" title=" " alt="" coords="120,259,350,285"/>
+<area shape="rect" id="node6" href="$MeanAQPIAWJOperator_8h.html" title=" " alt="" coords="374,259,669,285"/>
+<area shape="rect" id="node7" href="$TestBench_8h.html" title=" " alt="" coords="32,341,254,367"/>
+<area shape="rect" id="node5" href="$OperatorTable_8h.html" title=" " alt="" coords="329,333,520,375"/>
+<area shape="rect" id="node9" href="$PeriodicalWM_8h.html" title=" " alt="" coords="444,169,600,211"/>
 </map>

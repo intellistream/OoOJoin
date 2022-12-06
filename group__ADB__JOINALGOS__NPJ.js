@@ -1,32 +1,32 @@
 var group__ADB__JOINALGOS__NPJ =
 [
-    [ "NPJ_thread", "classAllianceDB_1_1NPJ__thread.html", [
-      [ "NPJ_thread", "group__ADB__JOINALGOS__NPJ.html#ga97ef92bcf5337fe9f46441353f18227b", null ],
-      [ "~NPJ_thread", "group__ADB__JOINALGOS__NPJ.html#ga4fcb2aed25cacdea67ebcb0f8c65249f", null ],
-      [ "getResult", "group__ADB__JOINALGOS__NPJ.html#gafaf16e37664a27715feb5d74862ef9e5", null ],
-      [ "init", "group__ADB__JOINALGOS__NPJ.html#ga529282a8a54692ad2a49f423bb57b59f", null ],
-      [ "inlineMain", "group__ADB__JOINALGOS__NPJ.html#ga0ebd238f932574e80d7b541946c11163", null ],
-      [ "syncTimeStruct", "group__ADB__JOINALGOS__NPJ.html#ga85e8968798ce1fc8f160cf1d8adf7f74", null ],
-      [ "waitBuildBar", "group__ADB__JOINALGOS__NPJ.html#ga7a7e265fc27dc3d98c5195198b492895", null ]
+    [ "NPJ_thread", "classOoOJoin_1_1NPJ__thread.html", [
+      [ "NPJ_thread", "group__ADB__JOINALGOS__NPJ.html#gad341406a52e1e62a52e048b892eeac60", null ],
+      [ "~NPJ_thread", "group__ADB__JOINALGOS__NPJ.html#ga605204c5cb14244a5d2f57377bf47898", null ],
+      [ "getResult", "group__ADB__JOINALGOS__NPJ.html#ga6096eb342b5b4c49e26ea99fb85e192d", null ],
+      [ "init", "group__ADB__JOINALGOS__NPJ.html#gacacd08bf16aaf37b227e6133d9e9a83e", null ],
+      [ "inlineMain", "group__ADB__JOINALGOS__NPJ.html#gaebeae6e77e7d509d2b13ea6fbabeebe1", null ],
+      [ "syncTimeStruct", "group__ADB__JOINALGOS__NPJ.html#ga5419c051a6ff8aae83ee839b8ba5bd3b", null ],
+      [ "waitBuildBar", "group__ADB__JOINALGOS__NPJ.html#gadf38daf38fae68ee56242810c3f56fad", null ]
     ] ],
-    [ "NPJ", "classAllianceDB_1_1NPJ.html", [
-      [ "NPJ", "group__ADB__JOINALGOS__NPJ.html#ga4107d29b51850b4c29cbe9a150936e8d", null ],
-      [ "~NPJ", "group__ADB__JOINALGOS__NPJ.html#ga115d10c54a15fce97a750c2d0587d609", null ],
-      [ "join", "group__ADB__JOINALGOS__NPJ.html#gad69dfe1b4e47c0646b3909194237415b", null ]
+    [ "NPJ", "classOoOJoin_1_1NPJ.html", [
+      [ "NPJ", "group__ADB__JOINALGOS__NPJ.html#gacd64fee804f1a489aa1f938c5387ec1b", null ],
+      [ "~NPJ", "group__ADB__JOINALGOS__NPJ.html#gaba75e7fa12b5609fee138c47f4f186d1", null ],
+      [ "join", "group__ADB__JOINALGOS__NPJ.html#gae3e65b10c48a8a2d4a7c1b4118b7b349", null ]
     ] ],
-    [ "NPJSingle", "classAllianceDB_1_1NPJSingle.html", [
-      [ "NPJSingle", "group__ADB__JOINALGOS__NPJ.html#ga27f3849104875a0d67edc8916522ccc9", null ],
-      [ "~NPJSingle", "group__ADB__JOINALGOS__NPJ.html#ga15463c900ac6dd8e6de0f96be99e22db", null ],
-      [ "join", "group__ADB__JOINALGOS__NPJ.html#gacf644071866b5a8b5fe658709823f8cb", null ]
+    [ "NPJSingle", "classOoOJoin_1_1NPJSingle.html", [
+      [ "NPJSingle", "group__ADB__JOINALGOS__NPJ.html#ga375ee3e8b9fffe7d27595a1705d194ef", null ],
+      [ "~NPJSingle", "group__ADB__JOINALGOS__NPJ.html#ga2dd57d17fcea4979bc3760a7c3ad77d6", null ],
+      [ "join", "group__ADB__JOINALGOS__NPJ.html#ga0258bc04c69b7e2209c310345b6eb982", null ]
     ] ],
     [ "BUCKET_SIZE", "group__ADB__JOINALGOS__NPJ.html#ga352964ca100791f7e6438323f55b8541", null ],
     [ "newNPJ", "group__ADB__JOINALGOS__NPJ.html#gafa21d5fc3f2bb1c5382f6acb93b28289", null ],
     [ "newNPJSingle", "group__ADB__JOINALGOS__NPJ.html#ga67096c91916ef7ec0d52169b62bb5088", null ],
-    [ "NPJPtr", "group__ADB__JOINALGOS__NPJ.html#gadecbd0a50fc1d5ab38c674369b67a091", null ],
-    [ "NPJSinglePtr", "group__ADB__JOINALGOS__NPJ.html#gacb3bd02ca20f1eb53a82974860872bc1", null ],
-    [ "init", "group__ADB__JOINALGOS__NPJ.html#ga529282a8a54692ad2a49f423bb57b59f", null ],
-    [ "inlineMain", "group__ADB__JOINALGOS__NPJ.html#ga0ebd238f932574e80d7b541946c11163", null ],
-    [ "join", "group__ADB__JOINALGOS__NPJ.html#gad69dfe1b4e47c0646b3909194237415b", null ],
-    [ "join", "group__ADB__JOINALGOS__NPJ.html#gacf644071866b5a8b5fe658709823f8cb", null ],
-    [ "syncTimeStruct", "group__ADB__JOINALGOS__NPJ.html#ga85e8968798ce1fc8f160cf1d8adf7f74", null ]
+    [ "NPJPtr", "group__ADB__JOINALGOS__NPJ.html#gaf25db899ef8846b20c3130af3da61147", null ],
+    [ "NPJSinglePtr", "group__ADB__JOINALGOS__NPJ.html#ga049d3836f39b2601c3d3726ea80eed8f", null ],
+    [ "init", "group__ADB__JOINALGOS__NPJ.html#gacacd08bf16aaf37b227e6133d9e9a83e", null ],
+    [ "inlineMain", "group__ADB__JOINALGOS__NPJ.html#gaebeae6e77e7d509d2b13ea6fbabeebe1", null ],
+    [ "join", "group__ADB__JOINALGOS__NPJ.html#gae3e65b10c48a8a2d4a7c1b4118b7b349", null ],
+    [ "join", "group__ADB__JOINALGOS__NPJ.html#ga0258bc04c69b7e2209c310345b6eb982", null ],
+    [ "syncTimeStruct", "group__ADB__JOINALGOS__NPJ.html#ga5419c051a6ff8aae83ee839b8ba5bd3b", null ]
 ];

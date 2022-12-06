@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['joinalgotableptr_294',['JoinAlgoTablePtr',['../namespaceAllianceDB.html#a73757770862eb449c7eb96821e3202e8',1,'AllianceDB']]]
+  ['joinalgotableptr_372',['JoinAlgoTablePtr',['../namespaceOoOJoin.html#aea657d50c98d5cffe64756e3d09f0728',1,'OoOJoin']]]
 ];

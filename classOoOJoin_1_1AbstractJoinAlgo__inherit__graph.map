@@ -1,0 +1,6 @@
+<map id="OoOJoin::AbstractJoinAlgo" name="OoOJoin::AbstractJoinAlgo">
+<area shape="rect" id="node1" title="The abstraction to describe a join algorithm, providing virtual function of join." alt="" coords="111,5,300,32"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1NPJ.html" title="The top class package of NPJ, providing a &quot;join function&quot;." alt="" coords="5,80,109,107"/>
+<area shape="rect" id="node3" href="$classOoOJoin_1_1NPJSingle.html" title="The top class package of single threadNPJ, providing a &quot;join function&quot;." alt="" coords="133,80,277,107"/>
+<area shape="rect" id="node4" href="$classOoOJoin_1_1NestedLoopJoin.html" title="The top class package of Nested Loop Join providing a &quot;join function&quot;." alt="" coords="302,80,485,107"/>
+</map>

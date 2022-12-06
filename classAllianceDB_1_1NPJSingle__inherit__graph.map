@@ -1,4 +1,0 @@
-<map id="AllianceDB::NPJSingle" name="AllianceDB::NPJSingle">
-<area shape="rect" id="node1" title="The top class package of single threadNPJ, providing a &quot;join function&quot;." alt="" coords="28,80,191,107"/>
-<area shape="rect" id="node2" href="$classAllianceDB_1_1AbstractJoinAlgo.html" title="The abstraction to describe a join algorithm, providing virtual function of join." alt="" coords="5,5,213,32"/>
-</map>

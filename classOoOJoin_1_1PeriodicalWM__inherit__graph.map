@@ -1,0 +1,4 @@
+<map id="OoOJoin::PeriodicalWM" name="OoOJoin::PeriodicalWM">
+<area shape="rect" id="node1" title="The class which generates watermark periodically." alt="" coords="29,80,200,107"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1AbstractWaterMarker.html" title="The abstraction to describe a watermark generator, providing virtual function of deciding watermark g..." alt="" coords="5,5,224,32"/>
+</map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['arrivaltime_277',['arrivalTime',['../classAllianceDB_1_1OoOTuple.html#a3b96d723a799acb78db41f236b41f83c',1,'AllianceDB::OoOTuple']]]
+  ['arrivaltime_352',['arrivalTime',['../classOoOJoin_1_1OoOTuple.html#a8cd32b975d23e8f5add7c167f88258ce',1,'OoOJoin::OoOTuple']]]
 ];

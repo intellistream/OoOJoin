@@ -104,34 +104,56 @@ $(document).ready(function(){initNavTree('group__ADB__OPERATORS.html',''); initR
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1AbstractOperator.html">AllianceDB::AbstractOperator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The abstraction to describe a join operator, providing virtual function of using the operation.  <a href="classAllianceDB_1_1AbstractOperator.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1AbstractOperator.html">OoOJoin::AbstractOperator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The abstraction to describe a join operator, providing virtual function of using the operation.  <a href="classOoOJoin_1_1AbstractOperator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAllianceDB_1_1IAWJOperator.html">AllianceDB::IAWJOperator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The intra window join (IAWJ) operator, only considers a single window.  <a href="classAllianceDB_1_1IAWJOperator.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1IAWJOperator.html">OoOJoin::IAWJOperator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The intra window join (IAWJ) operator, only considers a single window.  <a href="classOoOJoin_1_1IAWJOperator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1MeanAQPIAWJOperator.html">OoOJoin::MeanAQPIAWJOperator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The intra window join (MeanAQPIAWJ) operator under the simplest AQP strategy, only considers a single window and uses exponential weighted moving average for prediction.  <a href="classOoOJoin_1_1MeanAQPIAWJOperator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1OperatorTable.html">OoOJoin::OperatorTable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The entity of operatorTable, can used for searching all available operators.  <a href="classOoOJoin_1_1OperatorTable.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gafd083fd1cec9a407e95cf9a8c1141056"><td class="memItemLeft" align="right" valign="top"><a id="gafd083fd1cec9a407e95cf9a8c1141056"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#gafd083fd1cec9a407e95cf9a8c1141056">newAbstractOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classAllianceDB_1_1AbstractOperator.html">AllianceDB::AbstractOperator</a>&gt;</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#gafd083fd1cec9a407e95cf9a8c1141056">newAbstractOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1AbstractOperator.html">OoOJoin::AbstractOperator</a>&gt;</td></tr>
 <tr class="memdesc:gafd083fd1cec9a407e95cf9a8c1141056"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new AbstractOperator under shared pointer. <br /></td></tr>
 <tr class="separator:gafd083fd1cec9a407e95cf9a8c1141056"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga79cd84cb2307bfe9ebbf3d7ae3ad8f47"><td class="memItemLeft" align="right" valign="top"><a id="ga79cd84cb2307bfe9ebbf3d7ae3ad8f47"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga79cd84cb2307bfe9ebbf3d7ae3ad8f47">newIAWJOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classAllianceDB_1_1IAWJOperator.html">AllianceDB::IAWJOperator</a>&gt;</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga79cd84cb2307bfe9ebbf3d7ae3ad8f47">newIAWJOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1IAWJOperator.html">OoOJoin::IAWJOperator</a>&gt;</td></tr>
 <tr class="memdesc:ga79cd84cb2307bfe9ebbf3d7ae3ad8f47"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new IAWJOperator under shared pointer. <br /></td></tr>
 <tr class="separator:ga79cd84cb2307bfe9ebbf3d7ae3ad8f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga850a55916b987bafe63d13a299f831ee"><td class="memItemLeft" align="right" valign="top"><a id="ga850a55916b987bafe63d13a299f831ee"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga850a55916b987bafe63d13a299f831ee">newMeanAQPIAWJOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1MeanAQPIAWJOperator.html">OoOJoin::MeanAQPIAWJOperator</a>&gt;</td></tr>
+<tr class="memdesc:ga850a55916b987bafe63d13a299f831ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new MeanAQPIAWJOperator under shared pointer. <br /></td></tr>
+<tr class="separator:ga850a55916b987bafe63d13a299f831ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga882377b54021cdfba425bb1610b835c7"><td class="memItemLeft" align="right" valign="top"><a id="ga882377b54021cdfba425bb1610b835c7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga882377b54021cdfba425bb1610b835c7">newOperatorTable</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1OperatorTable.html">OoOJoin::OperatorTable</a>&gt;</td></tr>
+<tr class="memdesc:ga882377b54021cdfba425bb1610b835c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new OperatorTable under shared pointer. <br /></td></tr>
+<tr class="separator:ga882377b54021cdfba425bb1610b835c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga48f0c44bb66669e739d3540bf33eaaa8"><td class="memItemLeft" align="right" valign="top"><a id="ga48f0c44bb66669e739d3540bf33eaaa8"></a>
-typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1AbstractOperator.html">AbstractOperator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga48f0c44bb66669e739d3540bf33eaaa8">AllianceDB::AbstractOperatorPtr</a></td></tr>
-<tr class="memdesc:ga48f0c44bb66669e739d3540bf33eaaa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1AbstractOperator.html">AbstractOperator</a>. <br /></td></tr>
-<tr class="separator:ga48f0c44bb66669e739d3540bf33eaaa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb8a03416f339424c83276988c516ba9"><td class="memItemLeft" align="right" valign="top"><a id="gacb8a03416f339424c83276988c516ba9"></a>
-typedef std::shared_ptr&lt; class <a class="el" href="classAllianceDB_1_1IAWJOperator.html">IAWJOperator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#gacb8a03416f339424c83276988c516ba9">AllianceDB::IAWJOperatorPtr</a></td></tr>
-<tr class="memdesc:gacb8a03416f339424c83276988c516ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classAllianceDB_1_1IAWJOperator.html">IAWJOperator</a>. <br /></td></tr>
-<tr class="separator:gacb8a03416f339424c83276988c516ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33ebad6e01595b1734f047845230e7aa"><td class="memItemLeft" align="right" valign="top"><a id="ga33ebad6e01595b1734f047845230e7aa"></a>
+typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1AbstractOperator.html">AbstractOperator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga33ebad6e01595b1734f047845230e7aa">OoOJoin::AbstractOperatorPtr</a></td></tr>
+<tr class="memdesc:ga33ebad6e01595b1734f047845230e7aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1AbstractOperator.html">AbstractOperator</a>. <br /></td></tr>
+<tr class="separator:ga33ebad6e01595b1734f047845230e7aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac83f2aae6ea2fbfffc92018dd93a48dc"><td class="memItemLeft" align="right" valign="top"><a id="gac83f2aae6ea2fbfffc92018dd93a48dc"></a>
+typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1IAWJOperator.html">IAWJOperator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#gac83f2aae6ea2fbfffc92018dd93a48dc">OoOJoin::IAWJOperatorPtr</a></td></tr>
+<tr class="memdesc:gac83f2aae6ea2fbfffc92018dd93a48dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1IAWJOperator.html">IAWJOperator</a>. <br /></td></tr>
+<tr class="separator:gac83f2aae6ea2fbfffc92018dd93a48dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga321416e53471a27dc829c88ed8b737a7"><td class="memItemLeft" align="right" valign="top"><a id="ga321416e53471a27dc829c88ed8b737a7"></a>
+typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1MeanAQPIAWJOperator.html">MeanAQPIAWJOperator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga321416e53471a27dc829c88ed8b737a7">OoOJoin::MeanAQPIAWJOperatorPtr</a></td></tr>
+<tr class="memdesc:ga321416e53471a27dc829c88ed8b737a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1MeanAQPIAWJOperator.html">MeanAQPIAWJOperator</a>. <br /></td></tr>
+<tr class="separator:ga321416e53471a27dc829c88ed8b737a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b4e0e004dd2a3d6ea1db58ae7152308"><td class="memItemLeft" align="right" valign="top"><a id="ga4b4e0e004dd2a3d6ea1db58ae7152308"></a>
+typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1OperatorTable.html">OperatorTable</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga4b4e0e004dd2a3d6ea1db58ae7152308">OoOJoin::OperatorTablePtr</a></td></tr>
+<tr class="memdesc:ga4b4e0e004dd2a3d6ea1db58ae7152308"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1OperatorTable.html">OperatorTable</a>. <br /></td></tr>
+<tr class="separator:ga4b4e0e004dd2a3d6ea1db58ae7152308"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 </div><!-- contents -->

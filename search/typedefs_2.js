@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iawjoperatorptr_293',['IAWJOperatorPtr',['../group__ADB__OPERATORS.html#gacb8a03416f339424c83276988c516ba9',1,'AllianceDB']]]
+  ['iawjoperatorptr_371',['IAWJOperatorPtr',['../group__ADB__OPERATORS.html#gac83f2aae6ea2fbfffc92018dd93a48dc',1,'OoOJoin']]]
 ];

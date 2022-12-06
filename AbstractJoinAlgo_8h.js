@@ -4,5 +4,5 @@ var AbstractJoinAlgo_8h =
     [ "ALGO_INFO", "AbstractJoinAlgo_8h.html#a956d8181512ab0b56214c3d6ac9a5ccd", null ],
     [ "ALGO_WARNNING", "AbstractJoinAlgo_8h.html#a701b619d13437a4e9ba583f4049645d2", null ],
     [ "newAbstractJoinAlgo", "group__ADB__JOINALGOS__ABSTRACT.html#gaf4e2fe27dc5a755538b5d0e5a341f7ec", null ],
-    [ "AbstractJoinAlgoPtr", "AbstractJoinAlgo_8h.html#gad037855271725304874266cff3e54e17", null ]
+    [ "AbstractJoinAlgoPtr", "AbstractJoinAlgo_8h.html#ga99add0ab7a398d4d7d940d819a4db85b", null ]
 ];

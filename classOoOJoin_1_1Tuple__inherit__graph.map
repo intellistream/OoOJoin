@@ -1,0 +1,5 @@
+<map id="OoOJoin::Tuple" name="OoOJoin::Tuple">
+<area shape="rect" id="node1" title="The class to describe a normal tuple." alt="" coords="23,5,139,32"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1OoOTuple.html" title="The class to describe a tuple, which allows out&#45;of&#45;order." alt="" coords="9,80,153,107"/>
+<area shape="rect" id="node3" href="$classOoOJoin_1_1TrackTuple.html" title="The class to describe a tuple, which allows out&#45;of&#45;order and tracking processed Time." alt="" coords="5,155,156,181"/>
+</map>

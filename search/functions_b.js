@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['oootest_250',['OoOTest',['../classAllianceDB_1_1TestBench.html#a29a0d1394efdfb58d38df5de967ec27c',1,'AllianceDB::TestBench']]],
-  ['oootuple_251',['OoOTuple',['../classAllianceDB_1_1OoOTuple.html#ad7b821e077546ad2926e9158903038ff',1,'AllianceDB::OoOTuple::OoOTuple(keyType k)'],['../classAllianceDB_1_1OoOTuple.html#ac55f021d3882bc69143cd700ff1f961b',1,'AllianceDB::OoOTuple::OoOTuple(keyType k, valueType v)'],['../classAllianceDB_1_1OoOTuple.html#aeab835f695ee1f8fab617b82e23ce310',1,'AllianceDB::OoOTuple::OoOTuple(keyType k, valueType v, tsType et)'],['../classAllianceDB_1_1OoOTuple.html#a57ed97510ff2f8d6ec8bf22598aa8be5',1,'AllianceDB::OoOTuple::OoOTuple(keyType k, valueType v, tsType et, tsType at)']]]
+  ['oootest_318',['OoOTest',['../classOoOJoin_1_1TestBench.html#a992e19f050174f61e862d40680a02087',1,'OoOJoin::TestBench']]],
+  ['oootuple_319',['OoOTuple',['../classOoOJoin_1_1OoOTuple.html#a23058af99e50a6713f6f0accfcd7e80e',1,'OoOJoin::OoOTuple::OoOTuple(keyType k)'],['../classOoOJoin_1_1OoOTuple.html#a461a62af7687575023135edcc8771b50',1,'OoOJoin::OoOTuple::OoOTuple(keyType k, valueType v)'],['../classOoOJoin_1_1OoOTuple.html#aff07ba83cea717acd7a3fe1f3f4ca977',1,'OoOJoin::OoOTuple::OoOTuple(keyType k, valueType v, tsType et)'],['../classOoOJoin_1_1OoOTuple.html#acbe7ae17c97d56aaf0f0f669c1d3d876',1,'OoOJoin::OoOTuple::OoOTuple(keyType k, valueType v, tsType et, tsType at)']]],
+  ['operatortable_320',['OperatorTable',['../classOoOJoin_1_1OperatorTable.html#a508f64a5da1e49f9c915821fef6f6f86',1,'OoOJoin::OperatorTable']]]
 ];

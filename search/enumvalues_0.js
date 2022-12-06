@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['joinalgo_5fnestedloop_306',['JOINALGO_NESTEDLOOP',['../namespaceAllianceDB.html#ga68faf6e8578a50174021857c1b8c1410ac528b54a6b67c7ba4ed00c85ae1d95c2',1,'AllianceDB']]],
-  ['joinalgo_5fnpj_307',['JOINALGO_NPJ',['../namespaceAllianceDB.html#ga68faf6e8578a50174021857c1b8c1410af91fae6bd5b3d68a1b2c5cab917ddfa6',1,'AllianceDB']]],
-  ['joinalgo_5fnpj_5fsingle_308',['JOINALGO_NPJ_SINGLE',['../namespaceAllianceDB.html#ga68faf6e8578a50174021857c1b8c1410ab44ed028e257204ff59db26e3c23fc1b',1,'AllianceDB']]],
-  ['joinalgo_5fnull_309',['JOINALGO_NULL',['../namespaceAllianceDB.html#ga68faf6e8578a50174021857c1b8c1410a6b7e2b4ec0bfe98630164771d36c29c7',1,'AllianceDB']]]
+  ['joinalgo_5fnestedloop_389',['JOINALGO_NESTEDLOOP',['../namespaceOoOJoin.html#ga049ac3be11e850bb46b1445f1d054443a18160a79b0a51b58d9d0c9abd087a3d2',1,'OoOJoin']]],
+  ['joinalgo_5fnpj_390',['JOINALGO_NPJ',['../namespaceOoOJoin.html#ga049ac3be11e850bb46b1445f1d054443add5b2f47c541a22f0336be6c0ae159b6',1,'OoOJoin']]],
+  ['joinalgo_5fnpj_5fsingle_391',['JOINALGO_NPJ_SINGLE',['../namespaceOoOJoin.html#ga049ac3be11e850bb46b1445f1d054443a9e686e7c6753280c980e6dad31b31ce6',1,'OoOJoin']]],
+  ['joinalgo_5fnull_392',['JOINALGO_NULL',['../namespaceOoOJoin.html#ga049ac3be11e850bb46b1445f1d054443adbfcb2383643950f33d8d1c905b7f469',1,'OoOJoin']]]
 ];

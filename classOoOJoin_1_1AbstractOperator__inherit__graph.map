@@ -1,0 +1,5 @@
+<map id="OoOJoin::AbstractOperator" name="OoOJoin::AbstractOperator">
+<area shape="rect" id="node1" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="105,5,298,32"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1IAWJOperator.html" title="The intra window join (IAWJ) operator, only considers a single window." alt="" coords="5,80,173,107"/>
+<area shape="rect" id="node3" href="$classOoOJoin_1_1MeanAQPIAWJOperator.html" title="The intra window join (MeanAQPIAWJ) operator under the simplest AQP strategy, only considers a single..." alt="" coords="198,80,429,107"/>
+</map>
