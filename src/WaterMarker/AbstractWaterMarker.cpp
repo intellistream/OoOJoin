@@ -3,11 +3,11 @@
 //
 
 #include <WaterMarker/AbstractWaterMarker.h>
-using namespace AllianceDB;
-bool AllianceDB::AbstractWaterMarker::init() {
+using namespace OoOJoin;
+bool OoOJoin::AbstractWaterMarker::init() {
   return true;
 }
-bool AllianceDB::AbstractWaterMarker::setConfig(INTELLI::ConfigMapPtr cfg) {
+bool OoOJoin::AbstractWaterMarker::setConfig(INTELLI::ConfigMapPtr cfg) {
   config = cfg;
   if (config == nullptr) {
     return false;
@@ -28,25 +28,25 @@ bool AllianceDB::AbstractWaterMarker::setConfig(INTELLI::ConfigMapPtr cfg) {
   }*/
   return true;
 }
-size_t AllianceDB::AbstractWaterMarker::creatWindow(AllianceDB::tsType tBegin, AllianceDB::tsType tEnd) {
+size_t OoOJoin::AbstractWaterMarker::creatWindow(OoOJoin::tsType tBegin, OoOJoin::tsType tEnd) {
   assert(tEnd >= tBegin);
   return 1;
 }
-bool AllianceDB::AbstractWaterMarker::deleteWindow(size_t wid) {
+bool OoOJoin::AbstractWaterMarker::deleteWindow(size_t wid) {
   return (wid == 1);
 }
-bool AllianceDB::AbstractWaterMarker::reportTupleS(AllianceDB::TrackTuplePtr ts, size_t wid) {
+bool OoOJoin::AbstractWaterMarker::reportTupleS(OoOJoin::TrackTuplePtr ts, size_t wid) {
   assert(ts);
   assert(wid);
   return false;
 }
 
-bool AllianceDB::AbstractWaterMarker::reportTupleR(AllianceDB::TrackTuplePtr tr, size_t wid) {
+bool OoOJoin::AbstractWaterMarker::reportTupleR(OoOJoin::TrackTuplePtr tr, size_t wid) {
   assert(tr);
   assert(wid);
   return false;
 }
-double AllianceDB::AbstractWaterMarker::estimateError(size_t wid) {
+double OoOJoin::AbstractWaterMarker::estimateError(size_t wid) {
   assert(wid);
   return 0;
 }

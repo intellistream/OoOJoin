@@ -3,24 +3,28 @@
 //
 
 #include <Operator/AbstractOperator.h>
-using namespace AllianceDB;
-bool AllianceDB::AbstractOperator::feedTupleS(AllianceDB::TrackTuplePtr ts) {
+using namespace OoOJoin;
+bool OoOJoin::AbstractOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   assert(ts);
   return true;
 }
 
-bool AllianceDB::AbstractOperator::feedTupleR(AllianceDB::TrackTuplePtr tr) {
+bool OoOJoin::AbstractOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   assert(tr);
   return true;
 }
-bool AllianceDB::AbstractOperator::start() {
+bool OoOJoin::AbstractOperator::start() {
   return true;
 }
-bool AllianceDB::AbstractOperator::stop() {
+bool OoOJoin::AbstractOperator::stop() {
   return true;
 }
-size_t AllianceDB::AbstractOperator::getResult() {
+size_t OoOJoin::AbstractOperator::getResult() {
   return 0;
+}
+
+size_t OoOJoin::AbstractOperator::getAQPResult() {
+  return getResult();
 }
 bool AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   config = cfg;

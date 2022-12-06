@@ -6,9 +6,9 @@
 #include <Utils/UtilityFunctions.hpp>
 #include <algorithm>
 using namespace INTELLI;
-using namespace AllianceDB;
+using namespace OoOJoin;
 using namespace std;
-void AllianceDB::TestBench::OoOSort(std::vector<TrackTuplePtr> &arr) {
+void OoOJoin::TestBench::OoOSort(std::vector<TrackTuplePtr> &arr) {
   size_t i, j;
   TrackTuplePtr temp;
   size_t len = arr.size();
@@ -20,14 +20,14 @@ void AllianceDB::TestBench::OoOSort(std::vector<TrackTuplePtr> &arr) {
         arr[j + 1] = temp;
       }
 }
-void AllianceDB::TestBench::forceInOrder(std::vector<TrackTuplePtr> &arr) {
+void OoOJoin::TestBench::forceInOrder(std::vector<TrackTuplePtr> &arr) {
   size_t len = arr.size();
   size_t i;
   for (i = 0; i < len; i++) {
     arr[i]->arrivalTime = arr[i]->eventTime;
   }
 }
-void AllianceDB::TestBench::inOrderSort(std::vector<TrackTuplePtr> &arr) {
+void OoOJoin::TestBench::inOrderSort(std::vector<TrackTuplePtr> &arr) {
   size_t i, j;
   TrackTuplePtr temp;
   size_t len = arr.size();
@@ -41,11 +41,11 @@ void AllianceDB::TestBench::inOrderSort(std::vector<TrackTuplePtr> &arr) {
       }
   }
 }
-void AllianceDB::TestBench::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<TrackTuplePtr> _s) {
+void OoOJoin::TestBench::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<TrackTuplePtr> _s) {
   rTuple = _r;
   sTuple = _s;
 }
-bool AllianceDB::TestBench::setOperator(AllianceDB::AbstractOperatorPtr op, ConfigMapPtr cfg) {
+bool OoOJoin::TestBench::setOperator(OoOJoin::AbstractOperatorPtr op, ConfigMapPtr cfg) {
   testOp = op;
   opConfig = cfg;
   if (opConfig == nullptr) {
@@ -60,7 +60,7 @@ bool AllianceDB::TestBench::setOperator(AllianceDB::AbstractOperatorPtr op, Conf
   }
   return true;
 }
-void AllianceDB::TestBench::inlineTest() {
+void OoOJoin::TestBench::inlineTest() {
   struct timeval timeStart;
   size_t testSize = (rTuple.size() > sTuple.size()) ? sTuple.size() : rTuple.size();
   size_t rPos = 0, sPos = 0;
@@ -78,7 +78,7 @@ void AllianceDB::TestBench::inlineTest() {
   testOp->syncTimeStruct(timeStart);
   testOp->start();
   while (tNow < tMax) {
-    tNow = UtilityFunctions::timeLastUs(timeStart) ;
+    tNow = UtilityFunctions::timeLastUs(timeStart);
     //INTELLI_INFO("T=" << tNow);
     while (tNow >= tNextS) {
       if (sPos <= testSize - 1) {
@@ -115,17 +115,17 @@ void AllianceDB::TestBench::inlineTest() {
   }
   testOp->stop();
 }
-size_t AllianceDB::TestBench::OoOTest(bool additionalSort) {
+size_t OoOJoin::TestBench::OoOTest(bool additionalSort) {
   if (additionalSort) {
     OoOSort(rTuple);
     OoOSort(sTuple);
   }
   inlineTest();
-
+  AQPResult = testOp->getAQPResult();
   return testOp->getResult();
 }
 
-size_t AllianceDB::TestBench::inOrderTest(bool additionalSort) {
+size_t OoOJoin::TestBench::inOrderTest(bool additionalSort) {
   forceInOrder(rTuple);
   forceInOrder(sTuple);
   if (additionalSort) {
@@ -135,7 +135,7 @@ size_t AllianceDB::TestBench::inOrderTest(bool additionalSort) {
   inlineTest();
   return testOp->getResult();
 }
-void AllianceDB::TestBench::logRTuples(bool skipZero) {
+void OoOJoin::TestBench::logRTuples(bool skipZero) {
       TB_INFO("/***Printing the rTuples in the following***/");
   size_t rLen = rTuple.size();
   for (size_t i = 0; i < rLen; i++) {
@@ -148,7 +148,7 @@ void AllianceDB::TestBench::logRTuples(bool skipZero) {
   }
       TB_INFO("/***Done***/");
 }
-bool AllianceDB::TestBench::saveRTuplesToFile(std::string fname, bool skipZero) {
+bool OoOJoin::TestBench::saveRTuplesToFile(std::string fname, bool skipZero) {
   ofstream of;
   of.open(fname);
   if (of.fail()) {
@@ -170,7 +170,7 @@ bool AllianceDB::TestBench::saveRTuplesToFile(std::string fname, bool skipZero) 
   of.close();
   return true;
 }
-double AllianceDB::TestBench::getAvgLatency() {
+double OoOJoin::TestBench::getAvgLatency() {
   size_t rLen = rTuple.size();
   size_t nonZeroCnt = 0;
   double sum = 0;
@@ -181,9 +181,9 @@ double AllianceDB::TestBench::getAvgLatency() {
       nonZeroCnt++;
     }
   }
-  return sum  / nonZeroCnt;
+  return sum / nonZeroCnt;
 }
-double AllianceDB::TestBench::getThroughput() {
+double OoOJoin::TestBench::getThroughput() {
   size_t rLen = rTuple.size();
   tsType minArrival = rTuple[0]->arrivalTime;
   tsType maxProcessed = 0;
@@ -195,12 +195,12 @@ double AllianceDB::TestBench::getThroughput() {
       minArrival = rTuple[i]->arrivalTime;
     }
   }
-  double elapsedTime = (maxProcessed - minArrival) ;
+  double elapsedTime = (maxProcessed - minArrival);
   double thr = rLen;
   thr = thr * 1e6 / elapsedTime;
   return thr;
 }
-double AllianceDB::TestBench::getLatencyPercentage(double fraction) {
+double OoOJoin::TestBench::getLatencyPercentage(double fraction) {
   size_t rLen = rTuple.size();
   size_t nonZeroCnt = 0;
   vector<tsType> validLatency;
@@ -217,6 +217,6 @@ double AllianceDB::TestBench::getLatencyPercentage(double fraction) {
   if (idx >= validLatency.size()) {
     idx = validLatency.size() - 1;
   }
-  return validLatency[idx] ;
+  return validLatency[idx];
 
 }

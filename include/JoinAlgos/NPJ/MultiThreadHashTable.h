@@ -7,7 +7,7 @@
 #include <condition_variable>
 #include <mutex>
 #include <vector>
-namespace AllianceDB {
+namespace OoOJoin {
 
 /**
  * @ingroup  ADB_JOINALGOS_NPJ The no partition hash join (NPJ)
@@ -27,6 +27,7 @@ typedef TrackTuplePtr NPJTuplePtr;
  * maybe this is a more cache-aware way
  *
  */
+//template <class cell_t>
 class MtBucket {
  private:
   std::mutex m_mut;

@@ -5,8 +5,8 @@
 #include <JoinAlgos/NestedLoopJoin.h>
 #include <Utils/UtilityFunctions.hpp>
 using namespace INTELLI;
-using namespace AllianceDB;
-size_t NestedLoopJoin::join(C20Buffer<AllianceDB::TrackTuplePtr> windS, AllianceDB::TrackTuplePtr tr, int threads) {
+using namespace OoOJoin;
+size_t NestedLoopJoin::join(C20Buffer<OoOJoin::TrackTuplePtr> windS, OoOJoin::TrackTuplePtr tr, int threads) {
   assert(threads > 0);
   size_t result = 0;
   size_t tsLen = windS.size();
@@ -19,15 +19,15 @@ size_t NestedLoopJoin::join(C20Buffer<AllianceDB::TrackTuplePtr> windS, Alliance
   // cout<<result<<endl;
   return result;
 }
-size_t NestedLoopJoin::join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
-                            C20Buffer<AllianceDB::TrackTuplePtr> windR,
+size_t NestedLoopJoin::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
+                            C20Buffer<OoOJoin::TrackTuplePtr> windR,
                             int threads) {
   size_t result = 0;
   size_t trLen = windR.size();
   for (size_t i = 0; i < trLen; i++) {
-    AllianceDB::TrackTuplePtr tr = windR.data(i)[0];
+    OoOJoin::TrackTuplePtr tr = windR.data(i)[0];
     result += join(windS, tr, threads);
-    tr->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct) ;
+    tr->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
   return result;
 }

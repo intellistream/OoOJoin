@@ -6,10 +6,10 @@
 #ifndef _JOINALGO_NPJ_NPJ_H_
 #define _JOINALGO_NPJ_NPJ_H_
 #include <JoinAlgos/NPJ/MultiThreadHashTable.h>
-#include <Utils/AbstractC20Thread.h>
+#include <Utils/AbstractC20Thread.hpp>
 #include <barrier>
 #include <JoinAlgos/AbstractJoinAlgo.h>
-namespace AllianceDB {
+namespace OoOJoin {
 /**
 * @ingroup ADB_JOINALGOS
 * @{
@@ -120,8 +120,8 @@ class NPJ : public AbstractJoinAlgo {
   * @param threads The threads for executing this join
  * @return The joined tuples
  */
-  virtual size_t join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
-                      C20Buffer<AllianceDB::TrackTuplePtr> windR,
+  virtual size_t join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
+                      C20Buffer<OoOJoin::TrackTuplePtr> windR,
                       int threads = 1);
 
 };
@@ -156,8 +156,8 @@ class NPJSingle : public AbstractJoinAlgo {
    * @param threads The threads for executing this join
   * @return The joined tuples
   */
-  virtual size_t join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
-                      C20Buffer<AllianceDB::TrackTuplePtr> windR,
+  virtual size_t join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
+                      C20Buffer<OoOJoin::TrackTuplePtr> windR,
                       int threads = 1);
 
 };

@@ -6,7 +6,7 @@
 #ifndef _INCLUDE_WATERMARKER_PERIODICALWM_H_
 #define _INCLUDE_WATERMARKER_PERIODICALWM_H_
 #include <WaterMarker/AbstractWaterMarker.h>
-namespace AllianceDB {
+namespace OoOJoin {
 /**
  * @ingroup ADB_WATERMARKER The watermark generator
  *@class PeriodicalWM WaterMarker/PeriodicalWM.h
@@ -74,6 +74,6 @@ typedef std::shared_ptr<class PeriodicalWM> PeriodicalWMPtr;
  * @cite newPeriodicalWM
  * @brief (Macro) To creat a new @ref PeriodicalWM under shared pointer.
  */
-#define newPeriodicalWM std::make_shared<AllianceDB::PeriodicalWM>
+#define newPeriodicalWM std::make_shared<OoOJoin::PeriodicalWM>
 }
 #endif //INTELLISTREAM_INCLUDE_WATERMARKER_PERIODICALWM_H_

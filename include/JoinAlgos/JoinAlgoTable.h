@@ -15,7 +15,7 @@
 /**
  * add the header of other algorithms here
  */
-namespace AllianceDB {
+namespace OoOJoin {
 /**
    * @ingroup ADB_JOINALGOS_ABSTRACT
    * @class JoinAlgoTable JoinAlgos/JoinAlgoTable.h

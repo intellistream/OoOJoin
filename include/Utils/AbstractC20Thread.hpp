@@ -1,4 +1,4 @@
-/*! \file AbstractC20Thread.h*/
+/*! \file AbstractC20Thread.hpp*/
 //
 // Created by tony on 07/03/22.
 //
@@ -22,7 +22,7 @@
 namespace INTELLI {
 /**
  * @ingroup INTELLI_UTIL_OTHERC20
- * @class AbstractC20Thread  Utils/AbstractC20Thread.h
+ * @class AbstractC20Thread  Utils/AbstractC20Thread.hpp
  * @brief The base class and abstraction of C++20 thread,
  * and it can be derived into other threads
  */
@@ -58,6 +58,18 @@ class AbstractC20Thread {
   }
 
 };
+/**
+ * @ingroup INTELLI_UTIL_OTHERC20
+ * @typedef AbstractC20ThreadPtr
+ * @brief The class to describe a shared pointer to @ref AbstractC20Thread
+ */
+typedef std::shared_ptr<AbstractC20Thread> AbstractC20ThreadPtr;
+/**
+ * @ingroup INTELLI_UTIL_OTHERC20
+ * @def newAbstractC20Thread
+ * @brief (Macro) To creat a new @ref newAbstractC20Thread under shared pointer.
+ */
+#define  newAbstractC20Thread make_shared<INTELLI::AbstractC20Thread>
 typedef std::shared_ptr<std::barrier<>> BarrierPtr;
 }
 

@@ -36,6 +36,7 @@
  **/
 #include <Common/Tuples.h>
 #include <Common/Window.h>
+#include <Common/StateOfKey.h>
 /**
  * @}
  */
@@ -57,6 +58,7 @@
 * This package covers some common C++20 new features, such as std::thread to ease the programming
 */
 #include <Utils/C20Buffers.hpp>
+#include <Utils/ThreadPerf.hpp>
 /**
  * @}
  */
@@ -81,6 +83,8 @@
  */
 #include <Operator/AbstractOperator.h>
 #include <Operator/IAWJOperator.h>
+#include <Operator/MeanAQPIAWJOperator.h>
+#include <Operator/OperatorTable.h>
 /**
  * @}
  */

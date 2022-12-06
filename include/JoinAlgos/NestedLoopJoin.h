@@ -6,7 +6,7 @@
 #ifndef _JOINALGO_NESTEDLOOPJOIN_H_
 #define _JOINALGO_NESTEDLOOPJOIN_H_
 #include <JoinAlgos/AbstractJoinAlgo.h>
-namespace AllianceDB {
+namespace OoOJoin {
 /**
 * @ingroup ADB_JOINALGOS
 * @{
@@ -36,7 +36,7 @@ class NestedLoopJoin : public AbstractJoinAlgo {
    * @note The threads parameter will be ignored
   * @return The joined tuples
   */
-  virtual size_t join(C20Buffer<AllianceDB::TrackTuplePtr> windS, AllianceDB::TrackTuplePtr tr, int threads = 1);
+  virtual size_t join(C20Buffer<OoOJoin::TrackTuplePtr> windS, OoOJoin::TrackTuplePtr tr, int threads = 1);
   /**
   * @brief The function to execute join,
   * @param windS The window of S tuples
@@ -45,8 +45,8 @@ class NestedLoopJoin : public AbstractJoinAlgo {
    * @note The threads parameter will be ignored
   * @return The joined tuples
   */
-  virtual size_t join(C20Buffer<AllianceDB::TrackTuplePtr> windS,
-                      C20Buffer<AllianceDB::TrackTuplePtr> windR,
+  virtual size_t join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
+                      C20Buffer<OoOJoin::TrackTuplePtr> windR,
                       int threads = 1);
 };
 /**

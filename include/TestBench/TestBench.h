@@ -12,7 +12,7 @@ using namespace INTELLI;
 #define TB_INFO INTELLI_INFO
 #define TB_ERROR INTELLI_ERROR
 #define TB_WARNNING INTELLI_WARNING
-namespace AllianceDB {
+namespace OoOJoin {
 
 /**
 * @ingroup ADB_TESTBENCH The test bench to feed data into operators
@@ -38,6 +38,7 @@ class TestBench {
   std::vector<TrackTuplePtr> sTuple;
   AbstractOperatorPtr testOp = nullptr;
   ConfigMapPtr opConfig;
+  size_t AQPResult = 0;
   TestBench() {}
   ~TestBench() {}
 

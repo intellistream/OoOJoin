@@ -7,7 +7,7 @@
 #define INTELLISTREAM_INCLUDE_COMMON_WINDOW_H_
 #include <Common/Tuples.h>
 #include <Utils/C20Buffers.hpp>
-namespace AllianceDB {
+namespace OoOJoin {
 
 /**
 * @ingroup INTELLI_COMMON_BASIC Basic Definitions and Data Structures
@@ -51,8 +51,8 @@ class Window {
   */
   void setRange(tsType ts, tsType te);
   ~Window() {}
-  INTELLI::C20Buffer<AllianceDB::TrackTuplePtr> windowS;
-  INTELLI::C20Buffer<AllianceDB::TrackTuplePtr> windowR;
+  INTELLI::C20Buffer<OoOJoin::TrackTuplePtr> windowS;
+  INTELLI::C20Buffer<OoOJoin::TrackTuplePtr> windowR;
   /**
     * @brief init window with buffer/queue length and id
     * @param sLen The length of S queue and/or buffer
@@ -79,7 +79,20 @@ class Window {
    *  @return bool, whether reset is done
    */
   bool reset(void);
-
+  /**
+   * @brief get the start time of window
+   * @return the start time
+   */
+  tsType getStart() {
+    return startTime;
+  }
+  /**
+   * @brief get the end time of window
+   * @return the end time
+   */
+  tsType getEnd() {
+    return endTime;
+  }
 };
 /**
  * @}

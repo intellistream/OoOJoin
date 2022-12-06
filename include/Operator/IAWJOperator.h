@@ -1,3 +1,4 @@
+/*! \file   IAWJOperator.h*/
 //
 // Created by tony on 22/11/22.
 //
@@ -8,7 +9,7 @@
 #include <Common/Window.h>
 #include <atomic>
 #include <WaterMarker/PeriodicalWM.h>
-namespace AllianceDB {
+namespace OoOJoin {
 /**
  * @class IAWJOperator
  * @ingroup ADB_OPERATORS
@@ -22,6 +23,7 @@ namespace AllianceDB {
  * - "algo" String: The specific join algorithm (optional, default nested loop)
  * - "threads" U64: The threads to conduct intra window join (optional, default 1)
  * @note In current version, the computation will block feeding
+ * @note operator tag = "IAWJ"
  */
 class IAWJOperator : public AbstractOperator {
  protected:
@@ -92,6 +94,6 @@ typedef std::shared_ptr<class IAWJOperator> IAWJOperatorPtr;
  * @def newIAWJOperator
  * @brief (Macro) To creat a new @ref IAWJOperator under shared pointer.
  */
-#define newIAWJOperator std::make_shared<AllianceDB::IAWJOperator>
+#define newIAWJOperator std::make_shared<OoOJoin::IAWJOperator>
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_

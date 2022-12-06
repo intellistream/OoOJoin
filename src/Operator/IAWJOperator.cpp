@@ -4,8 +4,8 @@
 
 #include <Operator/IAWJOperator.h>
 #include <JoinAlgos/JoinAlgoTable.h>
-bool AllianceDB::IAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
-  if (!AllianceDB::AbstractOperator::setConfig(cfg)) {
+bool OoOJoin::IAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
+  if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
     return false;
   }
   // read the algorithm name
@@ -19,7 +19,7 @@ bool AllianceDB::IAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
       OP_INFO("selected join threads=" + to_string(joinThreads));
   return true;
 }
-bool AllianceDB::IAWJOperator::start() {
+bool OoOJoin::IAWJOperator::start() {
   /**
    * @brief set watermark generator
    */
@@ -39,7 +39,7 @@ bool AllianceDB::IAWJOperator::start() {
   lockedByWaterMark = false;
   return true;
 }
-void AllianceDB::IAWJOperator::conductComputation() {
+void OoOJoin::IAWJOperator::conductComputation() {
   JoinAlgoTable jt;
   AbstractJoinAlgoPtr algo = jt.findAlgo(algoTag);
   //NestedLoopJoin nj;
@@ -48,7 +48,7 @@ void AllianceDB::IAWJOperator::conductComputation() {
       OP_INFO("Invoke algorithm=" + algo->getAlgoName());
   intermediateResult = algo->join(myWindow.windowS, myWindow.windowR, joinThreads);
 }
-bool AllianceDB::IAWJOperator::stop() {
+bool OoOJoin::IAWJOperator::stop() {
   /**
    */
   if (lockedByWaterMark) {
@@ -61,7 +61,7 @@ bool AllianceDB::IAWJOperator::stop() {
   }
   return true;
 }
-bool AllianceDB::IAWJOperator::feedTupleS(AllianceDB::TrackTuplePtr ts) {
+bool OoOJoin::IAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   bool shouldGenWM;
   if (lockedByWaterMark) {
     return false;
@@ -76,7 +76,7 @@ bool AllianceDB::IAWJOperator::feedTupleS(AllianceDB::TrackTuplePtr ts) {
   return true;
 }
 
-bool AllianceDB::IAWJOperator::feedTupleR(AllianceDB::TrackTuplePtr tr) {
+bool OoOJoin::IAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   bool shouldGenWM;
   if (lockedByWaterMark) {
     return false;
@@ -90,6 +90,6 @@ bool AllianceDB::IAWJOperator::feedTupleR(AllianceDB::TrackTuplePtr tr) {
   }
   return true;
 }
-size_t AllianceDB::IAWJOperator::getResult() {
+size_t OoOJoin::IAWJOperator::getResult() {
   return intermediateResult;
 }
