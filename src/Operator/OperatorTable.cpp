@@ -8,5 +8,6 @@ namespace OoOJoin {
 OperatorTable::OperatorTable() {
   operatorMap["IAWJ"] = newIAWJOperator();
   operatorMap["MeanAQP"] = newMeanAQPIAWJOperator();
+  operatorMap["IMA"] = newIMAIAWJOperator();
 }
 } // OoOJoin

@@ -10,6 +10,7 @@
 #define INTELLISTREAM_INCLUDE_OPERATOR_OPERATORTABLE_H_
 #include <Operator/IAWJOperator.h>
 #include <Operator/MeanAQPIAWJOperator.h>
+#include <Operator/IMAIAWJOperator.h>
 #include <map>
 namespace OoOJoin {
 /**
@@ -19,6 +20,7 @@ namespace OoOJoin {
  * @note default tags:
  * - "IAWJ": @ref IAWJOperatorPtr (class @ref IAWJOperator)
  * - "MeanAQP": @ref MeanAQPIAWJOperatorPtr (class @ref MeanAQPIAWJOperator)
+ * - "IMA": @ref IMAIAWJOperatorPtr (class @ref IMAIAWJOperator)
  */
 class OperatorTable {
  protected:
