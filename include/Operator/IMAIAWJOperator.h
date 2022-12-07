@@ -18,7 +18,7 @@ namespace OoOJoin {
  * @class IMAIAWJOperator Operator/IMAIAWJOperator.h
  * \image html MeanAQP.png
  * @brief The IAWJ operator under the simplest AQP strategy, and updates incrementally (IMA), only considers a single window and uses
- * exponential weighted moving average for prediction
+ * exponential weighted moving average for prediction. This one is EAGER join in fact
  * @note require configurations:
  * - "windowLen" U64: The length of window
  * - "slideLen" U64: The length of slide
