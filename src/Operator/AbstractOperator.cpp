@@ -26,6 +26,7 @@ size_t OoOJoin::AbstractOperator::getResult() {
 size_t OoOJoin::AbstractOperator::getAQPResult() {
   return getResult();
 }
+
 bool AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   config = cfg;
   if (config == nullptr) {

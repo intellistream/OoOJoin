@@ -38,12 +38,13 @@ class MeanAQPIAWJOperator : public AbstractOperator {
   // double alphaArrivalRate=0.125;
   double alphaArrivalSkew = 0.125;
   double betaArrivalSkew = 0.25;
-  tsType lastTimeS = 0, lastTimeR = 0;
+//  tsType lastTimeS = 0, lastTimeR = 0;
   double aqpScale = 0.1;
   void conductComputation();
   atomic_bool lockedByWaterMark = false;
   AbstractWaterMarkerPtr wmGen = nullptr;
   StateOfKeyHashTablePtr stateOfKeyTableR, stateOfKeyTableS;
+  tsType lastTimeOfR = 0;
   class MeanStateOfKey : public AbstractStateOfKey {
    public:
     size_t arrivedTupleCnt = 0;

@@ -48,6 +48,7 @@ class AbstractWaterMarker {
   ConfigMapPtr config = nullptr;
   AbstractWaterMarker() {}
   ~AbstractWaterMarker() {}
+
   /**
    * @brief Separately set the errorBound
    * @param err The errorBound

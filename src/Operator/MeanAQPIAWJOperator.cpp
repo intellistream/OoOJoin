@@ -71,8 +71,9 @@ bool OoOJoin::MeanAQPIAWJOperator::stop() {
   lazyComputeOfAQP();
   size_t rLen = myWindow.windowR.size();
   NPJTuplePtr *tr = myWindow.windowR.data();
+  tsType timeNow = lastTimeOfR;
   for (size_t i = 0; i < rLen; i++) {
-    tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct);
+    if (tr[i]->arrivalTime < timeNow) { tr[i]->processedTime = timeNow; }
   }
   return true;
 }
@@ -102,6 +103,7 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
       sk = ImproveStateOfKeyTo(MeanStateOfKey, skrf);
     }
     updateStateOfKey(sk, ts);
+    // lazyComputeOfAQP();
   }
   return true;
 }
@@ -121,6 +123,7 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   // bool shouldGenWM;
   if (isInWindow) {
     MeanStateOfKeyPtr sk;
+    //lastTimeOfR=tr->arrivalTime;
     AbstractStateOfKeyPtr skrf = stateOfKeyTableR->getByKey(tr->key);
     // lastTimeR=tr->arrivalTime;
     if (skrf == nullptr) // this key does'nt exist
@@ -132,15 +135,11 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
       sk = ImproveStateOfKeyTo(MeanStateOfKey, skrf);
     }
     updateStateOfKey(sk, tr);
+    //lazyComputeOfAQP();
   }
   return true;
 }
 size_t OoOJoin::MeanAQPIAWJOperator::getResult() {
-  size_t rLen = myWindow.windowR.size();
-  NPJTuplePtr *tr = myWindow.windowR.data();
-  for (size_t i = 0; i < rLen; i++) {
-    tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct);
-  }
   return confirmedResult;
   // return confirmedResult;
 }
@@ -148,7 +147,7 @@ double OoOJoin::MeanAQPIAWJOperator::predictUnarrivedTuples(MeanStateOfKeyPtr px
   tsType lastTime = px->lastArrivalTuple->arrivalTime;
   double avgSkew = px->arrivalSkew;
   double goThroughTime = lastTime - avgSkew - myWindow.getStart();
-  double futureTime = myWindow.getEnd() + avgSkew - lastTimeS;
+  double futureTime = myWindow.getEnd() + avgSkew - lastTime;
   double futureTuple = px->arrivedTupleCnt * futureTime / goThroughTime;
   if (futureTuple < 0) {
     futureTuple = 0;
@@ -164,20 +163,22 @@ void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
         MeanStateOfKeyPtr px = ImproveStateOfKeyTo(MeanStateOfKey, iter);
         probrPtr = stateOfKeyTableS->getByKey(px->key);
         if (probrPtr != nullptr) {
-          lastTimeS = px->lastArrivalTuple->arrivalTime;
+          //  lastTimeS = px->lastArrivalTuple->arrivalTime;
           //lastTimeS=px->lastEventTuple->eventTime;
           double unarrivedS = predictUnarrivedTuples(px);
           MeanStateOfKeyPtr py = ImproveStateOfKeyTo(MeanStateOfKey, probrPtr);
           double unarrivedR = predictUnarrivedTuples(py);
           intermediateResult += (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR);
-          cout << "S: a=" + to_string(px->arrivedTupleCnt) + ", u=" + to_string(unarrivedS) + "sigma="
+          /*cout << "S: a=" + to_string(px->arrivedTupleCnt) + ", u=" + to_string(unarrivedS) + "sigma="
               + to_string(px->sigmaArrivalSkew) +
-              ";R: a=" + to_string(py->arrivedTupleCnt) + ", u=" + to_string(unarrivedR) + "\n";
+              ";R: a=" + to_string(py->arrivedTupleCnt) + ", u=" + to_string(unarrivedR) + "\n";*/
           confirmedResult += (px->arrivedTupleCnt) * (py->arrivedTupleCnt);
+
         }
       }
     }
   }
+  lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
 }
 size_t OoOJoin::MeanAQPIAWJOperator::getAQPResult() {
   return intermediateResult;

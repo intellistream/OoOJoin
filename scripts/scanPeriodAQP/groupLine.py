@@ -175,7 +175,7 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
     plt.grid(axis='y', color='gray')
     #figure.yaxis.set_major_locator(LogLocator(base=10))
     #figure.xaxis.set_major_locator(LogLocator(base=10))
-    plt.xticks(rotation = 30,fontsize= TICK_FONT_SIZE)
+    plt.xticks(rotation = 0,fontsize= TICK_FONT_SIZE)
     figure.get_xaxis().set_tick_params(direction='in', pad=10)
     figure.get_yaxis().set_tick_params(direction='in', pad=10)
 

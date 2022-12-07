@@ -36,6 +36,7 @@ class PeriodicalWM : public AbstractWaterMarker {
  public:
   PeriodicalWM() {}
   ~PeriodicalWM() {}
+
   /**
  * @brief Set the config map related to this operator
  * @param cfg The config map

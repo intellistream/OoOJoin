@@ -40,6 +40,10 @@ class AbstractOperator {
   size_t sLen = 0, rLen = 0;
   int threads = 0;
   tsType timeStep = 0;
+  /**
+   *@brief set the final processed time for all tuples
+   */
+  void setFinalProcessedTime();
  public:
   ConfigMapPtr config = nullptr;
   AbstractOperator() {}

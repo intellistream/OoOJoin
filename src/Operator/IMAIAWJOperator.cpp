@@ -36,29 +36,6 @@ bool OoOJoin::IMAIAWJOperator::start() {
 void OoOJoin::IMAIAWJOperator::conductComputation() {
 
 }
-void OoOJoin::IMAIAWJOperator::updateStateOfKey(IMAStateOfKeyPtr sk, TrackTuplePtr tp) {
-  double skewTp = tp->arrivalTime - tp->eventTime;
-  double rateTp = tp->arrivalTime;
-  rateTp = rateTp / (sk->arrivedTupleCnt + 1);
-  //size_t prevUnarrived=0,currentUnarrived=0;
-  sk->arrivalSkew = (1 - alphaArrivalSkew) * sk->arrivalSkew + alphaArrivalSkew * skewTp;
-  sk->sigmaArrivalSkew = (1 - betaArrivalSkew) * sk->sigmaArrivalSkew + betaArrivalSkew * abs(sk->arrivalSkew - skewTp);
-  sk->arrivedTupleCnt++;
-  if (sk->lastArrivalTuple == nullptr) {
-    sk->lastArrivalTuple = tp;
-  } else {
-    if (sk->lastArrivalTuple->arrivalTime < tp->arrivalTime) {
-      sk->lastArrivalTuple = tp;
-    }
-  }
-  if (sk->lastEventTuple == nullptr) {
-    sk->lastEventTuple = tp;
-  } else {
-    if (sk->lastEventTuple->eventTime < tp->eventTime) {
-      sk->lastEventTuple = tp;
-    }
-  }
-}
 bool OoOJoin::IMAIAWJOperator::stop() {
   /**
    */
@@ -68,11 +45,12 @@ bool OoOJoin::IMAIAWJOperator::stop() {
   if (!lockedByWaterMark) {
         WM_INFO("No watermark encountered, compute now");
   }
-  lazyComputeOfAQP();
+  //lazyComputeOfAQP();
   size_t rLen = myWindow.windowR.size();
   NPJTuplePtr *tr = myWindow.windowR.data();
+  tsType timeNow = lastTimeOfR;
   for (size_t i = 0; i < rLen; i++) {
-    tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct);
+    if (tr[i]->arrivalTime < timeNow) { tr[i]->processedTime = timeNow; }
   }
   return true;
 }
@@ -102,6 +80,19 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
       sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
     }
     updateStateOfKey(sk, ts);
+    //probe in R
+    double futureTuplesS = MeanAQPIAWJOperator::predictUnarrivedTuples(sk);
+    AbstractStateOfKeyPtr probrPtr = stateOfKeyTableR->getByKey(ts->key);
+    if (probrPtr != nullptr) {
+      IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
+      confirmedResult += py->arrivedTupleCnt;
+      intermediateResult -=
+          (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+      intermediateResult += (futureTuplesS + sk->arrivedTupleCnt) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+    }
+    //sk->lastEstimateAllTuples=futureTuplesS+sk->arrivedTupleCnt;
+    sk->lastUnarrivedTuples = futureTuplesS;
+    lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
   return true;
 }
@@ -116,10 +107,10 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   if (shouldGenWM) {
     lockedByWaterMark = true;
     //return false;
-
   }
   // bool shouldGenWM;
   if (isInWindow) {
+
     IMAStateOfKeyPtr sk;
     AbstractStateOfKeyPtr skrf = stateOfKeyTableR->getByKey(tr->key);
     // lastTimeR=tr->arrivalTime;
@@ -132,52 +123,26 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
       sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
     }
     updateStateOfKey(sk, tr);
+    //size_t futureTuplesR=predictUnarrivedTuples(sk);
+    //probe in S
+    AbstractStateOfKeyPtr probrPtr = stateOfKeyTableS->getByKey(tr->key);
+    double futureTuplesR = MeanAQPIAWJOperator::predictUnarrivedTuples(sk);
+    if (probrPtr != nullptr) {
+      IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
+      confirmedResult += py->arrivedTupleCnt;
+      intermediateResult -=
+          (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+      intermediateResult += (futureTuplesR + sk->arrivedTupleCnt) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+    }
+    sk->lastUnarrivedTuples = futureTuplesR;
+    lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
   return true;
 }
 size_t OoOJoin::IMAIAWJOperator::getResult() {
-  size_t rLen = myWindow.windowR.size();
-  NPJTuplePtr *tr = myWindow.windowR.data();
-  for (size_t i = 0; i < rLen; i++) {
-    tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct);
-  }
+
   return confirmedResult;
   // return confirmedResult;
-}
-double OoOJoin::IMAIAWJOperator::predictUnarrivedTuples(IMAStateOfKeyPtr px) {
-  tsType lastTime = px->lastArrivalTuple->arrivalTime;
-  double avgSkew = px->arrivalSkew;
-  double goThroughTime = lastTime - avgSkew - myWindow.getStart();
-  double futureTime = myWindow.getEnd() + avgSkew - lastTimeS;
-  double futureTuple = px->arrivedTupleCnt * futureTime / goThroughTime;
-  if (futureTuple < 0) {
-    futureTuple = 0;
-  }
-  return futureTuple;
-}
-void OoOJoin::IMAIAWJOperator::lazyComputeOfAQP() {
-  AbstractStateOfKeyPtr probrPtr = nullptr;
-  intermediateResult = 0;
-  for (size_t i = 0; i < stateOfKeyTableR->buckets.size(); i++) {
-    for (auto iter : stateOfKeyTableR->buckets[i]) {
-      if (iter != nullptr) {
-        IMAStateOfKeyPtr px = ImproveStateOfKeyTo(IMAStateOfKey, iter);
-        probrPtr = stateOfKeyTableS->getByKey(px->key);
-        if (probrPtr != nullptr) {
-          lastTimeS = px->lastArrivalTuple->arrivalTime;
-          //lastTimeS=px->lastEventTuple->eventTime;
-          double unarrivedS = predictUnarrivedTuples(px);
-          IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
-          double unarrivedR = predictUnarrivedTuples(py);
-          intermediateResult += (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR);
-          cout << "S: a=" + to_string(px->arrivedTupleCnt) + ", u=" + to_string(unarrivedS) + "sigma="
-              + to_string(px->sigmaArrivalSkew) +
-              ";R: a=" + to_string(py->arrivedTupleCnt) + ", u=" + to_string(unarrivedR) + "\n";
-          confirmedResult += (px->arrivedTupleCnt) * (py->arrivedTupleCnt);
-        }
-      }
-    }
-  }
 }
 size_t OoOJoin::IMAIAWJOperator::getAQPResult() {
   return intermediateResult;

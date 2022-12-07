@@ -48,24 +48,24 @@ matplotlib.rcParams['font.family'] = OPT_FONT_NAME
 matplotlib.rcParams['pdf.fonttype'] = 42
 
    
-def runPeriod(exePath,period,resultPath,aqpScale=0.1):
+def runPeriod(exePath,period,resultPath,templateName="config.csv"):
     #resultFolder="periodTests"
     configFname="config_period_"+str(period)+".csv"
-    configTemplate="config.csv"
+    configTemplate=templateName
     #clear old files
     os.system("cd "+exePath+"&& rm *.csv")
     #prepare new file
     editConfig(configTemplate,exePath+configFname,"watermarkPeriodMs",period)
-    editConfig(exePath+configFname,exePath+configFname,"aqpScale",aqpScale)
+    #editConfig(exePath+configFname,exePath+configFname,"aqpScale",aqpScale)
     #run 
     os.system("cd "+exePath+"&& ./benchmark "+configFname)
     #copy result
     os.system("rm -rf "+resultPath+"/"+str(period))
     os.system("mkdir "+resultPath+"/"+str(period))
     os.system("cd "+exePath+"&& cp *.csv "+resultPath+"/"+str(period))
-def runPeriodVector(exePath,periodVec,resultPath,aqpScale=0.1):
+def runPeriodVector(exePath,periodVec,resultPath,templateName="config.csv"):
     for i in periodVec:
-        runPeriod(exePath,i,resultPath,aqpScale)
+        runPeriod(exePath,i,resultPath,templateName)
 def readResultPeriod(period,resultPath):
     resultFname=resultPath+"/"+str(period)+"/default_general.csv"
     avgLat=readConfig(resultFname,"AvgLatency")
@@ -94,6 +94,9 @@ def readResultVectorPeriod(periodVec,resultPath):
 def main():
     exeSpace=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/"
     resultPath=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/results/aqpPeriodTest"
+    resultPathNoAqp=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/results/aqpPeriodTest/NoAQP"
+    resultPathMeanAqp=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/results/aqpPeriodTest/MeanAQP"
+    resultPathIMA=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/results/aqpPeriodTest/IMA"
     figPath=os.path.abspath(os.path.join(os.getcwd(), "../.."))+"/figures/"
     configTemplate=exeSpace+"config.csv"
     periodVec=[6,7,8,9,10,11,12,13,14,15]
@@ -104,15 +107,26 @@ def main():
     if(len(sys.argv)<2):
         os.system("rm -rf "+resultPath)
         os.system("mkdir "+resultPath)
-        runPeriodVector(exeSpace,periodVec,resultPath)
-    avgLatVec,lat95Vec,thrVec,errVec,compVec,aqpErrVec=readResultVectorPeriod(periodVec,resultPath)
+        os.system("mkdir "+resultPathNoAqp)
+        os.system("mkdir "+resultPathMeanAqp)
+        os.system("mkdir "+resultPathIMA)
+        runPeriodVector(exeSpace,periodVec,resultPathNoAqp,"config_noAQP.csv")
+        runPeriodVector(exeSpace,periodVec,resultPathMeanAqp,"config_meanAQP.csv")
+        runPeriodVector(exeSpace,periodVec,resultPathIMA,"config_IMA.csv")
+    avgLatVecNo,lat95VecNo,thrVecNo,errVecNo,compVec,aqpErrVecNo=readResultVectorPeriod(periodVec,resultPathNoAqp)
+    avgLatVecMean,lat95VecMean,thrVecMean,errVecMean,compVec,aqpErrVecMean=readResultVectorPeriod(periodVec,resultPathMeanAqp)
+    avgLatVecIMA,lat95VecIMA,thrVecIMA,errVecIMA,compVec,aqpErrVecIMA=readResultVectorPeriod(periodVec,resultPathIMA)
     os.system("mkdir "+figPath)
+    groupLine.DrawFigureYnormal([periodVec,periodVec,periodVec],[aqpErrVecNo,aqpErrVecMean,aqpErrVecIMA],['w/o AQP (lazy)',"w/ final AQP (lazy)","w/ incremental AQP (eager)"],"watermark time (ms)","Error",0,1,figPath+"wm_Aqps_err",True)
+    groupLine.DrawFigureYnormal([periodVec,periodVec,periodVec],[avgLatVecNo,avgLatVecMean,avgLatVecIMA],['w/o AQP (lazy)',"w/ final AQP (lazy)","w/ incremental AQP (eager)"],"watermark time (ms)","95% latency (ms)",0,1,figPath+"wm_Aqps_lat",True)
+    groupLine.DrawFigureYnormal([periodVec,periodVec],[aqpErrVecMean,aqpErrVecIMA],["w/ MeanAqp","w/ incremental AQP"],"watermark time (ms)","Error",0,1,figPath+"wm_Aqps_err_incre",True)
     #draw2yLine("watermark time (ms)",periodVecDisp,lat95Vec,errVec,"95% Latency (ms)","Error","ms","",figPath+"wm_lat")
     #draw2yLine("watermark time (ms)",periodVecDisp,thrVec,errVec,"Throughput (KTp/s)","Error","KTp/s","",figPath+"wm_thr")
     #draw2yLine("watermark time (ms)",periodVecDisp,lat95Vec,compVec,"95% Latency (ms)","Completeness","ms","",figPath+"wm_omp")
-    groupLine.DrawFigureYnormal([periodVec,periodVec],[errVec,aqpErrVec],['w/o aqp',"w/ MeanAqp"],"watermark time (ms)","Error",0,1,figPath+"wm_MeanAqp",True)
-    print(errVec)
-    print(aqpErrVec)
+    #groupLine.DrawFigureYnormal([periodVec,periodVec],[errVec,aqpErrVec],['w/o aqp',"w/ MeanAqp"],"watermark time (ms)","Error",0,1,figPath+"wm_MeanAqp",True)
+    #print(errVec)
+    #print(aqpErrVec)
+    print(aqpErrVecIMA,aqpErrVecMean)
     #readResultPeriod(50,resultPath)
 if __name__ == "__main__":
     main()
