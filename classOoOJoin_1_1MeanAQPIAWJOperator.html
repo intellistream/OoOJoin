@@ -115,6 +115,7 @@ Inheritance diagram for OoOJoin::MeanAQPIAWJOperator:</div>
 <div class="center"><img src="classOoOJoin_1_1MeanAQPIAWJOperator__inherit__graph.png" border="0" usemap="#aOoOJoin_1_1MeanAQPIAWJOperator_inherit__map" alt="Inheritance graph"/></div>
 <map name="aOoOJoin_1_1MeanAQPIAWJOperator_inherit__map" id="aOoOJoin_1_1MeanAQPIAWJOperator_inherit__map">
 <area shape="rect" title="The intra window join (MeanAQPIAWJ) operator under the simplest AQP strategy, only considers a single..." alt="" coords="5,80,236,107"/>
+<area shape="rect" href="classOoOJoin_1_1IMAIAWJOperator.html" title="The IAWJ operator under the simplest AQP strategy, and updates incrementally (IMA),..." alt="" coords="24,155,217,181"/>
 <area shape="rect" href="classOoOJoin_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="24,5,217,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
@@ -124,7 +125,7 @@ Collaboration diagram for OoOJoin::MeanAQPIAWJOperator:</div>
 <div class="center"><img src="classOoOJoin_1_1MeanAQPIAWJOperator__coll__graph.png" border="0" usemap="#aOoOJoin_1_1MeanAQPIAWJOperator_coll__map" alt="Collaboration graph"/></div>
 <map name="aOoOJoin_1_1MeanAQPIAWJOperator_coll__map" id="aOoOJoin_1_1MeanAQPIAWJOperator_coll__map">
 <area shape="rect" title="The intra window join (MeanAQPIAWJ) operator under the simplest AQP strategy, only considers a single..." alt="" coords="752,500,983,527"/>
-<area shape="rect" href="classOoOJoin_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="367,108,560,135"/>
+<area shape="rect" href="classOoOJoin_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="367,115,560,141"/>
 <area shape="rect" title=" " alt="" coords="67,193,142,220"/>
 <area shape="rect" href="classOoOJoin_1_1Window.html" title="The class to describe a simplest window." alt="" coords="396,403,531,429"/>
 <area shape="rect" title=" " alt="" coords="50,5,159,32"/>
@@ -198,6 +199,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>lazyComputeOfAQP</b> 
 <tr class="memitem:a2736c7a35bda38ab370a4c3693ead5c8"><td class="memItemLeft" align="right" valign="top"><a id="a2736c7a35bda38ab370a4c3693ead5c8"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>predictUnarrivedTuples</b> (MeanStateOfKeyPtr px)</td></tr>
 <tr class="separator:a2736c7a35bda38ab370a4c3693ead5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classOoOJoin_1_1AbstractOperator"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classOoOJoin_1_1AbstractOperator')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classOoOJoin_1_1AbstractOperator.html">OoOJoin::AbstractOperator</a></td></tr>
+<tr class="memitem:aa06c334a673523a3fa3159f3f08472d9 inherit pro_methods_classOoOJoin_1_1AbstractOperator"><td class="memItemLeft" align="right" valign="top"><a id="aa06c334a673523a3fa3159f3f08472d9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1AbstractOperator.html#aa06c334a673523a3fa3159f3f08472d9">setFinalProcessedTime</a> ()</td></tr>
+<tr class="memdesc:aa06c334a673523a3fa3159f3f08472d9 inherit pro_methods_classOoOJoin_1_1AbstractOperator"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the final processed time for all tuples <br /></td></tr>
+<tr class="separator:aa06c334a673523a3fa3159f3f08472d9 inherit pro_methods_classOoOJoin_1_1AbstractOperator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -219,12 +225,6 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>alphaArrivalSkew</b
 <tr class="memitem:aa3a68d7896d8cfc099a53303e931b875"><td class="memItemLeft" align="right" valign="top"><a id="aa3a68d7896d8cfc099a53303e931b875"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>betaArrivalSkew</b> = 0.25</td></tr>
 <tr class="separator:aa3a68d7896d8cfc099a53303e931b875"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a593bc4fe04b43afd7186170a63f217af"><td class="memItemLeft" align="right" valign="top"><a id="a593bc4fe04b43afd7186170a63f217af"></a>
-<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lastTimeS</b> = 0</td></tr>
-<tr class="separator:a593bc4fe04b43afd7186170a63f217af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97cf9f0bf3f0be04b28945caaf5b6f49"><td class="memItemLeft" align="right" valign="top"><a id="a97cf9f0bf3f0be04b28945caaf5b6f49"></a>
-<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lastTimeR</b> = 0</td></tr>
-<tr class="separator:a97cf9f0bf3f0be04b28945caaf5b6f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f763f4410ad644a2ae8568bf88696b7"><td class="memItemLeft" align="right" valign="top"><a id="a8f763f4410ad644a2ae8568bf88696b7"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>aqpScale</b> = 0.1</td></tr>
 <tr class="separator:a8f763f4410ad644a2ae8568bf88696b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,6 +240,9 @@ atomic_bool&#160;</td><td class="memItemRight" valign="bottom"><b>lockedByWaterM
 <tr class="memitem:a50a9dd2095d35f9e7bce8a967b1e13fb"><td class="memItemLeft" align="right" valign="top"><a id="a50a9dd2095d35f9e7bce8a967b1e13fb"></a>
 <a class="el" href="group__INTELLI__COMMON__BASIC__STATE__OF__KEY.html#gad5a7bf32648ca25c40a688537b7d786b">StateOfKeyHashTablePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>stateOfKeyTableS</b></td></tr>
 <tr class="separator:a50a9dd2095d35f9e7bce8a967b1e13fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3e02b4e20bd7bbc2043f7bd0bf2635f"><td class="memItemLeft" align="right" valign="top"><a id="ae3e02b4e20bd7bbc2043f7bd0bf2635f"></a>
+<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lastTimeOfR</b> = 0</td></tr>
+<tr class="separator:ae3e02b4e20bd7bbc2043f7bd0bf2635f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classOoOJoin_1_1AbstractOperator"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classOoOJoin_1_1AbstractOperator')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classOoOJoin_1_1AbstractOperator.html">OoOJoin::AbstractOperator</a></td></tr>
 <tr class="memitem:afcb253377ff999625b0740f456315186 inherit pro_attribs_classOoOJoin_1_1AbstractOperator"><td class="memItemLeft" align="right" valign="top"><a id="afcb253377ff999625b0740f456315186"></a>
 struct timeval&#160;</td><td class="memItemRight" valign="bottom"><b>timeBaseStruct</b></td></tr>
@@ -327,6 +330,8 @@ operator tag = "MeanAQP" </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classOoOJoin_1_1AbstractOperator.html#a60bf7d0e78e39fd1baeb04c13633db6d">OoOJoin::AbstractOperator</a>.</p>
 
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html#a9ab66b198f3cf78966b903a6ca363899">OoOJoin::IMAIAWJOperator</a>.</p>
+
 </div>
 </div>
 <a id="a945a3039f5897fd8887bbdd5da155431"></a>
@@ -365,6 +370,8 @@ operator tag = "MeanAQP" </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classOoOJoin_1_1AbstractOperator.html#ad737b1f84606a09b1811fed59d8d82bf">OoOJoin::AbstractOperator</a>.</p>
 
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html#a4f7b0bdf8ccaf06ece9c421cee2d2a30">OoOJoin::IMAIAWJOperator</a>.</p>
+
 </div>
 </div>
 <a id="aa635b521a1c074e18ab37d230e8351e0"></a>
@@ -394,6 +401,8 @@ operator tag = "MeanAQP" </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The result </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classOoOJoin_1_1AbstractOperator.html#ad6ad6f4f61c4b4325823a5b04b33824d">OoOJoin::AbstractOperator</a>.</p>
+
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html#a31e739c1caa10f10dda7b5cdcf03c391">OoOJoin::IMAIAWJOperator</a>.</p>
 
 </div>
 </div>
@@ -425,6 +434,8 @@ operator tag = "MeanAQP" </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classOoOJoin_1_1AbstractOperator.html#a29289efcdee4c0ce798d25a2117f426c">OoOJoin::AbstractOperator</a>.</p>
 
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html#acc51ea98956753fb455d033dcc53ea39">OoOJoin::IMAIAWJOperator</a>.</p>
+
 </div>
 </div>
 <a id="aff78fef753d315b82ee4ebfdadca5d44"></a>
@@ -452,7 +463,7 @@ operator tag = "MeanAQP" </dd></dl>
 </div><div class="memdoc">
 
 <p>Set the config map related to this operator. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">cfg</td><td>The config map </td></tr>
@@ -462,6 +473,8 @@ operator tag = "MeanAQP" </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classOoOJoin_1_1AbstractOperator.html#ae96556b0c1701f720160b72669e6303b">OoOJoin::AbstractOperator</a>.</p>
+
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html#a63d19197d54e2483334aee02bc291397">OoOJoin::IMAIAWJOperator</a>.</p>
 
 </div>
 </div>
@@ -493,6 +506,8 @@ operator tag = "MeanAQP" </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classOoOJoin_1_1AbstractOperator.html#abe66d29dd28d04be0366c76a7c2a0eff">OoOJoin::AbstractOperator</a>.</p>
 
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html#aa4929469afd83ffa6783f83776e86f95">OoOJoin::IMAIAWJOperator</a>.</p>
+
 </div>
 </div>
 <a id="a1efd107ded80520c0a7d055f71a6e76f"></a>
@@ -522,6 +537,8 @@ operator tag = "MeanAQP" </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>bool, whether start successfully </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classOoOJoin_1_1AbstractOperator.html#af1b66ef346a1acc82edec4a3ff7f8153">OoOJoin::AbstractOperator</a>.</p>
+
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html#aea1c9cf86688c7d2abb1bccd44b0fa47">OoOJoin::IMAIAWJOperator</a>.</p>
 
 </div>
 </div>

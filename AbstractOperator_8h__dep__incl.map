@@ -1,8 +1,9 @@
 <map id="include/Operator/AbstractOperator.h" name="include/Operator/AbstractOperator.h">
-<area shape="rect" id="node1" title=" " alt="" coords="196,5,384,47"/>
-<area shape="rect" id="node2" href="$OoOJoin_8h.html" title=" " alt="" coords="224,259,362,285"/>
-<area shape="rect" id="node3" href="$IAWJOperator_8h.html" title=" " alt="" coords="32,95,263,121"/>
-<area shape="rect" id="node5" href="$MeanAQPIAWJOperator_8h.html" title=" " alt="" coords="287,95,582,121"/>
-<area shape="rect" id="node6" href="$TestBench_8h.html" title=" " alt="" coords="490,177,712,203"/>
-<area shape="rect" id="node4" href="$OperatorTable_8h.html" title=" " alt="" coords="198,169,388,211"/>
+<area shape="rect" id="node1" title=" " alt="" coords="174,5,362,47"/>
+<area shape="rect" id="node2" href="$OoOJoin_8h.html" title=" " alt="" coords="227,333,365,360"/>
+<area shape="rect" id="node3" href="$IAWJOperator_8h.html" title=" " alt="" coords="27,169,258,196"/>
+<area shape="rect" id="node5" href="$MeanAQPIAWJOperator_8h.html" title=" " alt="" coords="281,95,575,121"/>
+<area shape="rect" id="node7" href="$TestBench_8h.html" title=" " alt="" coords="664,251,885,278"/>
+<area shape="rect" id="node4" href="$OperatorTable_8h.html" title=" " alt="" coords="201,244,391,285"/>
+<area shape="rect" id="node6" href="$IMAIAWJOperator_8h_source.html" title=" " alt="" coords="333,169,589,196"/>
 </map>

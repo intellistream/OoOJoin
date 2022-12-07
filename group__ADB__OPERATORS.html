@@ -110,6 +110,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1IAWJOperator.html">OoOJoin::IAWJOperator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The intra window join (IAWJ) operator, only considers a single window.  <a href="classOoOJoin_1_1IAWJOperator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html">OoOJoin::IMAIAWJOperator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The IAWJ operator under the simplest AQP strategy, and updates incrementally (IMA), only considers a single window and uses exponential weighted moving average for prediction.  <a href="classOoOJoin_1_1IMAIAWJOperator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1MeanAQPIAWJOperator.html">OoOJoin::MeanAQPIAWJOperator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The intra window join (MeanAQPIAWJ) operator under the simplest AQP strategy, only considers a single window and uses exponential weighted moving average for prediction.  <a href="classOoOJoin_1_1MeanAQPIAWJOperator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,6 +130,10 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga79cd84cb2307bfe9ebbf3d7ae3ad8f47">newIAWJOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1IAWJOperator.html">OoOJoin::IAWJOperator</a>&gt;</td></tr>
 <tr class="memdesc:ga79cd84cb2307bfe9ebbf3d7ae3ad8f47"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new IAWJOperator under shared pointer. <br /></td></tr>
 <tr class="separator:ga79cd84cb2307bfe9ebbf3d7ae3ad8f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacbe3614ba1f2bd9a798638a3968f395f"><td class="memItemLeft" align="right" valign="top"><a id="gacbe3614ba1f2bd9a798638a3968f395f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#gacbe3614ba1f2bd9a798638a3968f395f">newIMAIAWJOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html">OoOJoin::IMAIAWJOperator</a>&gt;</td></tr>
+<tr class="memdesc:gacbe3614ba1f2bd9a798638a3968f395f"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new IMAIAWJOperator under shared pointer. <br /></td></tr>
+<tr class="separator:gacbe3614ba1f2bd9a798638a3968f395f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga850a55916b987bafe63d13a299f831ee"><td class="memItemLeft" align="right" valign="top"><a id="ga850a55916b987bafe63d13a299f831ee"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga850a55916b987bafe63d13a299f831ee">newMeanAQPIAWJOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1MeanAQPIAWJOperator.html">OoOJoin::MeanAQPIAWJOperator</a>&gt;</td></tr>
 <tr class="memdesc:ga850a55916b987bafe63d13a299f831ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new MeanAQPIAWJOperator under shared pointer. <br /></td></tr>

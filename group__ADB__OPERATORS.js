@@ -9,6 +9,7 @@ var group__ADB__OPERATORS =
       [ "getResult", "classOoOJoin_1_1AbstractOperator.html#a29289efcdee4c0ce798d25a2117f426c", null ],
       [ "setBufferLen", "classOoOJoin_1_1AbstractOperator.html#a81a65da60d89a3004b76437abf249a72", null ],
       [ "setConfig", "classOoOJoin_1_1AbstractOperator.html#ae96556b0c1701f720160b72669e6303b", null ],
+      [ "setFinalProcessedTime", "classOoOJoin_1_1AbstractOperator.html#aa06c334a673523a3fa3159f3f08472d9", null ],
       [ "setWindow", "classOoOJoin_1_1AbstractOperator.html#afc5c30e6f7df2b41ba931b28192a19da", null ],
       [ "start", "classOoOJoin_1_1AbstractOperator.html#abe66d29dd28d04be0366c76a7c2a0eff", null ],
       [ "stop", "classOoOJoin_1_1AbstractOperator.html#af1b66ef346a1acc82edec4a3ff7f8153", null ],
@@ -39,6 +40,24 @@ var group__ADB__OPERATORS =
       [ "myWindow", "classOoOJoin_1_1IAWJOperator.html#af98a51deca01a534e94c71e0edcbaba8", null ],
       [ "wmGen", "classOoOJoin_1_1IAWJOperator.html#a40d141a33b22aeff2dad14e85f5f46c3", null ]
     ] ],
+    [ "IMAIAWJOperator", "classOoOJoin_1_1IMAIAWJOperator.html", [
+      [ "IMAStateOfKey", "classOoOJoin_1_1IMAIAWJOperator_1_1IMAStateOfKey.html", [
+        [ "IMAStateOfKey", "classOoOJoin_1_1IMAIAWJOperator_1_1IMAStateOfKey.html#a91f0ec9121fa7289a8ed9dd921dc2176", null ],
+        [ "~IMAStateOfKey", "classOoOJoin_1_1IMAIAWJOperator_1_1IMAStateOfKey.html#a400ecdcbc2392440bbd202dc7cc9b861", null ],
+        [ "lastUnarrivedTuples", "classOoOJoin_1_1IMAIAWJOperator_1_1IMAStateOfKey.html#a4ced3efb9657d6cc3ec092d082b41f62", null ]
+      ] ],
+      [ "IMAStateOfKeyPtr", "classOoOJoin_1_1IMAIAWJOperator.html#acb41061b7ff066a5ae5f0e691c0228be", null ],
+      [ "IMAIAWJOperator", "classOoOJoin_1_1IMAIAWJOperator.html#aab9bd9af588e1dbe14d1ba42d50c50c6", null ],
+      [ "~IMAIAWJOperator", "classOoOJoin_1_1IMAIAWJOperator.html#abbd12f86d6f07c11ef04df6d5737ce8f", null ],
+      [ "conductComputation", "classOoOJoin_1_1IMAIAWJOperator.html#ad941fa631b4e4d8a58b229dc8d8a27a2", null ],
+      [ "feedTupleR", "classOoOJoin_1_1IMAIAWJOperator.html#a9ab66b198f3cf78966b903a6ca363899", null ],
+      [ "feedTupleS", "classOoOJoin_1_1IMAIAWJOperator.html#a4f7b0bdf8ccaf06ece9c421cee2d2a30", null ],
+      [ "getAQPResult", "classOoOJoin_1_1IMAIAWJOperator.html#a31e739c1caa10f10dda7b5cdcf03c391", null ],
+      [ "getResult", "classOoOJoin_1_1IMAIAWJOperator.html#acc51ea98956753fb455d033dcc53ea39", null ],
+      [ "setConfig", "classOoOJoin_1_1IMAIAWJOperator.html#a63d19197d54e2483334aee02bc291397", null ],
+      [ "start", "classOoOJoin_1_1IMAIAWJOperator.html#aa4929469afd83ffa6783f83776e86f95", null ],
+      [ "stop", "classOoOJoin_1_1IMAIAWJOperator.html#aea1c9cf86688c7d2abb1bccd44b0fa47", null ]
+    ] ],
     [ "MeanAQPIAWJOperator", "classOoOJoin_1_1MeanAQPIAWJOperator.html", [
       [ "MeanStateOfKey", "classOoOJoin_1_1MeanAQPIAWJOperator_1_1MeanStateOfKey.html", [
         [ "MeanStateOfKey", "classOoOJoin_1_1MeanAQPIAWJOperator_1_1MeanStateOfKey.html#a69e63e7967215f353b4552255277b2d8", null ],
@@ -68,8 +87,7 @@ var group__ADB__OPERATORS =
       [ "betaArrivalSkew", "classOoOJoin_1_1MeanAQPIAWJOperator.html#aa3a68d7896d8cfc099a53303e931b875", null ],
       [ "confirmedResult", "classOoOJoin_1_1MeanAQPIAWJOperator.html#ac7729f14584736be56f57b8847c912b3", null ],
       [ "intermediateResult", "classOoOJoin_1_1MeanAQPIAWJOperator.html#ae2260582322d473267134cf7ecb424bc", null ],
-      [ "lastTimeR", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a97cf9f0bf3f0be04b28945caaf5b6f49", null ],
-      [ "lastTimeS", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a593bc4fe04b43afd7186170a63f217af", null ],
+      [ "lastTimeOfR", "classOoOJoin_1_1MeanAQPIAWJOperator.html#ae3e02b4e20bd7bbc2043f7bd0bf2635f", null ],
       [ "lockedByWaterMark", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a066467d96401e4bfc5d8efa4c9ac6922", null ],
       [ "myWindow", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a3b92af2f911e912c2247e0c90ac34121", null ],
       [ "stateOfKeyTableR", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a5145a4e2526e41301a7cec37d28c5cee", null ],
@@ -86,6 +104,7 @@ var group__ADB__OPERATORS =
     ] ],
     [ "newAbstractOperator", "group__ADB__OPERATORS.html#gafd083fd1cec9a407e95cf9a8c1141056", null ],
     [ "newIAWJOperator", "group__ADB__OPERATORS.html#ga79cd84cb2307bfe9ebbf3d7ae3ad8f47", null ],
+    [ "newIMAIAWJOperator", "group__ADB__OPERATORS.html#gacbe3614ba1f2bd9a798638a3968f395f", null ],
     [ "newMeanAQPIAWJOperator", "group__ADB__OPERATORS.html#ga850a55916b987bafe63d13a299f831ee", null ],
     [ "newOperatorTable", "group__ADB__OPERATORS.html#ga882377b54021cdfba425bb1610b835c7", null ],
     [ "AbstractOperatorPtr", "group__ADB__OPERATORS.html#ga33ebad6e01595b1734f047845230e7aa", null ],

@@ -63,8 +63,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AbstractC20Thread_8hpp.html",
-"classOoOJoin_1_1AbstractJoinAlgo.html#a624885666005ad15a24776f63800adc3",
-"group__ADB__JOINALGOS__ABSTRACT.html"
+"classOoOJoin_1_1AbstractJoinAlgo.html#a25ae0637df10b5c63eecf0db55d9d1b5",
+"classOoOJoin_1_1Window.html#aeba838d0843bfef252f8676e5d0abaac"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,0 +1,16 @@
+<map id="OoOJoin::IMAIAWJOperator" name="OoOJoin::IMAIAWJOperator">
+<area shape="rect" id="node1" title="The IAWJ operator under the simplest AQP strategy, and updates incrementally (IMA),..." alt="" coords="1032,500,1225,527"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1MeanAQPIAWJOperator.html" title="The intra window join (MeanAQPIAWJ) operator under the simplest AQP strategy, only considers a single..." alt="" coords="752,500,983,527"/>
+<area shape="rect" id="node3" href="$classOoOJoin_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="367,115,560,141"/>
+<area shape="rect" id="node4" title=" " alt="" coords="67,193,142,220"/>
+<area shape="rect" id="node9" href="$classOoOJoin_1_1Window.html" title="The class to describe a simplest window." alt="" coords="396,403,531,429"/>
+<area shape="rect" id="node5" title=" " alt="" coords="50,5,159,32"/>
+<area shape="rect" id="node6" title=" " alt="" coords="75,451,135,477"/>
+<area shape="rect" id="node7" title=" " alt="" coords="85,56,124,83"/>
+<area shape="rect" id="node8" title=" " alt="" coords="48,107,161,133"/>
+<area shape="rect" id="node10" href="$classINTELLI_1_1C20Buffer.html" title=" " alt="" coords="5,385,204,426"/>
+<area shape="rect" id="node11" title=" " alt="" coords="412,543,515,569"/>
+<area shape="rect" id="node12" title=" " alt="" coords="430,593,497,620"/>
+<area shape="rect" id="node13" title=" " alt="" coords="365,645,562,686"/>
+<area shape="rect" id="node14" title=" " alt="" coords="357,710,569,751"/>
+</map>

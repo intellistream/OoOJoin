@@ -10,10 +10,14 @@ var hierarchy =
     ] ],
     [ "OoOJoin::AbstractOperator", "classOoOJoin_1_1AbstractOperator.html", [
       [ "OoOJoin::IAWJOperator", "classOoOJoin_1_1IAWJOperator.html", null ],
-      [ "OoOJoin::MeanAQPIAWJOperator", "classOoOJoin_1_1MeanAQPIAWJOperator.html", null ]
+      [ "OoOJoin::MeanAQPIAWJOperator", "classOoOJoin_1_1MeanAQPIAWJOperator.html", [
+        [ "OoOJoin::IMAIAWJOperator", "classOoOJoin_1_1IMAIAWJOperator.html", null ]
+      ] ]
     ] ],
     [ "OoOJoin::AbstractStateOfKey", "classOoOJoin_1_1AbstractStateOfKey.html", [
-      [ "OoOJoin::MeanAQPIAWJOperator::MeanStateOfKey", "classOoOJoin_1_1MeanAQPIAWJOperator_1_1MeanStateOfKey.html", null ]
+      [ "OoOJoin::MeanAQPIAWJOperator::MeanStateOfKey", "classOoOJoin_1_1MeanAQPIAWJOperator_1_1MeanStateOfKey.html", [
+        [ "OoOJoin::IMAIAWJOperator::IMAStateOfKey", "classOoOJoin_1_1IMAIAWJOperator_1_1IMAStateOfKey.html", null ]
+      ] ]
     ] ],
     [ "OoOJoin::AbstractWaterMarker", "classOoOJoin_1_1AbstractWaterMarker.html", [
       [ "OoOJoin::PeriodicalWM", "classOoOJoin_1_1PeriodicalWM.html", null ]

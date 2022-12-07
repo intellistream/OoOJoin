@@ -27,6 +27,7 @@ var annotated_dup =
       [ "NPJSingle", "classOoOJoin_1_1NPJSingle.html", "classOoOJoin_1_1NPJSingle" ],
       [ "AbstractOperator", "classOoOJoin_1_1AbstractOperator.html", "classOoOJoin_1_1AbstractOperator" ],
       [ "IAWJOperator", "classOoOJoin_1_1IAWJOperator.html", "classOoOJoin_1_1IAWJOperator" ],
+      [ "IMAIAWJOperator", "classOoOJoin_1_1IMAIAWJOperator.html", "classOoOJoin_1_1IMAIAWJOperator" ],
       [ "MeanAQPIAWJOperator", "classOoOJoin_1_1MeanAQPIAWJOperator.html", "classOoOJoin_1_1MeanAQPIAWJOperator" ],
       [ "OperatorTable", "classOoOJoin_1_1OperatorTable.html", "classOoOJoin_1_1OperatorTable" ],
       [ "TestBench", "classOoOJoin_1_1TestBench.html", "classOoOJoin_1_1TestBench" ],

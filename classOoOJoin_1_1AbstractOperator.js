@@ -8,6 +8,7 @@ var classOoOJoin_1_1AbstractOperator =
     [ "getResult", "classOoOJoin_1_1AbstractOperator.html#a29289efcdee4c0ce798d25a2117f426c", null ],
     [ "setBufferLen", "classOoOJoin_1_1AbstractOperator.html#a81a65da60d89a3004b76437abf249a72", null ],
     [ "setConfig", "classOoOJoin_1_1AbstractOperator.html#ae96556b0c1701f720160b72669e6303b", null ],
+    [ "setFinalProcessedTime", "classOoOJoin_1_1AbstractOperator.html#aa06c334a673523a3fa3159f3f08472d9", null ],
     [ "setWindow", "classOoOJoin_1_1AbstractOperator.html#afc5c30e6f7df2b41ba931b28192a19da", null ],
     [ "start", "classOoOJoin_1_1AbstractOperator.html#abe66d29dd28d04be0366c76a7c2a0eff", null ],
     [ "stop", "classOoOJoin_1_1AbstractOperator.html#af1b66ef346a1acc82edec4a3ff7f8153", null ],

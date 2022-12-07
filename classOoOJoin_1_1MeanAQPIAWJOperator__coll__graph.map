@@ -1,6 +1,6 @@
 <map id="OoOJoin::MeanAQPIAWJOperator" name="OoOJoin::MeanAQPIAWJOperator">
 <area shape="rect" id="node1" title="The intra window join (MeanAQPIAWJ) operator under the simplest AQP strategy, only considers a single..." alt="" coords="752,500,983,527"/>
-<area shape="rect" id="node2" href="$classOoOJoin_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="367,108,560,135"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1AbstractOperator.html" title="The abstraction to describe a join operator, providing virtual function of using the operation." alt="" coords="367,115,560,141"/>
 <area shape="rect" id="node3" title=" " alt="" coords="67,193,142,220"/>
 <area shape="rect" id="node8" href="$classOoOJoin_1_1Window.html" title="The class to describe a simplest window." alt="" coords="396,403,531,429"/>
 <area shape="rect" id="node4" title=" " alt="" coords="50,5,159,32"/>
