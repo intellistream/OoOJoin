@@ -119,7 +119,7 @@ def main():
     os.system("mkdir "+figPath)
     groupLine.DrawFigureYnormal([periodVec,periodVec,periodVec],[aqpErrVecNo,aqpErrVecMean,aqpErrVecIMA],['w/o AQP (lazy)',"w/ final AQP (lazy)","w/ incremental AQP (eager)"],"watermark time (ms)","Error",0,1,figPath+"wm_Aqps_err",True)
     groupLine.DrawFigureYnormal([periodVec,periodVec,periodVec],[avgLatVecNo,avgLatVecMean,avgLatVecIMA],['w/o AQP (lazy)',"w/ final AQP (lazy)","w/ incremental AQP (eager)"],"watermark time (ms)","95% latency (ms)",0,1,figPath+"wm_Aqps_lat",True)
-    groupLine.DrawFigureYnormal([periodVec,periodVec],[aqpErrVecMean,aqpErrVecIMA],["w/ MeanAqp","w/ incremental AQP"],"watermark time (ms)","Error",0,1,figPath+"wm_Aqps_err_incre",True)
+    groupLine.DrawFigureYnormal([periodVec,periodVec],[aqpErrVecMean,aqpErrVecIMA],["w/ AQP (lazy)","w/ incremental AQP (eager)"],"watermark time (ms)","Error",0,1,figPath+"wm_Aqps_err_incre",True)
     #draw2yLine("watermark time (ms)",periodVecDisp,lat95Vec,errVec,"95% Latency (ms)","Error","ms","",figPath+"wm_lat")
     #draw2yLine("watermark time (ms)",periodVecDisp,thrVec,errVec,"Throughput (KTp/s)","Error","KTp/s","",figPath+"wm_thr")
     #draw2yLine("watermark time (ms)",periodVecDisp,lat95Vec,compVec,"95% Latency (ms)","Completeness","ms","",figPath+"wm_omp")
