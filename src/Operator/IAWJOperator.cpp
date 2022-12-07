@@ -59,6 +59,13 @@ bool OoOJoin::IAWJOperator::stop() {
     //force to flush, if no watermark is given
     conductComputation();
   }
+/*  size_t rLen = myWindow.windowR.size();
+  NPJTuplePtr *tr = myWindow.windowR.data();
+  tsType timeNow= UtilityFunctions::timeLastUs(timeBaseStruct);
+  for (size_t i = 0; i < rLen; i++) {
+    if (tr[i]->arrivalTime < timeNow)
+    {tr[i]->processedTime = timeNow;}
+  }*/
   return true;
 }
 bool OoOJoin::IAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {

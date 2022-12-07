@@ -1,11 +1,12 @@
-/*! \file   MeanAQPIAWJOperator.h*/
+/*! \file   IMAIAWJOperator
+.h*/
 //
 // Created by tony on 03/12/22.
 //
 
-#ifndef INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPMeanAQPIAWJOPERATOR_H_
-#define INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPMeanAQPIAWJOPERATOR_H_
-#include <Operator/AbstractOperator.h>
+#ifndef INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPIMAIAWJOperator_H_
+#define INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPIMAIAWJOperator_H_
+#include <Operator/MeanAQPIAWJOperator.h>
 #include <Common/Window.h>
 #include <atomic>
 #include <WaterMarker/PeriodicalWM.h>
@@ -14,10 +15,10 @@ namespace OoOJoin {
 
 /**
  * @ingroup ADB_OPERATORS
- * @class MeanAQPIAWJOperator Operator/MeanAQPIAWJOperator.h
+ * @class IMAIAWJOperator Operator/IMAIAWJOperator.h
  * \image html MeanAQP.png
- * @brief The intra window join (MeanAQPIAWJ) operator under the simplest AQP strategy, only considers a single window and uses
- * exponential weighted moving average for prediction
+ * @brief The IAWJ operator under the simplest AQP strategy, and updates incrementally (IMA), only considers a single window and uses
+ * exponential weighted moving average for prediction. This one is EAGER join in fact
  * @note require configurations:
  * - "windowLen" U64: The length of window
  * - "slideLen" U64: The length of slide
@@ -27,42 +28,45 @@ namespace OoOJoin {
  * @warning The predictor and watermarker are currently NOT seperated in this operator, split them in the future!
  * @note In current version, the computation will block feeding
  * @note follows the assumption of linear independent arrival and skewness
- * @note operator tag = "MeanAQP"
+ * @note operator tag = "IMA"
  */
-class MeanAQPIAWJOperator : public AbstractOperator {
+class IMAIAWJOperator
+    : public MeanAQPIAWJOperator {
  protected:
-  Window myWindow;
-  size_t intermediateResult = 0;
-  size_t confirmedResult = 0;
-  uint64_t windowBound = 0;
+  //Window myWindow;
+  //size_t intermediateResult = 0;
+  //size_t confirmedResult = 0;
+  //uint64_t windowBound = 0;
   // double alphaArrivalRate=0.125;
-  double alphaArrivalSkew = 0.125;
-  double betaArrivalSkew = 0.25;
-//  tsType lastTimeS = 0, lastTimeR = 0;
-  double aqpScale = 0.1;
+  // double alphaArrivalSkew = 0.125;
+  // double betaArrivalSkew = 0.25;
+  //tsType lastTimeS = 0, lastTimeR = 0;
+  // double aqpScale = 0.1;
   void conductComputation();
-  atomic_bool lockedByWaterMark = false;
-  AbstractWaterMarkerPtr wmGen = nullptr;
-  StateOfKeyHashTablePtr stateOfKeyTableR, stateOfKeyTableS;
-  tsType lastTimeOfR = 0;
-  class MeanStateOfKey : public AbstractStateOfKey {
+  // atomic_bool lockedByWaterMark = false;
+  //AbstractWaterMarkerPtr wmGen = nullptr;
+  //StateOfKeyHashTablePtr stateOfKeyTableR, stateOfKeyTableS;
+  class IMAStateOfKey : public MeanStateOfKey {
    public:
-    size_t arrivedTupleCnt = 0;
-    double arrivalSkew = 0, sigmaArrivalSkew = 0;
-    TrackTuplePtr lastEventTuple = nullptr, lastArrivalTuple = nullptr;
+    // size_t arrivedTupleCnt = 0;
+    //  double arrivalSkew = 0, sigmaArrivalSkew = 0;
+    // TrackTuplePtr lastEventTuple = nullptr, lastArrivalTuple = nullptr;
     // tsType  lastSeenTime=0;
-    MeanStateOfKey() {}
-    ~MeanStateOfKey() {}
+    //size_t lastEstimateAllTuples=0;
+    double lastUnarrivedTuples = 0;
+    // size_t lastAdded=0;
+    IMAStateOfKey() {}
+    ~IMAStateOfKey() {}
   };
-  typedef std::shared_ptr<MeanStateOfKey> MeanStateOfKeyPtr;
-#define newMeanStateOfKey std::make_shared<MeanStateOfKey>
-  void updateStateOfKey(MeanStateOfKeyPtr sk, TrackTuplePtr tp);
+  typedef std::shared_ptr<IMAStateOfKey> IMAStateOfKeyPtr;
+#define newIMAStateOfKey std::make_shared<IMAStateOfKey>
+  // void updateStateOfKey(IMAStateOfKeyPtr sk, TrackTuplePtr tp);
   // void updateStateOfKeyR(MeanStateOfKeyPtr sk,TrackTuplePtr tp);
-  void lazyComputeOfAQP();
-  double predictUnarrivedTuples(MeanStateOfKeyPtr px);
+  // void lazyComputeOfAQP();
+  // double predictUnarrivedTuples(IMAStateOfKeyPtr px,TrackTuplePtr tp);
  public:
-  MeanAQPIAWJOperator() {}
-  ~MeanAQPIAWJOperator() {}
+  IMAIAWJOperator() {}
+  ~IMAIAWJOperator() {}
   /**
    * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
   * @brief Set the config map related to this operator
@@ -112,15 +116,19 @@ class MeanAQPIAWJOperator : public AbstractOperator {
 };
 /**
  * @ingroup ADB_OPERATORS
- * @typedef MeanAQPIAWJOperatorPtr
- * @brief The class to describe a shared pointer to @ref MeanAQPIAWJOperator
+ * @typedef IMAIAWJOperator
+Ptr
+ * @brief The class to describe a shared pointer to @ref IMAIAWJOperator
+
  */
-typedef std::shared_ptr<class MeanAQPIAWJOperator> MeanAQPIAWJOperatorPtr;
+typedef std::shared_ptr<class IMAIAWJOperator> IMAIAWJOperatorPtr;
 /**
  * @ingroup ADB_OPERATORS
- * @def newMeanAQPIAWJOperator
- * @brief (Macro) To creat a new @ref MeanAQPIAWJOperator under shared pointer.
+ * @def newIMAIAWJOperator
+
+ * @brief (Macro) To creat a new @ref IMAIAWJOperator
+ under shared pointer.
  */
-#define newMeanAQPIAWJOperator std::make_shared<OoOJoin::MeanAQPIAWJOperator>
+#define newIMAIAWJOperator std::make_shared<OoOJoin::IMAIAWJOperator>
 }
-#endif //INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPMeanAQPIAWJOPERATOR_H_
+#endif //INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPIMAIAWJOperator_H_
