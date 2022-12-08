@@ -6,6 +6,7 @@ var classOoOJoin_1_1AbstractOperator =
     [ "feedTupleS", "classOoOJoin_1_1AbstractOperator.html#ad737b1f84606a09b1811fed59d8d82bf", null ],
     [ "getAQPResult", "classOoOJoin_1_1AbstractOperator.html#ad6ad6f4f61c4b4325823a5b04b33824d", null ],
     [ "getResult", "classOoOJoin_1_1AbstractOperator.html#a29289efcdee4c0ce798d25a2117f426c", null ],
+    [ "getTimeBreakDown", "classOoOJoin_1_1AbstractOperator.html#a5f3b401fbae548d72e55d8fe64573f87", null ],
     [ "setBufferLen", "classOoOJoin_1_1AbstractOperator.html#a81a65da60d89a3004b76437abf249a72", null ],
     [ "setConfig", "classOoOJoin_1_1AbstractOperator.html#ae96556b0c1701f720160b72669e6303b", null ],
     [ "setFinalProcessedTime", "classOoOJoin_1_1AbstractOperator.html#aa06c334a673523a3fa3159f3f08472d9", null ],
@@ -19,6 +20,7 @@ var classOoOJoin_1_1AbstractOperator =
     [ "slideLen", "classOoOJoin_1_1AbstractOperator.html#abac16253dc99594f79161d80387b574e", null ],
     [ "threads", "classOoOJoin_1_1AbstractOperator.html#a28c487cea3d8fb6cee0e105ab98347ba", null ],
     [ "timeBaseStruct", "classOoOJoin_1_1AbstractOperator.html#afcb253377ff999625b0740f456315186", null ],
+    [ "timeBreakDown_all", "classOoOJoin_1_1AbstractOperator.html#ae34b50232524fab4090916981e21aa5c", null ],
     [ "timeStep", "classOoOJoin_1_1AbstractOperator.html#a1453c146ccb6f0e0fa4ed804fff56510", null ],
     [ "windowLen", "classOoOJoin_1_1AbstractOperator.html#a61231e3c6222baa679001ca00704dcd3", null ]
 ];

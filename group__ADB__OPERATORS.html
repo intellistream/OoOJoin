@@ -111,7 +111,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The intra window join (IAWJ) operator, only considers a single window.  <a href="classOoOJoin_1_1IAWJOperator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html">OoOJoin::IMAIAWJOperator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The IAWJ operator under the simplest AQP strategy, and updates incrementally (IMA), only considers a single window and uses exponential weighted moving average for prediction.  <a href="classOoOJoin_1_1IMAIAWJOperator.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The IAWJ operator under the simplest AQP strategy, and updates incrementally (IMA), only considers a single window and uses exponential weighted moving average for prediction. This one is EAGER join in fact.  <a href="classOoOJoin_1_1IMAIAWJOperator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1MeanAQPIAWJOperator.html">OoOJoin::MeanAQPIAWJOperator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The intra window join (MeanAQPIAWJ) operator under the simplest AQP strategy, only considers a single window and uses exponential weighted moving average for prediction.  <a href="classOoOJoin_1_1MeanAQPIAWJOperator.html#details">More...</a><br /></td></tr>
@@ -126,6 +126,15 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#gafd083fd1cec9a407e95cf9a8c1141056">newAbstractOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1AbstractOperator.html">OoOJoin::AbstractOperator</a>&gt;</td></tr>
 <tr class="memdesc:gafd083fd1cec9a407e95cf9a8c1141056"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new AbstractOperator under shared pointer. <br /></td></tr>
 <tr class="separator:gafd083fd1cec9a407e95cf9a8c1141056"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7945da90ee65d7064ebd8be910abd431"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga7945da90ee65d7064ebd8be910abd431">timeTrackingStart</a>(v)&#160;&#160;&#160;; tsType v;v=UtilityFunctions::timeLastUs(timeBaseStruct);</td></tr>
+<tr class="memdesc:ga7945da90ee65d7064ebd8be910abd431"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) start a time tracking and record it at variable v, v is not defined yet  <a href="group__ADB__OPERATORS.html#ga7945da90ee65d7064ebd8be910abd431">More...</a><br /></td></tr>
+<tr class="separator:ga7945da90ee65d7064ebd8be910abd431"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5cf13c317544c71159a175d628f8da3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#gaa5cf13c317544c71159a175d628f8da3">timeTrackingStartNoClaim</a>(v)&#160;&#160;&#160;; v=UtilityFunctions::timeLastUs(timeBaseStruct);</td></tr>
+<tr class="memdesc:gaa5cf13c317544c71159a175d628f8da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) start a time tracking and record it at variable v, v is previously defined  <a href="group__ADB__OPERATORS.html#gaa5cf13c317544c71159a175d628f8da3">More...</a><br /></td></tr>
+<tr class="separator:gaa5cf13c317544c71159a175d628f8da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga768ce140050828cddb08294c35a94cd1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga768ce140050828cddb08294c35a94cd1">timeTrackingEnd</a>(v)&#160;&#160;&#160;(UtilityFunctions::timeLastUs(timeBaseStruct)-v)</td></tr>
+<tr class="memdesc:ga768ce140050828cddb08294c35a94cd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) end a time tracking of variable v and return  <a href="group__ADB__OPERATORS.html#ga768ce140050828cddb08294c35a94cd1">More...</a><br /></td></tr>
+<tr class="separator:ga768ce140050828cddb08294c35a94cd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga79cd84cb2307bfe9ebbf3d7ae3ad8f47"><td class="memItemLeft" align="right" valign="top"><a id="ga79cd84cb2307bfe9ebbf3d7ae3ad8f47"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga79cd84cb2307bfe9ebbf3d7ae3ad8f47">newIAWJOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1IAWJOperator.html">OoOJoin::IAWJOperator</a>&gt;</td></tr>
 <tr class="memdesc:ga79cd84cb2307bfe9ebbf3d7ae3ad8f47"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new IAWJOperator under shared pointer. <br /></td></tr>
@@ -163,6 +172,86 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1OperatorTa
 <tr class="separator:ga4b4e0e004dd2a3d6ea1db58ae7152308"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga768ce140050828cddb08294c35a94cd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga768ce140050828cddb08294c35a94cd1">&#9670;&nbsp;</a></span>timeTrackingEnd</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define timeTrackingEnd</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">v</td><td>)</td>
+          <td>&#160;&#160;&#160;(UtilityFunctions::timeLastUs(timeBaseStruct)-v)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>(Macro) end a time tracking of variable v and return </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>the variable name, must start with tt_ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the time last </dd></dl>
+
+</div>
+</div>
+<a id="ga7945da90ee65d7064ebd8be910abd431"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7945da90ee65d7064ebd8be910abd431">&#9670;&nbsp;</a></span>timeTrackingStart</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define timeTrackingStart</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">v</td><td>)</td>
+          <td>&#160;&#160;&#160;; tsType v;v=UtilityFunctions::timeLastUs(timeBaseStruct);</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>(Macro) start a time tracking and record it at variable v, v is not defined yet </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>the variable name, must start with tt_ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa5cf13c317544c71159a175d628f8da3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa5cf13c317544c71159a175d628f8da3">&#9670;&nbsp;</a></span>timeTrackingStartNoClaim</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define timeTrackingStartNoClaim</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">v</td><td>)</td>
+          <td>&#160;&#160;&#160;; v=UtilityFunctions::timeLastUs(timeBaseStruct);</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>(Macro) start a time tracking and record it at variable v, v is previously defined </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>the variable name, must start with tt_ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

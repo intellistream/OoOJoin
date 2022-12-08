@@ -178,6 +178,15 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#gafd083fd1cec9a407e95cf9a8c1141056">newAbstractOperator</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1AbstractOperator.html">OoOJoin::AbstractOperator</a>&gt;</td></tr>
 <tr class="memdesc:gafd083fd1cec9a407e95cf9a8c1141056"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new AbstractOperator under shared pointer. <br /></td></tr>
 <tr class="separator:gafd083fd1cec9a407e95cf9a8c1141056"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7945da90ee65d7064ebd8be910abd431"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga7945da90ee65d7064ebd8be910abd431">timeTrackingStart</a>(v)&#160;&#160;&#160;; tsType v;v=UtilityFunctions::timeLastUs(timeBaseStruct);</td></tr>
+<tr class="memdesc:ga7945da90ee65d7064ebd8be910abd431"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) start a time tracking and record it at variable v, v is not defined yet  <a href="group__ADB__OPERATORS.html#ga7945da90ee65d7064ebd8be910abd431">More...</a><br /></td></tr>
+<tr class="separator:ga7945da90ee65d7064ebd8be910abd431"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5cf13c317544c71159a175d628f8da3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#gaa5cf13c317544c71159a175d628f8da3">timeTrackingStartNoClaim</a>(v)&#160;&#160;&#160;; v=UtilityFunctions::timeLastUs(timeBaseStruct);</td></tr>
+<tr class="memdesc:gaa5cf13c317544c71159a175d628f8da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) start a time tracking and record it at variable v, v is previously defined  <a href="group__ADB__OPERATORS.html#gaa5cf13c317544c71159a175d628f8da3">More...</a><br /></td></tr>
+<tr class="separator:gaa5cf13c317544c71159a175d628f8da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga768ce140050828cddb08294c35a94cd1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__OPERATORS.html#ga768ce140050828cddb08294c35a94cd1">timeTrackingEnd</a>(v)&#160;&#160;&#160;(UtilityFunctions::timeLastUs(timeBaseStruct)-v)</td></tr>
+<tr class="memdesc:ga768ce140050828cddb08294c35a94cd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) end a time tracking of variable v and return  <a href="group__ADB__OPERATORS.html#ga768ce140050828cddb08294c35a94cd1">More...</a><br /></td></tr>
+<tr class="separator:ga768ce140050828cddb08294c35a94cd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>

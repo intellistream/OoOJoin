@@ -21,5 +21,6 @@ var searchData=
   ['getstart_68',['getStart',['../classOoOJoin_1_1Window.html#a08caba610562a7db108fafa6146ef912',1,'OoOJoin::Window']]],
   ['getstring_69',['getString',['../group__INTELLI__UTIL.html#ga51f63a67f241f1328531fab3337848a9',1,'INTELLI::ConfigMap']]],
   ['getthroughput_70',['getThroughput',['../classOoOJoin_1_1TestBench.html#a918eb04c72ea8619e4136407875029c5',1,'OoOJoin::TestBench']]],
-  ['getu64_71',['getU64',['../group__INTELLI__UTIL.html#ga8e9373fa7af1061e1d665269b59cdb0c',1,'INTELLI::ConfigMap']]]
+  ['gettimebreakdown_71',['getTimeBreakDown',['../classOoOJoin_1_1AbstractOperator.html#a5f3b401fbae548d72e55d8fe64573f87',1,'OoOJoin::AbstractOperator::getTimeBreakDown()'],['../classOoOJoin_1_1MeanAQPIAWJOperator.html#af8437774a178502a2cdb68ef2ca99673',1,'OoOJoin::MeanAQPIAWJOperator::getTimeBreakDown()'],['../classOoOJoin_1_1TestBench.html#ab6845145351f17e0d53e785beb863452',1,'OoOJoin::TestBench::getTimeBreakDown()']]],
+  ['getu64_72',['getU64',['../group__INTELLI__UTIL.html#ga8e9373fa7af1061e1d665269b59cdb0c',1,'INTELLI::ConfigMap']]]
 ];

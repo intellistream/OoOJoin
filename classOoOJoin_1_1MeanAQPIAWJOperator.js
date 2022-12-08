@@ -9,6 +9,7 @@ var classOoOJoin_1_1MeanAQPIAWJOperator =
     [ "feedTupleS", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a945a3039f5897fd8887bbdd5da155431", null ],
     [ "getAQPResult", "classOoOJoin_1_1MeanAQPIAWJOperator.html#aa635b521a1c074e18ab37d230e8351e0", null ],
     [ "getResult", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a1bfc8717b94c08554d75d651aeb35a73", null ],
+    [ "getTimeBreakDown", "classOoOJoin_1_1MeanAQPIAWJOperator.html#af8437774a178502a2cdb68ef2ca99673", null ],
     [ "lazyComputeOfAQP", "classOoOJoin_1_1MeanAQPIAWJOperator.html#af498eccb4e7395464fa12d66050cc84c", null ],
     [ "predictUnarrivedTuples", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a2736c7a35bda38ab370a4c3693ead5c8", null ],
     [ "setConfig", "classOoOJoin_1_1MeanAQPIAWJOperator.html#aff78fef753d315b82ee4ebfdadca5d44", null ],
@@ -25,6 +26,9 @@ var classOoOJoin_1_1MeanAQPIAWJOperator =
     [ "myWindow", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a3b92af2f911e912c2247e0c90ac34121", null ],
     [ "stateOfKeyTableR", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a5145a4e2526e41301a7cec37d28c5cee", null ],
     [ "stateOfKeyTableS", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a50a9dd2095d35f9e7bce8a967b1e13fb", null ],
+    [ "timeBreakDown_index", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a7734d265868691cebea8c994cd1589cb", null ],
+    [ "timeBreakDown_join", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a8edc3d604ac39a885ee3d12bc000b771", null ],
+    [ "timeBreakDown_prediction", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a457299c3df555dfc886fa67f617f9c3f", null ],
     [ "windowBound", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a49c5490fb8a32df2d1da1993de44b52f", null ],
     [ "wmGen", "classOoOJoin_1_1MeanAQPIAWJOperator.html#a556d4af0054a0fc69b0c65a51fe4cf1b", null ]
 ];

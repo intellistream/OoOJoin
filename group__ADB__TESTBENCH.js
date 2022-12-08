@@ -7,6 +7,7 @@ var group__ADB__TESTBENCH =
       [ "getAvgLatency", "classOoOJoin_1_1TestBench.html#a2dba7ee7a86f1178279004f10b107db1", null ],
       [ "getLatencyPercentage", "classOoOJoin_1_1TestBench.html#a1f46a1516765455f8b7641109315c15c", null ],
       [ "getThroughput", "classOoOJoin_1_1TestBench.html#a918eb04c72ea8619e4136407875029c5", null ],
+      [ "getTimeBreakDown", "classOoOJoin_1_1TestBench.html#ab6845145351f17e0d53e785beb863452", null ],
       [ "inlineTest", "classOoOJoin_1_1TestBench.html#a0bb68c94df66dddb708f9b73a06a4616", null ],
       [ "inOrderSort", "classOoOJoin_1_1TestBench.html#a06293b88f3378701b664a55696dcecf3", null ],
       [ "inOrderTest", "classOoOJoin_1_1TestBench.html#aa72adeb9d6ae22cdf36eeb68e6600827", null ],
