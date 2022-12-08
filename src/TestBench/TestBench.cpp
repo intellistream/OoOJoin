@@ -220,3 +220,9 @@ double OoOJoin::TestBench::getLatencyPercentage(double fraction) {
   return validLatency[idx];
 
 }
+ConfigMapPtr OoOJoin::TestBench::getTimeBreakDown() {
+  if (testOp != nullptr) {
+    return testOp->getTimeBreakDown();
+  }
+  return nullptr;
+}

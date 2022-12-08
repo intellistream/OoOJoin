@@ -31,12 +31,17 @@ bool OoOJoin::MeanAQPIAWJOperator::start() {
   intermediateResult = 0;
   confirmedResult = 0;
   lockedByWaterMark = false;
+  timeBreakDown_prediction = 0;
+  timeBreakDown_index = 0;
+  timeBreakDown_join = 0;
+  timeBreakDown_all = 0;timeTrackingStartNoClaim(timeBreakDown_all);
   return true;
 }
 void OoOJoin::MeanAQPIAWJOperator::conductComputation() {
 
 }
 void OoOJoin::MeanAQPIAWJOperator::updateStateOfKey(MeanStateOfKeyPtr sk, TrackTuplePtr tp) {
+
   double skewTp = tp->arrivalTime - tp->eventTime;
   double rateTp = tp->arrivalTime;
   rateTp = rateTp / (sk->arrivedTupleCnt + 1);
@@ -58,6 +63,7 @@ void OoOJoin::MeanAQPIAWJOperator::updateStateOfKey(MeanStateOfKeyPtr sk, TrackT
       sk->lastEventTuple = tp;
     }
   }
+
 }
 bool OoOJoin::MeanAQPIAWJOperator::stop() {
   /**
@@ -69,6 +75,7 @@ bool OoOJoin::MeanAQPIAWJOperator::stop() {
         WM_INFO("No watermark encountered, compute now");
   }
   lazyComputeOfAQP();
+  timeBreakDown_all = timeTrackingEnd(timeBreakDown_all);
   size_t rLen = myWindow.windowR.size();
   NPJTuplePtr *tr = myWindow.windowR.data();
   tsType timeNow = lastTimeOfR;
@@ -86,12 +93,10 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   shouldGenWM = wmGen->reportTupleS(ts, 1);
   if (shouldGenWM) {
     lockedByWaterMark = true;
-    //  return false;
-
   }
   // bool shouldGenWM;
   if (isInWindow) {
-    MeanStateOfKeyPtr sk;
+    MeanStateOfKeyPtr sk;timeTrackingStart(tt_index);
     AbstractStateOfKeyPtr skrf = stateOfKeyTableS->getByKey(ts->key);
     //lastTimeS=ts->arrivalTime;
     if (skrf == nullptr) // this key does'nt exist
@@ -102,7 +107,9 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     } else {
       sk = ImproveStateOfKeyTo(MeanStateOfKey, skrf);
     }
+    timeBreakDown_index += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
     updateStateOfKey(sk, ts);
+    timeBreakDown_prediction += timeTrackingEnd(tt_prediction);
     // lazyComputeOfAQP();
   }
   return true;
@@ -122,10 +129,8 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   }
   // bool shouldGenWM;
   if (isInWindow) {
-    MeanStateOfKeyPtr sk;
-    //lastTimeOfR=tr->arrivalTime;
+    MeanStateOfKeyPtr sk;timeTrackingStart(tt_index);
     AbstractStateOfKeyPtr skrf = stateOfKeyTableR->getByKey(tr->key);
-    // lastTimeR=tr->arrivalTime;
     if (skrf == nullptr) // this key does'nt exist
     {
       sk = newMeanStateOfKey();
@@ -134,7 +139,9 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     } else {
       sk = ImproveStateOfKeyTo(MeanStateOfKey, skrf);
     }
+    timeBreakDown_index += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
     updateStateOfKey(sk, tr);
+    timeBreakDown_prediction += timeTrackingEnd(tt_prediction);
     //lazyComputeOfAQP();
   }
   return true;
@@ -156,7 +163,7 @@ double OoOJoin::MeanAQPIAWJOperator::predictUnarrivedTuples(MeanStateOfKeyPtr px
 }
 void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
   AbstractStateOfKeyPtr probrPtr = nullptr;
-  intermediateResult = 0;
+  intermediateResult = 0;timeTrackingStart(tt_join);
   for (size_t i = 0; i < stateOfKeyTableR->buckets.size(); i++) {
     for (auto iter : stateOfKeyTableR->buckets[i]) {
       if (iter != nullptr) {
@@ -165,9 +172,12 @@ void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
         if (probrPtr != nullptr) {
           //  lastTimeS = px->lastArrivalTuple->arrivalTime;
           //lastTimeS=px->lastEventTuple->eventTime;
+          //timeTrackingStart(tt_prediction);
           double unarrivedS = predictUnarrivedTuples(px);
           MeanStateOfKeyPtr py = ImproveStateOfKeyTo(MeanStateOfKey, probrPtr);
           double unarrivedR = predictUnarrivedTuples(py);
+          // timeBreakDown_prediction+= timeTrackingEnd(tt_prediction);
+
           intermediateResult += (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR);
           /*cout << "S: a=" + to_string(px->arrivedTupleCnt) + ", u=" + to_string(unarrivedS) + "sigma="
               + to_string(px->sigmaArrivalSkew) +
@@ -178,9 +188,17 @@ void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
       }
     }
   }
+  timeBreakDown_join += timeTrackingEnd(tt_join);
   lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
 }
 size_t OoOJoin::MeanAQPIAWJOperator::getAQPResult() {
   return intermediateResult;
 }
 
+ConfigMapPtr OoOJoin::MeanAQPIAWJOperator::getTimeBreakDown() {
+  ConfigMapPtr ru = newConfigMap();
+  ru->edit("index", (uint64_t) timeBreakDown_index);
+  ru->edit("prediction", (uint64_t) timeBreakDown_prediction);
+  ru->edit("join", (uint64_t) timeBreakDown_join);
+  return ru;
+}

@@ -157,7 +157,11 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   INTELLI_DEBUG("95% latency (us)=" << tbOoO.getLatencyPercentage(0.95));
   INTELLI_DEBUG("Throughput (TPs/s)=" << tbOoO.getThroughput());
   tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
-
+  ConfigMapPtr resultBreakDown=tbOoO.getTimeBreakDown();
+  if(resultBreakDown!= nullptr)
+  {
+    resultBreakDown->toFile(outPrefix + "_breakdown.csv");
+  }
   cfg->edit("watermarkPeriod", (uint64_t) (windowLenMs + maxArrivalSkewMs) * 1000);
   tb.setOperator(iawj, cfg);
   tb.setDataSet(rTuple, sTuple);

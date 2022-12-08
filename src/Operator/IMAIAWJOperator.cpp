@@ -31,6 +31,10 @@ bool OoOJoin::IMAIAWJOperator::start() {
   intermediateResult = 0;
   confirmedResult = 0;
   lockedByWaterMark = false;
+  timeBreakDown_prediction = 0;
+  timeBreakDown_index = 0;
+  timeBreakDown_join = 0;
+  timeBreakDown_all = 0;timeTrackingStartNoClaim(timeBreakDown_all);
   return true;
 }
 void OoOJoin::IMAIAWJOperator::conductComputation() {
@@ -45,6 +49,7 @@ bool OoOJoin::IMAIAWJOperator::stop() {
   if (!lockedByWaterMark) {
         WM_INFO("No watermark encountered, compute now");
   }
+  timeBreakDown_all = timeTrackingEnd(timeBreakDown_all);
   //lazyComputeOfAQP();
   size_t rLen = myWindow.windowR.size();
   NPJTuplePtr *tr = myWindow.windowR.data();
@@ -55,6 +60,7 @@ bool OoOJoin::IMAIAWJOperator::stop() {
   return true;
 }
 bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
+  //tsType startPredictionTime,startIndexingTime,startJoinTime;
   bool shouldGenWM, isInWindow;
   if (lockedByWaterMark) {
     return false;
@@ -64,13 +70,15 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   if (shouldGenWM) {
     lockedByWaterMark = true;
     //  return false;
-
   }
   // bool shouldGenWM;
   if (isInWindow) {
     IMAStateOfKeyPtr sk;
+    /**
+     * @brief First get the index of hash table
+     */
+    timeTrackingStart(tt_index);
     AbstractStateOfKeyPtr skrf = stateOfKeyTableS->getByKey(ts->key);
-    //lastTimeS=ts->arrivalTime;
     if (skrf == nullptr) // this key does'nt exist
     {
       sk = newIMAStateOfKey();
@@ -79,9 +87,16 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     } else {
       sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
     }
+    timeBreakDown_index += timeTrackingEnd(tt_index);
+    /**
+     *
+     */
+    timeTrackingStart(tt_prediction);
     updateStateOfKey(sk, ts);
-    //probe in R
     double futureTuplesS = MeanAQPIAWJOperator::predictUnarrivedTuples(sk);
+    timeBreakDown_prediction += timeTrackingEnd(tt_prediction);
+    //probe in R
+    timeTrackingStart(tt_join);
     AbstractStateOfKeyPtr probrPtr = stateOfKeyTableR->getByKey(ts->key);
     if (probrPtr != nullptr) {
       IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
@@ -90,6 +105,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
           (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
       intermediateResult += (futureTuplesS + sk->arrivedTupleCnt) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
     }
+    timeBreakDown_join += timeTrackingEnd(tt_join);
     //sk->lastEstimateAllTuples=futureTuplesS+sk->arrivedTupleCnt;
     sk->lastUnarrivedTuples = futureTuplesS;
     lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
@@ -111,8 +127,9 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   // bool shouldGenWM;
   if (isInWindow) {
 
-    IMAStateOfKeyPtr sk;
+    IMAStateOfKeyPtr sk;timeTrackingStart(tt_index);
     AbstractStateOfKeyPtr skrf = stateOfKeyTableR->getByKey(tr->key);
+
     // lastTimeR=tr->arrivalTime;
     if (skrf == nullptr) // this key does'nt exist
     {
@@ -122,11 +139,13 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     } else {
       sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
     }
+    timeBreakDown_index += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
     updateStateOfKey(sk, tr);
-    //size_t futureTuplesR=predictUnarrivedTuples(sk);
-    //probe in S
-    AbstractStateOfKeyPtr probrPtr = stateOfKeyTableS->getByKey(tr->key);
     double futureTuplesR = MeanAQPIAWJOperator::predictUnarrivedTuples(sk);
+    timeBreakDown_prediction += timeTrackingEnd(tt_prediction);
+    //probe in S
+    timeTrackingStart(tt_join);
+    AbstractStateOfKeyPtr probrPtr = stateOfKeyTableS->getByKey(tr->key);
     if (probrPtr != nullptr) {
       IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
       confirmedResult += py->arrivedTupleCnt;
@@ -134,6 +153,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
           (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
       intermediateResult += (futureTuplesR + sk->arrivedTupleCnt) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
     }
+    timeBreakDown_join += timeTrackingEnd(tt_join);
     sk->lastUnarrivedTuples = futureTuplesR;
     lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
@@ -147,4 +167,3 @@ size_t OoOJoin::IMAIAWJOperator::getResult() {
 size_t OoOJoin::IMAIAWJOperator::getAQPResult() {
   return intermediateResult;
 }
-

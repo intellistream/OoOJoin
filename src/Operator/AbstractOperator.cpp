@@ -27,7 +27,7 @@ size_t OoOJoin::AbstractOperator::getAQPResult() {
   return getResult();
 }
 
-bool AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
+bool OoOJoin::AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   config = cfg;
   if (config == nullptr) {
     return false;
@@ -64,4 +64,6 @@ bool AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   }*/
   return true;
 }
-
+ConfigMapPtr OoOJoin::AbstractOperator::getTimeBreakDown() {
+  return nullptr;
+}
