@@ -45,6 +45,18 @@ class MeanAQPIAWJOperator : public AbstractOperator {
   AbstractWaterMarkerPtr wmGen = nullptr;
   StateOfKeyHashTablePtr stateOfKeyTableR, stateOfKeyTableS;
   tsType lastTimeOfR = 0;
+  /**
+   * @brief for time breakdown of searching index
+   */
+  tsType timeBreakDown_index;
+  /**
+   * @brief for time breakdown of prediction
+   */
+  tsType timeBreakDown_prediction;
+  /**
+   * @brief for time breakdown of join
+   */
+  tsType timeBreakDown_join;
   class MeanStateOfKey : public AbstractStateOfKey {
    public:
     size_t arrivedTupleCnt = 0;
@@ -109,6 +121,17 @@ class MeanAQPIAWJOperator : public AbstractOperator {
    * @return The result
    */
   virtual size_t getAQPResult();
+  /**
+ * @brief get the break down information of processing time
+ * @warning should check the nullptr of output
+ * @return The ConfigMapPtr which contains breakdown information, null if no breakdown supported
+  * @note provided breakdown:
+  * - "index" U64, processing time on prediction for indexing the tuple state in hhash table
+  * - "prediction" U64, processing time on prediction
+  * - "join" U64, processing time on prediction
+  * The total processing time=index+prediction+join
+ */
+  virtual ConfigMapPtr getTimeBreakDown();
 };
 /**
  * @ingroup ADB_OPERATORS

@@ -30,8 +30,7 @@ namespace OoOJoin {
  * @note follows the assumption of linear independent arrival and skewness
  * @note operator tag = "IMA"
  */
-class IMAIAWJOperator
-    : public MeanAQPIAWJOperator {
+class IMAIAWJOperator : public MeanAQPIAWJOperator {
  protected:
   //Window myWindow;
   //size_t intermediateResult = 0;
@@ -113,6 +112,7 @@ class IMAIAWJOperator
    * @return The result
    */
   virtual size_t getAQPResult();
+
 };
 /**
  * @ingroup ADB_OPERATORS

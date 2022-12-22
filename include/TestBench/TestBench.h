@@ -95,6 +95,12 @@ class TestBench {
    * @return the latency in us
    */
   double getLatencyPercentage(double fraction);
+  /**
+   * @brief get the break down information of processing time from the join operator tested
+   * @warning should check the nullptr of output
+   * @return The ConfigMapPtr which contains breakdown information, null if no breakdown supported
+   */
+  ConfigMapPtr getTimeBreakDown();
 };
 /**
  * @}

@@ -1,2 +1,2 @@
-1. an incremental eager version of MeanAQP, called IMAIAWJOperator
-2. corresponding scripts
+1. Add time breakdown function to the eager incremental AQP
+2. Add function to track all input tuples

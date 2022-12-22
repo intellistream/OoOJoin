@@ -8,6 +8,7 @@
 #include <Utils/Logger.hpp>
 #include <vector>
 #include <OoOJoin.h>
+#include <cmath>
 using namespace std;
 using namespace OoOJoin;
 vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
@@ -157,7 +158,12 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   INTELLI_DEBUG("95% latency (us)=" << tbOoO.getLatencyPercentage(0.95));
   INTELLI_DEBUG("Throughput (TPs/s)=" << tbOoO.getThroughput());
   tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
-
+  tbOoO.saveRTuplesToFile(outPrefix + "_arrived_tuples.csv", false);
+  ConfigMapPtr resultBreakDown=tbOoO.getTimeBreakDown();
+  if(resultBreakDown!= nullptr)
+  {
+    resultBreakDown->toFile(outPrefix + "_breakdown.csv");
+  }
   cfg->edit("watermarkPeriod", (uint64_t) (windowLenMs + maxArrivalSkewMs) * 1000);
   tb.setOperator(iawj, cfg);
   tb.setDataSet(rTuple, sTuple);
