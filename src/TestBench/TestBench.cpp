@@ -53,9 +53,9 @@ bool OoOJoin::TestBench::setOperator(OoOJoin::AbstractOperatorPtr op, ConfigMapP
   }
   if (opConfig->existU64("timeStep")) {
     timeStep = opConfig->getU64("timeStep");
-        TB_INFO("Feeding time step=" + to_string(timeStep) + "us");
+       // TB_INFO("Feeding time step=" + to_string(timeStep) + "us");
   } else {
-        TB_WARNNING("No setting of timeStep, use 1\n");
+      //  TB_WARNNING("No setting of timeStep, use 1\n");
     timeStep = 1;
   }
   return true;
@@ -136,17 +136,17 @@ size_t OoOJoin::TestBench::inOrderTest(bool additionalSort) {
   return testOp->getResult();
 }
 void OoOJoin::TestBench::logRTuples(bool skipZero) {
-      TB_INFO("/***Printing the rTuples in the following***/");
+   //   TB_INFO("/***Printing the rTuples in the following***/");
   size_t rLen = rTuple.size();
   for (size_t i = 0; i < rLen; i++) {
     if (skipZero && rTuple[i]->processedTime == 0) {
 
     } else {
-          TB_INFO(rTuple[i]->toString());
+          //TB_INFO(rTuple[i]->toString());
     }
 
   }
-      TB_INFO("/***Done***/");
+     // TB_INFO("/***Done***/");
 }
 bool OoOJoin::TestBench::saveRTuplesToFile(std::string fname, bool skipZero) {
   ofstream of;

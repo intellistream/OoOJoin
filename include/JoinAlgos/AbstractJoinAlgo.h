@@ -10,7 +10,7 @@
 #include <memory>
 #include <assert.h>
 #include <Utils/ConfigMap.hpp>
-#include <Utils/Logger.hpp>
+//#include <Utils/Logger.hpp>/
 using namespace INTELLI;
 #define ALGO_INFO INTELLI_INFO
 #define ALGO_ERROR INTELLI_ERROR

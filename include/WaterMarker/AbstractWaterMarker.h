@@ -13,10 +13,10 @@
 #include <assert.h>
 #include <Utils/ConfigMap.hpp>
 
-#include <Utils/Logger.hpp>
-#define WM_INFO INTELLI_INFO
+//#include <Utils/Logger.hpp>
+#define WM_INFO printf
 #define WM_ERROR INTELLI_ERROR
-#define WM_WARNNING INTELLI_WARNING
+#define WM_WARNNING printf
 using namespace INTELLI;
 namespace OoOJoin {
 /**

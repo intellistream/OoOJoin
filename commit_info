@@ -1,1 +1,2 @@
-1. first create the branch with pytorch
+1. remove conflicts with pytorch
+2. discard the liblog4cxx due to conflicts

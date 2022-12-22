@@ -17,8 +17,8 @@ include(cmake/default.cmake)
 
 
 # C++ Standard
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#set(CMAKE_CXX_STANDARD 20)
+#set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #gcc 10 g++10
 message(STATUS "sudo add-apt-repository 'deb http://mirrors.kernel.org/ubuntu hirsute main universe'")
 message(STATUS "sudo apt-get update")
@@ -30,7 +30,11 @@ message(STATUS "sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++
 set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Werror=return-type -Werror=unused-variable -Werror=unused-parameter")
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DNO_RACE_CHECK -DIntelliStream_DEBUG_MODE=1")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wno-ignored-qualifiers -Wno-sign-compare -O3")
-
+set(CMAKE_CUDA_STANDARD 11)
+set(CMAKE_CUDA_FLAGS "-std=c++11")
+#set(CMAKE_CXX_STANDARD 20)
+#set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#set(CMAKE_CUDA_ARCHITECTURES 55)
 # Set LOGGING_LEVEL Flag
 if (IntelliStream_LOGGING_LEVEL)
     get_log_level_value(IntelliStream_LOGGING_VALUE)
@@ -44,12 +48,14 @@ endif (IntelliStream_LOGGING_LEVEL)
 message(STATUS "CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}")
 message(STATUS "CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG}")
 message(STATUS "CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE}")
-
+#pytorch
+#set(Torch_DIR "/home/tony/.local/lib/python3.10/site-packages/torch/share/cmake" )
+message(STATUS ${Torch_DIR})
 
 # Log4cc
-find_package(Log4cxx REQUIRED)
-include_directories(${Log4cxx_INCLUDE_DIR})
-set(LIBRARIES ${LIBRARIES} ${Log4cxx_LIBRARY})
+#find_package(Log4cxx REQUIRED)
+#include_directories(${Log4cxx_INCLUDE_DIR})
+#set(LIBRARIES ${LIBRARIES} ${Log4cxx_LIBRARY})
 
 if (LOG4CXX_FOUND)
     message(STATUS "LOG4CXX found")
@@ -59,7 +65,7 @@ else (LOG4CXX_FOUND)
     message(STATUS "sudo apt-get install -y liblog4cxx-dev")
 endif (LOG4CXX_FOUND)
 
-option(ENABLE_UNIT_TESTS "Enable unit tests" ON)
+option(ENABLE_UNIT_TESTS "Enable unit tests" OFF)
 message(STATUS "Enable testing: ${ENABLE_UNIT_TESTS}")
 
 if (ENABLE_UNIT_TESTS)
@@ -76,7 +82,12 @@ if (ENABLE_UNIT_TESTS)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
     include(GoogleTest)
+    add_subdirectory(test)
 endif ()
+
+find_package(Torch REQUIRED)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+set(LIBRARIES ${LIBRARIES} ${TORCH_LIBRARIES})
 
 # Print all used include directories
 message(STATUS "INCLUDE_DIRS:")
@@ -102,7 +113,7 @@ target_link_libraries(IntelliStream PUBLIC ${LIBRARIES})
 add_subdirectory(benchmark)
 
 #Add tests (based on GTest suits)
-add_subdirectory(test)
+
 
 install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStream)
 # copy scripts

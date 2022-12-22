@@ -5,10 +5,12 @@
  * We use this as the entry point for benchmarking.
  *
  */
-#include <Utils/Logger.hpp>
+//#include <Utils/Logger.hpp>
 #include <vector>
 #include <OoOJoin.h>
 #include <cmath>
+#include <torch/torch.h>
+
 using namespace std;
 using namespace OoOJoin;
 vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
@@ -67,9 +69,9 @@ uint64_t tryU64(ConfigMapPtr config, string key, uint64_t defaultValue = 0) {
   uint64_t ru = defaultValue;
   if (config->existU64(key)) {
     ru = config->getU64(key);
-    INTELLI_INFO(key + " = " + to_string(ru));
+   // INTELLI_INFO(key + " = " + to_string(ru));
   } else {
-        WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
+      //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
   }
   return ru;
 }
@@ -85,9 +87,9 @@ string tryString(ConfigMapPtr config, string key, string defaultValue = "") {
   string ru = defaultValue;
   if (config->existString(key)) {
     ru = config->getString(key);
-    INTELLI_INFO(key + " = " + (ru));
+    //INTELLI_INFO(key + " = " + (ru));
   } else {
-        WM_WARNNING("Leaving " + key + " as blank, will use " + (defaultValue) + " instead");
+       // WM_WARNNING("Leaving " + key + " as blank, will use " + (defaultValue) + " instead");
   }
   return ru;
 }
@@ -105,7 +107,7 @@ string tryString(ConfigMapPtr config, string key, string defaultValue = "") {
  * - "operator" String The operator to be used
  */
 void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
-  INTELLI_INFO("Load global config from" + configName + ", output prefix = " + outPrefix + "\n");
+  //INTELLI_INFO("Load global config from" + configName + ", output prefix = " + outPrefix + "\n");
   OperatorTablePtr opTable = newOperatorTable();
   //IAWJOperatorPtr iawj = newIAWJOperator();
   //get config
@@ -128,7 +130,7 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   AbstractOperatorPtr iawj = opTable->findOperator(operatorTag);
   if (iawj == nullptr) {
     iawj = newIAWJOperator();
-        WM_WARNNING("No " + operatorTag + " operator, will use IAWJ instead");
+       // WM_WARNNING("No " + operatorTag + " operator, will use IAWJ instead");
   }
   // generate dataset
   vector<TrackTuplePtr>
@@ -143,20 +145,20 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   TestBench tb, tbOoO;
   //cfg->edit("windowLen", (uint64_t) 100);
   // cfg->edit("watermarkPeriod", (uint64_t) 100);
-  INTELLI_INFO("/****run OoO test of " + to_string(testSize) + " tuples***/");
+  //INTELLI_INFO("/****run OoO test of " + to_string(testSize) + " tuples***/");
   tbOoO.setOperator(iawj, cfg);
   tbOoO.setDataSet(rTuple, sTuple);
   OoORu = tbOoO.OoOTest(true);
-  INTELLI_DEBUG("OoO Confirmed joined " << OoORu);
-  INTELLI_DEBUG("OoO AQP joined " << tbOoO.AQPResult);
+  //INTELLI_DEBUG("OoO Confirmed joined " << OoORu);
+  //INTELLI_DEBUG("OoO AQP joined " << tbOoO.AQPResult);
   ConfigMap generalStatistics;
   generalStatistics.edit("AvgLatency", (double) tbOoO.getAvgLatency());
   generalStatistics.edit("95%Latency", (double) tbOoO.getLatencyPercentage(0.95));
   generalStatistics.edit("Throughput", (double) tbOoO.getThroughput());
   // tbOoO.logRTuples();
-  INTELLI_DEBUG("Average latency (us)=" << tbOoO.getAvgLatency());
-  INTELLI_DEBUG("95% latency (us)=" << tbOoO.getLatencyPercentage(0.95));
-  INTELLI_DEBUG("Throughput (TPs/s)=" << tbOoO.getThroughput());
+ // INTELLI_DEBUG("Average latency (us)=" << tbOoO.getAvgLatency());
+  //INTELLI_DEBUG("95% latency (us)=" << tbOoO.getLatencyPercentage(0.95));
+  //INTELLI_DEBUG("Throughput (TPs/s)=" << tbOoO.getThroughput());
   tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
   tbOoO.saveRTuplesToFile(outPrefix + "_arrived_tuples.csv", false);
   ConfigMapPtr resultBreakDown=tbOoO.getTimeBreakDown();
@@ -168,15 +170,15 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   tb.setOperator(iawj, cfg);
   tb.setDataSet(rTuple, sTuple);
   realRu = tb.inOrderTest(true);
-  INTELLI_DEBUG("Expect " << realRu);
+  //INTELLI_DEBUG("Expect " << realRu);
   double err = OoORu;
   err = (err - realRu) / realRu;
   generalStatistics.edit("Error", (double) err);
-  INTELLI_DEBUG("OoO AQP joined " << tbOoO.AQPResult);
+  //INTELLI_DEBUG("OoO AQP joined " << tbOoO.AQPResult);
   err = tbOoO.AQPResult;
   err = (err - realRu) / realRu;
   generalStatistics.edit("AQPError", (double) err);
-  INTELLI_DEBUG("Error = " << err);
+  //INTELLI_DEBUG("Error = " << err);
   generalStatistics.toFile(outPrefix + "_general.csv");
   //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
@@ -186,13 +188,13 @@ int main(int argc, char **argv) {
   ThreadPerf pef(-1);
 
   //Setup Logs.
-  setLogLevel(getStringAsDebugLevel("LOG_TRACE"));
+ // setLogLevel(getStringAsDebugLevel("LOG_TRACE"));
 
-  setupLogging("benchmark.log", LOG_DEBUG);
+ // setupLogging("benchmark.log", LOG_DEBUG);
 
 
   //Run the test here.
-  INTELLI_INFO("Nothing to run." << argc << argv);
+  //INTELLI_INFO("Nothing to run." << argc << argv);
   string configName = "", outPrefix = "";
   if (argc >= 2) {
     configName += argv[1];
@@ -211,6 +213,9 @@ int main(int argc, char **argv) {
   runTestBenchAdj(configName, outPrefix);
   pef.end();
   pef.resultToConfigMap()->toFile("perfRu.csv");
+  torch::Tensor tensor = torch::rand({2, 3});
+  std::cout << tensor << std::endl;
+
   // testConfig();
   //TuplePtrQueue tpq=
 }

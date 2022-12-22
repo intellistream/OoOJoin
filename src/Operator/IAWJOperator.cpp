@@ -12,11 +12,11 @@ bool OoOJoin::IAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (config->existString("algo")) {
     algoTag = config->getString("algo");
   }
-      OP_INFO("selected join algorithm=" + algoTag);
+     // OP_INFO("selected join algorithm=" + algoTag);
   if (config->existU64("threads")) {
     joinThreads = config->getU64("threads");
   }
-      OP_INFO("selected join threads=" + to_string(joinThreads));
+     // OP_INFO("selected join threads=" + to_string(joinThreads));
   return true;
 }
 bool OoOJoin::IAWJOperator::start() {
@@ -45,7 +45,7 @@ void OoOJoin::IAWJOperator::conductComputation() {
   //NestedLoopJoin nj;
   algo->setConfig(config);
   algo->syncTimeStruct(timeBaseStruct);
-      OP_INFO("Invoke algorithm=" + algo->getAlgoName());
+     // OP_INFO("Invoke algorithm=" + algo->getAlgoName());
   intermediateResult = algo->join(myWindow.windowS, myWindow.windowR, joinThreads);
 }
 bool OoOJoin::IAWJOperator::stop() {

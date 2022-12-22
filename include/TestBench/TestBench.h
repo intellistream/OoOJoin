@@ -7,7 +7,7 @@
 #define INTELLISTREAM_INCLUDE_TESTBENCH_TESTBENCH_H_
 #include <Common/Window.h>
 #include <Operator/AbstractOperator.h>
-#include <Utils/Logger.hpp>
+//#include <Utils/Logger.hpp>
 using namespace INTELLI;
 #define TB_INFO INTELLI_INFO
 #define TB_ERROR INTELLI_ERROR

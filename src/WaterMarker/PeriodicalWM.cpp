@@ -10,9 +10,9 @@ bool OoOJoin::PeriodicalWM::setConfig(INTELLI::ConfigMapPtr cfg) {
   }
   if (config->existU64("watermarkPeriod")) {
     watermarkPeriod = config->getU64("watermarkPeriod");
-        WM_INFO("watermarkPeriod=" + to_string(watermarkPeriod));
+        //WM_INFO("watermarkPeriod=" + to_string(watermarkPeriod));
   } else {
-        WM_WARNNING("Leaving watermarkPeriod as blank, will use windowLen+1 instead\n");
+       // WM_WARNNING("Leaving watermarkPeriod as blank, will use windowLen+1 instead\n");
   }
   return true;
 }
@@ -30,7 +30,7 @@ size_t OoOJoin::PeriodicalWM::creatWindow(OoOJoin::tsType tBegin, OoOJoin::tsTyp
 bool OoOJoin::PeriodicalWM::isReachWMPoint(OoOJoin::TrackTuplePtr tp) {
   //tsType tNow=UtilityFunctions::UtilityFunctions::timeLastUs(timeBaseStruct)/timeStep;
   if (tp->arrivalTime >= nextWMPoint) {
-        WM_INFO("watermark reached at" + tp->toString());
+     //   WM_INFO("watermark reached at" + tp->toString());
     nextWMPoint += nextWMDelta;
     return true;
   }

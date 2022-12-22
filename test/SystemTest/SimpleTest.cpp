@@ -2,8 +2,8 @@
 
 #include <filesystem>
 #include <gtest/gtest.h>
-#include <Utils/Logger.hpp>
-#include <Utils/Logger.hpp>
+//#include <Utils/Logger.hpp>
+//#include <Utils/Logger.hpp>
 #include <vector>
 #include <OoOJoin.h>
 using namespace std;
@@ -61,9 +61,9 @@ uint64_t tryU64(ConfigMapPtr config,string key,uint64_t defaultValue=0)
 { uint64_t  ru=defaultValue;
   if (config->existU64(key)) {
     ru=config->getU64(key);
-    INTELLI_INFO(key+" = " + to_string(ru));
+   // INTELLI_INFO(key+" = " + to_string(ru));
   } else {
-        WM_WARNNING("Leaving " +key+" as blank, will use "+ to_string(defaultValue)+" instead");
+       // WM_WARNNING("Leaving " +key+" as blank, will use "+ to_string(defaultValue)+" instead");
   }
   return ru;
 }
@@ -80,7 +80,7 @@ uint64_t tryU64(ConfigMapPtr config,string key,uint64_t defaultValue=0)
  * - "keyRange" U64 The range of Key
  */
 void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
-  INTELLI_INFO("Load global config from" + configName + ", output prefix = " + outPrefix + "\n");
+  //INTELLI_INFO("Load global config from" + configName + ", output prefix = " + outPrefix + "\n");
   IAWJOperatorPtr iawj = newIAWJOperator();
   //get config
   ConfigMapPtr cfg = newConfigMap();
@@ -108,41 +108,41 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   TestBench tb, tbOoO;
   //cfg->edit("windowLen", (uint64_t) 100);
   // cfg->edit("watermarkPeriod", (uint64_t) 100);
-  INTELLI_INFO("/****run OoO test of "+to_string(testSize)+" tuples***/");
+  //INTELLI_INFO("/****run OoO test of "+to_string(testSize)+" tuples***/");
   tbOoO.setOperator(iawj, cfg);
   tbOoO.setDataSet(rTuple, sTuple);
   OoORu = tbOoO.OoOTest(true);
-  INTELLI_DEBUG("OoO joined " << OoORu);
+  //INTELLI_DEBUG("OoO joined " << OoORu);
   ConfigMap generalStatistics;
   generalStatistics.edit("AvgLatency", (double) tbOoO.getAvgLatency());
   generalStatistics.edit("95%Latency", (double) tbOoO.getLatencyPercentage(0.95));
   generalStatistics.edit("Throughput", (double) tbOoO.getThroughput());
   // tbOoO.logRTuples();
-  INTELLI_DEBUG("Average latency (us)=" << tbOoO.getAvgLatency());
-  INTELLI_DEBUG("95% latency (us)=" << tbOoO.getLatencyPercentage(0.95));
-  INTELLI_DEBUG("Throughput (TPs/s)=" << tbOoO.getThroughput());
+  //INTELLI_DEBUG("Average latency (us)=" << tbOoO.getAvgLatency());
+  //INTELLI_DEBUG("95% latency (us)=" << tbOoO.getLatencyPercentage(0.95));
+  //INTELLI_DEBUG("Throughput (TPs/s)=" << tbOoO.getThroughput());
   tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
 
   cfg->edit("watermarkPeriod", (uint64_t) (windowLenMs+maxArrivalSkewMs)*1000);
   tb.setOperator(iawj, cfg);
   tb.setDataSet(rTuple, sTuple);
   realRu = tb.inOrderTest(true);
-  INTELLI_DEBUG("Expect " << realRu);
+  //INTELLI_DEBUG("Expect " << realRu);
   double err = OoORu;
   err = (err - realRu) / realRu;
   generalStatistics.edit("Error", (double) err);
-  INTELLI_DEBUG("Error = " << err);
+ // INTELLI_DEBUG("Error = " << err);
   generalStatistics.toFile(outPrefix + "_general.csv");
   //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
 TEST(SystemTest, SimpleTest) {
   //Setup Logs.
-  setLogLevel(getStringAsDebugLevel("LOG_DEBUG"));
+ // setLogLevel(getStringAsDebugLevel("LOG_DEBUG"));
 
-  setupLogging("benchmark.log", LOG_DEBUG);
+  //setupLogging("benchmark.log", LOG_DEBUG);
 
   //Run the test here.
-  INTELLI_INFO("Nothing to test.");
+ // INTELLI_INFO("Nothing to test.");
   string configName = "config.csv", outPrefix = "";
 
 
