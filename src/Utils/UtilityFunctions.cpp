@@ -5,7 +5,6 @@
 #include <numeric>
 using namespace std;
 
-
 std::shared_ptr<std::barrier<>> INTELLI::UtilityFunctions::createBarrier(int count) {
   return std::make_shared<std::barrier<>>(count);
 }

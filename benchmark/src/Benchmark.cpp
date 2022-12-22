@@ -69,9 +69,9 @@ uint64_t tryU64(ConfigMapPtr config, string key, uint64_t defaultValue = 0) {
   uint64_t ru = defaultValue;
   if (config->existU64(key)) {
     ru = config->getU64(key);
-   // INTELLI_INFO(key + " = " + to_string(ru));
+    // INTELLI_INFO(key + " = " + to_string(ru));
   } else {
-      //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
+    //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
   }
   return ru;
 }
@@ -89,7 +89,7 @@ string tryString(ConfigMapPtr config, string key, string defaultValue = "") {
     ru = config->getString(key);
     //INTELLI_INFO(key + " = " + (ru));
   } else {
-       // WM_WARNNING("Leaving " + key + " as blank, will use " + (defaultValue) + " instead");
+    // WM_WARNNING("Leaving " + key + " as blank, will use " + (defaultValue) + " instead");
   }
   return ru;
 }
@@ -130,7 +130,7 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   AbstractOperatorPtr iawj = opTable->findOperator(operatorTag);
   if (iawj == nullptr) {
     iawj = newIAWJOperator();
-       // WM_WARNNING("No " + operatorTag + " operator, will use IAWJ instead");
+    // WM_WARNNING("No " + operatorTag + " operator, will use IAWJ instead");
   }
   // generate dataset
   vector<TrackTuplePtr>
@@ -156,14 +156,13 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   generalStatistics.edit("95%Latency", (double) tbOoO.getLatencyPercentage(0.95));
   generalStatistics.edit("Throughput", (double) tbOoO.getThroughput());
   // tbOoO.logRTuples();
- // INTELLI_DEBUG("Average latency (us)=" << tbOoO.getAvgLatency());
+  // INTELLI_DEBUG("Average latency (us)=" << tbOoO.getAvgLatency());
   //INTELLI_DEBUG("95% latency (us)=" << tbOoO.getLatencyPercentage(0.95));
   //INTELLI_DEBUG("Throughput (TPs/s)=" << tbOoO.getThroughput());
   tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
   tbOoO.saveRTuplesToFile(outPrefix + "_arrived_tuples.csv", false);
-  ConfigMapPtr resultBreakDown=tbOoO.getTimeBreakDown();
-  if(resultBreakDown!= nullptr)
-  {
+  ConfigMapPtr resultBreakDown = tbOoO.getTimeBreakDown();
+  if (resultBreakDown != nullptr) {
     resultBreakDown->toFile(outPrefix + "_breakdown.csv");
   }
   cfg->edit("watermarkPeriod", (uint64_t) (windowLenMs + maxArrivalSkewMs) * 1000);
@@ -188,9 +187,9 @@ int main(int argc, char **argv) {
   ThreadPerf pef(-1);
 
   //Setup Logs.
- // setLogLevel(getStringAsDebugLevel("LOG_TRACE"));
+  // setLogLevel(getStringAsDebugLevel("LOG_TRACE"));
 
- // setupLogging("benchmark.log", LOG_DEBUG);
+  // setupLogging("benchmark.log", LOG_DEBUG);
 
 
   //Run the test here.

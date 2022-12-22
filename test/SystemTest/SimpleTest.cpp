@@ -39,10 +39,14 @@ vector<OoOJoin::TrackTuplePtr> genTuples(vector<keyType> keyS, vector<tsType> ev
   bubble_sort(ru);
   return ru;
 }
-vector<TrackTuplePtr> genTuplesSmooth(size_t testSize,uint64_t keyRange,uint64_t rateKtps,uint64_t groupUnit,uint64_t maxSkewUs,uint64_t seed=999)
-{
+vector<TrackTuplePtr> genTuplesSmooth(size_t testSize,
+                                      uint64_t keyRange,
+                                      uint64_t rateKtps,
+                                      uint64_t groupUnit,
+                                      uint64_t maxSkewUs,
+                                      uint64_t seed = 999) {
   MicroDataSet ms(seed);
-  uint64_t tsGrow=1000*groupUnit/rateKtps;
+  uint64_t tsGrow = 1000 * groupUnit / rateKtps;
   vector<keyType> keyS = ms.genRandInt<keyType>(testSize, keyRange, 1);
   vector<tsType> eventS = ms.genSmoothTimeStamp<tsType>(testSize, groupUnit, tsGrow);
   vector<tsType> arrivalSkew = ms.genRandInt<tsType>(testSize, maxSkewUs, 1);
@@ -57,13 +61,13 @@ vector<TrackTuplePtr> genTuplesSmooth(size_t testSize,uint64_t keyRange,uint64_t
    * @param defaultValue The default
    * @return The returned value
    */
-uint64_t tryU64(ConfigMapPtr config,string key,uint64_t defaultValue=0)
-{ uint64_t  ru=defaultValue;
+uint64_t tryU64(ConfigMapPtr config, string key, uint64_t defaultValue = 0) {
+  uint64_t ru = defaultValue;
   if (config->existU64(key)) {
-    ru=config->getU64(key);
-   // INTELLI_INFO(key+" = " + to_string(ru));
+    ru = config->getU64(key);
+    // INTELLI_INFO(key+" = " + to_string(ru));
   } else {
-       // WM_WARNNING("Leaving " +key+" as blank, will use "+ to_string(defaultValue)+" instead");
+    // WM_WARNNING("Leaving " +key+" as blank, will use "+ to_string(defaultValue)+" instead");
   }
   return ru;
 }
@@ -85,25 +89,27 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   //get config
   ConfigMapPtr cfg = newConfigMap();
   cfg->fromFile(configName);
-  size_t testSize=0;
-  size_t OoORu = 0,realRu=0;
+  size_t testSize = 0;
+  size_t OoORu = 0, realRu = 0;
   //load global configs
-  tsType windowLenMs,timeStepUs,watermarkPeriodMs,maxArrivalSkewMs,eventRateKTps;
-  uint64_t  keyRange;
-  windowLenMs= tryU64(cfg,"windowLenMs",10);
-  timeStepUs= tryU64(cfg,"timeStepUs",40);
-  watermarkPeriodMs= tryU64(cfg,"watermarkPeriodMs",10);
-  maxArrivalSkewMs= tryU64(cfg,"maxArrivalSkewMs",10/2);
-  eventRateKTps= tryU64(cfg,"eventRateKTps",10);
-  keyRange = tryU64(cfg,"keyRange",10);
-  testSize=windowLenMs*eventRateKTps;
+  tsType windowLenMs, timeStepUs, watermarkPeriodMs, maxArrivalSkewMs, eventRateKTps;
+  uint64_t keyRange;
+  windowLenMs = tryU64(cfg, "windowLenMs", 10);
+  timeStepUs = tryU64(cfg, "timeStepUs", 40);
+  watermarkPeriodMs = tryU64(cfg, "watermarkPeriodMs", 10);
+  maxArrivalSkewMs = tryU64(cfg, "maxArrivalSkewMs", 10 / 2);
+  eventRateKTps = tryU64(cfg, "eventRateKTps", 10);
+  keyRange = tryU64(cfg, "keyRange", 10);
+  testSize = windowLenMs * eventRateKTps;
   // generate dataset
-  vector<TrackTuplePtr> sTuple= genTuplesSmooth(testSize,keyRange,eventRateKTps,timeStepUs,maxArrivalSkewMs*1000,7758258);
-  vector<TrackTuplePtr> rTuple= genTuplesSmooth(testSize,keyRange,eventRateKTps,timeStepUs,maxArrivalSkewMs*1000,114514);
+  vector<TrackTuplePtr>
+      sTuple = genTuplesSmooth(testSize, keyRange, eventRateKTps, timeStepUs, maxArrivalSkewMs * 1000, 7758258);
+  vector<TrackTuplePtr>
+      rTuple = genTuplesSmooth(testSize, keyRange, eventRateKTps, timeStepUs, maxArrivalSkewMs * 1000, 114514);
   cfg->edit("rLen", (uint64_t) testSize);
   cfg->edit("sLen", (uint64_t) testSize);
-  cfg->edit("windowLen", (uint64_t) windowLenMs*1000);
-  cfg->edit("watermarkPeriod", (uint64_t) watermarkPeriodMs*1000);
+  cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
+  cfg->edit("watermarkPeriod", (uint64_t) watermarkPeriodMs * 1000);
   cfg->edit("timeStep", (uint64_t) timeStepUs);
   TestBench tb, tbOoO;
   //cfg->edit("windowLen", (uint64_t) 100);
@@ -123,7 +129,7 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   //INTELLI_DEBUG("Throughput (TPs/s)=" << tbOoO.getThroughput());
   tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
 
-  cfg->edit("watermarkPeriod", (uint64_t) (windowLenMs+maxArrivalSkewMs)*1000);
+  cfg->edit("watermarkPeriod", (uint64_t) (windowLenMs + maxArrivalSkewMs) * 1000);
   tb.setOperator(iawj, cfg);
   tb.setDataSet(rTuple, sTuple);
   realRu = tb.inOrderTest(true);
@@ -131,21 +137,22 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   double err = OoORu;
   err = (err - realRu) / realRu;
   generalStatistics.edit("Error", (double) err);
- // INTELLI_DEBUG("Error = " << err);
+  // INTELLI_DEBUG("Error = " << err);
   generalStatistics.toFile(outPrefix + "_general.csv");
   //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
-TEST(SystemTest, SimpleTest) {
-  //Setup Logs.
- // setLogLevel(getStringAsDebugLevel("LOG_DEBUG"));
+TEST(SystemTest, SimpleTest
+) {
+//Setup Logs.
+// setLogLevel(getStringAsDebugLevel("LOG_DEBUG"));
 
-  //setupLogging("benchmark.log", LOG_DEBUG);
+//setupLogging("benchmark.log", LOG_DEBUG);
 
-  //Run the test here.
- // INTELLI_INFO("Nothing to test.");
-  string configName = "config.csv", outPrefix = "";
+//Run the test here.
+// INTELLI_INFO("Nothing to test.");
+string configName = "config.csv", outPrefix = "";
 
-
-  //tempTest();
-  runTestBenchAdj(configName, outPrefix);
+//tempTest();
+runTestBenchAdj(configName, outPrefix
+);
 }

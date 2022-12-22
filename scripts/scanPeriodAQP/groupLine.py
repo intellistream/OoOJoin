@@ -10,6 +10,7 @@ from matplotlib.ticker import MaxNLocator
 from matplotlib.font_manager import FontProperties
 from matplotlib.ticker import LinearLocator, LogLocator, MaxNLocator, ScalarFormatter
 from numpy import double
+
 OPT_FONT_NAME = 'Helvetica'
 TICK_FONT_SIZE = 20
 LABEL_FONT_SIZE = 20
@@ -18,9 +19,11 @@ LABEL_FP = FontProperties(style='normal', size=LABEL_FONT_SIZE)
 LEGEND_FP = FontProperties(style='normal', size=LEGEND_FONT_SIZE)
 TICK_FP = FontProperties(style='normal', size=TICK_FONT_SIZE)
 
-MARKERS = (['o', 's', 'v', "^", "h", "v", ">", "x", "d", "<", "|", "p", "+", "_","%","|","|","|","|","|"])
+MARKERS = (['o', 's', 'v', "^", "h", "v", ">", "x", "d", "<", "|", "p", "+", "_", "%", "|", "|", "|", "|", "|"])
 # you may want to change the color map for different figures
-COLOR_MAP = ('#F15854', '#5DA5DA', '#60BD68', '#B276B2', '#DECF3F', '#F17CB0', '#B2912F', '#FAA43A', '#AFAFAF','#087878','#783456','#560012','#431256',"#00AABB","#AA00BB")
+COLOR_MAP = (
+'#F15854', '#5DA5DA', '#60BD68', '#B276B2', '#DECF3F', '#F17CB0', '#B2912F', '#FAA43A', '#AFAFAF', '#087878', '#783456',
+'#560012', '#431256', "#00AABB", "#AA00BB")
 # you may want to change the patterns for different figures
 PATTERNS = (["|", "\\", "/", "+", "-", ".", "*", "x", "o", "O", "////", ".", "|||", "o", "---", "+", "\\\\", "*"])
 LABEL_WEIGHT = 'bold'
@@ -85,8 +88,6 @@ def DrawFigure(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, 
 
     FIGURE_LABEL = legend_labels
 
-  
-
     x_values = xvalues
     y_values = yvalues
 
@@ -103,7 +104,7 @@ def DrawFigure(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, 
                    prop=LEGEND_FP,
                    loc='upper center',
                    ncol=3,
-                   #mode='expand',
+                   # mode='expand',
                    bbox_to_anchor=(0.55, 1.6), shadow=False,
                    columnspacing=0.1,
                    frameon=True, borderaxespad=0.0, handlelength=1.5,
@@ -112,9 +113,9 @@ def DrawFigure(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, 
     plt.xscale('log')
     plt.yscale('log')
     # plt.yscale('log')
-    
+
     # you may control the limits on your own.
-  
+
     plt.ylim(y_min, y_max)
 
     plt.grid(axis='y', color='gray')
@@ -126,12 +127,12 @@ def DrawFigure(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, 
 
     plt.xlabel(x_label, fontproperties=LABEL_FP)
     plt.ylabel(y_label, fontproperties=LABEL_FP)
-  
+
     size = fig.get_size_inches()
     dpi = fig.get_dpi()
-    
-    
+
     plt.savefig(filename + ".pdf", bbox_inches='tight')
+
 
 # draw a line chart
 def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
@@ -141,8 +142,6 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
 
     FIGURE_LABEL = legend_labels
 
-  
-
     x_values = xvalues
     y_values = yvalues
 
@@ -150,7 +149,7 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
     for i in range(len(y_values)):
         lines[i], = figure.plot(x_values[i], y_values[i], color=LINE_COLORS[i], \
                                 linewidth=LINE_WIDTH, marker=MARKERS[i], \
-                                markersize=MARKER_SIZE, label=FIGURE_LABEL[i],markeredgecolor='k')
+                                markersize=MARKER_SIZE, label=FIGURE_LABEL[i], markeredgecolor='k')
 
     # sometimes you may not want to draw legends.
     if allow_legend == True:
@@ -164,29 +163,30 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
                    frameon=True, borderaxespad=0, handlelength=1.2,
                    handletextpad=0.1,
                    labelspacing=0.1)
-    #plt.xscale('log')
-    #plt.yscale('log')
+    # plt.xscale('log')
     # plt.yscale('log')
-    
+    # plt.yscale('log')
+
     # you may control the limits on your own.
-  
-    #plt.ylim(y_min, y_max)
+
+    # plt.ylim(y_min, y_max)
 
     plt.grid(axis='y', color='gray')
-    #figure.yaxis.set_major_locator(LogLocator(base=10))
-    #figure.xaxis.set_major_locator(LogLocator(base=10))
-    plt.xticks(rotation = 0,fontsize= TICK_FONT_SIZE)
+    # figure.yaxis.set_major_locator(LogLocator(base=10))
+    # figure.xaxis.set_major_locator(LogLocator(base=10))
+    plt.xticks(rotation=0, fontsize=TICK_FONT_SIZE)
     figure.get_xaxis().set_tick_params(direction='in', pad=10)
     figure.get_yaxis().set_tick_params(direction='in', pad=10)
 
     plt.xlabel(x_label, fontproperties=LABEL_FP)
     plt.ylabel(y_label, fontproperties=LABEL_FP)
-  
+
     size = fig.get_size_inches()
     dpi = fig.get_dpi()
-    
-    
+
     plt.savefig(filename + ".pdf", bbox_inches='tight')
+
+
 # example for reading csv file
 def ReadFile():
     y = []
@@ -204,7 +204,7 @@ def ReadFile():
         f = open(file, "r")
         read = f.readlines()
         x = float(read.pop(len(read) - 1).strip("\n"))  # get last timestamp
-        value = len(read)   / x  # get throughput (#items/ms)
+        value = len(read) / x  # get throughput (#items/ms)
         col1.append(value)
     y.append(col1)
 
@@ -213,7 +213,7 @@ def ReadFile():
         f = open(file, "r")
         read = f.readlines()
         x = float(read.pop(len(read) - 1).strip("\n"))  # get last timestamp
-        value = len(read)   / x  # get throughput (#items/ms)
+        value = len(read) / x  # get throughput (#items/ms)
         col2.append(value)
     y.append(col2)
 
@@ -222,7 +222,7 @@ def ReadFile():
         f = open(file, "r")
         read = f.readlines()
         x = float(read.pop(len(read) - 1).strip("\n"))  # get last timestamp
-        value = len(read)   / x  # get throughput (#items/ms)
+        value = len(read) / x  # get throughput (#items/ms)
         col3.append(value)
     y.append(col3)
 
@@ -231,7 +231,7 @@ def ReadFile():
         f = open(file, "r")
         read = f.readlines()
         x = float(read.pop(len(read) - 1).strip("\n"))  # get last timestamp
-        value = len(read)   / x  # get throughput (#items/ms)
+        value = len(read) / x  # get throughput (#items/ms)
         col4.append(value)
     y.append(col4)
 
@@ -240,7 +240,7 @@ def ReadFile():
         f = open(file, "r")
         read = f.readlines()
         x = float(read.pop(len(read) - 1).strip("\n"))  # get last timestamp
-        value = len(read)   / x  # get throughput (#items/ms)
+        value = len(read) / x  # get throughput (#items/ms)
         col5.append(value)
     y.append(col5)
 
@@ -249,7 +249,7 @@ def ReadFile():
         f = open(file, "r")
         read = f.readlines()
         x = float(read.pop(len(read) - 1).strip("\n"))  # get last timestamp
-        value = len(read)   / x  # get throughput (#items/ms)
+        value = len(read) / x  # get throughput (#items/ms)
         col6.append(value)
     y.append(col6)
 
@@ -258,7 +258,7 @@ def ReadFile():
         f = open(file, "r")
         read = f.readlines()
         x = float(read.pop(len(read) - 1).strip("\n"))  # get last timestamp
-        value = len(read)   / x  # get throughput (#items/ms)
+        value = len(read) / x  # get throughput (#items/ms)
         col7.append(value)
     y.append(col7)
 
@@ -267,7 +267,7 @@ def ReadFile():
         f = open(file, "r")
         read = f.readlines()
         x = float(read.pop(len(read) - 1).strip("\n"))  # get last timestamp
-        value = len(read)   / x  # get throughput (#items/ms)
+        value = len(read) / x  # get throughput (#items/ms)
         col8.append(value)
     y.append(col8)
     return y
@@ -283,7 +283,7 @@ if __name__ == "__main__":
                      'PMJ$^{JB}$']
 
     DrawFigure(x_values, y_values, legend_labels,
-               'Input arrival rate of R (e/ms)', 'Tpt. (#matches/ms)',  x_values[0],
+               'Input arrival rate of R (e/ms)', 'Tpt. (#matches/ms)', x_values[0],
                x_values[4], 'throughput_figure1_1', False)
 
 #   DrawLegend(legend_labels, 'factor_legend')

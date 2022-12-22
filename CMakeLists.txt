@@ -61,7 +61,7 @@ if (LOG4CXX_FOUND)
     message(STATUS "LOG4CXX found")
 else (LOG4CXX_FOUND)
     message(STATUS "LOG4CXX not found")
-   # message(STATUS "On Ubuntu, install the package by the following command!")
+    # message(STATUS "On Ubuntu, install the package by the following command!")
     message(STATUS "sudo apt-get install -y liblog4cxx-dev")
 endif (LOG4CXX_FOUND)
 
