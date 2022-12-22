@@ -1,1 +1,2 @@
 1. Add time breakdown function to the eager incremental AQP
+2. Add function to track all input tuples

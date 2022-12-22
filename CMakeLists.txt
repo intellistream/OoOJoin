@@ -15,6 +15,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
 include(cmake/macros.cmake)
 include(cmake/default.cmake)
 
+
 # C++ Standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -54,7 +55,7 @@ if (LOG4CXX_FOUND)
     message(STATUS "LOG4CXX found")
 else (LOG4CXX_FOUND)
     message(STATUS "LOG4CXX not found")
-    message(STATUS "On Ubuntu, install the package by the following command!")
+   # message(STATUS "On Ubuntu, install the package by the following command!")
     message(STATUS "sudo apt-get install -y liblog4cxx-dev")
 endif (LOG4CXX_FOUND)
 
