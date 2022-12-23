@@ -111,7 +111,8 @@ string tryString(ConfigMapPtr config, string key, string defaultValue = "") {
  * - "operator" String The operator to be used
  */
 void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
-  //INTELLI_INFO("Load global config from" + configName + ", output prefix = " + outPrefix + "\n");
+  //IntelliLog::log("iNFO","Load global config from " + configName + ", output prefix = " + outPrefix + "\n");
+  INTELLI_INFO("Load global config from" + configName + ", output prefix = " + outPrefix);
   OperatorTablePtr opTable = newOperatorTable();
   //IAWJOperatorPtr iawj = newIAWJOperator();
   //get config
@@ -149,20 +150,20 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   TestBench tb, tbOoO;
   //cfg->edit("windowLen", (uint64_t) 100);
   // cfg->edit("watermarkPeriod", (uint64_t) 100);
-  //INTELLI_INFO("/****run OoO test of " + to_string(testSize) + " tuples***/");
+  INTELLI_INFO("/****run OoO test of " + to_string(testSize) + " tuples***/");
   tbOoO.setOperator(iawj, cfg);
   tbOoO.setDataSet(rTuple, sTuple);
   OoORu = tbOoO.OoOTest(true);
-  //INTELLI_DEBUG("OoO Confirmed joined " << OoORu);
-  //INTELLI_DEBUG("OoO AQP joined " << tbOoO.AQPResult);
+  INTELLI_DEBUG("OoO Confirmed joined " + to_string(OoORu));
+  INTELLI_DEBUG("OoO AQP joined " +to_string(tbOoO.AQPResult));
   ConfigMap generalStatistics;
   generalStatistics.edit("AvgLatency", (double) tbOoO.getAvgLatency());
   generalStatistics.edit("95%Latency", (double) tbOoO.getLatencyPercentage(0.95));
   generalStatistics.edit("Throughput", (double) tbOoO.getThroughput());
   // tbOoO.logRTuples();
   // INTELLI_DEBUG("Average latency (us)=" << tbOoO.getAvgLatency());
-  //INTELLI_DEBUG("95% latency (us)=" << tbOoO.getLatencyPercentage(0.95));
-  //INTELLI_DEBUG("Throughput (TPs/s)=" << tbOoO.getThroughput());
+  INTELLI_DEBUG("95% latency (us)=" +to_string(tbOoO.getLatencyPercentage(0.95)));
+  INTELLI_DEBUG("Throughput (TPs/s)=" + to_string(tbOoO.getThroughput()));
   tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
   tbOoO.saveRTuplesToFile(outPrefix + "_arrived_tuples.csv", false);
   ConfigMapPtr resultBreakDown = tbOoO.getTimeBreakDown();
@@ -173,15 +174,15 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   tb.setOperator(iawj, cfg);
   tb.setDataSet(rTuple, sTuple);
   realRu = tb.inOrderTest(true);
-  //INTELLI_DEBUG("Expect " << realRu);
+  INTELLI_DEBUG("Expect " + to_string(realRu));
   double err = OoORu;
   err = (err - realRu) / realRu;
   generalStatistics.edit("Error", (double) err);
-  //INTELLI_DEBUG("OoO AQP joined " << tbOoO.AQPResult);
+  INTELLI_DEBUG("OoO AQP joined " +to_string(tbOoO.AQPResult));
   err = tbOoO.AQPResult;
   err = (err - realRu) / realRu;
   generalStatistics.edit("AQPError", (double) err);
-  //INTELLI_DEBUG("Error = " << err);
+  INTELLI_DEBUG("Error = " +to_string(err));
   generalStatistics.toFile(outPrefix + "_general.csv");
   //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
@@ -206,7 +207,7 @@ int main(int argc, char **argv) {
 
   // setupLogging("benchmark.log", LOG_DEBUG);
 
-
+ // INTELLI::IntelliLog::setupLoggingFile("benchmark.log");
   //Run the test here.
   //INTELLI_INFO("Nothing to run." << argc << argv);
   string configName = "", outPrefix = "";

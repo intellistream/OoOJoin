@@ -59,6 +59,7 @@
 */
 #include <Utils/C20Buffers.hpp>
 #include <Utils/ThreadPerf.hpp>
+#include <Utils/IntelliLog.h>
 /**
  * @}
  */

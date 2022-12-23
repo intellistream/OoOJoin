@@ -9,8 +9,10 @@
 #include <iostream>
 #include <source_location>
 #include <ctime>
+#include <mutex>
+#include <fstream>
 /**
- *  @defgroup INTELLI_UTIL
+ *  @ingroup INTELLI_UTIL
  *  @{
 * @defgroup INTELLI_UTIL_INTELLILOG Log utils
 * @{
@@ -20,8 +22,8 @@ using namespace std;
 namespace INTELLI {
 /**
  * @ingroup INTELLI_UTIL_INTELLILOG
- * @class ConfigMap Utils/IntelliLog.hpp
- * @brief The unified map structure to store configurations in a key-value style
+ * @class IntelliLog Utils/IntelliLog.hpp
+ * @brief The log functions packed in class
  */
 class IntelliLog{
  public:
@@ -30,10 +32,89 @@ class IntelliLog{
    * @param level The log level you want to indicate
    * @param message The log message you want to indicate
    * @param source reserved
+   * @note message is automatically appended with a "\n"
    */
- static void log(std::string level,std::string message,std::source_location const source = std::source_location::current());
-
+ static void log(std::string level, std::string_view message,std::source_location const source = std::source_location::current());
+ /**
+  * @brief set up the logging file by its name
+  * @param fname the name of file
+  */
+ static void setupLoggingFile(string fname);
 };
-
+/**
+ * @ingroup INTELLI_UTIL_INTELLILOG
+ * @class IntelliLog_FileProtector Utils/IntelliLog.hpp
+ * @brief The protector for concurrent log on a file
+ * @warning This class is preserved for internal use only!
+ */
+class IntelliLog_FileProtector{
+ private:
+  std::mutex m_mut;
+  ofstream of;
+  bool isOpened=false;
+ public:
+  IntelliLog_FileProtector(){}
+  ~IntelliLog_FileProtector(){
+    if(isOpened)
+    {
+      of.close();
+    }
+  }
+  /**
+ * @brief lock this protector
+ */
+  void lock() {
+    while (!m_mut.try_lock());
+  }
+  /**
+   * @brief unlock this protector
+   */
+  void unlock() {
+    m_mut.unlock();
+  }
+  /**
+   * @brief try to open a file
+   * @param fname The name of file
+   */
+  void openLogFile(string fname)
+  {
+    of.open(fname, std::ios_base::app);
+    if (of.fail()) {
+      return ;
+    }
+    isOpened=true;
+  }
+  /**
+  * @brief try to appened something to the file, if it's opened
+  * @param msg The message to appened
+  */
+  void appendLogFile(string msg)
+  { if(!isOpened)
+    {
+      return;
+    }
+    lock();
+    of << msg;
+    unlock();
+  }
+};
+/**
+ * @ingroup INTELLI_UTIL_INTELLILOG
+ * @def INTELLI_INFO
+ * @brief (Macro) To log something as information
+ */
+#define INTELLI_INFO(n) IntelliLog::log("INFO",n)
+/**
+ * @ingroup INTELLI_UTIL_INTELLILOG
+ * @def INTELLI_ERROR
+ * @brief (Macro) To log something as error
+ */
+#define INTELLI_ERROR(n) IntelliLog::log("ERROR",n)
+/**
+ * @ingroup INTELLI_UTIL_INTELLILOG
+ * @def INTELLI_DEBUG
+ * @brief (Macro) To log something as debug
+ */
+#define INTELLI_DEBUG(n) IntelliLog::log("DEBUG",n)
 }
 #endif

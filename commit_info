@@ -1,3 +1,4 @@
 1. remove conflicts with pytorch
 2. discard the liblog4cxx due to conflicts
 3. replace gtest with header-only catch2
+4. basically replace liblog4cxx with InteliLog
