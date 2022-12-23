@@ -9,8 +9,12 @@
 #include <vector>
 #include <OoOJoin.h>
 #include <cmath>
+//#include <torch/torch.h>
+#include <chrono>
+#include <iostream>
+#include <source_location>
+#include <ctime>
 #include <torch/torch.h>
-
 using namespace std;
 using namespace OoOJoin;
 vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
@@ -181,7 +185,18 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   generalStatistics.toFile(outPrefix + "_general.csv");
   //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
+enum class log_level : char
+{
+  Info = 'I',
+  Warning = 'W',
+  Error = 'E'
+};
 
+int testPytorch() {
+  torch::Tensor tensor = torch::rand({2, 3});
+  std::cout << tensor << std::endl;
+  return 0;
+}
 int main(int argc, char **argv) {
 
   ThreadPerf pef(-1);
@@ -212,9 +227,10 @@ int main(int argc, char **argv) {
   runTestBenchAdj(configName, outPrefix);
   pef.end();
   pef.resultToConfigMap()->toFile("perfRu.csv");
-  torch::Tensor tensor = torch::rand({2, 3});
-  std::cout << tensor << std::endl;
-
+  testPytorch();
+ // torch::Tensor tensor = torch::rand({2, 3});
+  //std::cout << tensor << std::endl;
+  //minist_test();
   // testConfig();
   //TuplePtrQueue tpq=
 }

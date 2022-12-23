@@ -16,6 +16,8 @@ if (BUILD_BENCHMARKS)
     message("---Building benchmarks ${source_dir}")
     include_directories("${source_dir}/include/")
     include_directories("include/")
+    set(CMAKE_CXX_STANDARD 20)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
     add_executable(benchmark "src/Benchmark.cpp")
     target_link_libraries(benchmark IntelliStream)
 

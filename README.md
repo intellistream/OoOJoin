@@ -129,3 +129,4 @@ pip3 install matplotlib pandas numpy
 1. If you use Torch with cuda, the nvcc will refuse to work as it doesn't support c++20 yet. Therefore, we disabled the
    global requirement check of C++ 20, and only leave an "-std=c++20" option for g++. This will be fixed after nvidia
    can support c++20 in cuda.
+2. The pytorch headers also conflict with gtest, so gtest is now excluded, we switch the test framework to header-only catch2

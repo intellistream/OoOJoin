@@ -32,8 +32,8 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DNO_RACE_CHECK -DIntelliStream_DEBUG_MODE=1")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wno-ignored-qualifiers -Wno-sign-compare -O3")
 set(CMAKE_CUDA_STANDARD 11)
 set(CMAKE_CUDA_FLAGS "-std=c++11")
-#set(CMAKE_CXX_STANDARD 20)
-#set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
 #set(CMAKE_CUDA_ARCHITECTURES 55)
 # Set LOGGING_LEVEL Flag
 if (IntelliStream_LOGGING_LEVEL)
@@ -50,8 +50,6 @@ message(STATUS "CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG}")
 message(STATUS "CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE}")
 #pytorch
 #set(Torch_DIR "/home/tony/.local/lib/python3.10/site-packages/torch/share/cmake" )
-message(STATUS ${Torch_DIR})
-
 # Log4cc
 #find_package(Log4cxx REQUIRED)
 #include_directories(${Log4cxx_INCLUDE_DIR})
@@ -65,28 +63,11 @@ else (LOG4CXX_FOUND)
     message(STATUS "sudo apt-get install -y liblog4cxx-dev")
 endif (LOG4CXX_FOUND)
 
-option(ENABLE_UNIT_TESTS "Enable unit tests" OFF)
+option(ENABLE_UNIT_TESTS "Enable unit tests" ON)
 message(STATUS "Enable testing: ${ENABLE_UNIT_TESTS}")
 
-if (ENABLE_UNIT_TESTS)
-    enable_testing()
-    # Google Test
-    include(FetchContent)
-
-    FetchContent_Declare(
-            googletest
-            GIT_REPOSITORY https://github.com/google/googletest.git
-            GIT_TAG release-1.11.0
-    )
-
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    FetchContent_MakeAvailable(googletest)
-    include(GoogleTest)
-    add_subdirectory(test)
-endif ()
-
 find_package(Torch REQUIRED)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 set(LIBRARIES ${LIBRARIES} ${TORCH_LIBRARIES})
 
 # Print all used include directories
@@ -97,7 +78,7 @@ foreach (dir ${dirs})
 endforeach ()
 
 message(STATUS " Libraries: ${LIBRARIES}")
-
+#add_subdirectory(pytorchNN)
 # Add Source Code
 add_subdirectory(src)
 
@@ -105,14 +86,22 @@ add_subdirectory(src)
 get_sources(IntelliStream_SOURCE_FILES)
 get_headers(IntelliStream_HEADER_FILES)
 add_library(IntelliStream SHARED ${IntelliStream_SOURCE_FILES} ${IntelliStream_HEADER_FILES} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+set_property(TARGET IntelliStream PROPERTY CXX_STANDARD 20)
+
 target_include_directories(IntelliStream PUBLIC "include")
 target_include_directories(IntelliStream PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
-target_link_libraries(IntelliStream PUBLIC ${LIBRARIES})
-
+target_link_libraries(IntelliStream PUBLIC ${LIBRARIES} )
+#add_subdirectory(test)
 #Add benchmarks with command
 add_subdirectory(benchmark)
-
+set_property(TARGET benchmark PROPERTY CXX_STANDARD 20)
 #Add tests (based on GTest suits)
+#include(GoogleTest)
+
+if (ENABLE_UNIT_TESTS)
+    add_subdirectory(test)
+endif ()
+
 
 
 install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStream)
