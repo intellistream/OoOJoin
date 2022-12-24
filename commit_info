@@ -3,3 +3,4 @@
 3. replace gtest with header-only catch2
 4. basically replace liblog4cxx with IntelliLog
 5. a not-toy calling function to pytorch
+6. fix bugs in CMakeLists.txt

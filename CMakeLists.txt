@@ -55,13 +55,6 @@ message(STATUS "CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE}")
 #include_directories(${Log4cxx_INCLUDE_DIR})
 #set(LIBRARIES ${LIBRARIES} ${Log4cxx_LIBRARY})
 
-if (LOG4CXX_FOUND)
-    message(STATUS "LOG4CXX found")
-else (LOG4CXX_FOUND)
-    message(STATUS "LOG4CXX not found")
-    # message(STATUS "On Ubuntu, install the package by the following command!")
-    message(STATUS "sudo apt-get install -y liblog4cxx-dev")
-endif (LOG4CXX_FOUND)
 
 option(ENABLE_UNIT_TESTS "Enable unit tests" ON)
 message(STATUS "Enable testing: ${ENABLE_UNIT_TESTS}")

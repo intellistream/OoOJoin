@@ -1,7 +1,7 @@
 # adding the Google_Tests_run target
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Werror=return-type -Werror=unused-variable -Werror=unused-parameter -lboost_unit_test_framework")
+set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Werror=return-type -Werror=unused-variable -Werror=unused-parameter")
 enable_testing()
 add_executable(cpp_test SystemTest/SimpleTest.cpp)
 message(STATUS " Libraries: ${LIBRARIES}")
