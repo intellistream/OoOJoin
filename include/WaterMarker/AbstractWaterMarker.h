@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <Utils/ConfigMap.hpp>
 
-#include <Utils/Logger.hpp>
+#include <Utils/IntelliLog.h>
 #define WM_INFO INTELLI_INFO
 #define WM_ERROR INTELLI_ERROR
 #define WM_WARNNING INTELLI_WARNING

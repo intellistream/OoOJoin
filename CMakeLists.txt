@@ -1,3 +1,4 @@
+# Copyright (C) 2021 by the INTELLI team (https://github.com/OoOJoin)
 # Copyright (C) 2021 by the INTELLI team (https://github.com/intellistream)
 
 cmake_minimum_required(VERSION 3.14)
@@ -46,37 +47,8 @@ message(STATUS "CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG}")
 message(STATUS "CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE}")
 
 
-# Log4cc
-find_package(Log4cxx REQUIRED)
-include_directories(${Log4cxx_INCLUDE_DIR})
-set(LIBRARIES ${LIBRARIES} ${Log4cxx_LIBRARY})
-
-if (LOG4CXX_FOUND)
-    message(STATUS "LOG4CXX found")
-else (LOG4CXX_FOUND)
-    message(STATUS "LOG4CXX not found")
-   # message(STATUS "On Ubuntu, install the package by the following command!")
-    message(STATUS "sudo apt-get install -y liblog4cxx-dev")
-endif (LOG4CXX_FOUND)
-
 option(ENABLE_UNIT_TESTS "Enable unit tests" ON)
 message(STATUS "Enable testing: ${ENABLE_UNIT_TESTS}")
-
-if (ENABLE_UNIT_TESTS)
-    enable_testing()
-    # Google Test
-    include(FetchContent)
-
-    FetchContent_Declare(
-            googletest
-            GIT_REPOSITORY https://github.com/google/googletest.git
-            GIT_TAG release-1.11.0
-    )
-
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    FetchContent_MakeAvailable(googletest)
-    include(GoogleTest)
-endif ()
 
 # Print all used include directories
 message(STATUS "INCLUDE_DIRS:")
@@ -110,4 +82,3 @@ file(GLOB allCopyFiles "${PROJECT_SOURCE_DIR}/scripts/*")
 file(COPY ${allCopyFiles} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/benchmark/scripts)
 file(COPY ${allCopyFiles} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/benchmark/scripts)
 #file(COPY ${allCopyFiles} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/scripts)
-

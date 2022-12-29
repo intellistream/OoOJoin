@@ -69,10 +69,10 @@ bool OoOJoin::MeanAQPIAWJOperator::stop() {
   /**
    */
   if (lockedByWaterMark) {
-        WM_INFO("early terminate by watermark, already have results");
+    WM_INFO("early terminate by watermark, already have results");
   }
   if (!lockedByWaterMark) {
-        WM_INFO("No watermark encountered, compute now");
+    WM_INFO("No watermark encountered, compute now");
   }
   lazyComputeOfAQP();
   timeBreakDown_all = timeTrackingEnd(timeBreakDown_all);

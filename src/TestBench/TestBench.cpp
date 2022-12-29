@@ -5,6 +5,7 @@
 #include <TestBench/TestBench.h>
 #include <Utils/UtilityFunctions.hpp>
 #include <algorithm>
+#include <Utils/IntelliLog.h>
 using namespace INTELLI;
 using namespace OoOJoin;
 using namespace std;
@@ -53,9 +54,9 @@ bool OoOJoin::TestBench::setOperator(OoOJoin::AbstractOperatorPtr op, ConfigMapP
   }
   if (opConfig->existU64("timeStep")) {
     timeStep = opConfig->getU64("timeStep");
-        TB_INFO("Feeding time step=" + to_string(timeStep) + "us");
+    // TB_INFO("Feeding time step=" + to_string(timeStep) + "us");
   } else {
-        TB_WARNNING("No setting of timeStep, use 1\n");
+    //  TB_WARNNING("No setting of timeStep, use 1\n");
     timeStep = 1;
   }
   return true;
@@ -136,17 +137,17 @@ size_t OoOJoin::TestBench::inOrderTest(bool additionalSort) {
   return testOp->getResult();
 }
 void OoOJoin::TestBench::logRTuples(bool skipZero) {
-      TB_INFO("/***Printing the rTuples in the following***/");
+  //   TB_INFO("/***Printing the rTuples in the following***/");
   size_t rLen = rTuple.size();
   for (size_t i = 0; i < rLen; i++) {
     if (skipZero && rTuple[i]->processedTime == 0) {
 
     } else {
-          TB_INFO(rTuple[i]->toString());
+      //TB_INFO(rTuple[i]->toString());
     }
 
   }
-      TB_INFO("/***Done***/");
+  // TB_INFO("/***Done***/");
 }
 bool OoOJoin::TestBench::saveRTuplesToFile(std::string fname, bool skipZero) {
   ofstream of;
@@ -196,6 +197,10 @@ double OoOJoin::TestBench::getThroughput() {
     }
   }
   double elapsedTime = (maxProcessed - minArrival);
+  if (elapsedTime <= 0) {
+    TB_WARNNING("No valid elapsed time, maybe there is no joined result?");
+    return 0;
+  }
   double thr = rLen;
   thr = thr * 1e6 / elapsedTime;
   return thr;
@@ -209,6 +214,10 @@ double OoOJoin::TestBench::getLatencyPercentage(double fraction) {
       validLatency.push_back(rTuple[i]->processedTime - rTuple[i]->arrivalTime);
       nonZeroCnt++;
     }
+  }
+  if (nonZeroCnt == 0) {
+    TB_WARNNING("No valid latency, maybe there is no joined result?");
+    return 0;
   }
   std::sort(validLatency.begin(), validLatency.end());
   double t = nonZeroCnt;

@@ -11,9 +11,9 @@
 #include <assert.h>
 #include <Utils/ConfigMap.hpp>
 
-#include <Utils/Logger.hpp>
-#define OP_INFO INTELLI_INFO
-#define OP_ERROR INTELLI_ERROR
+//#include <Utils/Logger.hpp>
+#define OP_INFO printf
+#define OP_ERROR printf
 #define OP_WARNNING INTELLI_WARNING
 
 using namespace INTELLI;

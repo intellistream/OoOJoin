@@ -43,7 +43,7 @@ bool OoOJoin::AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   } else {
 
     //printf("sLen not set\r\n");
-        OP_ERROR("empty buffer for S stream \n");
+    OP_ERROR("empty buffer for S stream \n");
 
     return false;
   }
@@ -51,7 +51,7 @@ bool OoOJoin::AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     rLen = config->getU64("rLen");
   } else {
 
-        OP_ERROR("empty buffer for R stream \n");
+    OP_ERROR("empty buffer for R stream \n");
     return false;
   }
   /*if (config->existU64("timeStep")) {

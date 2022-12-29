@@ -1,2 +1,3 @@
-1. Add time breakdown function to the eager incremental AQP
-2. Add function to track all input tuples
+1. clone from with pytorch, but delete the libtorch
+2. fix several bugs in test bench
+3. fix bugs in test
