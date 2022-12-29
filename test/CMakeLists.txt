@@ -11,8 +11,8 @@ target_link_libraries(cpp_test
 # avoid undefined reference to "main" in test.cpp
 
 add_test(
-NAME catch_test
-COMMAND $<TARGET_FILE:cpp_test> --success
+        NAME catch_test
+        COMMAND $<TARGET_FILE:cpp_test> --success
 )
 
 

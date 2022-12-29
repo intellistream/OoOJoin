@@ -25,7 +25,7 @@ namespace INTELLI {
  * @class IntelliLog Utils/IntelliLog.hpp
  * @brief The log functions packed in class
  */
-class IntelliLog{
+class IntelliLog {
  public:
   /**
    * @brief Produce a log
@@ -34,12 +34,14 @@ class IntelliLog{
    * @param source reserved
    * @note message is automatically appended with a "\n"
    */
- static void log(std::string level, std::string_view message,std::source_location const source = std::source_location::current());
- /**
-  * @brief set up the logging file by its name
-  * @param fname the name of file
-  */
- static void setupLoggingFile(string fname);
+  static void log(std::string level,
+                  std::string_view message,
+                  std::source_location const source = std::source_location::current());
+  /**
+   * @brief set up the logging file by its name
+   * @param fname the name of file
+   */
+  static void setupLoggingFile(string fname);
 };
 /**
  * @ingroup INTELLI_UTIL_INTELLILOG
@@ -47,16 +49,15 @@ class IntelliLog{
  * @brief The protector for concurrent log on a file
  * @warning This class is preserved for internal use only!
  */
-class IntelliLog_FileProtector{
+class IntelliLog_FileProtector {
  private:
   std::mutex m_mut;
   ofstream of;
-  bool isOpened=false;
+  bool isOpened = false;
  public:
-  IntelliLog_FileProtector(){}
-  ~IntelliLog_FileProtector(){
-    if(isOpened)
-    {
+  IntelliLog_FileProtector() {}
+  ~IntelliLog_FileProtector() {
+    if (isOpened) {
       of.close();
     }
   }
@@ -76,21 +77,19 @@ class IntelliLog_FileProtector{
    * @brief try to open a file
    * @param fname The name of file
    */
-  void openLogFile(string fname)
-  {
+  void openLogFile(string fname) {
     of.open(fname, std::ios_base::app);
     if (of.fail()) {
-      return ;
+      return;
     }
-    isOpened=true;
+    isOpened = true;
   }
   /**
   * @brief try to appened something to the file, if it's opened
   * @param msg The message to appened
   */
-  void appendLogFile(string msg)
-  { if(!isOpened)
-    {
+  void appendLogFile(string msg) {
+    if (!isOpened) {
       return;
     }
     lock();

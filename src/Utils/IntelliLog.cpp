@@ -12,21 +12,21 @@ void INTELLI::IntelliLog::log(std::string level, std::string_view message, const
   time_t now = time(0);
 
   // 把 now 转换为字符串形式
-  char* dt = ctime(&now);
-  std::string str=level+":";
-  dt[strlen(dt)-1]=0;
-  str+=dt;
+  char *dt = ctime(&now);
+  std::string str = level + ":";
+  dt[strlen(dt) - 1] = 0;
+  str += dt;
   //str+= static_cast<char>(level);
-  str+=":";
-  str+=source.file_name();
-  str+=+"|";
-  str+=+source.function_name();
-  str+=+"|";
-  str+=to_string(source.line());
-  str+="|:";
-  str+=message;
-  cout<<str+"\n";
+  str += ":";
+  str += source.file_name();
+  str += +"|";
+  str += +source.function_name();
+  str += +"|";
+  str += to_string(source.line());
+  str += "|:";
+  str += message;
+  cout << str + "\n";
 
-  fp_doNotTouchMe.appendLogFile(str+"\n");
+  fp_doNotTouchMe.appendLogFile(str + "\n");
   //fp_doNotTouchMe.unlock();
 }

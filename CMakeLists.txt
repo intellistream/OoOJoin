@@ -77,7 +77,7 @@ set_property(TARGET IntelliStream PROPERTY CXX_STANDARD 20)
 
 target_include_directories(IntelliStream PUBLIC "include")
 target_include_directories(IntelliStream PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
-target_link_libraries(IntelliStream PUBLIC ${LIBRARIES} )
+target_link_libraries(IntelliStream PUBLIC ${LIBRARIES})
 #add_subdirectory(test)
 #Add benchmarks with command
 add_subdirectory(benchmark)
@@ -88,7 +88,6 @@ set_property(TARGET benchmark PROPERTY CXX_STANDARD 20)
 if (ENABLE_UNIT_TESTS)
     add_subdirectory(test)
 endif ()
-
 
 
 install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStream)

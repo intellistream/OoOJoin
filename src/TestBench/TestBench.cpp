@@ -197,8 +197,7 @@ double OoOJoin::TestBench::getThroughput() {
     }
   }
   double elapsedTime = (maxProcessed - minArrival);
-  if(elapsedTime<=0)
-  {
+  if (elapsedTime <= 0) {
     TB_WARNNING("No valid elapsed time, maybe there is no joined result?");
     return 0;
   }
@@ -216,8 +215,7 @@ double OoOJoin::TestBench::getLatencyPercentage(double fraction) {
       nonZeroCnt++;
     }
   }
-  if(nonZeroCnt==0)
-  {
+  if (nonZeroCnt == 0) {
     TB_WARNNING("No valid latency, maybe there is no joined result?");
     return 0;
   }

@@ -155,14 +155,14 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   tbOoO.setDataSet(rTuple, sTuple);
   OoORu = tbOoO.OoOTest(true);
   INTELLI_DEBUG("OoO Confirmed joined " + to_string(OoORu));
-  INTELLI_DEBUG("OoO AQP joined " +to_string(tbOoO.AQPResult));
+  INTELLI_DEBUG("OoO AQP joined " + to_string(tbOoO.AQPResult));
   ConfigMap generalStatistics;
   generalStatistics.edit("AvgLatency", (double) tbOoO.getAvgLatency());
   generalStatistics.edit("95%Latency", (double) tbOoO.getLatencyPercentage(0.95));
   generalStatistics.edit("Throughput", (double) tbOoO.getThroughput());
   // tbOoO.logRTuples();
   // INTELLI_DEBUG("Average latency (us)=" << tbOoO.getAvgLatency());
-  INTELLI_DEBUG("95% latency (us)=" +to_string(tbOoO.getLatencyPercentage(0.95)));
+  INTELLI_DEBUG("95% latency (us)=" + to_string(tbOoO.getLatencyPercentage(0.95)));
   INTELLI_DEBUG("Throughput (TPs/s)=" + to_string(tbOoO.getThroughput()));
   tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
   tbOoO.saveRTuplesToFile(outPrefix + "_arrived_tuples.csv", false);
@@ -178,16 +178,15 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   double err = OoORu;
   err = (err - realRu) / realRu;
   generalStatistics.edit("Error", (double) err);
-  INTELLI_DEBUG("OoO AQP joined " +to_string(tbOoO.AQPResult));
+  INTELLI_DEBUG("OoO AQP joined " + to_string(tbOoO.AQPResult));
   err = tbOoO.AQPResult;
   err = (err - realRu) / realRu;
   generalStatistics.edit("AQPError", (double) err);
-  INTELLI_DEBUG("Error = " +to_string(err));
+  INTELLI_DEBUG("Error = " + to_string(err));
   generalStatistics.toFile(outPrefix + "_general.csv");
   //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
-enum class log_level : char
-{
+enum class log_level : char {
   Info = 'I',
   Warning = 'W',
   Error = 'E'
@@ -202,7 +201,7 @@ int main(int argc, char **argv) {
 
   // setupLogging("benchmark.log", LOG_DEBUG);
 
- // INTELLI::IntelliLog::setupLoggingFile("benchmark.log");
+  // INTELLI::IntelliLog::setupLoggingFile("benchmark.log");
   //Run the test here.
   //INTELLI_INFO("Nothing to run." << argc << argv);
   string configName = "", outPrefix = "";
@@ -223,7 +222,7 @@ int main(int argc, char **argv) {
   runTestBenchAdj(configName, outPrefix);
   pef.end();
   pef.resultToConfigMap()->toFile("perfRu.csv");
- // torch::Tensor tensor = torch::rand({2, 3});
+  // torch::Tensor tensor = torch::rand({2, 3});
   //std::cout << tensor << std::endl;
   //minist_test();
   // testConfig();

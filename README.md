@@ -17,7 +17,6 @@ Then, install the default gcc/g++ of ubuntu22.04
 sudo apt-get install gcc g++ cmake python3 python3-pip
 ```
 
-
 ## How to build
 
 ### Build in shell
@@ -27,7 +26,6 @@ sudo apt-get install gcc g++ cmake python3 python3-pip
 mkdir build && cd build
 make 
 ```
-
 
 ## Code Structure
 
@@ -82,4 +80,5 @@ pip3 install matplotlib pandas numpy
 1. If you use Torch with cuda, the nvcc will refuse to work as it doesn't support c++20 yet. Therefore, we disabled the
    global requirement check of C++ 20, and only leave an "-std=c++20" option for g++. This will be fixed after nvidia
    can support c++20 in cuda.
-2. The pytorch headers also conflict with gtest, so gtest is now excluded, we switch the test framework to header-only catch2
+2. The pytorch headers also conflict with gtest, so gtest is now excluded, we switch the test framework to header-only
+   catch2
