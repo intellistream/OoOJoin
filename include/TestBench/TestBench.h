@@ -12,7 +12,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
+#include <TestBench/DataLoaderTable.h>
 using namespace INTELLI;
 #define TB_INFO INTELLI_INFO
 #define TB_ERROR INTELLI_ERROR
@@ -25,7 +25,7 @@ namespace OoOJoin {
  *
  */
 /**
- * @class TestBench Common/TestBench
+ * @class TestBench TestBench/TestBench
  * @brief The test bench class to feed data
  * @ingroup ADB_TESTBENCH
  * @note Require config if used
@@ -68,7 +68,28 @@ class TestBench {
    * @return The vector of TrackTuplePtr
    */
   std::vector<TrackTuplePtr> loadDataFromCsv(std::string fname,std::string separator = ",", std::string newLine = "\n");
-
+  /**
+   * @brief load a dataset according to the tag
+   * @param tag the name tag of DataLoader
+   * @param globalCfg the global config file to load dataset
+   */
+  void setDataLoader(std::string tag,ConfigMapPtr globalCfg);
+  /**
+   * @brief get the size of loaded s tuple
+   * @return the size
+   */
+  size_t sizeOfS()
+  {
+    return sTuple.size();
+  }
+  /**
+  * @brief get the size of loaded r tuple
+  * @return the size
+  */
+  size_t sizeOfR()
+  {
+    return rTuple.size();
+  }
   /**
    * @brief set the dataset to feed
    * @param _r The r tuples

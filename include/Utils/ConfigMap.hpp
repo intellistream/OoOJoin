@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <assert.h>
 /**
  *  @defgroup INTELLI_UTIL
  *  @{
@@ -260,6 +261,72 @@ class ConfigMap {
     //ins>>readStr;
     ins.close();
     return true;
+  }
+
+/**
+   * @brief Try to get an I64 from config map, if not exist, use default value instead
+   * @param key The key
+   * @param defaultValue The default
+   * @return The returned value
+   */
+  int64_t tryI64( string key, int64_t defaultValue = 0) {
+    int64_t ru = defaultValue;
+    if (this->existI64(key)) {
+      ru = this->getI64(key);
+      // INTELLI_INFO(key + " = " + to_string(ru));
+    } else {
+      //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
+    }
+    return ru;
+  }
+/**
+   * @brief Try to get an U64 from config map, if not exist, use default value instead
+   * @param key The key
+   * @param defaultValue The default
+   * @return The returned value
+   */
+   uint64_t tryU64( string key, uint64_t defaultValue = 0) {
+    uint64_t ru = defaultValue;
+    if (this->existU64(key)) {
+      ru = this->getU64(key);
+      // INTELLI_INFO(key + " = " + to_string(ru));
+    } else {
+      //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
+    }
+    return ru;
+  }
+
+/**
+   * @brief Try to get a double from config map, if not exist, use default value instead
+   * @param key The key
+   * @param defaultValue The default
+   * @return The returned value
+   */
+  double tryDouble( string key, double defaultValue = 0) {
+    double ru = defaultValue;
+    if (this->existDouble(key)) {
+      ru = this->getDouble(key);
+      // INTELLI_INFO(key + " = " + to_string(ru));
+    } else {
+      //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
+    }
+    return ru;
+  }
+/**
+   * @brief Try to get an String from config map, if not exist, use default value instead
+   * @param key The key
+   * @param defaultValue The default
+   * @return The returned value
+   */
+  string tryString(string key, string defaultValue = "") {
+    string ru = defaultValue;
+    if (this->existString(key)) {
+      ru = this->getString(key);
+      //INTELLI_INFO(key + " = " + (ru));
+    } else {
+      // WM_WARNNING("Leaving " + key + " as blank, will use " + (defaultValue) + " instead");
+    }
+    return ru;
   }
 
 };

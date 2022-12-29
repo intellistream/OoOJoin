@@ -57,7 +57,7 @@ size_t NPJ::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
 
   INTELLI::BarrierPtr buildBar = std::make_shared<std::barrier<>>(threads);
   //cout << ("init time ") + to_string(tp.getResultById(-1)) << endl;
-  for (size_t i = 0; i < threads; i++) {
+  for (int i = 0; i < threads; i++) {
     workers[i].init(&ts[sBegin], \
                     &tr[rBegin], \
                     partitionS[i], \
@@ -71,10 +71,10 @@ size_t NPJ::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
     sBegin += partitionS[i];
     rBegin += partitionR[i];
   }
-  for (size_t i = 0; i < threads; i++) {
+  for (int i = 0; i < threads; i++) {
     workers[i].startThread();
   }
-  for (size_t i = 0; i < threads; i++) {
+  for (int i = 0; i < threads; i++) {
     workers[i].joinThread();
     ru += workers[i].getResult();
   }

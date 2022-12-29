@@ -6,6 +6,7 @@
 #include <Utils/UtilityFunctions.hpp>
 #include <algorithm>
 #include <Utils/IntelliLog.h>
+#include <TestBench/RandomDataLoader.h>
 using namespace INTELLI;
 using namespace OoOJoin;
 using namespace std;
@@ -234,6 +235,18 @@ ConfigMapPtr OoOJoin::TestBench::getTimeBreakDown() {
     return testOp->getTimeBreakDown();
   }
   return nullptr;
+}
+void OoOJoin::TestBench::setDataLoader(std::string tag,ConfigMapPtr globalCfg) {
+  DataLoaderTablePtr dt=newDataLoaderTable();
+  AbstractDataLoaderPtr dl=dt->findDataLoader(tag);
+  if(dl== nullptr)
+  {
+    TB_WARNNING("Invalid DataLoader ["+tag+"], use random instead");
+    dl=newRandomDataLoader();
+  }
+  dl->setConfig(globalCfg);
+  setDataSet(dl->getTupleVectorS(),dl->getTupleVectorR());
+  TB_INFO("Using DataLoader ["+tag+"]");
 }
 std::vector<TrackTuplePtr> OoOJoin::TestBench::loadDataFromCsv(std::string fname,std::string separator , std::string newLine)
 {
