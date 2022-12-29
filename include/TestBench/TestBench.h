@@ -8,6 +8,11 @@
 #include <Common/Window.h>
 #include <Operator/AbstractOperator.h>
 #include <Utils/IntelliLog.h>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
 using namespace INTELLI;
 #define TB_INFO INTELLI_INFO
 #define TB_ERROR INTELLI_ERROR
@@ -33,6 +38,20 @@ class TestBench {
   void inlineTest(void);
   void forceInOrder(std::vector<TrackTuplePtr> &arr);
   tsType timeStep = 1;
+
+  void spilt(const std::string s, const std::string &c, vector<std::string> &v) {
+    std::string::size_type pos1, pos2;
+    pos2 = s.find(c);
+    pos1 = 0;
+    while (std::string::npos != pos2) {
+      v.push_back(s.substr(pos1, pos2 - pos1));
+
+      pos1 = pos2 + c.size();
+      pos2 = s.find(c, pos1);
+    }
+    if (pos1 != s.length())
+      v.push_back(s.substr(pos1));
+  }
  public:
   std::vector<TrackTuplePtr> rTuple;
   std::vector<TrackTuplePtr> sTuple;
@@ -41,6 +60,14 @@ class TestBench {
   size_t AQPResult = 0;
   TestBench() {}
   ~TestBench() {}
+  /**
+   * @brief load a dataset from csv file
+   * @param fname The name of file
+   * @param separator The separator in .csv, default is ","
+   * @param newLine THe indicator of a new line. default is "\n"
+   * @return The vector of TrackTuplePtr
+   */
+  std::vector<TrackTuplePtr> loadDataFromCsv(std::string fname,std::string separator = ",", std::string newLine = "\n");
 
   /**
    * @brief set the dataset to feed

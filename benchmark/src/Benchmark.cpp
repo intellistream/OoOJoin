@@ -184,6 +184,7 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   generalStatistics.edit("AQPError", (double) err);
   INTELLI_DEBUG("Error = " + to_string(err));
   generalStatistics.toFile(outPrefix + "_general.csv");
+  tb.loadDataFromCsv(outPrefix + "_arrived_tuples.csv");
   //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
 
