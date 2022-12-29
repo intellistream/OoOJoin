@@ -18,19 +18,14 @@ include(cmake/default.cmake)
 # C++ Standard
 #set(CMAKE_CXX_STANDARD 20)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#gcc 10 g++10
-message(STATUS "sudo add-apt-repository 'deb http://mirrors.kernel.org/ubuntu hirsute main universe'")
-message(STATUS "sudo apt-get update")
-message(STATUS "sudo apt install gcc-11 g++-11")
-message(STATUS "sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11")
-message(STATUS "sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11")
+
 
 # Set Optimization Flags
 set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Werror=return-type -Werror=unused-variable -Werror=unused-parameter")
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DNO_RACE_CHECK -DIntelliStream_DEBUG_MODE=1")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wno-ignored-qualifiers -Wno-sign-compare -O3")
-set(CMAKE_CUDA_STANDARD 11)
-set(CMAKE_CUDA_FLAGS "-std=c++11")
+#set(CMAKE_CUDA_STANDARD 11)
+#set(CMAKE_CUDA_FLAGS "-std=c++11")
 
 
 #set(CMAKE_CUDA_ARCHITECTURES 55)
@@ -58,9 +53,9 @@ message(STATUS "CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE}")
 option(ENABLE_UNIT_TESTS "Enable unit tests" ON)
 message(STATUS "Enable testing: ${ENABLE_UNIT_TESTS}")
 
-find_package(Torch REQUIRED)
+#find_package(Torch REQUIRED)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
-set(LIBRARIES ${LIBRARIES} ${TORCH_LIBRARIES})
+#set(LIBRARIES ${LIBRARIES} ${TORCH_LIBRARIES})
 
 # Print all used include directories
 message(STATUS "INCLUDE_DIRS:")

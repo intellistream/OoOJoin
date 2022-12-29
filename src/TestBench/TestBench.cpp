@@ -5,6 +5,7 @@
 #include <TestBench/TestBench.h>
 #include <Utils/UtilityFunctions.hpp>
 #include <algorithm>
+#include <Utils/IntelliLog.h>
 using namespace INTELLI;
 using namespace OoOJoin;
 using namespace std;
@@ -196,6 +197,11 @@ double OoOJoin::TestBench::getThroughput() {
     }
   }
   double elapsedTime = (maxProcessed - minArrival);
+  if(elapsedTime<=0)
+  {
+    TB_WARNNING("No valid elapsed time, maybe there is no joined result?");
+    return 0;
+  }
   double thr = rLen;
   thr = thr * 1e6 / elapsedTime;
   return thr;
@@ -209,6 +215,11 @@ double OoOJoin::TestBench::getLatencyPercentage(double fraction) {
       validLatency.push_back(rTuple[i]->processedTime - rTuple[i]->arrivalTime);
       nonZeroCnt++;
     }
+  }
+  if(nonZeroCnt==0)
+  {
+    TB_WARNNING("No valid latency, maybe there is no joined result?");
+    return 0;
   }
   std::sort(validLatency.begin(), validLatency.end());
   double t = nonZeroCnt;

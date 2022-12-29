@@ -112,6 +112,12 @@ class IntelliLog_FileProtector{
 #define INTELLI_ERROR(n) IntelliLog::log("ERROR",n)
 /**
  * @ingroup INTELLI_UTIL_INTELLILOG
+ * @def INTELLI_Warning
+ * @brief (Macro) To log something as warnning
+ */
+#define INTELLI_WARNING(n) IntelliLog::log("WARNING",n)
+/**
+ * @ingroup INTELLI_UTIL_INTELLILOG
  * @def INTELLI_DEBUG
  * @brief (Macro) To log something as debug
  */

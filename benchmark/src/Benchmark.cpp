@@ -9,12 +9,12 @@
 #include <vector>
 #include <OoOJoin.h>
 #include <cmath>
-//#include <torch/torch.h>
+
 #include <chrono>
 #include <iostream>
 #include <source_location>
 #include <ctime>
-#include <torch/torch.h>
+
 using namespace std;
 using namespace OoOJoin;
 vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
@@ -193,26 +193,6 @@ enum class log_level : char
   Error = 'E'
 };
 
-int testPytorch() {
-  torch::Tensor tensor = torch::rand({1,6});
-
-  std::vector<float> v(tensor.data_ptr<float>(), tensor.data_ptr<float>() + tensor.numel());
-  cout<<"raw tensor"<<endl;
-  std::cout << tensor << std::endl;
-  cout<<"vector"<<endl;
-  for(int i=0;i<v.size();i++)
-  {
-    cout<<v[i]<<",";
-  }
-  auto opts = torch::TensorOptions().dtype(torch::kFloat32);
-  auto tensor2 = torch::from_blob(v.data(), {int64_t(v.size())}, opts).clone();
-  int tx=2,ty=3;
-  tensor2=tensor2.reshape({tx,ty});
-  //cout<<v.size()<<endl;
-  cout<<"converted tensor"<<endl;
-  std::cout << tensor2 << std::endl;
-  return 0;
-}
 int main(int argc, char **argv) {
 
   ThreadPerf pef(-1);
@@ -243,7 +223,6 @@ int main(int argc, char **argv) {
   runTestBenchAdj(configName, outPrefix);
   pef.end();
   pef.resultToConfigMap()->toFile("perfRu.csv");
-  testPytorch();
  // torch::Tensor tensor = torch::rand({2, 3});
   //std::cout << tensor << std::endl;
   //minist_test();
