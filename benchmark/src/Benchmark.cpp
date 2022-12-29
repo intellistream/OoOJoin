@@ -186,11 +186,6 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   generalStatistics.toFile(outPrefix + "_general.csv");
   //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
-enum class log_level : char {
-  Info = 'I',
-  Warning = 'W',
-  Error = 'E'
-};
 
 int main(int argc, char **argv) {
 
