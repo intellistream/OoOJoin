@@ -1,4 +1,4 @@
-/*! \file   IMAIAWJOperator
+/*! \file   IMAIAWJOperator.h
 .h*/
 //
 // Created by tony on 03/12/22.
@@ -116,8 +116,7 @@ class IMAIAWJOperator : public MeanAQPIAWJOperator {
 };
 /**
  * @ingroup ADB_OPERATORS
- * @typedef IMAIAWJOperator
-Ptr
+ * @typedef IMAIAWJOperatorPtr
  * @brief The class to describe a shared pointer to @ref IMAIAWJOperator
 
  */
