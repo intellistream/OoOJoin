@@ -1,1 +1,2 @@
-1. More elegant way of loading datasets, by using XXXDataLoade
+1. More elegant way of loading datasets, by using XXXDataLoader
+2. Providing tests over FileDataLoader class

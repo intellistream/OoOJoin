@@ -197,3 +197,12 @@ TEST_CASE("Test Holistic punctuation+join", "[short]")
   a=runTestBenchAdj(configName, outPrefix);
   REQUIRE(a==1);
 }
+
+TEST_CASE("Test running on external file", "[short]")
+{
+  int a = 0;
+  string configName = "", outPrefix = "";
+  configName = "config_fileDataLoader.csv";
+  a=runTestBenchAdj(configName, outPrefix);
+  REQUIRE(a==1);
+}

@@ -48,18 +48,20 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   string loaderTag = "random";
   //uint64_t keyRange;
 
-  windowLenMs = cfg->tryU64 ("windowLenMs", 10);
-  timeStepUs = cfg->tryU64( "timeStepUs", 40);
-  watermarkPeriodMs = cfg->tryU64("watermarkPeriodMs", 10);
+  windowLenMs = cfg->tryU64 ("windowLenMs", 10,true);
+  timeStepUs = cfg->tryU64( "timeStepUs", 40,true);
+  watermarkPeriodMs = cfg->tryU64("watermarkPeriodMs", 10,true);
   maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
+  INTELLI_INFO("window len= " + to_string(windowLenMs) + "ms , watermark ="+ to_string(watermarkPeriodMs));
  // eventRateKTps = tryU64(cfg, "eventRateKTps", 10);
   //keyRange = tryU64(cfg, "keyRange", 10);
   operatorTag = cfg->tryString( "operator", "IAWJ");
   loaderTag=cfg->tryString("dataLoader","random");
   AbstractOperatorPtr iawj = opTable->findOperator(operatorTag);
+  INTELLI_INFO("Try use " + operatorTag + " operator");
   if (iawj == nullptr) {
     iawj = newIAWJOperator();
-    // WM_WARNNING("No " + operatorTag + " operator, will use IAWJ instead");
+    INTELLI_INFO("No " + operatorTag + " operator, will use IAWJ instead");
   }
   cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
   cfg->edit("watermarkPeriod", (uint64_t) watermarkPeriodMs * 1000);
