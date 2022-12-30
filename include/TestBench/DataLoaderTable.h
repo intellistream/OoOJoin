@@ -23,6 +23,7 @@ namespace OoOJoin {
   *  @note please edit corresponding .cpp if adding a new data loader
   *  @note Default tags
   *  - "random" @ref RandomDataLoader
+  *  - "file" @ref FileDataLoader
   */
  class DataLoaderTable {
   protected:

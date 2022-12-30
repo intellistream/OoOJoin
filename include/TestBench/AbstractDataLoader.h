@@ -8,10 +8,11 @@
 #include <Utils/ConfigMap.hpp>
 #include <Common/Tuples.h>
 #include <assert.h>
+#include <Utils/IntelliLog.h>
 using namespace INTELLI;
-#define ALGO_INFO INTELLI_INFO
-#define ALGO_ERROR INTELLI_ERROR
-#define ALGO_WARNNING INTELLI_WARNING
+#define DATA_INFO INTELLI_INFO
+#define DATA_ERROR INTELLI_ERROR
+#define DATA_WARNNING INTELLI_WARNING
 namespace OoOJoin {
 
 /**

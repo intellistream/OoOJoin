@@ -3,4 +3,5 @@ add_sources(
         DataLoaderTable.cpp
         AbstractDataLoader.cpp
         RandomDataLoader.cpp
+        FileDataLoader.cpp
 )

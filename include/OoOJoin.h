@@ -15,6 +15,17 @@
  * The whole work is complete join operator, including basic windowing, buffering and join computation. However, watermark
  * generation is the major focus.
  * \image html System.png
+ * @section BENCH_MARK Benchmark Tips
+ * usage: ./benchmark [configfile]
+ * @note Require configs in configfile
+ * - "windowLenMs" U64 The real world window length in ms
+ * - "timeStepUs" U64 The simulation step in us
+ * - "watermarkPeriodMs" U64 The real world watermark generation period in ms
+ * - "maxArrivalSkewMs" U64 The maximum real-world arrival skewness in ms
+ * - "eventRateKTps" U64 The real-world rate of spawn event, in KTuples/s
+ * - "keyRange" U64 The range of Key
+ * - "operator" String The operator to be used, see OperatorTable class for all valid tags
+ * - "dataLoader"  String The dataloader to be used, see DataLoaderTable class for all valid tags
  * @section Code_overview  Code Overview
  * The code structure aligns well with system design.
  * \image html UML_ALL.png

@@ -1,4 +1,4 @@
-/*! \file   IMAIAWJOperator
+/*! \file   IMAIAWJOperator.h
 .h*/
 //
 // Created by tony on 03/12/22.

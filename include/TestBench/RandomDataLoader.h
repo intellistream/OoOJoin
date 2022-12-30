@@ -24,6 +24,13 @@ namespace OoOJoin {
  * - create
  * - setConfig and setModConfig (optional), generate R and S internally
  * - call getTupleVectorS/R and getSizeS/R;
+ * @note require configs:
+ * - "windowLenMs" U64 The real world window length in ms
+ * - "timeStepUs" U64 The simulation step in us
+ * - "watermarkPeriodMs" U64 The real world watermark generation period in ms
+ * - "maxArrivalSkewMs" U64 The maximum real-world arrival skewness in ms
+ * - "eventRateKTps" U64 The real-world rate of spawn event, in KTuples/s
+ * - "keyRange" U64 The range of Key
  */
 class RandomDataLoader : public  AbstractDataLoader{
  protected:

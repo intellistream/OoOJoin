@@ -1,3 +1,4 @@
+/*! \file benchmark.cpp*/
 // Copyright (C) 2021 by the IntelliStream team (https://github.com/intellistream)
 
 /**
@@ -18,6 +19,7 @@
 using namespace std;
 using namespace OoOJoin;
 /**
+ * @defgroup OJ_BENCHMARK The benchmark program
  * @brief run the test bench and allow adjusting
  * @param configName
  * @param outPrefix
@@ -38,7 +40,7 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   //get config
   ConfigMapPtr cfg = newConfigMap();
   cfg->fromFile(configName);
-  size_t testSize = 0;
+  //size_t testSize = 0;
   size_t OoORu = 0, realRu = 0;
   //load global configs
   tsType windowLenMs, timeStepUs, watermarkPeriodMs,maxArrivalSkewMs;
@@ -63,12 +65,13 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   cfg->edit("watermarkPeriod", (uint64_t) watermarkPeriodMs * 1000);
   cfg->edit("timeStep", (uint64_t) timeStepUs);
   TestBench tb, tbOoO;
-  INTELLI_INFO("/****run OoO test of " + to_string(testSize) + " tuples***/");
+
 
   tbOoO.setDataLoader(loaderTag,cfg);
   cfg->edit("rLen", (uint64_t) tbOoO.sizeOfS());
   cfg->edit("sLen", (uint64_t) tbOoO.sizeOfR());
   tbOoO.setOperator(iawj, cfg);
+  INTELLI_INFO("/****run OoO test of  tuples***/");
   OoORu = tbOoO.OoOTest(true);
   INTELLI_DEBUG("OoO Confirmed joined " + to_string(OoORu));
   INTELLI_DEBUG("OoO AQP joined " + to_string(tbOoO.AQPResult));
@@ -101,7 +104,7 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   generalStatistics.edit("AQPError", (double) err);
   INTELLI_DEBUG("Error = " + to_string(err));
   generalStatistics.toFile(outPrefix + "_general.csv");
-  tb.loadDataFromCsv(outPrefix + "_arrived_tuples.csv");
+
   //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
 

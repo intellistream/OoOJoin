@@ -10,6 +10,7 @@
 #include <iostream>
 #include <sstream>
 #include <assert.h>
+#include <Utils/IntelliLog.h>
 /**
  *  @defgroup INTELLI_UTIL
  *  @{
@@ -23,6 +24,7 @@ namespace INTELLI {
 /**
  * @ingroup INTELLI_UTIL_CONFIGS
  * @class ConfigMap Utils/ConfigMap.hpp
+ * @note Require @ref IntelliLog Util package
  * @brief The unified map structure to store configurations in a key-value style
  */
 class ConfigMap {
@@ -267,14 +269,19 @@ class ConfigMap {
    * @brief Try to get an I64 from config map, if not exist, use default value instead
    * @param key The key
    * @param defaultValue The default
+   * @param showWarning Whether show warning logs if not found
    * @return The returned value
    */
-  int64_t tryI64( string key, int64_t defaultValue = 0) {
+  int64_t tryI64( string key, int64_t defaultValue = 0,bool showWarning=false) {
     int64_t ru = defaultValue;
     if (this->existI64(key)) {
       ru = this->getI64(key);
       // INTELLI_INFO(key + " = " + to_string(ru));
     } else {
+      if(showWarning)
+      {
+        INTELLI_WARNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
+      }
       //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
     }
     return ru;
@@ -283,14 +290,19 @@ class ConfigMap {
    * @brief Try to get an U64 from config map, if not exist, use default value instead
    * @param key The key
    * @param defaultValue The default
+   *  @param showWarning Whether show warning logs if not found
    * @return The returned value
    */
-   uint64_t tryU64( string key, uint64_t defaultValue = 0) {
+   uint64_t tryU64( string key, uint64_t defaultValue = 0,bool showWarning=false) {
     uint64_t ru = defaultValue;
     if (this->existU64(key)) {
       ru = this->getU64(key);
       // INTELLI_INFO(key + " = " + to_string(ru));
     } else {
+      if(showWarning)
+      {
+        INTELLI_WARNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
+      }
       //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
     }
     return ru;
@@ -300,14 +312,19 @@ class ConfigMap {
    * @brief Try to get a double from config map, if not exist, use default value instead
    * @param key The key
    * @param defaultValue The default
+   * @param showWarning Whether show warning logs if not found
    * @return The returned value
    */
-  double tryDouble( string key, double defaultValue = 0) {
+  double tryDouble( string key, double defaultValue = 0,bool showWarning=false) {
     double ru = defaultValue;
     if (this->existDouble(key)) {
       ru = this->getDouble(key);
       // INTELLI_INFO(key + " = " + to_string(ru));
     } else {
+      if(showWarning)
+      {
+        INTELLI_WARNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
+      }
       //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
     }
     return ru;
@@ -316,14 +333,19 @@ class ConfigMap {
    * @brief Try to get an String from config map, if not exist, use default value instead
    * @param key The key
    * @param defaultValue The default
+   * @param showWarning Whether show warning logs if not found
    * @return The returned value
    */
-  string tryString(string key, string defaultValue = "") {
+  string tryString(string key, string defaultValue = "",bool showWarning=false) {
     string ru = defaultValue;
     if (this->existString(key)) {
       ru = this->getString(key);
       //INTELLI_INFO(key + " = " + (ru));
     } else {
+      if(showWarning)
+      {
+        INTELLI_WARNING("Leaving " + key + " as blank, will use " + (defaultValue) + " instead");
+      }
       // WM_WARNNING("Leaving " + key + " as blank, will use " + (defaultValue) + " instead");
     }
     return ru;
