@@ -104,23 +104,29 @@ $(document).ready(function(){initNavTree('AbstractDataLoader_8h.html',''); initR
 <div class="textblock"><code>#include &lt;<a class="el" href="ConfigMap_8hpp_source.html">Utils/ConfigMap.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="Tuples_8h_source.html">Common/Tuples.h</a>&gt;</code><br />
 <code>#include &lt;assert.h&gt;</code><br />
+<code>#include &lt;Utils/IntelliLog.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AbstractDataLoader.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="AbstractDataLoader_8h__incl.png" border="0" usemap="#ainclude_2TestBench_2AbstractDataLoader_8h" alt=""/></div>
 <map name="ainclude_2TestBench_2AbstractDataLoader_8h" id="ainclude_2TestBench_2AbstractDataLoader_8h">
-<area shape="rect" title=" " alt="" coords="375,5,573,47"/>
-<area shape="rect" href="ConfigMap_8hpp.html" title=" " alt="" coords="397,95,551,121"/>
-<area shape="rect" title=" " alt="" coords="749,169,823,196"/>
-<area shape="rect" href="Tuples_8h.html" title=" " alt="" coords="107,95,246,121"/>
-<area shape="rect" title=" " alt="" coords="586,169,637,196"/>
-<area shape="rect" title=" " alt="" coords="661,169,724,196"/>
-<area shape="rect" title=" " alt="" coords="183,169,261,196"/>
-<area shape="rect" title=" " alt="" coords="101,169,159,196"/>
-<area shape="rect" title=" " alt="" coords="285,169,359,196"/>
-<area shape="rect" title=" " alt="" coords="383,169,463,196"/>
-<area shape="rect" title=" " alt="" coords="487,169,562,196"/>
-<area shape="rect" title=" " alt="" coords="5,169,76,196"/>
+<area shape="rect" title=" " alt="" coords="684,5,881,47"/>
+<area shape="rect" href="ConfigMap_8hpp.html" title=" " alt="" coords="597,95,750,121"/>
+<area shape="rect" title=" " alt="" coords="836,169,911,196"/>
+<area shape="rect" href="IntelliLog_8h_source.html" title=" " alt="" coords="319,169,447,196"/>
+<area shape="rect" href="Tuples_8h.html" title=" " alt="" coords="933,95,1072,121"/>
+<area shape="rect" title=" " alt="" coords="623,169,673,196"/>
+<area shape="rect" title=" " alt="" coords="698,169,761,196"/>
+<area shape="rect" title=" " alt="" coords="935,169,1012,196"/>
+<area shape="rect" title=" " alt="" coords="769,244,828,271"/>
+<area shape="rect" title=" " alt="" coords="417,244,490,271"/>
+<area shape="rect" title=" " alt="" coords="515,244,595,271"/>
+<area shape="rect" title=" " alt="" coords="619,244,693,271"/>
+<area shape="rect" title=" " alt="" coords="93,244,160,271"/>
+<area shape="rect" title=" " alt="" coords="185,244,309,271"/>
+<area shape="rect" title=" " alt="" coords="333,244,392,271"/>
+<area shape="rect" title=" " alt="" coords="5,244,69,271"/>
+<area shape="rect" title=" " alt="" coords="1087,169,1158,196"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -128,15 +134,17 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="AbstractDataLoader_8h__dep__incl.png" border="0" usemap="#ainclude_2TestBench_2AbstractDataLoader_8hdep" alt=""/></div>
 <map name="ainclude_2TestBench_2AbstractDataLoader_8hdep" id="ainclude_2TestBench_2AbstractDataLoader_8hdep">
-<area shape="rect" title=" " alt="" coords="240,5,437,47"/>
-<area shape="rect" title=" " alt="" coords="5,95,205,136"/>
-<area shape="rect" href="DataLoaderTable_8h.html" title=" " alt="" coords="229,95,448,136"/>
-<area shape="rect" href="RandomDataLoader_8h.html" title=" " alt="" coords="472,95,669,136"/>
-<area shape="rect" title=" " alt="" coords="342,184,533,225"/>
-<area shape="rect" href="TestBench_8h.html" title=" " alt="" coords="96,191,317,218"/>
-<area shape="rect" title=" " alt="" coords="383,273,591,300"/>
-<area shape="rect" href="OoOJoin_8h.html" title=" " alt="" coords="138,273,275,300"/>
-<area shape="rect" title=" " alt="" coords="608,184,808,225"/>
+<area shape="rect" title=" " alt="" coords="383,5,581,47"/>
+<area shape="rect" title=" " alt="" coords="43,95,243,136"/>
+<area shape="rect" href="DataLoaderTable_8h.html" title=" " alt="" coords="489,95,707,136"/>
+<area shape="rect" href="FileDataLoader_8h.html" title=" " alt="" coords="267,95,465,136"/>
+<area shape="rect" href="RandomDataLoader_8h.html" title=" " alt="" coords="731,95,929,136"/>
+<area shape="rect" title=" " alt="" coords="515,184,705,225"/>
+<area shape="rect" href="TestBench_8h.html" title=" " alt="" coords="269,191,490,218"/>
+<area shape="rect" title=" " alt="" coords="667,273,875,300"/>
+<area shape="rect" href="OoOJoin_8h.html" title=" " alt="" coords="311,273,448,300"/>
+<area shape="rect" title=" " alt="" coords="5,191,244,218"/>
+<area shape="rect" title=" " alt="" coords="730,184,930,225"/>
 </map>
 </div>
 </div>
@@ -155,15 +163,15 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a956d8181512ab0b56214c3d6ac9a5ccd"><td class="memItemLeft" align="right" valign="top"><a id="a956d8181512ab0b56214c3d6ac9a5ccd"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ALGO_INFO</b>&#160;&#160;&#160;<a class="el" href="group__INTELLI__UTIL__INTELLILOG.html#gabf2a4e42bcb0ff1463f85b6ca0bdbe82">INTELLI_INFO</a></td></tr>
-<tr class="separator:a956d8181512ab0b56214c3d6ac9a5ccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50afd5e64b88d040b06ba17dc63db4e1"><td class="memItemLeft" align="right" valign="top"><a id="a50afd5e64b88d040b06ba17dc63db4e1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ALGO_ERROR</b>&#160;&#160;&#160;<a class="el" href="group__INTELLI__UTIL__INTELLILOG.html#ga88128ee4c523ec89e4fb6f1da6dea2e4">INTELLI_ERROR</a></td></tr>
-<tr class="separator:a50afd5e64b88d040b06ba17dc63db4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a701b619d13437a4e9ba583f4049645d2"><td class="memItemLeft" align="right" valign="top"><a id="a701b619d13437a4e9ba583f4049645d2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ALGO_WARNNING</b>&#160;&#160;&#160;INTELLI_WARNING</td></tr>
-<tr class="separator:a701b619d13437a4e9ba583f4049645d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac184f4cab8165f82d23234b8c45c044e"><td class="memItemLeft" align="right" valign="top"><a id="ac184f4cab8165f82d23234b8c45c044e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATA_INFO</b>&#160;&#160;&#160;<a class="el" href="group__INTELLI__UTIL__INTELLILOG.html#gabf2a4e42bcb0ff1463f85b6ca0bdbe82">INTELLI_INFO</a></td></tr>
+<tr class="separator:ac184f4cab8165f82d23234b8c45c044e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a199c7b5090bea170b3695fb3e35bf674"><td class="memItemLeft" align="right" valign="top"><a id="a199c7b5090bea170b3695fb3e35bf674"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATA_ERROR</b>&#160;&#160;&#160;<a class="el" href="group__INTELLI__UTIL__INTELLILOG.html#ga88128ee4c523ec89e4fb6f1da6dea2e4">INTELLI_ERROR</a></td></tr>
+<tr class="separator:a199c7b5090bea170b3695fb3e35bf674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42bdcaa3d8aeda84844c2cb9e7f4a0d8"><td class="memItemLeft" align="right" valign="top"><a id="a42bdcaa3d8aeda84844c2cb9e7f4a0d8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATA_WARNNING</b>&#160;&#160;&#160;INTELLI_WARNING</td></tr>
+<tr class="separator:a42bdcaa3d8aeda84844c2cb9e7f4a0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7a82218fbd09709f67cbee0c56e0d733"><td class="memItemLeft" align="right" valign="top">
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga7a82218fbd09709f67cbee0c56e0d733">newAbstractDataLoader</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1AbstractDataLoader.html">OoOJoin::AbstractDataLoader</a>&gt;</td></tr>
 <tr class="memdesc:ga7a82218fbd09709f67cbee0c56e0d733"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new AbstractDataLoader under shared pointer. <br /></td></tr>

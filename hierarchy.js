@@ -4,6 +4,7 @@ var hierarchy =
       [ "OoOJoin::NPJ_thread", "classOoOJoin_1_1NPJ__thread.html", null ]
     ] ],
     [ "OoOJoin::AbstractDataLoader", "classOoOJoin_1_1AbstractDataLoader.html", [
+      [ "OoOJoin::FileDataLoader", "classOoOJoin_1_1FileDataLoader.html", null ],
       [ "OoOJoin::RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html", null ]
     ] ],
     [ "OoOJoin::AbstractJoinAlgo", "classOoOJoin_1_1AbstractJoinAlgo.html", [

@@ -95,7 +95,8 @@ $(document).ready(function(){initNavTree('group__ADB__TESTBENCH__DATALOADERS.htm
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">The classes of dataloader<div class="ingroups"><a class="el" href="group__ADB__TESTBENCH.html">The test bench</a></div></div>  </div>
 </div><!--header-->
@@ -115,6 +116,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1AbstractDataLoader.html">OoOJoin::AbstractDataLoader</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The abstract class of dataloader.  <a href="classOoOJoin_1_1AbstractDataLoader.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1FileDataLoader.html">OoOJoin::FileDataLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dataloader which loads data from external csv file.  <a href="classOoOJoin_1_1FileDataLoader.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1RandomDataLoader.html">OoOJoin::RandomDataLoader</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dataloader which produces random key, random value and random skewness.  <a href="classOoOJoin_1_1RandomDataLoader.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,6 +137,36 @@ Functions</h2></td></tr>
 <tr class="memitem:gaaa3038960d3e42daad8b7fba3055fed1"><td class="memItemLeft" align="right" valign="top">virtual vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaaa3038960d3e42daad8b7fba3055fed1">OoOJoin::AbstractDataLoader::getTupleVectorR</a> ()</td></tr>
 <tr class="memdesc:gaaa3038960d3e42daad8b7fba3055fed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the vector of R tuple  <a href="group__ADB__TESTBENCH__DATALOADERS.html#gaaa3038960d3e42daad8b7fba3055fed1">More...</a><br /></td></tr>
 <tr class="separator:gaaa3038960d3e42daad8b7fba3055fed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaea300ff9661fbbd4886a2eddd909d49"><td class="memItemLeft" align="right" valign="top"><a id="gaaea300ff9661fbbd4886a2eddd909d49"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::FileDataLoader::spilt</b> (const std::string s, const std::string &amp;c, vector&lt; std::string &gt; &amp;v)</td></tr>
+<tr class="separator:gaaea300ff9661fbbd4886a2eddd909d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac613b92b8e1abb03a8862688567a1164"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gac613b92b8e1abb03a8862688567a1164">OoOJoin::FileDataLoader::loadDataFromCsv</a> (std::string fname, std::string separator=&quot;,&quot;, std::string newLine=&quot;\n&quot;)</td></tr>
+<tr class="memdesc:gac613b92b8e1abb03a8862688567a1164"><td class="mdescLeft">&#160;</td><td class="mdescRight">load a dataset from csv file  <a href="group__ADB__TESTBENCH__DATALOADERS.html#gac613b92b8e1abb03a8862688567a1164">More...</a><br /></td></tr>
+<tr class="separator:gac613b92b8e1abb03a8862688567a1164"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4315f20770d93c8549a25dee69a68c0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gad4315f20770d93c8549a25dee69a68c0">OoOJoin::FileDataLoader::setConfig</a> (<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</td></tr>
+<tr class="memdesc:gad4315f20770d93c8549a25dee69a68c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the GLOBAL config map related to this loader.  <a href="group__ADB__TESTBENCH__DATALOADERS.html#gad4315f20770d93c8549a25dee69a68c0">More...</a><br /></td></tr>
+<tr class="separator:gad4315f20770d93c8549a25dee69a68c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ec80cec0a00d583fbf1e1de80f606b5"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">OoOJoin::FileDataLoader::setModConfig</a> (<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</td></tr>
+<tr class="memdesc:ga8ec80cec0a00d583fbf1e1de80f606b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the modification config map related to this loader.  <a href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">More...</a><br /></td></tr>
+<tr class="separator:ga8ec80cec0a00d583fbf1e1de80f606b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c197dbdc4655903b59b9a1c43233fe4"><td class="memItemLeft" align="right" valign="top">virtual vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga2c197dbdc4655903b59b9a1c43233fe4">OoOJoin::FileDataLoader::getTupleVectorS</a> ()</td></tr>
+<tr class="memdesc:ga2c197dbdc4655903b59b9a1c43233fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the vector of s tuple  <a href="group__ADB__TESTBENCH__DATALOADERS.html#ga2c197dbdc4655903b59b9a1c43233fe4">More...</a><br /></td></tr>
+<tr class="separator:ga2c197dbdc4655903b59b9a1c43233fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab904bb17430df5fe400b14e2587c0ad1"><td class="memItemLeft" align="right" valign="top">virtual vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gab904bb17430df5fe400b14e2587c0ad1">OoOJoin::FileDataLoader::getTupleVectorR</a> ()</td></tr>
+<tr class="memdesc:gab904bb17430df5fe400b14e2587c0ad1"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the vector of R tuple  <a href="group__ADB__TESTBENCH__DATALOADERS.html#gab904bb17430df5fe400b14e2587c0ad1">More...</a><br /></td></tr>
+<tr class="separator:gab904bb17430df5fe400b14e2587c0ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga16db92386d9b018a32a91b5816f5db1b"><td class="memItemLeft" align="right" valign="top"><a id="ga16db92386d9b018a32a91b5816f5db1b"></a>
+<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::FileDataLoader::cfgGlobal</b></td></tr>
+<tr class="separator:ga16db92386d9b018a32a91b5816f5db1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d65b92e4b3ba0f23f4816ca34b2a0e5"><td class="memItemLeft" align="right" valign="top"><a id="ga1d65b92e4b3ba0f23f4816ca34b2a0e5"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::FileDataLoader::sTuple</b></td></tr>
+<tr class="separator:ga1d65b92e4b3ba0f23f4816ca34b2a0e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad34028825225b149fb56e5b078b544af"><td class="memItemLeft" align="right" valign="top"><a id="gad34028825225b149fb56e5b078b544af"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::FileDataLoader::rTuple</b></td></tr>
+<tr class="separator:gad34028825225b149fb56e5b078b544af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafee8f3f806352b7976f0944bfe544c0e"><td class="memItemLeft" align="right" valign="top"><a id="gafee8f3f806352b7976f0944bfe544c0e"></a>
 typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1AbstractDataLoader.html">AbstractDataLoader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gafee8f3f806352b7976f0944bfe544c0e">OoOJoin::AbstractDataLoaderPtr</a></td></tr>
 <tr class="memdesc:gafee8f3f806352b7976f0944bfe544c0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1AbstractDataLoader.html">AbstractDataLoader</a>. <br /></td></tr>
@@ -141,6 +175,14 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1AbstractDa
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga7a82218fbd09709f67cbee0c56e0d733">newAbstractDataLoader</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1AbstractDataLoader.html">OoOJoin::AbstractDataLoader</a>&gt;</td></tr>
 <tr class="memdesc:ga7a82218fbd09709f67cbee0c56e0d733"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new AbstractDataLoader under shared pointer. <br /></td></tr>
 <tr class="separator:ga7a82218fbd09709f67cbee0c56e0d733"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacdc4e0ad5824ed2a6781ef81e2d77a62"><td class="memItemLeft" align="right" valign="top"><a id="gacdc4e0ad5824ed2a6781ef81e2d77a62"></a>
+typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1FileDataLoader.html">FileDataLoader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gacdc4e0ad5824ed2a6781ef81e2d77a62">OoOJoin::FileDataLoaderPtr</a></td></tr>
+<tr class="memdesc:gacdc4e0ad5824ed2a6781ef81e2d77a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1FileDataLoader.html">FileDataLoader</a>. <br /></td></tr>
+<tr class="separator:gacdc4e0ad5824ed2a6781ef81e2d77a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1068f84536dfc3945e619a76664fb94"><td class="memItemLeft" align="right" valign="top"><a id="gaf1068f84536dfc3945e619a76664fb94"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaf1068f84536dfc3945e619a76664fb94">newFileDataLoader</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1FileDataLoader.html">OoOJoin::FileDataLoader</a>&gt;</td></tr>
+<tr class="memdesc:gaf1068f84536dfc3945e619a76664fb94"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new FileDataLoader under shared pointer. <br /></td></tr>
+<tr class="separator:gaf1068f84536dfc3945e619a76664fb94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga07ba8308a3f4cdb9f1c7dba7c12854b6"><td class="memItemLeft" align="right" valign="top"><a id="ga07ba8308a3f4cdb9f1c7dba7c12854b6"></a>
 typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomDataLoader.html">RandomDataLoader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga07ba8308a3f4cdb9f1c7dba7c12854b6">OoOJoin::RandomDataLoaderPtr</a></td></tr>
 <tr class="memdesc:ga07ba8308a3f4cdb9f1c7dba7c12854b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1RandomDataLoader.html">RandomDataLoader</a>. <br /></td></tr>
@@ -153,7 +195,7 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomData
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gaaa3038960d3e42daad8b7fba3055fed1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaa3038960d3e42daad8b7fba3055fed1">&#9670;&nbsp;</a></span>getTupleVectorR()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaa3038960d3e42daad8b7fba3055fed1">&#9670;&nbsp;</a></span>getTupleVectorR() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -178,12 +220,42 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomData
 <p>get the vector of R tuple </p>
 <dl class="section return"><dt>Returns</dt><dd>the vector </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a47c80a035fbf2ecc117ede354ed24ba4">OoOJoin::RandomDataLoader</a>.</p>
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a47c80a035fbf2ecc117ede354ed24ba4">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gab904bb17430df5fe400b14e2587c0ad1">OoOJoin::FileDataLoader</a>.</p>
+
+</div>
+</div>
+<a id="gab904bb17430df5fe400b14e2587c0ad1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab904bb17430df5fe400b14e2587c0ad1">&#9670;&nbsp;</a></span>getTupleVectorR() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt; FileDataLoader::getTupleVectorR </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the vector of R tuple </p>
+<dl class="section return"><dt>Returns</dt><dd>the vector </dd></dl>
+
+<p>Reimplemented from <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaaa3038960d3e42daad8b7fba3055fed1">OoOJoin::AbstractDataLoader</a>.</p>
 
 </div>
 </div>
 <a id="gaf5eddbc21e6f2de4a760a345902d91ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf5eddbc21e6f2de4a760a345902d91ef">&#9670;&nbsp;</a></span>getTupleVectorS()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf5eddbc21e6f2de4a760a345902d91ef">&#9670;&nbsp;</a></span>getTupleVectorS() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -208,12 +280,101 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomData
 <p>get the vector of s tuple </p>
 <dl class="section return"><dt>Returns</dt><dd>the vector </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a778c93157a51e5266b0301d24246f240">OoOJoin::RandomDataLoader</a>.</p>
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a778c93157a51e5266b0301d24246f240">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga2c197dbdc4655903b59b9a1c43233fe4">OoOJoin::FileDataLoader</a>.</p>
+
+</div>
+</div>
+<a id="ga2c197dbdc4655903b59b9a1c43233fe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2c197dbdc4655903b59b9a1c43233fe4">&#9670;&nbsp;</a></span>getTupleVectorS() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt; FileDataLoader::getTupleVectorS </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the vector of s tuple </p>
+<dl class="section return"><dt>Returns</dt><dd>the vector </dd></dl>
+
+<p>Reimplemented from <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaf5eddbc21e6f2de4a760a345902d91ef">OoOJoin::AbstractDataLoader</a>.</p>
+
+</div>
+</div>
+<a id="gac613b92b8e1abb03a8862688567a1164"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac613b92b8e1abb03a8862688567a1164">&#9670;&nbsp;</a></span>loadDataFromCsv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt; OoOJoin::FileDataLoader::loadDataFromCsv </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>fname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>separator</em> = <code>&quot;,&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>newLine</em> = <code>&quot;\n&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>load a dataset from csv file </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>The name of file </td></tr>
+    <tr><td class="paramname">separator</td><td>The separator in .csv, default is "," </td></tr>
+    <tr><td class="paramname">newLine</td><td>THe indicator of a new line. default is "\n" </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The vector of TrackTuplePtr </dd></dl>
+<p>header is of &lt;&lt; "key,value,eventTime,arrivalTime,processedTime\n"; should read the first line</p>
+<dl class="section note"><dt>Note</dt><dd>parase the first row here</dd>
+<dd>
+deciding the valid rows</dd></dl>
+<p>re-open file</p>
+<p>jump the header,</p>
 
 </div>
 </div>
 <a id="gae866ca3f61e7924d060ce42d62d628a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae866ca3f61e7924d060ce42d62d628a9">&#9670;&nbsp;</a></span>setConfig()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gae866ca3f61e7924d060ce42d62d628a9">&#9670;&nbsp;</a></span>setConfig() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -245,12 +406,49 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomData
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a4420431e245dfa68ad3a7db635427d70">OoOJoin::RandomDataLoader</a>.</p>
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a4420431e245dfa68ad3a7db635427d70">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gad4315f20770d93c8549a25dee69a68c0">OoOJoin::FileDataLoader</a>.</p>
+
+</div>
+</div>
+<a id="gad4315f20770d93c8549a25dee69a68c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad4315f20770d93c8549a25dee69a68c0">&#9670;&nbsp;</a></span>setConfig() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileDataLoader::setConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the GLOBAL config map related to this loader. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>The config map </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
+
+<p>Reimplemented from <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gae866ca3f61e7924d060ce42d62d628a9">OoOJoin::AbstractDataLoader</a>.</p>
 
 </div>
 </div>
 <a id="ga325834de0cdda703ea47dbdd8b247f6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga325834de0cdda703ea47dbdd8b247f6b">&#9670;&nbsp;</a></span>setModConfig()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga325834de0cdda703ea47dbdd8b247f6b">&#9670;&nbsp;</a></span>setModConfig() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -282,7 +480,44 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomData
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a1ab7b5c79a8d80d7ecfa5fd82d22723f">OoOJoin::RandomDataLoader</a>.</p>
+<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a1ab7b5c79a8d80d7ecfa5fd82d22723f">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">OoOJoin::FileDataLoader</a>.</p>
+
+</div>
+</div>
+<a id="ga8ec80cec0a00d583fbf1e1de80f606b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8ec80cec0a00d583fbf1e1de80f606b5">&#9670;&nbsp;</a></span>setModConfig() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool OoOJoin::FileDataLoader::setModConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the modification config map related to this loader. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>The config map </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
+
+<p>Reimplemented from <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga325834de0cdda703ea47dbdd8b247f6b">OoOJoin::AbstractDataLoader</a>.</p>
 
 </div>
 </div>

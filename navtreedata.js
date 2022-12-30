@@ -28,7 +28,11 @@ var NAVTREE =
     [ "Introduction", "index.html", [
       [ "System Overview", "index.html#Sys_overview", null ],
       [ "Benchmark Tips", "index.html#BENCH_MARK", null ],
-      [ "Code Overview", "index.html#Code_overview", null ]
+      [ "Code Overview", "index.html#Code_overview", null ],
+      [ "How to extend", "index.html#sec_extend", [
+        [ "How to extend a new DataLoader", "index.html#subsec_extend_dataloader", null ],
+        [ "How to extend a new Operator", "index.html#subsec_extend_operator", null ]
+      ] ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Modules", "modules.html", "modules" ],
@@ -46,7 +50,7 @@ var NAVTREE =
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
+        [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ]
       ] ]
@@ -64,9 +68,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "",
-"classINTELLI_1_1ThreadPerf_1_1PerfPair.html#ac574e5877574f90c466471dfbe63d01f",
-"classOoOJoin_1_1StateOfKeyHashTable.html#a131616ced066b3f0f03511fc8bb390e1",
-"group__INTELLI__UTIL.html#ga91aca71dbb715210055bdcbca4190102"
+"classINTELLI_1_1ThreadPerf_1_1PerfPair.html#a731dc2239f16ad868c6df8e26ab0ec8a",
+"classOoOJoin_1_1StateOfKeyBucket.html#ae1bf7f569c890234d5344a8f30ccf8e3",
+"group__INTELLI__UTIL.html#ga28f3423f687a6570b93d91d9c97fd8d8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

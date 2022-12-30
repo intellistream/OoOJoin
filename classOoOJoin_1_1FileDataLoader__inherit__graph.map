@@ -1,0 +1,4 @@
+<map id="OoOJoin::FileDataLoader" name="OoOJoin::FileDataLoader">
+<area shape="rect" id="node1" title="The dataloader which loads data from external csv file." alt="" coords="21,80,201,107"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1AbstractDataLoader.html" title="The abstract class of dataloader." alt="" coords="5,5,216,32"/>
+</map>

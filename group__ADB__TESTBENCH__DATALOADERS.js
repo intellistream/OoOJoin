@@ -8,6 +8,19 @@ var group__ADB__TESTBENCH__DATALOADERS =
       [ "setConfig", "group__ADB__TESTBENCH__DATALOADERS.html#gae866ca3f61e7924d060ce42d62d628a9", null ],
       [ "setModConfig", "group__ADB__TESTBENCH__DATALOADERS.html#ga325834de0cdda703ea47dbdd8b247f6b", null ]
     ] ],
+    [ "FileDataLoader", "classOoOJoin_1_1FileDataLoader.html", [
+      [ "FileDataLoader", "group__ADB__TESTBENCH__DATALOADERS.html#gaa8ce765f604b3d3aeac87088a4830789", null ],
+      [ "~FileDataLoader", "group__ADB__TESTBENCH__DATALOADERS.html#ga95db70acedf5a2c1233263a3ba3a8f77", null ],
+      [ "getTupleVectorR", "group__ADB__TESTBENCH__DATALOADERS.html#gab904bb17430df5fe400b14e2587c0ad1", null ],
+      [ "getTupleVectorS", "group__ADB__TESTBENCH__DATALOADERS.html#ga2c197dbdc4655903b59b9a1c43233fe4", null ],
+      [ "loadDataFromCsv", "group__ADB__TESTBENCH__DATALOADERS.html#gac613b92b8e1abb03a8862688567a1164", null ],
+      [ "setConfig", "group__ADB__TESTBENCH__DATALOADERS.html#gad4315f20770d93c8549a25dee69a68c0", null ],
+      [ "setModConfig", "group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5", null ],
+      [ "spilt", "group__ADB__TESTBENCH__DATALOADERS.html#gaaea300ff9661fbbd4886a2eddd909d49", null ],
+      [ "cfgGlobal", "group__ADB__TESTBENCH__DATALOADERS.html#ga16db92386d9b018a32a91b5816f5db1b", null ],
+      [ "rTuple", "group__ADB__TESTBENCH__DATALOADERS.html#gad34028825225b149fb56e5b078b544af", null ],
+      [ "sTuple", "group__ADB__TESTBENCH__DATALOADERS.html#ga1d65b92e4b3ba0f23f4816ca34b2a0e5", null ]
+    ] ],
     [ "RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html", [
       [ "RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html#a17b62bb61e5e01b3c71a40998c4b0aa3", null ],
       [ "~RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html#a24c206f965e311d2a1e87bd258846ab8", null ],
@@ -29,11 +42,18 @@ var group__ADB__TESTBENCH__DATALOADERS =
       [ "windowLenMs", "classOoOJoin_1_1RandomDataLoader.html#ab4e0eb226629e38f3394ece7d005854a", null ]
     ] ],
     [ "newAbstractDataLoader", "group__ADB__TESTBENCH__DATALOADERS.html#ga7a82218fbd09709f67cbee0c56e0d733", null ],
+    [ "newFileDataLoader", "group__ADB__TESTBENCH__DATALOADERS.html#gaf1068f84536dfc3945e619a76664fb94", null ],
     [ "newRandomDataLoader", "group__ADB__TESTBENCH__DATALOADERS.html#gaf17eac2f10b7399509a2d4719fae1d46", null ],
     [ "AbstractDataLoaderPtr", "group__ADB__TESTBENCH__DATALOADERS.html#gafee8f3f806352b7976f0944bfe544c0e", null ],
+    [ "FileDataLoaderPtr", "group__ADB__TESTBENCH__DATALOADERS.html#gacdc4e0ad5824ed2a6781ef81e2d77a62", null ],
     [ "RandomDataLoaderPtr", "group__ADB__TESTBENCH__DATALOADERS.html#ga07ba8308a3f4cdb9f1c7dba7c12854b6", null ],
     [ "getTupleVectorR", "group__ADB__TESTBENCH__DATALOADERS.html#gaaa3038960d3e42daad8b7fba3055fed1", null ],
+    [ "getTupleVectorR", "group__ADB__TESTBENCH__DATALOADERS.html#gab904bb17430df5fe400b14e2587c0ad1", null ],
     [ "getTupleVectorS", "group__ADB__TESTBENCH__DATALOADERS.html#gaf5eddbc21e6f2de4a760a345902d91ef", null ],
+    [ "getTupleVectorS", "group__ADB__TESTBENCH__DATALOADERS.html#ga2c197dbdc4655903b59b9a1c43233fe4", null ],
+    [ "loadDataFromCsv", "group__ADB__TESTBENCH__DATALOADERS.html#gac613b92b8e1abb03a8862688567a1164", null ],
     [ "setConfig", "group__ADB__TESTBENCH__DATALOADERS.html#gae866ca3f61e7924d060ce42d62d628a9", null ],
-    [ "setModConfig", "group__ADB__TESTBENCH__DATALOADERS.html#ga325834de0cdda703ea47dbdd8b247f6b", null ]
+    [ "setConfig", "group__ADB__TESTBENCH__DATALOADERS.html#gad4315f20770d93c8549a25dee69a68c0", null ],
+    [ "setModConfig", "group__ADB__TESTBENCH__DATALOADERS.html#ga325834de0cdda703ea47dbdd8b247f6b", null ],
+    [ "setModConfig", "group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5", null ]
 ];

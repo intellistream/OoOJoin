@@ -1,4 +1,5 @@
 <map id="OoOJoin::AbstractDataLoader" name="OoOJoin::AbstractDataLoader">
-<area shape="rect" id="node1" title="The abstract class of dataloader." alt="" coords="5,5,216,32"/>
-<area shape="rect" id="node2" href="$classOoOJoin_1_1RandomDataLoader.html" title="The dataloader which produces random key, random value and random skewness." alt="" coords="5,80,216,107"/>
+<area shape="rect" id="node1" title="The abstract class of dataloader." alt="" coords="99,5,310,32"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1FileDataLoader.html" title="The dataloader which loads data from external csv file." alt="" coords="5,80,185,107"/>
+<area shape="rect" id="node3" href="$classOoOJoin_1_1RandomDataLoader.html" title="The dataloader which produces random key, random value and random skewness." alt="" coords="210,80,421,107"/>
 </map>

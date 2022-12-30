@@ -34,6 +34,7 @@ var annotated_dup =
       [ "OperatorTable", "classOoOJoin_1_1OperatorTable.html", "classOoOJoin_1_1OperatorTable" ],
       [ "AbstractDataLoader", "classOoOJoin_1_1AbstractDataLoader.html", "classOoOJoin_1_1AbstractDataLoader" ],
       [ "DataLoaderTable", "classOoOJoin_1_1DataLoaderTable.html", "classOoOJoin_1_1DataLoaderTable" ],
+      [ "FileDataLoader", "classOoOJoin_1_1FileDataLoader.html", "classOoOJoin_1_1FileDataLoader" ],
       [ "RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html", "classOoOJoin_1_1RandomDataLoader" ],
       [ "TestBench", "classOoOJoin_1_1TestBench.html", "classOoOJoin_1_1TestBench" ],
       [ "AbstractWaterMarker", "classOoOJoin_1_1AbstractWaterMarker.html", "classOoOJoin_1_1AbstractWaterMarker" ],

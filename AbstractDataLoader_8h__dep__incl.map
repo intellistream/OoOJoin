@@ -1,11 +1,13 @@
 <map id="include/TestBench/AbstractDataLoader.h" name="include/TestBench/AbstractDataLoader.h">
-<area shape="rect" id="node1" title=" " alt="" coords="240,5,437,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,95,205,136"/>
-<area shape="rect" id="node3" href="$DataLoaderTable_8h.html" title=" " alt="" coords="229,95,448,136"/>
-<area shape="rect" id="node8" href="$RandomDataLoader_8h.html" title=" " alt="" coords="472,95,669,136"/>
-<area shape="rect" id="node4" title=" " alt="" coords="342,184,533,225"/>
-<area shape="rect" id="node5" href="$TestBench_8h.html" title=" " alt="" coords="96,191,317,218"/>
-<area shape="rect" id="node6" title=" " alt="" coords="383,273,591,300"/>
-<area shape="rect" id="node7" href="$OoOJoin_8h.html" title=" " alt="" coords="138,273,275,300"/>
-<area shape="rect" id="node9" title=" " alt="" coords="608,184,808,225"/>
+<area shape="rect" id="node1" title=" " alt="" coords="383,5,581,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="43,95,243,136"/>
+<area shape="rect" id="node3" href="$DataLoaderTable_8h.html" title=" " alt="" coords="489,95,707,136"/>
+<area shape="rect" id="node8" href="$FileDataLoader_8h.html" title=" " alt="" coords="267,95,465,136"/>
+<area shape="rect" id="node10" href="$RandomDataLoader_8h.html" title=" " alt="" coords="731,95,929,136"/>
+<area shape="rect" id="node4" title=" " alt="" coords="515,184,705,225"/>
+<area shape="rect" id="node5" href="$TestBench_8h.html" title=" " alt="" coords="269,191,490,218"/>
+<area shape="rect" id="node6" title=" " alt="" coords="667,273,875,300"/>
+<area shape="rect" id="node7" href="$OoOJoin_8h.html" title=" " alt="" coords="311,273,448,300"/>
+<area shape="rect" id="node9" title=" " alt="" coords="5,191,244,218"/>
+<area shape="rect" id="node11" title=" " alt="" coords="730,184,930,225"/>
 </map>

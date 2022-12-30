@@ -25,10 +25,10 @@ var group__INTELLI__UTIL =
       [ "spilt", "group__INTELLI__UTIL.html#gab8014677197284d745e713c6c4b53bdb", null ],
       [ "toFile", "group__INTELLI__UTIL.html#ga4e4655dbad1fb7360a5c84b7d5dc8f58", null ],
       [ "toString", "group__INTELLI__UTIL.html#ga28f3423f687a6570b93d91d9c97fd8d8", null ],
-      [ "tryDouble", "group__INTELLI__UTIL.html#gad3c2429858f57200ab642d0a1dcbc70d", null ],
-      [ "tryI64", "group__INTELLI__UTIL.html#ga67051b30ce0809b9f5b8cb2883162aea", null ],
-      [ "tryString", "group__INTELLI__UTIL.html#ga2521433ca9923ce208a47ca1281f3d71", null ],
-      [ "tryU64", "group__INTELLI__UTIL.html#ga9d29ae5cef860619ac828305b5c9dbe0", null ],
+      [ "tryDouble", "group__INTELLI__UTIL.html#gadfe907507ed721140b0bd894ac886d8a", null ],
+      [ "tryI64", "group__INTELLI__UTIL.html#ga898594395727ba23a2ac5d5fe4736fa3", null ],
+      [ "tryString", "group__INTELLI__UTIL.html#gaed289b7983671a0f2f3a3aaf3d03646a", null ],
+      [ "tryU64", "group__INTELLI__UTIL.html#gab654d7f2e19a7a29355451f75ef15687", null ],
       [ "doubleMap", "group__INTELLI__UTIL.html#gaa7a5c37cc48d2f368ffdfac18c3df042", null ],
       [ "i64Map", "group__INTELLI__UTIL.html#gae94133b37f8c0721be55822e5d18ecd3", null ],
       [ "strMap", "group__INTELLI__UTIL.html#gaf109dcedf12fd774b7452102f5ee767d", null ],
@@ -51,8 +51,8 @@ var group__INTELLI__UTIL =
     [ "getU64", "group__INTELLI__UTIL.html#ga8e9373fa7af1061e1d665269b59cdb0c", null ],
     [ "toFile", "group__INTELLI__UTIL.html#ga4e4655dbad1fb7360a5c84b7d5dc8f58", null ],
     [ "toString", "group__INTELLI__UTIL.html#ga28f3423f687a6570b93d91d9c97fd8d8", null ],
-    [ "tryDouble", "group__INTELLI__UTIL.html#gad3c2429858f57200ab642d0a1dcbc70d", null ],
-    [ "tryI64", "group__INTELLI__UTIL.html#ga67051b30ce0809b9f5b8cb2883162aea", null ],
-    [ "tryString", "group__INTELLI__UTIL.html#ga2521433ca9923ce208a47ca1281f3d71", null ],
-    [ "tryU64", "group__INTELLI__UTIL.html#ga9d29ae5cef860619ac828305b5c9dbe0", null ]
+    [ "tryDouble", "group__INTELLI__UTIL.html#gadfe907507ed721140b0bd894ac886d8a", null ],
+    [ "tryI64", "group__INTELLI__UTIL.html#ga898594395727ba23a2ac5d5fe4736fa3", null ],
+    [ "tryString", "group__INTELLI__UTIL.html#gaed289b7983671a0f2f3a3aaf3d03646a", null ],
+    [ "tryU64", "group__INTELLI__UTIL.html#gab654d7f2e19a7a29355451f75ef15687", null ]
 ];

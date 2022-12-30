@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['keytype_457',['keyType',['../group__INTELLI__COMMON__BASIC.html#ga6e458bcbd0b4c308f65c97ab68911edf',1,'OoOJoin']]]
+  ['joinalgotableptr_463',['JoinAlgoTablePtr',['../namespaceOoOJoin.html#aea657d50c98d5cffe64756e3d09f0728',1,'OoOJoin']]]
 ];

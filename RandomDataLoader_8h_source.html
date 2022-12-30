@@ -109,88 +109,88 @@ $(document).ready(function(){initNavTree('RandomDataLoader_8h_source.html',''); 
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">using namespace </span>INTELLI;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOoOJoin.html">OoOJoin</a> {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classOoOJoin_1_1RandomDataLoader.html">   28</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOoOJoin_1_1RandomDataLoader.html">RandomDataLoader</a> : <span class="keyword">public</span>  <a class="code" href="classOoOJoin_1_1AbstractDataLoader.html">AbstractDataLoader</a>{</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> windowLenMs, timeStepUs, watermarkPeriodMs, maxArrivalSkewMs, eventRateKTps;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  vector&lt;tsType&gt; genArrivalTime(vector&lt;tsType&gt; eventTime, vector&lt;tsType&gt; arrivalSkew) {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    vector&lt;tsType&gt; ru = vector&lt;tsType&gt;(eventTime.size());</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">size_t</span> len = (eventTime.size() &gt; arrivalSkew.size()) ? arrivalSkew.size() : eventTime.size();</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      ru[i] = eventTime[i] + arrivalSkew[i];</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordflow">return</span> ru;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  }</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">void</span> bubble_sort(vector&lt;OoOJoin::TrackTuplePtr&gt; &amp;arr) {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">size_t</span> i, j;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> temp;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">size_t</span> len = arr.size();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">for</span> (i = 0; i &lt; len - 1; i++)</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      <span class="keywordflow">for</span> (j = 0; j &lt; len - 1 - i; j++)</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">if</span> (arr[j]-&gt;arrivalTime &gt; arr[j + 1]-&gt;arrivalTime) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;          temp = arr[j];</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;          arr[j] = arr[j + 1];</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;          arr[j + 1] = temp;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  vector&lt;OoOJoin::TrackTuplePtr&gt; genTuples(vector&lt;keyType&gt; keyS, vector&lt;tsType&gt; eventS, vector&lt;tsType&gt; arrivalS) {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">size_t</span> len = keyS.size();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    vector&lt;OoOJoin::TrackTuplePtr&gt; ru = vector&lt;OoOJoin::TrackTuplePtr&gt;(len);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      ru[i] = <a class="code" href="Tuples_8h.html#a15979ae8bd2777b5d54ddfc3d5c55d4d">newTrackTuple</a>(keyS[i], 0, eventS[i], arrivalS[i]);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    bubble_sort(ru);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">return</span> ru;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  vector&lt;TrackTuplePtr&gt; genTuplesSmooth(<span class="keywordtype">size_t</span> testSize,</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                                        uint64_t keyRange,</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                                        uint64_t rateKtps,</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                                        uint64_t groupUnit,</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                                        uint64_t maxSkewUs,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                                        uint64_t seed = 999) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="classINTELLI_1_1MicroDataSet.html">MicroDataSet</a> ms(seed);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    uint64_t tsGrow = 1000 * groupUnit / rateKtps;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    vector&lt;keyType&gt; keyS = ms.<a class="code" href="group__MICRO__GENERIC.html#gacf71a910ff30505d08bc060923e48b0f">genRandInt</a>&lt;<a class="code" href="group__INTELLI__COMMON__BASIC.html#ga6e458bcbd0b4c308f65c97ab68911edf">keyType</a>&gt;(testSize, keyRange, 1);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    vector&lt;tsType&gt; eventS = ms.<a class="code" href="group__MICRO__TS.html#ga19765940de8d14bbc533d507e62be20a">genSmoothTimeStamp</a>&lt;<a class="code" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&gt;(testSize, groupUnit, tsGrow);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    vector&lt;tsType&gt; arrivalSkew = ms.<a class="code" href="group__MICRO__GENERIC.html#gacf71a910ff30505d08bc060923e48b0f">genRandInt</a>&lt;<a class="code" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&gt;(testSize, maxSkewUs, 1);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    vector&lt;tsType&gt; arrivalS = genArrivalTime(eventS, arrivalSkew);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    vector&lt;TrackTuplePtr&gt; genTuple = genTuples(keyS, eventS, arrivalS);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">return</span> genTuple;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfgGlobal;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  vector&lt;TrackTuplePtr&gt; sTuple,rTuple;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <a class="code" href="classOoOJoin_1_1RandomDataLoader.html">RandomDataLoader</a>(){}</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  ~<a class="code" href="classOoOJoin_1_1RandomDataLoader.html">RandomDataLoader</a>(){}</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> setConfig(<a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg);</div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classOoOJoin_1_1RandomDataLoader.html#a1ab7b5c79a8d80d7ecfa5fd82d22723f">   92</a></span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classOoOJoin_1_1RandomDataLoader.html#a1ab7b5c79a8d80d7ecfa5fd82d22723f">setModConfig</a>(<a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    assert(cfg);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keyword">virtual</span> vector&lt;TrackTuplePtr&gt;getTupleVectorS();</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keyword">virtual</span> vector&lt;TrackTuplePtr&gt;getTupleVectorR();</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;};</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="group__ADB__TESTBENCH__DATALOADERS.html#ga07ba8308a3f4cdb9f1c7dba7c12854b6">  118</a></span>&#160;<span class="keyword">typedef</span> std::shared_ptr&lt;class RandomDataLoader&gt; <a class="code" href="group__ADB__TESTBENCH__DATALOADERS.html#ga07ba8308a3f4cdb9f1c7dba7c12854b6">RandomDataLoaderPtr</a>;</div>
-<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="group__ADB__TESTBENCH__DATALOADERS.html#gaf17eac2f10b7399509a2d4719fae1d46">  124</a></span>&#160;<span class="preprocessor">#define newRandomDataLoader std::make_shared&lt;OoOJoin::RandomDataLoader&gt;</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//INTELLISTREAM_INCLUDE_TESTBENCH_RandomDataLoader_H_</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classOoOJoin_1_1RandomDataLoader.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOoOJoin_1_1RandomDataLoader.html">RandomDataLoader</a> : <span class="keyword">public</span>  <a class="code" href="classOoOJoin_1_1AbstractDataLoader.html">AbstractDataLoader</a>{</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> windowLenMs, timeStepUs, watermarkPeriodMs, maxArrivalSkewMs, eventRateKTps;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  vector&lt;tsType&gt; genArrivalTime(vector&lt;tsType&gt; eventTime, vector&lt;tsType&gt; arrivalSkew) {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    vector&lt;tsType&gt; ru = vector&lt;tsType&gt;(eventTime.size());</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">size_t</span> len = (eventTime.size() &gt; arrivalSkew.size()) ? arrivalSkew.size() : eventTime.size();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      ru[i] = eventTime[i] + arrivalSkew[i];</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">return</span> ru;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  }</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">void</span> bubble_sort(vector&lt;OoOJoin::TrackTuplePtr&gt; &amp;arr) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">size_t</span> i, j;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> temp;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">size_t</span> len = arr.size();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">for</span> (i = 0; i &lt; len - 1; i++)</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      <span class="keywordflow">for</span> (j = 0; j &lt; len - 1 - i; j++)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">if</span> (arr[j]-&gt;arrivalTime &gt; arr[j + 1]-&gt;arrivalTime) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;          temp = arr[j];</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;          arr[j] = arr[j + 1];</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;          arr[j + 1] = temp;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  vector&lt;OoOJoin::TrackTuplePtr&gt; genTuples(vector&lt;keyType&gt; keyS, vector&lt;tsType&gt; eventS, vector&lt;tsType&gt; arrivalS) {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">size_t</span> len = keyS.size();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    vector&lt;OoOJoin::TrackTuplePtr&gt; ru = vector&lt;OoOJoin::TrackTuplePtr&gt;(len);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      ru[i] = <a class="code" href="Tuples_8h.html#a15979ae8bd2777b5d54ddfc3d5c55d4d">newTrackTuple</a>(keyS[i], 0, eventS[i], arrivalS[i]);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    bubble_sort(ru);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">return</span> ru;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  vector&lt;TrackTuplePtr&gt; genTuplesSmooth(<span class="keywordtype">size_t</span> testSize,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                                        uint64_t keyRange,</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                                        uint64_t rateKtps,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                                        uint64_t groupUnit,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                                        uint64_t maxSkewUs,</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                                        uint64_t seed = 999) {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="classINTELLI_1_1MicroDataSet.html">MicroDataSet</a> ms(seed);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    uint64_t tsGrow = 1000 * groupUnit / rateKtps;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    vector&lt;keyType&gt; keyS = ms.<a class="code" href="group__MICRO__GENERIC.html#gacf71a910ff30505d08bc060923e48b0f">genRandInt</a>&lt;<a class="code" href="group__INTELLI__COMMON__BASIC.html#ga6e458bcbd0b4c308f65c97ab68911edf">keyType</a>&gt;(testSize, keyRange, 1);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    vector&lt;tsType&gt; eventS = ms.<a class="code" href="group__MICRO__TS.html#ga19765940de8d14bbc533d507e62be20a">genSmoothTimeStamp</a>&lt;<a class="code" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&gt;(testSize, groupUnit, tsGrow);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    vector&lt;tsType&gt; arrivalSkew = ms.<a class="code" href="group__MICRO__GENERIC.html#gacf71a910ff30505d08bc060923e48b0f">genRandInt</a>&lt;<a class="code" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&gt;(testSize, maxSkewUs, 1);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    vector&lt;tsType&gt; arrivalS = genArrivalTime(eventS, arrivalSkew);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    vector&lt;TrackTuplePtr&gt; genTuple = genTuples(keyS, eventS, arrivalS);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">return</span> genTuple;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfgGlobal;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  vector&lt;TrackTuplePtr&gt; sTuple,rTuple;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <a class="code" href="classOoOJoin_1_1RandomDataLoader.html">RandomDataLoader</a>(){}</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  ~<a class="code" href="classOoOJoin_1_1RandomDataLoader.html">RandomDataLoader</a>(){}</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> setConfig(<a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg);</div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="classOoOJoin_1_1RandomDataLoader.html#a1ab7b5c79a8d80d7ecfa5fd82d22723f">   99</a></span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classOoOJoin_1_1RandomDataLoader.html#a1ab7b5c79a8d80d7ecfa5fd82d22723f">setModConfig</a>(<a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    assert(cfg);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  }</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keyword">virtual</span> vector&lt;TrackTuplePtr&gt;getTupleVectorS();</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="keyword">virtual</span> vector&lt;TrackTuplePtr&gt;getTupleVectorR();</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;};</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="group__ADB__TESTBENCH__DATALOADERS.html#ga07ba8308a3f4cdb9f1c7dba7c12854b6">  125</a></span>&#160;<span class="keyword">typedef</span> std::shared_ptr&lt;class RandomDataLoader&gt; <a class="code" href="group__ADB__TESTBENCH__DATALOADERS.html#ga07ba8308a3f4cdb9f1c7dba7c12854b6">RandomDataLoaderPtr</a>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="group__ADB__TESTBENCH__DATALOADERS.html#gaf17eac2f10b7399509a2d4719fae1d46">  131</a></span>&#160;<span class="preprocessor">#define newRandomDataLoader std::make_shared&lt;OoOJoin::RandomDataLoader&gt;</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//INTELLISTREAM_INCLUDE_TESTBENCH_RandomDataLoader_H_</span></div>
 <div class="ttc" id="aAbstractDataLoader_8h_html"><div class="ttname"><a href="AbstractDataLoader_8h.html">AbstractDataLoader.h</a></div></div>
 <div class="ttc" id="aTuples_8h_html_a15979ae8bd2777b5d54ddfc3d5c55d4d"><div class="ttname"><a href="Tuples_8h.html#a15979ae8bd2777b5d54ddfc3d5c55d4d">newTrackTuple</a></div><div class="ttdeci">#define newTrackTuple</div><div class="ttdoc">(Macro) To creat a new TrackTuple under shared pointer.</div><div class="ttdef"><b>Definition:</b> Tuples.h:176</div></div>
 <div class="ttc" id="aclassINTELLI_1_1MicroDataSet_html"><div class="ttname"><a href="classINTELLI_1_1MicroDataSet.html">INTELLI::MicroDataSet</a></div><div class="ttdoc">The all-in-one class for the Micro dataset.</div><div class="ttdef"><b>Definition:</b> MicroDataSet.hpp:45</div></div>
-<div class="ttc" id="aclassOoOJoin_1_1AbstractDataLoader_html"><div class="ttname"><a href="classOoOJoin_1_1AbstractDataLoader.html">OoOJoin::AbstractDataLoader</a></div><div class="ttdoc">The abstract class of dataloader.</div><div class="ttdef"><b>Definition:</b> AbstractDataLoader.h:38</div></div>
-<div class="ttc" id="aclassOoOJoin_1_1RandomDataLoader_html"><div class="ttname"><a href="classOoOJoin_1_1RandomDataLoader.html">OoOJoin::RandomDataLoader</a></div><div class="ttdoc">The dataloader which produces random key, random value and random skewness.</div><div class="ttdef"><b>Definition:</b> RandomDataLoader.h:28</div></div>
-<div class="ttc" id="aclassOoOJoin_1_1RandomDataLoader_html_a1ab7b5c79a8d80d7ecfa5fd82d22723f"><div class="ttname"><a href="classOoOJoin_1_1RandomDataLoader.html#a1ab7b5c79a8d80d7ecfa5fd82d22723f">OoOJoin::RandomDataLoader::setModConfig</a></div><div class="ttdeci">virtual bool setModConfig(ConfigMapPtr cfg)</div><div class="ttdoc">Set the modification config map related to this loader.</div><div class="ttdef"><b>Definition:</b> RandomDataLoader.h:92</div></div>
-<div class="ttc" id="agroup__ADB__TESTBENCH__DATALOADERS_html_ga07ba8308a3f4cdb9f1c7dba7c12854b6"><div class="ttname"><a href="group__ADB__TESTBENCH__DATALOADERS.html#ga07ba8308a3f4cdb9f1c7dba7c12854b6">OoOJoin::RandomDataLoaderPtr</a></div><div class="ttdeci">std::shared_ptr&lt; class RandomDataLoader &gt; RandomDataLoaderPtr</div><div class="ttdoc">The class to describe a shared pointer to RandomDataLoader.</div><div class="ttdef"><b>Definition:</b> RandomDataLoader.h:118</div></div>
+<div class="ttc" id="aclassOoOJoin_1_1AbstractDataLoader_html"><div class="ttname"><a href="classOoOJoin_1_1AbstractDataLoader.html">OoOJoin::AbstractDataLoader</a></div><div class="ttdoc">The abstract class of dataloader.</div><div class="ttdef"><b>Definition:</b> AbstractDataLoader.h:39</div></div>
+<div class="ttc" id="aclassOoOJoin_1_1RandomDataLoader_html"><div class="ttname"><a href="classOoOJoin_1_1RandomDataLoader.html">OoOJoin::RandomDataLoader</a></div><div class="ttdoc">The dataloader which produces random key, random value and random skewness.</div><div class="ttdef"><b>Definition:</b> RandomDataLoader.h:35</div></div>
+<div class="ttc" id="aclassOoOJoin_1_1RandomDataLoader_html_a1ab7b5c79a8d80d7ecfa5fd82d22723f"><div class="ttname"><a href="classOoOJoin_1_1RandomDataLoader.html#a1ab7b5c79a8d80d7ecfa5fd82d22723f">OoOJoin::RandomDataLoader::setModConfig</a></div><div class="ttdeci">virtual bool setModConfig(ConfigMapPtr cfg)</div><div class="ttdoc">Set the modification config map related to this loader.</div><div class="ttdef"><b>Definition:</b> RandomDataLoader.h:99</div></div>
+<div class="ttc" id="agroup__ADB__TESTBENCH__DATALOADERS_html_ga07ba8308a3f4cdb9f1c7dba7c12854b6"><div class="ttname"><a href="group__ADB__TESTBENCH__DATALOADERS.html#ga07ba8308a3f4cdb9f1c7dba7c12854b6">OoOJoin::RandomDataLoaderPtr</a></div><div class="ttdeci">std::shared_ptr&lt; class RandomDataLoader &gt; RandomDataLoaderPtr</div><div class="ttdoc">The class to describe a shared pointer to RandomDataLoader.</div><div class="ttdef"><b>Definition:</b> RandomDataLoader.h:125</div></div>
 <div class="ttc" id="agroup__INTELLI__COMMON__BASIC_html_ga6e458bcbd0b4c308f65c97ab68911edf"><div class="ttname"><a href="group__INTELLI__COMMON__BASIC.html#ga6e458bcbd0b4c308f65c97ab68911edf">OoOJoin::keyType</a></div><div class="ttdeci">uint64_t keyType</div><div class="ttdef"><b>Definition:</b> Tuples.h:18</div></div>
 <div class="ttc" id="agroup__INTELLI__COMMON__BASIC_html_gaa95f0e41249456afd65caeeb23207042"><div class="ttname"><a href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">OoOJoin::tsType</a></div><div class="ttdeci">uint64_t tsType</div><div class="ttdef"><b>Definition:</b> Tuples.h:20</div></div>
 <div class="ttc" id="agroup__INTELLI__COMMON__BASIC_html_gac8feaf54d6fbdacfed0ed232e9354c7e"><div class="ttname"><a href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">OoOJoin::TrackTuplePtr</a></div><div class="ttdeci">std::shared_ptr&lt; class TrackTuple &gt; TrackTuplePtr</div><div class="ttdoc">The class to describe a shared pointer to TrackTuple.</div><div class="ttdef"><b>Definition:</b> Tuples.h:171</div></div>
-<div class="ttc" id="agroup__INTELLI__UTIL__CONFIGS_html_gaeb9674f6f5860b687d73f618962dfcea"><div class="ttname"><a href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">INTELLI::ConfigMapPtr</a></div><div class="ttdeci">std::shared_ptr&lt; ConfigMap &gt; ConfigMapPtr</div><div class="ttdoc">The class to describe a shared pointer to ConfigMap.</div><div class="ttdef"><b>Definition:</b> ConfigMap.hpp:338</div></div>
+<div class="ttc" id="agroup__INTELLI__UTIL__CONFIGS_html_gaeb9674f6f5860b687d73f618962dfcea"><div class="ttname"><a href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">INTELLI::ConfigMapPtr</a></div><div class="ttdeci">std::shared_ptr&lt; ConfigMap &gt; ConfigMapPtr</div><div class="ttdoc">The class to describe a shared pointer to ConfigMap.</div><div class="ttdef"><b>Definition:</b> ConfigMap.hpp:360</div></div>
 <div class="ttc" id="agroup__MICRO__GENERIC_html_gacf71a910ff30505d08bc060923e48b0f"><div class="ttname"><a href="group__MICRO__GENERIC.html#gacf71a910ff30505d08bc060923e48b0f">INTELLI::MicroDataSet::genRandInt</a></div><div class="ttdeci">vector&lt; tsType &gt; genRandInt(size_t len, tsType maxV, tsType minV=0)</div><div class="ttdoc">generate the vector of random integer</div><div class="ttdef"><b>Definition:</b> MicroDataSet.hpp:150</div></div>
 <div class="ttc" id="agroup__MICRO__TS_html_ga19765940de8d14bbc533d507e62be20a"><div class="ttname"><a href="group__MICRO__TS.html#ga19765940de8d14bbc533d507e62be20a">INTELLI::MicroDataSet::genSmoothTimeStamp</a></div><div class="ttdeci">vector&lt; tsType &gt; genSmoothTimeStamp(size_t len, size_t step, size_t interval)</div><div class="ttdoc">The function to generate a vector of timestamp which grows smoothly.</div><div class="ttdef"><b>Definition:</b> MicroDataSet.hpp:213</div></div>
 <div class="ttc" id="anamespaceOoOJoin_html"><div class="ttname"><a href="namespaceOoOJoin.html">OoOJoin</a></div><div class="ttdef"><b>Definition:</b> OperatorTable.cpp:7</div></div>

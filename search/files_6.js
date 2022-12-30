@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ooojoin_2eh_312',['OoOJoin.h',['../OoOJoin_8h.html',1,'']]],
-  ['operatortable_2eh_313',['OperatorTable.h',['../OperatorTable_8h.html',1,'']]]
+  ['nestedloopjoin_2eh_316',['NestedLoopJoin.h',['../NestedLoopJoin_8h.html',1,'']]],
+  ['npj_2eh_317',['NPJ.h',['../NPJ_8h.html',1,'']]]
 ];
