@@ -29,6 +29,21 @@
  * @section Code_overview  Code Overview
  * The code structure aligns well with system design.
  * \image html UML_ALL.png
+ * @section sec_extend How to extend
+ * @subsection subsec_extend_dataloader How to extend a new DataLoader
+ * - copy the TestBench/AbstractDataLoader.h, to your extension of TestBench/xxx.h, assume xxx is your new dataloader
+ * - make it inherited from AbstractDataLoader
+ * - creat the corresponding TestBench/xxx.cpp, fill in the virtual functions
+ * - your extension may require extra specific configs, please name as xxx_yyy, and then state them in TestBench/xxx.h and leave a default value in your setConfig
+ * - edit the TestBench/DataLoaderTable.cpp so the benchmark system can find it by tag
+ * - assign "dataLoader" in global config file into your own tag of xxx when running, so the data will be loaded by your xxx
+ * @subsection subsec_extend_operator How to extend a new Operator
+ * - copy the Operator/AbstractOperator.h, to your extension of Operator/xxx.h, assume xxx is your new Operator
+ * - make it inherited from AbstractOperator
+ * - creat the corresponding Operator/xxx.cpp, fill in the virtual functions
+ * - your extension may require extra specific configs, please name as xxx_yyy, and then state them in Operator/xxx.h and leave a default value in your setConfig
+ * - edit the Operator/OperatorTable.cpp so the benchmark system can find it by tag
+ * - assign "operator" in global config file into your own tag of xxx when running, so the data will be processed by your xxx operator
  */
 /**
 *
