@@ -108,12 +108,13 @@ $(document).ready(function(){initNavTree('ConfigMap_8hpp.html',''); initResizabl
 <code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;assert.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ConfigMap.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="ConfigMap_8hpp__incl.png" border="0" usemap="#ainclude_2Utils_2ConfigMap_8hpp" alt=""/></div>
 <map name="ainclude_2Utils_2ConfigMap_8hpp" id="ainclude_2Utils_2ConfigMap_8hpp">
-<area shape="rect" title=" " alt="" coords="197,5,401,32"/>
+<area shape="rect" title=" " alt="" coords="242,5,446,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,56,107"/>
 <area shape="rect" title=" " alt="" coords="81,80,143,107"/>
 <area shape="rect" title=" " alt="" coords="168,80,245,107"/>
@@ -121,6 +122,7 @@ Include dependency graph for ConfigMap.hpp:</div>
 <area shape="rect" title=" " alt="" coords="353,80,426,107"/>
 <area shape="rect" title=" " alt="" coords="451,80,531,107"/>
 <area shape="rect" title=" " alt="" coords="555,80,629,107"/>
+<area shape="rect" title=" " alt="" coords="653,80,728,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -128,21 +130,39 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="ConfigMap_8hpp__dep__incl.png" border="0" usemap="#ainclude_2Utils_2ConfigMap_8hppdep" alt=""/></div>
 <map name="ainclude_2Utils_2ConfigMap_8hppdep" id="ainclude_2Utils_2ConfigMap_8hppdep">
-<area shape="rect" title=" " alt="" coords="537,5,741,32"/>
-<area shape="rect" href="AbstractJoinAlgo_8h.html" title=" " alt="" coords="286,259,477,300"/>
-<area shape="rect" href="OoOJoin_8h.html" title=" " alt="" coords="679,527,817,553"/>
-<area shape="rect" href="AbstractOperator_8h.html" title=" " alt="" coords="545,169,733,211"/>
-<area shape="rect" href="ThreadPerf_8hpp.html" title=" " alt="" coords="1227,87,1432,114"/>
-<area shape="rect" href="AbstractWaterMarker_8h.html" title=" " alt="" coords="910,80,1085,121"/>
-<area shape="rect" href="JoinAlgoTable_8h_source.html" title=" " alt="" coords="173,437,363,479"/>
-<area shape="rect" href="NestedLoopJoin_8h.html" title=" " alt="" coords="43,348,226,389"/>
-<area shape="rect" href="NPJ_8h.html" title=" " alt="" coords="302,348,461,389"/>
-<area shape="rect" href="IAWJOperator_8h.html" title=" " alt="" coords="638,355,869,382"/>
-<area shape="rect" href="MeanAQPIAWJOperator_8h.html" title=" " alt="" coords="791,266,1086,293"/>
-<area shape="rect" href="TestBench_8h.html" title=" " alt="" coords="489,445,711,471"/>
-<area shape="rect" href="OperatorTable_8h.html" title=" " alt="" coords="945,437,1135,479"/>
-<area shape="rect" href="IMAIAWJOperator_8h_source.html" title=" " alt="" coords="995,355,1251,382"/>
-<area shape="rect" href="PeriodicalWM_8h.html" title=" " alt="" coords="919,169,1075,211"/>
+<area shape="rect" title=" " alt="" coords="1203,5,1407,32"/>
+<area shape="rect" href="AbstractJoinAlgo_8h.html" title=" " alt="" coords="379,169,570,211"/>
+<area shape="rect" href="OoOJoin_8h.html" title=" " alt="" coords="1143,527,1281,553"/>
+<area shape="rect" href="AbstractOperator_8h.html" title=" " alt="" coords="1034,169,1222,211"/>
+<area shape="rect" href="AbstractDataLoader_8h.html" title=" " alt="" coords="2379,80,2576,121"/>
+<area shape="rect" href="ThreadPerf_8hpp.html" title=" " alt="" coords="5,87,211,114"/>
+<area shape="rect" href="AbstractWaterMarker_8h.html" title=" " alt="" coords="1422,80,1597,121"/>
+<area shape="rect" title=" " alt="" coords="316,259,503,300"/>
+<area shape="rect" href="JoinAlgoTable_8h_source.html" title=" " alt="" coords="370,348,561,389"/>
+<area shape="rect" href="NestedLoopJoin_8h.html" title=" " alt="" coords="109,259,291,300"/>
+<area shape="rect" href="NPJ_8h.html" title=" " alt="" coords="578,259,737,300"/>
+<area shape="rect" title=" " alt="" coords="251,445,474,471"/>
+<area shape="rect" title=" " alt="" coords="599,445,817,471"/>
+<area shape="rect" title=" " alt="" coords="1249,445,1492,471"/>
+<area shape="rect" title=" " alt="" coords="893,445,1174,471"/>
+<area shape="rect" title=" " alt="" coords="159,348,345,389"/>
+<area shape="rect" title=" " alt="" coords="636,355,820,382"/>
+<area shape="rect" title=" " alt="" coords="945,266,1188,293"/>
+<area shape="rect" href="IAWJOperator_8h.html" title=" " alt="" coords="1095,355,1326,382"/>
+<area shape="rect" href="MeanAQPIAWJOperator_8h.html" title=" " alt="" coords="1263,266,1558,293"/>
+<area shape="rect" href="TestBench_8h.html" title=" " alt="" coords="1905,266,2127,293"/>
+<area shape="rect" href="OperatorTable_8h.html" title=" " alt="" coords="1517,437,1707,479"/>
+<area shape="rect" title=" " alt="" coords="1500,527,1724,553"/>
+<area shape="rect" href="IMAIAWJOperator_8h.html" title=" " alt="" coords="1452,355,1708,382"/>
+<area shape="rect" title=" " alt="" coords="2321,355,2529,382"/>
+<area shape="rect" title=" " alt="" coords="2716,169,2916,211"/>
+<area shape="rect" href="DataLoaderTable_8h.html" title=" " alt="" coords="2252,169,2471,211"/>
+<area shape="rect" href="RandomDataLoader_8h.html" title=" " alt="" coords="2495,169,2692,211"/>
+<area shape="rect" title=" " alt="" coords="2266,259,2457,300"/>
+<area shape="rect" title=" " alt="" coords="2532,259,2732,300"/>
+<area shape="rect" title=" " alt="" coords="1307,169,1493,211"/>
+<area shape="rect" href="PeriodicalWM_8h.html" title=" " alt="" coords="1518,169,1674,211"/>
+<area shape="rect" title=" " alt="" coords="1685,259,1881,300"/>
 </map>
 </div>
 </div>

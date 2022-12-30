@@ -1,4 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOoOJoin_1_1AbstractWaterMarker.html" title="The abstraction to describe a watermark generator, providing virtual function of deciding watermark g..." alt="" coords="5,5,224,32"/>
-<area shape="rect" id="node2" href="$classOoOJoin_1_1PeriodicalWM.html" title="The class which generates watermark periodically." alt="" coords="272,5,443,32"/>
+<area shape="rect" id="node1" href="$classOoOJoin_1_1AbstractJoinAlgo.html" title="The abstraction to describe a join algorithm, providing virtual function of join." alt="" coords="5,56,195,83"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1NPJ.html" title="The top class package of NPJ, providing a &quot;join function&quot;." alt="" coords="282,5,386,32"/>
+<area shape="rect" id="node3" href="$classOoOJoin_1_1NPJSingle.html" title="The top class package of single threadNPJ, providing a &quot;join function&quot;." alt="" coords="262,56,406,83"/>
+<area shape="rect" id="node4" href="$classOoOJoin_1_1NestedLoopJoin.html" title="The top class package of Nested Loop Join providing a &quot;join function&quot;." alt="" coords="243,107,425,133"/>
 </map>

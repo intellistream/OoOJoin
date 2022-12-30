@@ -4,6 +4,8 @@ var annotated_dup =
       [ "AbstractC20Thread", "classINTELLI_1_1AbstractC20Thread.html", "classINTELLI_1_1AbstractC20Thread" ],
       [ "C20Buffer", "classINTELLI_1_1C20Buffer.html", "classINTELLI_1_1C20Buffer" ],
       [ "ConfigMap", "classINTELLI_1_1ConfigMap.html", "classINTELLI_1_1ConfigMap" ],
+      [ "IntelliLog", "classINTELLI_1_1IntelliLog.html", null ],
+      [ "IntelliLog_FileProtector", "classINTELLI_1_1IntelliLog__FileProtector.html", "classINTELLI_1_1IntelliLog__FileProtector" ],
       [ "MicroDataSet", "classINTELLI_1_1MicroDataSet.html", "classINTELLI_1_1MicroDataSet" ],
       [ "SPSCQueue", "classINTELLI_1_1SPSCQueue.html", "classINTELLI_1_1SPSCQueue" ],
       [ "ThreadPerf", "classINTELLI_1_1ThreadPerf.html", "classINTELLI_1_1ThreadPerf" ],
@@ -30,6 +32,9 @@ var annotated_dup =
       [ "IMAIAWJOperator", "classOoOJoin_1_1IMAIAWJOperator.html", "classOoOJoin_1_1IMAIAWJOperator" ],
       [ "MeanAQPIAWJOperator", "classOoOJoin_1_1MeanAQPIAWJOperator.html", "classOoOJoin_1_1MeanAQPIAWJOperator" ],
       [ "OperatorTable", "classOoOJoin_1_1OperatorTable.html", "classOoOJoin_1_1OperatorTable" ],
+      [ "AbstractDataLoader", "classOoOJoin_1_1AbstractDataLoader.html", "classOoOJoin_1_1AbstractDataLoader" ],
+      [ "DataLoaderTable", "classOoOJoin_1_1DataLoaderTable.html", "classOoOJoin_1_1DataLoaderTable" ],
+      [ "RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html", "classOoOJoin_1_1RandomDataLoader" ],
       [ "TestBench", "classOoOJoin_1_1TestBench.html", "classOoOJoin_1_1TestBench" ],
       [ "AbstractWaterMarker", "classOoOJoin_1_1AbstractWaterMarker.html", "classOoOJoin_1_1AbstractWaterMarker" ],
       [ "PeriodicalWM", "classOoOJoin_1_1PeriodicalWM.html", "classOoOJoin_1_1PeriodicalWM" ]

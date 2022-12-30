@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['stateofkeybucketptr_399',['StateOfKeyBucketPtr',['../group__INTELLI__COMMON__BASIC__STATE__OF__KEY.html#ga544ccdbebc56338c5f005c8abe2d8513',1,'OoOJoin']]],
-  ['stateofkeyhashtableptr_400',['StateOfKeyHashTablePtr',['../group__INTELLI__COMMON__BASIC__STATE__OF__KEY.html#gad5a7bf32648ca25c40a688537b7d786b',1,'OoOJoin']]]
+  ['randomdataloaderptr_465',['RandomDataLoaderPtr',['../group__ADB__TESTBENCH__DATALOADERS.html#ga07ba8308a3f4cdb9f1c7dba7c12854b6',1,'OoOJoin']]]
 ];

@@ -1,5 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOoOJoin_1_1AbstractStateOfKey.html" title="The statistics and prediction state of a key." alt="" coords="5,13,215,39"/>
-<area shape="rect" id="node2" href="$classOoOJoin_1_1MeanAQPIAWJOperator_1_1MeanStateOfKey.html" title=" " alt="" coords="263,5,493,47"/>
-<area shape="rect" id="node3" href="$classOoOJoin_1_1IMAIAWJOperator_1_1IMAStateOfKey.html" title=" " alt="" coords="541,5,735,47"/>
+<area shape="rect" id="node1" href="$classOoOJoin_1_1AbstractDataLoader.html" title="The abstract class of dataloader." alt="" coords="5,5,216,32"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1RandomDataLoader.html" title="The dataloader which produces random key, random value and random skewness." alt="" coords="264,5,475,32"/>
 </map>

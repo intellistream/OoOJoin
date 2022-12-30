@@ -27,6 +27,7 @@ var NAVTREE =
   [ "OoOJoin", "index.html", [
     [ "Introduction", "index.html", [
       [ "System Overview", "index.html#Sys_overview", null ],
+      [ "Benchmark Tips", "index.html#BENCH_MARK", null ],
       [ "Code Overview", "index.html#Code_overview", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
@@ -62,9 +63,10 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"AbstractC20Thread_8hpp.html",
-"classOoOJoin_1_1AbstractJoinAlgo.html#a25ae0637df10b5c63eecf0db55d9d1b5",
-"classOoOJoin_1_1Window.html#a7ee9e1f606467cf3581314f864f083bf"
+"",
+"classINTELLI_1_1ThreadPerf_1_1PerfPair.html#ac574e5877574f90c466471dfbe63d01f",
+"classOoOJoin_1_1StateOfKeyHashTable.html#a131616ced066b3f0f03511fc8bb390e1",
+"group__INTELLI__UTIL.html#ga91aca71dbb715210055bdcbca4190102"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -3,6 +3,9 @@ var hierarchy =
     [ "INTELLI::AbstractC20Thread", "classINTELLI_1_1AbstractC20Thread.html", [
       [ "OoOJoin::NPJ_thread", "classOoOJoin_1_1NPJ__thread.html", null ]
     ] ],
+    [ "OoOJoin::AbstractDataLoader", "classOoOJoin_1_1AbstractDataLoader.html", [
+      [ "OoOJoin::RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html", null ]
+    ] ],
     [ "OoOJoin::AbstractJoinAlgo", "classOoOJoin_1_1AbstractJoinAlgo.html", [
       [ "OoOJoin::NPJ", "classOoOJoin_1_1NPJ.html", null ],
       [ "OoOJoin::NPJSingle", "classOoOJoin_1_1NPJSingle.html", null ],
@@ -25,7 +28,10 @@ var hierarchy =
     [ "INTELLI::C20Buffer< dataType >", "classINTELLI_1_1C20Buffer.html", null ],
     [ "INTELLI::C20Buffer< OoOJoin::TrackTuplePtr >", "classINTELLI_1_1C20Buffer.html", null ],
     [ "INTELLI::ConfigMap", "classINTELLI_1_1ConfigMap.html", null ],
+    [ "OoOJoin::DataLoaderTable", "classOoOJoin_1_1DataLoaderTable.html", null ],
     [ "default_attrs", "structdefault__attrs.html", null ],
+    [ "INTELLI::IntelliLog", "classINTELLI_1_1IntelliLog.html", null ],
+    [ "INTELLI::IntelliLog_FileProtector", "classINTELLI_1_1IntelliLog__FileProtector.html", null ],
     [ "OoOJoin::JoinAlgoTable", "classOoOJoin_1_1JoinAlgoTable.html", null ],
     [ "INTELLI::MicroDataSet", "classINTELLI_1_1MicroDataSet.html", null ],
     [ "OoOJoin::MtBucket", "classOoOJoin_1_1MtBucket.html", null ],

@@ -1,8 +1,13 @@
 <map id="include/WaterMarker/PeriodicalWM.h" name="include/WaterMarker/PeriodicalWM.h">
-<area shape="rect" id="node1" title=" " alt="" coords="114,5,270,47"/>
-<area shape="rect" id="node2" href="$OoOJoin_8h.html" title=" " alt="" coords="207,333,344,360"/>
-<area shape="rect" id="node3" href="$IAWJOperator_8h.html" title=" " alt="" coords="27,169,258,196"/>
-<area shape="rect" id="node5" href="$IMAIAWJOperator_8h_source.html" title=" " alt="" coords="282,169,538,196"/>
-<area shape="rect" id="node6" href="$MeanAQPIAWJOperator_8h.html" title=" " alt="" coords="346,95,640,121"/>
-<area shape="rect" id="node4" href="$OperatorTable_8h.html" title=" " alt="" coords="248,244,439,285"/>
+<area shape="rect" id="node1" title=" " alt="" coords="444,5,600,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,201,136"/>
+<area shape="rect" id="node3" href="$OoOJoin_8h.html" title=" " alt="" coords="464,348,601,375"/>
+<area shape="rect" id="node4" href="$IAWJOperator_8h.html" title=" " alt="" coords="407,184,637,211"/>
+<area shape="rect" id="node8" href="$IMAIAWJOperator_8h.html" title=" " alt="" coords="713,184,969,211"/>
+<area shape="rect" id="node10" href="$MeanAQPIAWJOperator_8h.html" title=" " alt="" coords="693,102,988,129"/>
+<area shape="rect" id="node5" title=" " alt="" coords="277,266,495,293"/>
+<area shape="rect" id="node6" href="$OperatorTable_8h.html" title=" " alt="" coords="571,259,761,300"/>
+<area shape="rect" id="node7" title=" " alt="" coords="626,348,850,375"/>
+<area shape="rect" id="node9" title=" " alt="" coords="786,266,1029,293"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1104,184,1385,211"/>
 </map>
