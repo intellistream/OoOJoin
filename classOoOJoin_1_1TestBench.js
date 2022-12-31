@@ -14,6 +14,7 @@ var classOoOJoin_1_1TestBench =
     [ "OoOSort", "classOoOJoin_1_1TestBench.html#a8db2436a4476a25202265d39aa99a4ef", null ],
     [ "OoOTest", "classOoOJoin_1_1TestBench.html#a992e19f050174f61e862d40680a02087", null ],
     [ "saveRTuplesToFile", "classOoOJoin_1_1TestBench.html#a49c3803e6629485f4543b03aaeebc39b", null ],
+    [ "saveSTuplesToFile", "classOoOJoin_1_1TestBench.html#a01c2742ba4dd235ff42c5bfba9197b03", null ],
     [ "setDataLoader", "classOoOJoin_1_1TestBench.html#a604c4920b829ea52ae920f9b17d8a345", null ],
     [ "setDataSet", "classOoOJoin_1_1TestBench.html#a61623af4ad372924415bc2a9111e7a37", null ],
     [ "setOperator", "classOoOJoin_1_1TestBench.html#adff3943e460c1e353ba8ad2416a8ba38", null ],

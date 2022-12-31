@@ -127,7 +127,8 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 </li>
 <li>creatWindow()
 : <a class="el" href="classOoOJoin_1_1AbstractWaterMarker.html#a0b8647f1eedb77ebb667bdd01320fa51">OoOJoin::AbstractWaterMarker</a>
-, <a class="el" href="classOoOJoin_1_1PeriodicalWM.html#a7e426e248d4cf9ca2c5a010fc5ff797a">OoOJoin::PeriodicalWM</a>
+, <a class="el" href="classOoOJoin_1_1ArrivalWM.html#ac40f4106f8f37ee3f47216dd9db1478b">OoOJoin::ArrivalWM</a>
+, <a class="el" href="classOoOJoin_1_1LatenessWM.html#aa40d233f89aa0e5f07ece391ea9c5e8f">OoOJoin::LatenessWM</a>
 </li>
 </ul>
 
@@ -199,6 +200,9 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 </li>
 <li>findOperator()
 : <a class="el" href="classOoOJoin_1_1OperatorTable.html#aa5ee2f43cd919dae650505155ae09011">OoOJoin::OperatorTable</a>
+</li>
+<li>findWM()
+: <a class="el" href="classOoOJoin_1_1WMTable.html#a1e0eb55b499a828034fb0b2e95c98e44">OoOJoin::WMTable</a>
 </li>
 <li>fromFile()
 : <a class="el" href="group__INTELLI__UTIL.html#ga38ca18a1e09ab07e1968fd72a04b9d2e">INTELLI::ConfigMap</a>
@@ -314,6 +318,9 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>insertSafe()
 : <a class="el" href="classOoOJoin_1_1StateOfKeyHashTable.html#a131616ced066b3f0f03511fc8bb390e1">OoOJoin::StateOfKeyHashTable</a>
 </li>
+<li>isReachWMPoint()
+: <a class="el" href="classOoOJoin_1_1LatenessWM.html#a7f7e1333733463ad1427f0fa687a870b">OoOJoin::LatenessWM</a>
+</li>
 </ul>
 
 
@@ -392,13 +399,18 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>registerNewOperator()
 : <a class="el" href="classOoOJoin_1_1OperatorTable.html#a38a1bba25f06a020501ce5a334ccca5e">OoOJoin::OperatorTable</a>
 </li>
+<li>registerNewWM()
+: <a class="el" href="classOoOJoin_1_1WMTable.html#a04949c7028532a5b93adced356d0673c">OoOJoin::WMTable</a>
+</li>
 <li>reportTupleR()
 : <a class="el" href="classOoOJoin_1_1AbstractWaterMarker.html#af93c80c872dc7213c4bb44c75a477b5e">OoOJoin::AbstractWaterMarker</a>
-, <a class="el" href="classOoOJoin_1_1PeriodicalWM.html#a3107f5fe431beb89e33f5980c6aa0c95">OoOJoin::PeriodicalWM</a>
+, <a class="el" href="classOoOJoin_1_1ArrivalWM.html#a7e7f21317b90da105ada5f1f84995e01">OoOJoin::ArrivalWM</a>
+, <a class="el" href="classOoOJoin_1_1LatenessWM.html#afdab1fe66eaef95eaf9db52dcd71055a">OoOJoin::LatenessWM</a>
 </li>
 <li>reportTupleS()
 : <a class="el" href="classOoOJoin_1_1AbstractWaterMarker.html#a4d90ddf45079df3474e8f5fddbb4f109">OoOJoin::AbstractWaterMarker</a>
-, <a class="el" href="classOoOJoin_1_1PeriodicalWM.html#a06de9bd83ce51f6d114ebd3b3a6bdceb">OoOJoin::PeriodicalWM</a>
+, <a class="el" href="classOoOJoin_1_1ArrivalWM.html#aa1f9613b318fee6c9f69d1d01db23da2">OoOJoin::ArrivalWM</a>
+, <a class="el" href="classOoOJoin_1_1LatenessWM.html#a30e8aa1af3a2e797aac7f3ffa31ceaeb">OoOJoin::LatenessWM</a>
 </li>
 <li>reset()
 : <a class="el" href="classINTELLI_1_1C20Buffer.html#a8f65947545ed427886513a1879e4bc8d">INTELLI::C20Buffer&lt; dataType &gt;</a>
@@ -414,6 +426,9 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>saveRTuplesToFile()
 : <a class="el" href="classOoOJoin_1_1TestBench.html#a49c3803e6629485f4543b03aaeebc39b">OoOJoin::TestBench</a>
 </li>
+<li>saveSTuplesToFile()
+: <a class="el" href="classOoOJoin_1_1TestBench.html#a01c2742ba4dd235ff42c5bfba9197b03">OoOJoin::TestBench</a>
+</li>
 <li>setAlgoName()
 : <a class="el" href="classOoOJoin_1_1AbstractJoinAlgo.html#a25ae0637df10b5c63eecf0db55d9d1b5">OoOJoin::AbstractJoinAlgo</a>
 </li>
@@ -428,11 +443,12 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 , <a class="el" href="classOoOJoin_1_1AbstractJoinAlgo.html#a2a30e81300aba1ba282e98341cce6060">OoOJoin::AbstractJoinAlgo</a>
 , <a class="el" href="classOoOJoin_1_1AbstractOperator.html#ad8aae7c39e0d7cd1fc5dec7f7c6c4871">OoOJoin::AbstractOperator</a>
 , <a class="el" href="classOoOJoin_1_1AbstractWaterMarker.html#ae85cf0f89e4c89ff3d91510404d51326">OoOJoin::AbstractWaterMarker</a>
+, <a class="el" href="classOoOJoin_1_1ArrivalWM.html#a450cffe662fb19a05488ee06b857ba44">OoOJoin::ArrivalWM</a>
 , <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gad4315f20770d93c8549a25dee69a68c0">OoOJoin::FileDataLoader</a>
 , <a class="el" href="classOoOJoin_1_1IAWJOperator.html#a25bf227b0fae725114fde38567f94f13">OoOJoin::IAWJOperator</a>
 , <a class="el" href="classOoOJoin_1_1IMAIAWJOperator.html#a5acaf169e1308731982bf8d731e632e8">OoOJoin::IMAIAWJOperator</a>
+, <a class="el" href="classOoOJoin_1_1LatenessWM.html#a26dba243749a7e44445684fff77a9e46">OoOJoin::LatenessWM</a>
 , <a class="el" href="classOoOJoin_1_1MeanAQPIAWJOperator.html#a8cff4f90748dae789bb1e8b652111df3">OoOJoin::MeanAQPIAWJOperator</a>
-, <a class="el" href="classOoOJoin_1_1PeriodicalWM.html#a9868b57a274fbd534bc0adcb633eaabe">OoOJoin::PeriodicalWM</a>
 , <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a4420431e245dfa68ad3a7db635427d70">OoOJoin::RandomDataLoader</a>
 </li>
 <li>setDataLoader()

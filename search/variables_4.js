@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nextwmdelta_443',['nextWMDelta',['../classOoOJoin_1_1PeriodicalWM.html#a5a8d670f8a7dfafd51f7fcf364ec075f',1,'OoOJoin::PeriodicalWM']]]
+  ['nextwmdelta_466',['nextWMDelta',['../classOoOJoin_1_1ArrivalWM.html#aa4be6994d23f1937e1dd42b826bfc712',1,'OoOJoin::ArrivalWM']]]
 ];

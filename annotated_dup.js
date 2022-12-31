@@ -38,7 +38,9 @@ var annotated_dup =
       [ "RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html", "classOoOJoin_1_1RandomDataLoader" ],
       [ "TestBench", "classOoOJoin_1_1TestBench.html", "classOoOJoin_1_1TestBench" ],
       [ "AbstractWaterMarker", "classOoOJoin_1_1AbstractWaterMarker.html", "classOoOJoin_1_1AbstractWaterMarker" ],
-      [ "PeriodicalWM", "classOoOJoin_1_1PeriodicalWM.html", "classOoOJoin_1_1PeriodicalWM" ]
+      [ "ArrivalWM", "classOoOJoin_1_1ArrivalWM.html", "classOoOJoin_1_1ArrivalWM" ],
+      [ "LatenessWM", "classOoOJoin_1_1LatenessWM.html", "classOoOJoin_1_1LatenessWM" ],
+      [ "WMTable", "classOoOJoin_1_1WMTable.html", "classOoOJoin_1_1WMTable" ]
     ] ],
     [ "default_attrs", "structdefault__attrs.html", null ]
 ];

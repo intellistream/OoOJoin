@@ -1,7 +1,7 @@
 <map id="OoOJoin::RandomDataLoader" name="OoOJoin::RandomDataLoader">
-<area shape="rect" id="node1" title="The dataloader which produces random key, random value and random skewness." alt="" coords="253,153,464,180"/>
+<area shape="rect" id="node1" title="The dataloader which produces random key, random value and random skewness." alt="" coords="249,153,460,180"/>
 <area shape="rect" id="node2" href="$classOoOJoin_1_1AbstractDataLoader.html" title="The abstract class of dataloader." alt="" coords="5,5,216,32"/>
 <area shape="rect" id="node3" title=" " alt="" coords="240,5,315,32"/>
-<area shape="rect" id="node4" title=" " alt="" coords="385,5,495,32"/>
-<area shape="rect" id="node5" title=" " alt="" coords="519,5,697,32"/>
+<area shape="rect" id="node4" title=" " alt="" coords="379,5,488,32"/>
+<area shape="rect" id="node5" title=" " alt="" coords="512,5,691,32"/>
 </map>

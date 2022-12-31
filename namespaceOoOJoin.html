@@ -182,8 +182,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1AbstractWaterMarker.html">AbstractWaterMarker</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The abstraction to describe a watermark generator, providing virtual function of deciding watermark generation.  <a href="classOoOJoin_1_1AbstractWaterMarker.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1PeriodicalWM.html">PeriodicalWM</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class which generates watermark periodically.  <a href="classOoOJoin_1_1PeriodicalWM.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1ArrivalWM.html">ArrivalWM</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">watermark generates at time t, and every thing arrives later then t will be discard, i.e., flush finial result at t  <a href="classOoOJoin_1_1ArrivalWM.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1LatenessWM.html">LatenessWM</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class which generates watermark according to lateness of event time. A tuple with event time earlier than max (event time we have seen) - lateness will be discard and trigger a compute.  <a href="classOoOJoin_1_1LatenessWM.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1WMTable.html">WMTable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The table to indexing all possible watermark generators.  <a href="classOoOJoin_1_1WMTable.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -221,9 +227,16 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1OperatorTa
 <tr class="memitem:ab0675faef7b090d830c75504660db002"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1AbstractWaterMarker.html">AbstractWaterMarker</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOoOJoin.html#ab0675faef7b090d830c75504660db002">AbstractWaterMarkerPtr</a></td></tr>
 <tr class="memdesc:ab0675faef7b090d830c75504660db002"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1AbstractWaterMarker.html">AbstractWaterMarker</a>.  <a href="namespaceOoOJoin.html#ab0675faef7b090d830c75504660db002">More...</a><br /></td></tr>
 <tr class="separator:ab0675faef7b090d830c75504660db002"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa15527251a9a033040dc90dda8e8bf3a"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1PeriodicalWM.html">PeriodicalWM</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOoOJoin.html#aa15527251a9a033040dc90dda8e8bf3a">PeriodicalWMPtr</a></td></tr>
-<tr class="memdesc:aa15527251a9a033040dc90dda8e8bf3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1PeriodicalWM.html">PeriodicalWM</a>.  <a href="namespaceOoOJoin.html#aa15527251a9a033040dc90dda8e8bf3a">More...</a><br /></td></tr>
-<tr class="separator:aa15527251a9a033040dc90dda8e8bf3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae25ac257c30211e388ee40363273cc30"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1ArrivalWM.html">ArrivalWM</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOoOJoin.html#ae25ac257c30211e388ee40363273cc30">ArrivalWMPtr</a></td></tr>
+<tr class="memdesc:ae25ac257c30211e388ee40363273cc30"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1ArrivalWM.html">ArrivalWM</a>.  <a href="namespaceOoOJoin.html#ae25ac257c30211e388ee40363273cc30">More...</a><br /></td></tr>
+<tr class="separator:ae25ac257c30211e388ee40363273cc30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53e076076a8f92b51bfb19c3245618dc"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1LatenessWM.html">LatenessWM</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOoOJoin.html#a53e076076a8f92b51bfb19c3245618dc">LatenessWMPtr</a></td></tr>
+<tr class="memdesc:a53e076076a8f92b51bfb19c3245618dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to PeriodicalWM.  <a href="namespaceOoOJoin.html#a53e076076a8f92b51bfb19c3245618dc">More...</a><br /></td></tr>
+<tr class="separator:a53e076076a8f92b51bfb19c3245618dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1485d5d8314a9851f3b4b06b1942871"><td class="memItemLeft" align="right" valign="top">
+typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1WMTable.html">WMTable</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__WATERMARKER.html#gaf1485d5d8314a9851f3b4b06b1942871">WMTablePtr</a></td></tr>
+<tr class="memdesc:gaf1485d5d8314a9851f3b4b06b1942871"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1WMTable.html">WMTable</a>. <br /></td></tr>
+<tr class="separator:gaf1485d5d8314a9851f3b4b06b1942871"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
 <tr class="memitem:ga15e00e3ab557eab55b7f71a5f4a30080"><td class="memItemLeft" align="right" valign="top">
 typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1AbstractStateOfKey.html">AbstractStateOfKey</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__INTELLI__COMMON__BASIC__STATE__OF__KEY.html#ga15e00e3ab557eab55b7f71a5f4a30080">AbstractStateOfKeyPtr</a></td></tr>
@@ -324,6 +337,23 @@ If new Operator is added, please change this file and its .cpp </dd></dl>
 
 </div>
 </div>
+<a id="ae25ac257c30211e388ee40363273cc30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae25ac257c30211e388ee40363273cc30">&#9670;&nbsp;</a></span>ArrivalWMPtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::shared_ptr&lt;class <a class="el" href="classOoOJoin_1_1ArrivalWM.html">ArrivalWM</a>&gt; <a class="el" href="namespaceOoOJoin.html#ae25ac257c30211e388ee40363273cc30">OoOJoin::ArrivalWMPtr</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1ArrivalWM.html">ArrivalWM</a>. </p>
+<p><b>[ArrivalWMPtr]</b> </p>
+
+</div>
+</div>
 <a id="aea657d50c98d5cffe64756e3d09f0728"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aea657d50c98d5cffe64756e3d09f0728">&#9670;&nbsp;</a></span>JoinAlgoTablePtr</h2>
 
@@ -341,19 +371,19 @@ If new Operator is added, please change this file and its .cpp </dd></dl>
 
 </div>
 </div>
-<a id="aa15527251a9a033040dc90dda8e8bf3a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa15527251a9a033040dc90dda8e8bf3a">&#9670;&nbsp;</a></span>PeriodicalWMPtr</h2>
+<a id="a53e076076a8f92b51bfb19c3245618dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53e076076a8f92b51bfb19c3245618dc">&#9670;&nbsp;</a></span>LatenessWMPtr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::shared_ptr&lt;class <a class="el" href="classOoOJoin_1_1PeriodicalWM.html">PeriodicalWM</a>&gt; <a class="el" href="namespaceOoOJoin.html#aa15527251a9a033040dc90dda8e8bf3a">OoOJoin::PeriodicalWMPtr</a></td>
+          <td class="memname">typedef std::shared_ptr&lt;class <a class="el" href="classOoOJoin_1_1LatenessWM.html">LatenessWM</a>&gt; <a class="el" href="namespaceOoOJoin.html#a53e076076a8f92b51bfb19c3245618dc">OoOJoin::LatenessWMPtr</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1PeriodicalWM.html">PeriodicalWM</a>. </p>
+<p>The class to describe a shared pointer to PeriodicalWM. </p>
 <p><b>[PeriodicalWMPtr]</b> </p>
 
 </div>

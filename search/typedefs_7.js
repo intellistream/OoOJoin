@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['nestedloopjoinptr_466',['NestedLoopJoinPtr',['../group__ADB__JOINALGOS__NLJ.html#gabb61141f5fb25ff4958e4942f2801e49',1,'OoOJoin']]],
-  ['npjptr_467',['NPJPtr',['../group__ADB__JOINALGOS__NPJ.html#gaf25db899ef8846b20c3130af3da61147',1,'OoOJoin']]],
-  ['npjsingleptr_468',['NPJSinglePtr',['../group__ADB__JOINALGOS__NPJ.html#ga049d3836f39b2601c3d3726ea80eed8f',1,'OoOJoin']]]
+  ['meanaqpiawjoperatorptr_491',['MeanAQPIAWJOperatorPtr',['../group__ADB__OPERATORS.html#ga321416e53471a27dc829c88ed8b737a7',1,'OoOJoin']]]
 ];

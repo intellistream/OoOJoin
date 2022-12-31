@@ -25,7 +25,7 @@ var group__ADB__TESTBENCH =
       [ "rTuple", "classOoOJoin_1_1RandomDataLoader.html#aa5271a40d2a006fd87857851a41380ca", null ],
       [ "sTuple", "classOoOJoin_1_1RandomDataLoader.html#a39570ac3696eaf19d1eed8dd80708193", null ],
       [ "timeStepUs", "classOoOJoin_1_1RandomDataLoader.html#a89d0aa59d270a78daca23b808b135a33", null ],
-      [ "watermarkPeriodMs", "classOoOJoin_1_1RandomDataLoader.html#a8fc9eac5b6c26bc23fef3df6944ea87e", null ],
+      [ "watermarkTimeMs", "classOoOJoin_1_1RandomDataLoader.html#af33f7a0ae2db37aa87c7b405f54e4a8e", null ],
       [ "windowLenMs", "classOoOJoin_1_1RandomDataLoader.html#ab4e0eb226629e38f3394ece7d005854a", null ]
     ] ],
     [ "TestBench", "classOoOJoin_1_1TestBench.html", [
@@ -43,6 +43,7 @@ var group__ADB__TESTBENCH =
       [ "OoOSort", "classOoOJoin_1_1TestBench.html#a8db2436a4476a25202265d39aa99a4ef", null ],
       [ "OoOTest", "classOoOJoin_1_1TestBench.html#a992e19f050174f61e862d40680a02087", null ],
       [ "saveRTuplesToFile", "classOoOJoin_1_1TestBench.html#a49c3803e6629485f4543b03aaeebc39b", null ],
+      [ "saveSTuplesToFile", "classOoOJoin_1_1TestBench.html#a01c2742ba4dd235ff42c5bfba9197b03", null ],
       [ "setDataLoader", "classOoOJoin_1_1TestBench.html#a604c4920b829ea52ae920f9b17d8a345", null ],
       [ "setDataSet", "classOoOJoin_1_1TestBench.html#a61623af4ad372924415bc2a9111e7a37", null ],
       [ "setOperator", "classOoOJoin_1_1TestBench.html#adff3943e460c1e353ba8ad2416a8ba38", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['meanaqpiawjoperatorptr_465',['MeanAQPIAWJOperatorPtr',['../group__ADB__OPERATORS.html#ga321416e53471a27dc829c88ed8b737a7',1,'OoOJoin']]]
+  ['latenesswmptr_490',['LatenessWMPtr',['../namespaceOoOJoin.html#a53e076076a8f92b51bfb19c3245618dc',1,'OoOJoin']]]
 ];

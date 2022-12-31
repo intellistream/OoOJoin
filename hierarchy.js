@@ -24,7 +24,8 @@ var hierarchy =
       ] ]
     ] ],
     [ "OoOJoin::AbstractWaterMarker", "classOoOJoin_1_1AbstractWaterMarker.html", [
-      [ "OoOJoin::PeriodicalWM", "classOoOJoin_1_1PeriodicalWM.html", null ]
+      [ "OoOJoin::ArrivalWM", "classOoOJoin_1_1ArrivalWM.html", null ],
+      [ "OoOJoin::LatenessWM", "classOoOJoin_1_1LatenessWM.html", null ]
     ] ],
     [ "INTELLI::C20Buffer< dataType >", "classINTELLI_1_1C20Buffer.html", null ],
     [ "INTELLI::C20Buffer< OoOJoin::TrackTuplePtr >", "classINTELLI_1_1C20Buffer.html", null ],
@@ -51,5 +52,6 @@ var hierarchy =
       ] ]
     ] ],
     [ "INTELLI::UtilityFunctions", "classINTELLI_1_1UtilityFunctions.html", null ],
-    [ "OoOJoin::Window", "classOoOJoin_1_1Window.html", null ]
+    [ "OoOJoin::Window", "classOoOJoin_1_1Window.html", null ],
+    [ "OoOJoin::WMTable", "classOoOJoin_1_1WMTable.html", null ]
 ];

@@ -112,7 +112,7 @@ $(document).ready(function(){initNavTree('FileDataLoader_8h_source.html',''); in
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOoOJoin.html">OoOJoin</a> {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classOoOJoin_1_1FileDataLoader.html">   40</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOoOJoin_1_1FileDataLoader.html">FileDataLoader</a> : <span class="keyword">public</span> <a class="code" href="classOoOJoin_1_1AbstractDataLoader.html">AbstractDataLoader</a>{</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classOoOJoin_1_1FileDataLoader.html">   40</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOoOJoin_1_1FileDataLoader.html">FileDataLoader</a> : <span class="keyword">public</span> <a class="code" href="classOoOJoin_1_1AbstractDataLoader.html">AbstractDataLoader</a> {</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">void</span> spilt(<span class="keyword">const</span> std::string s, <span class="keyword">const</span> std::string &amp;c, vector&lt;std::string&gt; &amp;v) {</div>
@@ -128,37 +128,38 @@ $(document).ready(function(){initNavTree('FileDataLoader_8h_source.html',''); in
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">if</span> (pos1 != s.length())</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      v.push_back(s.substr(pos1));</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  std::vector&lt;TrackTuplePtr&gt; loadDataFromCsv(std::string fname,std::string separator = <span class="stringliteral">&quot;,&quot;</span>, std::string newLine = <span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfgGlobal;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  vector&lt;TrackTuplePtr&gt; sTuple,rTuple;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <a class="code" href="classOoOJoin_1_1FileDataLoader.html">FileDataLoader</a>(){}</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  ~<a class="code" href="classOoOJoin_1_1FileDataLoader.html">FileDataLoader</a>(){}</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> setConfig(<a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">   81</a></span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">setModConfig</a>(<a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    assert(cfg);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keyword">virtual</span> vector&lt;TrackTuplePtr&gt;getTupleVectorS();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keyword">virtual</span> vector&lt;TrackTuplePtr&gt;getTupleVectorR();</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;};</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="group__ADB__TESTBENCH__DATALOADERS.html#gacdc4e0ad5824ed2a6781ef81e2d77a62">  106</a></span>&#160;<span class="keyword">typedef</span> std::shared_ptr&lt;class FileDataLoader&gt; <a class="code" href="group__ADB__TESTBENCH__DATALOADERS.html#gacdc4e0ad5824ed2a6781ef81e2d77a62">FileDataLoaderPtr</a>;</div>
-<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="group__ADB__TESTBENCH__DATALOADERS.html#gaf1068f84536dfc3945e619a76664fb94">  112</a></span>&#160;<span class="preprocessor">#define newFileDataLoader std::make_shared&lt;OoOJoin::FileDataLoader&gt;</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//INTELLISTREAM_INCLUDE_TESTBENCH_FileDataLoader_H_</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  std::vector&lt;TrackTuplePtr&gt; loadDataFromCsv(std::string fname,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                                             std::string separator = <span class="stringliteral">&quot;,&quot;</span>,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                                             std::string newLine = <span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfgGlobal;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  vector&lt;TrackTuplePtr&gt; sTuple, rTuple;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <a class="code" href="classOoOJoin_1_1FileDataLoader.html">FileDataLoader</a>() {}</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  ~<a class="code" href="classOoOJoin_1_1FileDataLoader.html">FileDataLoader</a>() {}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> setConfig(<a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">   83</a></span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">setModConfig</a>(<a class="code" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg) {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    assert(cfg);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keyword">virtual</span> vector&lt;TrackTuplePtr&gt; getTupleVectorS();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keyword">virtual</span> vector&lt;TrackTuplePtr&gt; getTupleVectorR();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;};</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="group__ADB__TESTBENCH__DATALOADERS.html#gacdc4e0ad5824ed2a6781ef81e2d77a62">  107</a></span>&#160;<span class="keyword">typedef</span> std::shared_ptr&lt;class FileDataLoader&gt; <a class="code" href="group__ADB__TESTBENCH__DATALOADERS.html#gacdc4e0ad5824ed2a6781ef81e2d77a62">FileDataLoaderPtr</a>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="group__ADB__TESTBENCH__DATALOADERS.html#gaf1068f84536dfc3945e619a76664fb94">  113</a></span>&#160;<span class="preprocessor">#define newFileDataLoader std::make_shared&lt;OoOJoin::FileDataLoader&gt;</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//INTELLISTREAM_INCLUDE_TESTBENCH_FileDataLoader_H_</span></div>
 <div class="ttc" id="aAbstractDataLoader_8h_html"><div class="ttname"><a href="AbstractDataLoader_8h.html">AbstractDataLoader.h</a></div></div>
 <div class="ttc" id="aConfigMap_8hpp_html"><div class="ttname"><a href="ConfigMap_8hpp.html">ConfigMap.hpp</a></div></div>
 <div class="ttc" id="aTuples_8h_html"><div class="ttname"><a href="Tuples_8h.html">Tuples.h</a></div></div>
 <div class="ttc" id="aclassOoOJoin_1_1AbstractDataLoader_html"><div class="ttname"><a href="classOoOJoin_1_1AbstractDataLoader.html">OoOJoin::AbstractDataLoader</a></div><div class="ttdoc">The abstract class of dataloader.</div><div class="ttdef"><b>Definition:</b> AbstractDataLoader.h:39</div></div>
 <div class="ttc" id="aclassOoOJoin_1_1FileDataLoader_html"><div class="ttname"><a href="classOoOJoin_1_1FileDataLoader.html">OoOJoin::FileDataLoader</a></div><div class="ttdoc">The dataloader which loads data from external csv file.</div><div class="ttdef"><b>Definition:</b> FileDataLoader.h:40</div></div>
-<div class="ttc" id="agroup__ADB__TESTBENCH__DATALOADERS_html_ga8ec80cec0a00d583fbf1e1de80f606b5"><div class="ttname"><a href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">OoOJoin::FileDataLoader::setModConfig</a></div><div class="ttdeci">virtual bool setModConfig(ConfigMapPtr cfg)</div><div class="ttdoc">Set the modification config map related to this loader.</div><div class="ttdef"><b>Definition:</b> FileDataLoader.h:81</div></div>
-<div class="ttc" id="agroup__ADB__TESTBENCH__DATALOADERS_html_gacdc4e0ad5824ed2a6781ef81e2d77a62"><div class="ttname"><a href="group__ADB__TESTBENCH__DATALOADERS.html#gacdc4e0ad5824ed2a6781ef81e2d77a62">OoOJoin::FileDataLoaderPtr</a></div><div class="ttdeci">std::shared_ptr&lt; class FileDataLoader &gt; FileDataLoaderPtr</div><div class="ttdoc">The class to describe a shared pointer to FileDataLoader.</div><div class="ttdef"><b>Definition:</b> FileDataLoader.h:106</div></div>
-<div class="ttc" id="agroup__INTELLI__UTIL__CONFIGS_html_gaeb9674f6f5860b687d73f618962dfcea"><div class="ttname"><a href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">INTELLI::ConfigMapPtr</a></div><div class="ttdeci">std::shared_ptr&lt; ConfigMap &gt; ConfigMapPtr</div><div class="ttdoc">The class to describe a shared pointer to ConfigMap.</div><div class="ttdef"><b>Definition:</b> ConfigMap.hpp:360</div></div>
+<div class="ttc" id="agroup__ADB__TESTBENCH__DATALOADERS_html_ga8ec80cec0a00d583fbf1e1de80f606b5"><div class="ttname"><a href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">OoOJoin::FileDataLoader::setModConfig</a></div><div class="ttdeci">virtual bool setModConfig(ConfigMapPtr cfg)</div><div class="ttdoc">Set the modification config map related to this loader.</div><div class="ttdef"><b>Definition:</b> FileDataLoader.h:83</div></div>
+<div class="ttc" id="agroup__ADB__TESTBENCH__DATALOADERS_html_gacdc4e0ad5824ed2a6781ef81e2d77a62"><div class="ttname"><a href="group__ADB__TESTBENCH__DATALOADERS.html#gacdc4e0ad5824ed2a6781ef81e2d77a62">OoOJoin::FileDataLoaderPtr</a></div><div class="ttdeci">std::shared_ptr&lt; class FileDataLoader &gt; FileDataLoaderPtr</div><div class="ttdoc">The class to describe a shared pointer to FileDataLoader.</div><div class="ttdef"><b>Definition:</b> FileDataLoader.h:107</div></div>
+<div class="ttc" id="agroup__INTELLI__UTIL__CONFIGS_html_gaeb9674f6f5860b687d73f618962dfcea"><div class="ttname"><a href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">INTELLI::ConfigMapPtr</a></div><div class="ttdeci">std::shared_ptr&lt; ConfigMap &gt; ConfigMapPtr</div><div class="ttdoc">The class to describe a shared pointer to ConfigMap.</div><div class="ttdef"><b>Definition:</b> ConfigMap.hpp:356</div></div>
 <div class="ttc" id="anamespaceOoOJoin_html"><div class="ttname"><a href="namespaceOoOJoin.html">OoOJoin</a></div><div class="ttdef"><b>Definition:</b> OperatorTable.cpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

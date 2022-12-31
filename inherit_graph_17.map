@@ -1,4 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOoOJoin_1_1AbstractWaterMarker.html" title="The abstraction to describe a watermark generator, providing virtual function of deciding watermark g..." alt="" coords="5,5,224,32"/>
-<area shape="rect" id="node2" href="$classOoOJoin_1_1PeriodicalWM.html" title="The class which generates watermark periodically." alt="" coords="272,5,443,32"/>
+<area shape="rect" id="node1" href="$classOoOJoin_1_1AbstractWaterMarker.html" title="The abstraction to describe a watermark generator, providing virtual function of deciding watermark g..." alt="" coords="5,31,224,57"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1ArrivalWM.html" title="watermark generates at time t, and every thing arrives later then t will be discard,..." alt="" coords="279,5,430,32"/>
+<area shape="rect" id="node3" href="$classOoOJoin_1_1LatenessWM.html" title="The class which generates watermark according to lateness of event time. A tuple with event time earl..." alt="" coords="272,56,437,83"/>
 </map>

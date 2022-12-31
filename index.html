@@ -108,7 +108,9 @@ Benchmark Tips</h1>
 <p>usage: ./benchmark [configfile] </p><dl class="section note"><dt>Note</dt><dd>Require configs in configfile<ul>
 <li>"windowLenMs" U64 The real world window length in ms</li>
 <li>"timeStepUs" U64 The simulation step in us</li>
-<li>"watermarkPeriodMs" U64 The real world watermark generation period in ms</li>
+<li>"wmTag" String The name of watermark generator, see WMTable class for all valid tags</li>
+<li>"watermarkTimeMs" U64 The time of watermark assertion in ms, if use the ArrivalWM to generate watermark</li>
+<li>"latenessMs" U64 The time of max allowed event lateness in ms, if use the LatenessWM to generate watermark</li>
 <li>"maxArrivalSkewMs" U64 The maximum real-world arrival skewness in ms</li>
 <li>"eventRateKTps" U64 The real-world rate of spawn event, in KTuples/s</li>
 <li>"keyRange" U64 The range of Key</li>

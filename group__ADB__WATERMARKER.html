@@ -94,7 +94,9 @@ $(document).ready(function(){initNavTree('group__ADB__WATERMARKER.html',''); ini
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">The watermark generator</div>  </div>
 </div><!--header-->
@@ -105,9 +107,29 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1AbstractWaterMarker.html">OoOJoin::AbstractWaterMarker</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The abstraction to describe a watermark generator, providing virtual function of deciding watermark generation.  <a href="classOoOJoin_1_1AbstractWaterMarker.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1PeriodicalWM.html">OoOJoin::PeriodicalWM</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class which generates watermark periodically.  <a href="classOoOJoin_1_1PeriodicalWM.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1ArrivalWM.html">OoOJoin::ArrivalWM</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">watermark generates at time t, and every thing arrives later then t will be discard, i.e., flush finial result at t  <a href="classOoOJoin_1_1ArrivalWM.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1LatenessWM.html">OoOJoin::LatenessWM</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class which generates watermark according to lateness of event time. A tuple with event time earlier than max (event time we have seen) - lateness will be discard and trigger a compute.  <a href="classOoOJoin_1_1LatenessWM.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1WMTable.html">OoOJoin::WMTable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The table to indexing all possible watermark generators.  <a href="classOoOJoin_1_1WMTable.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga91e55f98fd39af8c81ffe26258f0e643"><td class="memItemLeft" align="right" valign="top"><a id="ga91e55f98fd39af8c81ffe26258f0e643"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__WATERMARKER.html#ga91e55f98fd39af8c81ffe26258f0e643">newWMTable</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1WMTable.html">OoOJoin::WMTable</a>&gt;</td></tr>
+<tr class="memdesc:ga91e55f98fd39af8c81ffe26258f0e643"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new WMTable under shared pointer. <br /></td></tr>
+<tr class="separator:ga91e55f98fd39af8c81ffe26258f0e643"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaf1485d5d8314a9851f3b4b06b1942871"><td class="memItemLeft" align="right" valign="top"><a id="gaf1485d5d8314a9851f3b4b06b1942871"></a>
+typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1WMTable.html">WMTable</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__WATERMARKER.html#gaf1485d5d8314a9851f3b4b06b1942871">OoOJoin::WMTablePtr</a></td></tr>
+<tr class="memdesc:gaf1485d5d8314a9851f3b4b06b1942871"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1WMTable.html">WMTable</a>. <br /></td></tr>
+<tr class="separator:gaf1485d5d8314a9851f3b4b06b1942871"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>This package is the key to the whole operator and generate the watermark to control processing </p>

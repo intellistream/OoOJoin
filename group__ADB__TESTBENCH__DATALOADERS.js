@@ -38,7 +38,7 @@ var group__ADB__TESTBENCH__DATALOADERS =
       [ "rTuple", "classOoOJoin_1_1RandomDataLoader.html#aa5271a40d2a006fd87857851a41380ca", null ],
       [ "sTuple", "classOoOJoin_1_1RandomDataLoader.html#a39570ac3696eaf19d1eed8dd80708193", null ],
       [ "timeStepUs", "classOoOJoin_1_1RandomDataLoader.html#a89d0aa59d270a78daca23b808b135a33", null ],
-      [ "watermarkPeriodMs", "classOoOJoin_1_1RandomDataLoader.html#a8fc9eac5b6c26bc23fef3df6944ea87e", null ],
+      [ "watermarkTimeMs", "classOoOJoin_1_1RandomDataLoader.html#af33f7a0ae2db37aa87c7b405f54e4a8e", null ],
       [ "windowLenMs", "classOoOJoin_1_1RandomDataLoader.html#ab4e0eb226629e38f3394ece7d005854a", null ]
     ] ],
     [ "newAbstractDataLoader", "group__ADB__TESTBENCH__DATALOADERS.html#ga7a82218fbd09709f67cbee0c56e0d733", null ],

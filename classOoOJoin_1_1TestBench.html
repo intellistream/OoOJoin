@@ -149,6 +149,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a49c3803e6629485f4543b03aaeebc39b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1TestBench.html#a49c3803e6629485f4543b03aaeebc39b">saveRTuplesToFile</a> (string fname, bool skipZero=false)</td></tr>
 <tr class="memdesc:a49c3803e6629485f4543b03aaeebc39b"><td class="mdescLeft">&#160;</td><td class="mdescRight">save the rTuples to a file  <a href="classOoOJoin_1_1TestBench.html#a49c3803e6629485f4543b03aaeebc39b">More...</a><br /></td></tr>
 <tr class="separator:a49c3803e6629485f4543b03aaeebc39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01c2742ba4dd235ff42c5bfba9197b03"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1TestBench.html#a01c2742ba4dd235ff42c5bfba9197b03">saveSTuplesToFile</a> (string fname, bool skipZero=false)</td></tr>
+<tr class="memdesc:a01c2742ba4dd235ff42c5bfba9197b03"><td class="mdescLeft">&#160;</td><td class="mdescRight">save the sTuples to a file  <a href="classOoOJoin_1_1TestBench.html#a01c2742ba4dd235ff42c5bfba9197b03">More...</a><br /></td></tr>
+<tr class="separator:a01c2742ba4dd235ff42c5bfba9197b03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2dba7ee7a86f1178279004f10b107db1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1TestBench.html#a2dba7ee7a86f1178279004f10b107db1">getAvgLatency</a> ()</td></tr>
 <tr class="memdesc:a2dba7ee7a86f1178279004f10b107db1"><td class="mdescLeft">&#160;</td><td class="mdescRight">to compute average latency after run a test  <a href="classOoOJoin_1_1TestBench.html#a2dba7ee7a86f1178279004f10b107db1">More...</a><br /></td></tr>
 <tr class="separator:a2dba7ee7a86f1178279004f10b107db1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -400,6 +403,44 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>save the rTuples to a file </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>the name of file </td></tr>
+    <tr><td class="paramname">skipZero</td><td>Whether skip the tuples whose processed time is zero </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>whether the file is written </dd></dl>
+
+</div>
+</div>
+<a id="a01c2742ba4dd235ff42c5bfba9197b03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01c2742ba4dd235ff42c5bfba9197b03">&#9670;&nbsp;</a></span>saveSTuplesToFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool OoOJoin::TestBench::saveSTuplesToFile </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>fname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>skipZero</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>save the sTuples to a file </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fname</td><td>the name of file </td></tr>

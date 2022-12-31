@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['periodicalwm_2eh_320',['PeriodicalWM.h',['../PeriodicalWM_8h.html',1,'']]]
+  ['ooojoin_2eh_336',['OoOJoin.h',['../OoOJoin_8h.html',1,'']]],
+  ['operatortable_2eh_337',['OperatorTable.h',['../OperatorTable_8h.html',1,'']]]
 ];
