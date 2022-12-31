@@ -27,14 +27,14 @@ namespace OoOJoin {
  * @note require configs:
  * - "windowLenMs" U64 The real world window length in ms
  * - "timeStepUs" U64 The simulation step in us
- * - "watermarkPeriodMs" U64 The real world watermark generation period in ms
+ * - "watermarkTimeMs" U64 The real world watermark generation period in ms
  * - "maxArrivalSkewMs" U64 The maximum real-world arrival skewness in ms
  * - "eventRateKTps" U64 The real-world rate of spawn event, in KTuples/s
  * - "keyRange" U64 The range of Key
  */
-class RandomDataLoader : public  AbstractDataLoader{
+class RandomDataLoader : public AbstractDataLoader {
  protected:
-  tsType windowLenMs, timeStepUs, watermarkPeriodMs, maxArrivalSkewMs, eventRateKTps;
+  tsType windowLenMs, timeStepUs, watermarkTimeMs, maxArrivalSkewMs, eventRateKTps;
   vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
     vector<tsType> ru = vector<tsType>(eventTime.size());
     size_t len = (eventTime.size() > arrivalSkew.size()) ? arrivalSkew.size() : eventTime.size();
@@ -82,9 +82,9 @@ class RandomDataLoader : public  AbstractDataLoader{
   }
  public:
   ConfigMapPtr cfgGlobal;
-  vector<TrackTuplePtr> sTuple,rTuple;
-  RandomDataLoader(){}
-  ~RandomDataLoader(){}
+  vector<TrackTuplePtr> sTuple, rTuple;
+  RandomDataLoader() {}
+  ~RandomDataLoader() {}
   /**
  * @brief Set the GLOBAL config map related to this loader
  * @param cfg The config map
@@ -96,8 +96,7 @@ class RandomDataLoader : public  AbstractDataLoader{
 * @param cfg The config map
 * @return bool whether the config is successfully set
 */
-  virtual bool setModConfig(ConfigMapPtr cfg)
-  {
+  virtual bool setModConfig(ConfigMapPtr cfg) {
     assert(cfg);
     return true;
   }
@@ -106,13 +105,13 @@ class RandomDataLoader : public  AbstractDataLoader{
    * @brief get the vector of s tuple
    * @return the vector
    */
-  virtual vector<TrackTuplePtr>getTupleVectorS();
+  virtual vector<TrackTuplePtr> getTupleVectorS();
 
   /**
   * @brief get the vector of R tuple
   * @return the vector
   */
-  virtual vector<TrackTuplePtr>getTupleVectorR();
+  virtual vector<TrackTuplePtr> getTupleVectorR();
 
 };
 

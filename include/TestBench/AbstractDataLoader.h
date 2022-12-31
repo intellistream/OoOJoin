@@ -20,33 +20,32 @@ namespace OoOJoin {
 * @{
  *
  */
- /**
-  * @defgroup ADB_TESTBENCH_DATALOADERS The classes of dataloader
-  * @{
-  */
-  /**
-   * @class AbstractDataLoader TestBench/AbstractDataLoader.h
-   * @brief The abstract class of dataloader
-   * @ingroup ADB_TESTBENCH_DATALOADERS
-   * @note:
-   * - Must have a global config by @ref setConfig
-   * - Can also have a modification config by
-   *@note  Default behavior
- * - create
- * - setConfig and setModConfig (optional), generate R and S internally
- * - call getTupleVectorS/R
-   */
+/**
+ * @defgroup ADB_TESTBENCH_DATALOADERS The classes of dataloader
+ * @{
+ */
+/**
+ * @class AbstractDataLoader TestBench/AbstractDataLoader.h
+ * @brief The abstract class of dataloader
+ * @ingroup ADB_TESTBENCH_DATALOADERS
+ * @note:
+ * - Must have a global config by @ref setConfig
+ * - Can also have a modification config by
+ *@note  Default behavior
+* - create
+* - setConfig and setModConfig (optional), generate R and S internally
+* - call getTupleVectorS/R
+ */
 class AbstractDataLoader {
  public:
-  AbstractDataLoader(){}
-  ~AbstractDataLoader(){}
+  AbstractDataLoader() {}
+  ~AbstractDataLoader() {}
   /**
  * @brief Set the GLOBAL config map related to this loader
  * @param cfg The config map
   * @return bool whether the config is successfully set
  */
-  virtual bool setConfig(ConfigMapPtr cfg)
-  {
+  virtual bool setConfig(ConfigMapPtr cfg) {
     assert(cfg);
     return true;
   }
@@ -55,8 +54,7 @@ class AbstractDataLoader {
 * @param cfg The config map
 * @return bool whether the config is successfully set
 */
-  virtual bool setModConfig(ConfigMapPtr cfg)
-  {
+  virtual bool setModConfig(ConfigMapPtr cfg) {
     assert(cfg);
     return true;
   }
@@ -64,21 +62,19 @@ class AbstractDataLoader {
    * @brief get the vector of s tuple
    * @return the vector
    */
-  virtual vector<TrackTuplePtr>getTupleVectorS()
-  {
+  virtual vector<TrackTuplePtr> getTupleVectorS() {
 
-      vector<TrackTuplePtr>ru;
-      return ru;
+    vector<TrackTuplePtr> ru;
+    return ru;
 
   }
   /**
   * @brief get the vector of R tuple
   * @return the vector
   */
-  virtual vector<TrackTuplePtr>getTupleVectorR()
-  {
-      vector<TrackTuplePtr>ru;
-      return ru;
+  virtual vector<TrackTuplePtr> getTupleVectorR() {
+    vector<TrackTuplePtr> ru;
+    return ru;
 
   }
 };

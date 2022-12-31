@@ -327,26 +327,26 @@ unsigned int rngSeed();
 
 // Check if byte is available and usable
 #  if __has_include(<cstddef>) && defined(CATCH_CPP17_OR_GREATER)
-                                                                                                                        #    include <cstddef>
-  #    if defined(__cpp_lib_byte) && (__cpp_lib_byte > 0)
-  #      define CATCH_INTERNAL_CONFIG_CPP17_BYTE
-  #    endif
+#    include <cstddef>
+#    if defined(__cpp_lib_byte) && (__cpp_lib_byte > 0)
+#      define CATCH_INTERNAL_CONFIG_CPP17_BYTE
+#    endif
 #  endif // __has_include(<cstddef>) && defined(CATCH_CPP17_OR_GREATER)
 
 // Check if variant is available and usable
 #  if __has_include(<variant>) && defined(CATCH_CPP17_OR_GREATER)
-                                                                                                                        #    if defined(__clang__) && (__clang_major__ < 8)
-         // work around clang bug with libstdc++ https://bugs.llvm.org/show_bug.cgi?id=31852
-         // fix should be in clang 8, workaround in libstdc++ 8.2
-  #      include <ciso646>
-  #      if defined(__GLIBCXX__) && defined(_GLIBCXX_RELEASE) && (_GLIBCXX_RELEASE < 9)
-  #        define CATCH_CONFIG_NO_CPP17_VARIANT
-  #      else
-  #        define CATCH_INTERNAL_CONFIG_CPP17_VARIANT
-  #      endif // defined(__GLIBCXX__) && defined(_GLIBCXX_RELEASE) && (_GLIBCXX_RELEASE < 9)
-  #    else
-  #      define CATCH_INTERNAL_CONFIG_CPP17_VARIANT
-  #    endif // defined(__clang__) && (__clang_major__ < 8)
+#    if defined(__clang__) && (__clang_major__ < 8)
+// work around clang bug with libstdc++ https://bugs.llvm.org/show_bug.cgi?id=31852
+// fix should be in clang 8, workaround in libstdc++ 8.2
+#      include <ciso646>
+#      if defined(__GLIBCXX__) && defined(_GLIBCXX_RELEASE) && (_GLIBCXX_RELEASE < 9)
+#        define CATCH_CONFIG_NO_CPP17_VARIANT
+#      else
+#        define CATCH_INTERNAL_CONFIG_CPP17_VARIANT
+#      endif // defined(__GLIBCXX__) && defined(_GLIBCXX_RELEASE) && (_GLIBCXX_RELEASE < 9)
+#    else
+#      define CATCH_INTERNAL_CONFIG_CPP17_VARIANT
+#    endif // defined(__clang__) && (__clang_major__ < 8)
 #  endif // __has_include(<variant>) && defined(CATCH_CPP17_OR_GREATER)
 #endif // defined(__has_include)
 
@@ -941,10 +941,10 @@ template<typename Fun, typename... Args>
 struct is_callable<Fun(Args...)> : decltype(is_callable_tester::test<Fun, Args...>(0)) {};
 
 #if defined(__cpp_lib_is_invocable) && __cpp_lib_is_invocable >= 201703
-                                                                                                                        // std::result_of is deprecated in C++17 and removed in C++20. Hence, it is
-    // replaced with std::invoke_result here.
-    template <typename Func, typename... U>
-    using FunctionReturnType = std::remove_reference_t<std::remove_cv_t<std::invoke_result_t<Func, U...>>>;
+// std::result_of is deprecated in C++17 and removed in C++20. Hence, it is
+// replaced with std::invoke_result here.
+template<typename Func, typename... U>
+using FunctionReturnType = std::remove_reference_t<std::remove_cv_t<std::invoke_result_t<Func, U...>>>;
 #else
 // Keep ::type here because we still support C++11
 template<typename Func, typename... U>
@@ -977,7 +977,7 @@ auto makeTestInvoker(void(*testAsFunction)()) noexcept -> ITestInvoker *;
 template<typename C>
 auto makeTestInvoker(void (C::*testAsMethod)()) noexcept -> ITestInvoker * {
   return new(std::nothrow)
-  TestInvokerAsMethod<C>( testAsMethod );
+      TestInvokerAsMethod<C>(testAsMethod);
 }
 
 struct NameAndTags {
@@ -1677,10 +1677,10 @@ struct StringMaker<std::string> {
 };
 
 #ifdef CATCH_CONFIG_CPP17_STRING_VIEW
-                                                                                                                        template<>
-    struct StringMaker<std::string_view> {
-        static std::string convert(std::string_view str);
-    };
+template<>
+struct StringMaker<std::string_view> {
+  static std::string convert(std::string_view str);
+};
 #endif
 
 template<>
@@ -1699,10 +1699,10 @@ struct StringMaker<std::wstring> {
 };
 
 # ifdef CATCH_CONFIG_CPP17_STRING_VIEW
-                                                                                                                        template<>
-    struct StringMaker<std::wstring_view> {
-        static std::string convert(std::wstring_view str);
-    };
+template<>
+struct StringMaker<std::wstring_view> {
+  static std::string convert(std::wstring_view str);
+};
 # endif
 
 template<>
@@ -1737,10 +1737,10 @@ struct StringMaker<unsigned char[SZ]> {
 };
 
 #if defined(CATCH_CONFIG_CPP17_BYTE)
-                                                                                                                        template<>
-    struct StringMaker<std::byte> {
-        static std::string convert(std::byte value);
-    };
+template<>
+struct StringMaker<std::byte> {
+  static std::string convert(std::byte value);
+};
 #endif // defined(CATCH_CONFIG_CPP17_BYTE)
 template<>
 struct StringMaker<int> {
@@ -8446,7 +8446,7 @@ void handleExceptionMatchExpr(AssertionHandler &handler, StringMatcher const &ma
 #ifndef CLARA_CONFIG_OPTIONAL_TYPE
 #ifdef __has_include
 #if __has_include(<optional>) && __cplusplus >= 201703L
-                                                                                                                        #include <optional>
+#include <optional>
 #define CLARA_CONFIG_OPTIONAL_TYPE std::optional
 #endif
 #endif
@@ -9096,14 +9096,14 @@ inline auto convertInto(std::string const &source, bool &target) -> ParserResult
   return ParserResult::ok(ParseResultType::Matched);
 }
 #ifdef CLARA_CONFIG_OPTIONAL_TYPE
-                                                                                                                        template<typename T>
-    inline auto convertInto( std::string const &source, CLARA_CONFIG_OPTIONAL_TYPE<T>& target ) -> ParserResult {
-        T temp;
-        auto result = convertInto( source, temp );
-        if( result )
-            target = std::move(temp);
-        return result;
-    }
+template<typename T>
+inline auto convertInto(std::string const &source, CLARA_CONFIG_OPTIONAL_TYPE<T> &target) -> ParserResult {
+  T temp;
+  auto result = convertInto(source, temp);
+  if (result)
+    target = std::move(temp);
+  return result;
+}
 #endif // CLARA_CONFIG_OPTIONAL_TYPE
 
 struct NonCopyable {
@@ -15062,8 +15062,8 @@ std::string StringMaker<std::string>::convert(const std::string &str) {
 }
 
 #ifdef CATCH_CONFIG_CPP17_STRING_VIEW
-                                                                                                                        std::string StringMaker<std::string_view>::convert(std::string_view str) {
-    return ::Catch::Detail::stringify(std::string{ str });
+std::string StringMaker<std::string_view>::convert(std::string_view str) {
+  return ::Catch::Detail::stringify(std::string{str});
 }
 #endif
 
@@ -15093,8 +15093,8 @@ std::string StringMaker<std::wstring>::convert(const std::wstring &wstr) {
 }
 
 # ifdef CATCH_CONFIG_CPP17_STRING_VIEW
-                                                                                                                        std::string StringMaker<std::wstring_view>::convert(std::wstring_view str) {
-    return StringMaker<std::wstring>::convert(std::wstring(str));
+std::string StringMaker<std::wstring_view>::convert(std::wstring_view str) {
+  return StringMaker<std::wstring>::convert(std::wstring(str));
 }
 # endif
 
@@ -15115,9 +15115,9 @@ std::string StringMaker<wchar_t *>::convert(wchar_t *str) {
 #endif
 
 #if defined(CATCH_CONFIG_CPP17_BYTE)
-                                                                                                                        #include <cstddef>
+#include <cstddef>
 std::string StringMaker<std::byte>::convert(std::byte value) {
-    return ::Catch::Detail::stringify(std::to_integer<unsigned long long>(value));
+  return ::Catch::Detail::stringify(std::to_integer<unsigned long long>(value));
 }
 #endif // defined(CATCH_CONFIG_CPP17_BYTE)
 

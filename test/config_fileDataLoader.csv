@@ -2,7 +2,7 @@ key,value,type
 slideLenMs,123,U64
 timeStepUs,50,U64
 windowLenMs,54,U64
-watermarkPeriodMs,54,U64
+watermarkTimeMs,54,U64
 maxArrivalSkewMs,5,U64
 eventRateKTps,100,U64
 keyRange,10,U64

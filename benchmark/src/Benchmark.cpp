@@ -26,7 +26,7 @@ using namespace OoOJoin;
  * @note Require configs for this function:
  * - "windowLenMs" U64 The real world window length in ms
  * - "timeStepUs" U64 The simulation step in us
- * - "watermarkPeriodMs" U64 The real world watermark generation period in ms
+ * - "watermarkTimeMs" U64 The real world watermark generation period in ms
  * - "maxArrivalSkewMs" U64 The maximum real-world arrival skewness in ms
  * - "eventRateKTps" U64 The real-world rate of spawn event, in KTuples/s
  * - "keyRange" U64 The range of Key
@@ -43,20 +43,20 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   //size_t testSize = 0;
   size_t OoORu = 0, realRu = 0;
   //load global configs
-  tsType windowLenMs, timeStepUs, watermarkPeriodMs,maxArrivalSkewMs;
+  tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
   string operatorTag = "IAWJ";
   string loaderTag = "random";
   //uint64_t keyRange;
 
-  windowLenMs = cfg->tryU64 ("windowLenMs", 10,true);
-  timeStepUs = cfg->tryU64( "timeStepUs", 40,true);
-  watermarkPeriodMs = cfg->tryU64("watermarkPeriodMs", 10,true);
+  windowLenMs = cfg->tryU64("windowLenMs", 10, true);
+  timeStepUs = cfg->tryU64("timeStepUs", 40, true);
+  //watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10,true);
   maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
-  INTELLI_INFO("window len= " + to_string(windowLenMs) + "ms , watermark ="+ to_string(watermarkPeriodMs));
- // eventRateKTps = tryU64(cfg, "eventRateKTps", 10);
+  INTELLI_INFO("window len= " + to_string(windowLenMs) + "ms ");
+  // eventRateKTps = tryU64(cfg, "eventRateKTps", 10);
   //keyRange = tryU64(cfg, "keyRange", 10);
-  operatorTag = cfg->tryString( "operator", "IAWJ");
-  loaderTag=cfg->tryString("dataLoader","random");
+  operatorTag = cfg->tryString("operator", "IAWJ");
+  loaderTag = cfg->tryString("dataLoader", "random");
   AbstractOperatorPtr iawj = opTable->findOperator(operatorTag);
   INTELLI_INFO("Try use " + operatorTag + " operator");
   if (iawj == nullptr) {
@@ -64,12 +64,11 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
     INTELLI_INFO("No " + operatorTag + " operator, will use IAWJ instead");
   }
   cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
-  cfg->edit("watermarkPeriod", (uint64_t) watermarkPeriodMs * 1000);
+  //cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
   cfg->edit("timeStep", (uint64_t) timeStepUs);
   TestBench tb, tbOoO;
 
-
-  tbOoO.setDataLoader(loaderTag,cfg);
+  tbOoO.setDataLoader(loaderTag, cfg);
   cfg->edit("rLen", (uint64_t) tbOoO.sizeOfS());
   cfg->edit("sLen", (uint64_t) tbOoO.sizeOfR());
   tbOoO.setOperator(iawj, cfg);
@@ -86,13 +85,19 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
   INTELLI_DEBUG("95% latency (us)=" + to_string(tbOoO.getLatencyPercentage(0.95)));
   INTELLI_DEBUG("Throughput (TPs/s)=" + to_string(tbOoO.getThroughput()));
   tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
-  tbOoO.saveRTuplesToFile(outPrefix + "_arrived_tuples.csv", false);
+  tbOoO.saveRTuplesToFile(outPrefix + "_arrived_tuplesR.csv", false);
+  tbOoO.saveSTuplesToFile(outPrefix + "_arrived_tuplesS.csv", false);
   ConfigMapPtr resultBreakDown = tbOoO.getTimeBreakDown();
   if (resultBreakDown != nullptr) {
     resultBreakDown->toFile(outPrefix + "_breakdown.csv");
   }
-  cfg->edit("watermarkPeriod", (uint64_t) (windowLenMs + maxArrivalSkewMs) * 1000);
-  tb.setDataLoader(loaderTag,cfg);
+  /**
+   * disable all possible OoO related settings, as we will test the expected in-order results
+   */
+  cfg->edit("watermarkTimeMs", (uint64_t) (windowLenMs + maxArrivalSkewMs));
+  cfg->edit("latenessMs", (uint64_t) 0);
+  cfg->edit("earlierEmitMs", (uint64_t) 0);
+  tb.setDataLoader(loaderTag, cfg);
   tb.setOperator(iawj, cfg);
 
   realRu = tb.inOrderTest(true);

@@ -56,7 +56,7 @@ def runPeriod(exePath, period, resultPath):
     # clear old files
     os.system("cd " + exePath + "&& rm *.csv")
     # prepare new file
-    editConfig(configTemplate, exePath + configFname, "watermarkPeriodMs", period)
+    editConfig(configTemplate, exePath + configFname, "watermarkTimeMs", period)
     # run
     os.system("cd " + exePath + "&& ./benchmark " + configFname)
     # copy result

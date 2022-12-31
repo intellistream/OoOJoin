@@ -1,41 +1,47 @@
-/*! \file PeriodicalWM.h*/
+/*! \file LatenessWM.h*/
 //
 // Created by tony on 25/11/22.
 //
 
-#ifndef _INCLUDE_WATERMARKER_PERIODICALWM_H_
-#define _INCLUDE_WATERMARKER_PERIODICALWM_H_
+#ifndef _INCLUDE_WATERMARKER_LATENESSWM_H_
+#define _INCLUDE_WATERMARKER_LATENESSWM_H_
 #include <WaterMarker/AbstractWaterMarker.h>
 namespace OoOJoin {
 /**
  * @ingroup ADB_WATERMARKER The watermark generator
- *@class PeriodicalWM WaterMarker/PeriodicalWM.h
- * @brief The class which generates watermark periodically
- * @todo multi window support is not done yet, left for future, but we do preserve the interfaces
- * @note require configurations:
- * - "errorBound" Double The assigned error bound
- * - "timeStep" U64 The simulation time step in us
- * - "watermarkPeriod" U64 The watermark period, if not set will equal to window length
+ *@class LatenessWM WaterMarker/LatenessWM.h
+ * @brief The class which generates watermark according to lateness of event time. A tuple with event time earlier
+ * than max (event time we have seen) - lateness will be discard and trigger a compute.
+ * @note This one assert completeness by arrival time. Require configurations:
+ * - "latenessMs" U64 Here used to control the lateness, in ms
+ * - "earlierEmitMs" U64 Here used to allow earlier emit, in ms
+ * @note
+ *
+  * When assign this final water mark, it "convince' the system that everything whose event time is earlier than window bound, is arrived, so we can
+  * provide the final result.
+  * The condition is
+  * - windowUpperBound-earlierEmit+lateness<maxEventTime
  */
-class PeriodicalWM : public AbstractWaterMarker {
+class LatenessWM : public AbstractWaterMarker {
  protected:
   /**
-  * @brief The period to generate watermark, set by outside configuration
+  * @brief The max allowed lateness, internal, in us
   */
-  tsType watermarkPeriod = 0;
+  tsType lateness = 0;
   /**
-  * @brief The Delta value for next watermark
-  */
-  tsType nextWMDelta = 0;
+   * @brief The time of earlier emit before reaching window bound, internal, in us
+   */
+  tsType earlierEmit = 0;
+
   /**
    * @note currently only support single window
    */
-  tsType windowLen = 0;
-  tsType nextWMPoint = 0;
+  tsType windowUpperBound = 0;
+  tsType maxEventTime = 0;
   bool isReachWMPoint(TrackTuplePtr tp);
  public:
-  PeriodicalWM() {}
-  ~PeriodicalWM() {}
+  LatenessWM() {}
+  ~LatenessWM() {}
 
   /**
  * @brief Set the config map related to this operator
@@ -70,11 +76,11 @@ class PeriodicalWM : public AbstractWaterMarker {
  * @cite PeriodicalWMPtr
  * @brief The class to describe a shared pointer to @ref  PeriodicalWM
  */
-typedef std::shared_ptr<class PeriodicalWM> PeriodicalWMPtr;
+typedef std::shared_ptr<class LatenessWM> LatenessWMPtr;
 /**
  * @cite newPeriodicalWM
  * @brief (Macro) To creat a new @ref PeriodicalWM under shared pointer.
  */
-#define newPeriodicalWM std::make_shared<OoOJoin::PeriodicalWM>
+#define newLatenessWM std::make_shared<OoOJoin::LatenessWM>
 }
 #endif //INTELLISTREAM_INCLUDE_WATERMARKER_PERIODICALWM_H_

@@ -8,7 +8,7 @@
 #include <Operator/AbstractOperator.h>
 #include <Common/Window.h>
 #include <atomic>
-#include <WaterMarker/PeriodicalWM.h>
+#include <WaterMarker/LatenessWM.h>
 namespace OoOJoin {
 /**
  * @class IAWJOperator
@@ -22,6 +22,7 @@ namespace OoOJoin {
  * - "rLen" U64: The length of R buffer
  * - "algo" String: The specific join algorithm (optional, default nested loop)
  * - "threads" U64: The threads to conduct intra window join (optional, default 1)
+ * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
  * @note In current version, the computation will block feeding
  * @note operator tag = "IAWJ"
  */

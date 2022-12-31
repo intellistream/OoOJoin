@@ -1,2 +1,5 @@
-1. More elegant way of loading datasets, by using XXXDataLoader
-2. Providing tests over FileDataLoader class
+1. fix all typos of watermark generation
+2. create LatenessWM, which controls final watermark by the "lateness" of event time of tuples
+3. create ArrivalWM, which controls final watermark by the arrival time of tuples
+4. create the WMTable to conveniently load all watermarkers
+5. update scripts to test different syntax of watermark, i.e., by event lateness and by arrival time

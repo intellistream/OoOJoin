@@ -172,6 +172,29 @@ bool OoOJoin::TestBench::saveRTuplesToFile(std::string fname, bool skipZero) {
   of.close();
   return true;
 }
+
+bool OoOJoin::TestBench::saveSTuplesToFile(std::string fname, bool skipZero) {
+  ofstream of;
+  of.open(fname);
+  if (of.fail()) {
+    return false;
+  }
+  of << "key,value,eventTime,arrivalTime,processedTime\n";
+  size_t rLen = rTuple.size();
+  for (size_t i = 0; i < rLen; i++) {
+    if (skipZero && rTuple[i]->processedTime == 0) {
+
+    } else {
+      TrackTuplePtr tp = rTuple[i];
+      string line = to_string(tp->key) + "," + to_string(tp->payload) + "," + to_string(tp->eventTime) + ","
+          + to_string(tp->arrivalTime) + "," + to_string(tp->processedTime) + "\n";
+      of << line;
+    }
+
+  }
+  of.close();
+  return true;
+}
 double OoOJoin::TestBench::getAvgLatency() {
   size_t rLen = rTuple.size();
   size_t nonZeroCnt = 0;
@@ -236,15 +259,14 @@ ConfigMapPtr OoOJoin::TestBench::getTimeBreakDown() {
   }
   return nullptr;
 }
-void OoOJoin::TestBench::setDataLoader(std::string tag,ConfigMapPtr globalCfg) {
-  DataLoaderTablePtr dt=newDataLoaderTable();
-  AbstractDataLoaderPtr dl=dt->findDataLoader(tag);
-  if(dl== nullptr)
-  {
-    TB_WARNNING("Invalid DataLoader ["+tag+"], use random instead");
-    dl=newRandomDataLoader();
+void OoOJoin::TestBench::setDataLoader(std::string tag, ConfigMapPtr globalCfg) {
+  DataLoaderTablePtr dt = newDataLoaderTable();
+  AbstractDataLoaderPtr dl = dt->findDataLoader(tag);
+  if (dl == nullptr) {
+    TB_WARNNING("Invalid DataLoader [" + tag + "], use random instead");
+    dl = newRandomDataLoader();
   }
   dl->setConfig(globalCfg);
-  setDataSet(dl->getTupleVectorS(),dl->getTupleVectorR());
-  TB_INFO("Using DataLoader ["+tag+"]");
+  setDataSet(dl->getTupleVectorS(), dl->getTupleVectorR());
+  TB_INFO("Using DataLoader [" + tag + "]");
 }

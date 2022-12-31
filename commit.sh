@@ -1,4 +1,4 @@
-BRANCH=math_estimator_new
+BRANCH=syntax_fixing
 git init
 git checkout -b $BRANCH
 git add .

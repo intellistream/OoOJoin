@@ -1,5 +1,7 @@
 add_sources(
         AbstractWaterMarker.cpp
-        PeriodicalWM.cpp
+        LatenessWM.cpp
+        ArrivalWM.cpp
+        WMTable.cpp
 )
 #add_subdirectory(NPJ)

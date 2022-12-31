@@ -5,13 +5,21 @@ bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
     return false;
   }
+  std::string wmTag = config->tryString("wmTag", "arrival", true);
+  WMTablePtr wmTable = newWMTable();
+  wmGen = wmTable->findWM(wmTag);
+  if (wmGen == nullptr) {
+    INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
+    return false;
+  }
+  INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
   return true;
 }
 bool OoOJoin::IMAIAWJOperator::start() {
   /**
   * @brief set watermark generator
   */
-  wmGen = newPeriodicalWM();
+  //wmGen = newPeriodicalWM();
   wmGen->setConfig(config);
   wmGen->syncTimeStruct(timeBaseStruct);
   /**
@@ -69,6 +77,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   shouldGenWM = wmGen->reportTupleS(ts, 1);
   if (shouldGenWM) {
     lockedByWaterMark = true;
+    WM_INFO("water mark in S");
     //  return false;
   }
   // bool shouldGenWM;
@@ -122,6 +131,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   shouldGenWM = wmGen->reportTupleR(tr, 1);
   if (shouldGenWM) {
     lockedByWaterMark = true;
+    WM_INFO("water mark in R");
     //return false;
   }
   // bool shouldGenWM;
