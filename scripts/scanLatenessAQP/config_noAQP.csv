@@ -11,3 +11,6 @@ Energy,12.3,Double
 algo,NPJSingle,String
 operator,IAWJ,String
 aqpScale,0.035,Double
+latenessMs,0,U64
+earlierEmitMs,0,U64
+wmTag,lateness,String

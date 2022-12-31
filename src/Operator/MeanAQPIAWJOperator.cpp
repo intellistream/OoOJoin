@@ -5,13 +5,21 @@ bool OoOJoin::MeanAQPIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
     return false;
   }
+  std::string wmTag = config->tryString("wmTag", "arrival", true);
+  WMTablePtr wmTable = newWMTable();
+  wmGen = wmTable->findWM(wmTag);
+  if (wmGen == nullptr) {
+    INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
+    return false;
+  }
+  INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
   return true;
 }
 bool OoOJoin::MeanAQPIAWJOperator::start() {
   /**
   * @brief set watermark generator
   */
-  wmGen = newPeriodicalWM();
+  // wmGen = newPeriodicalWM();
   wmGen->setConfig(config);
   wmGen->syncTimeStruct(timeBaseStruct);
   /**

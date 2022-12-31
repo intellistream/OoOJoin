@@ -18,26 +18,26 @@ namespace OoOJoin {
 * @{
  *
  */
- /**
-  * @defgroup ADB_TESTBENCH_DATALOADERS The classes of dataloader
-  * @{
-  */
-  /**
-   * @class FileDataLoader TestBench/FileDataLoader.h
-   * @brief The dataloader which loads data from external csv file
-   * @ingroup ADB_TESTBENCH_DATALOADERS
-   * @note:
-   * - Must have a global config by @ref setConfig
-   * - Can also have a modification config by
-   *@note  Default behavior
- * - create
- * - setConfig and setModConfig (optional), generate R and S internally
- * - call getTupleVectorS/R
- * @note Require configs
-   * - "fileDataLoader_rFile" String The file name of r tuple
-   * - "fileDataLoader_sFile" String The file name of s tuple
-   */
-class FileDataLoader : public AbstractDataLoader{
+/**
+ * @defgroup ADB_TESTBENCH_DATALOADERS The classes of dataloader
+ * @{
+ */
+/**
+ * @class FileDataLoader TestBench/FileDataLoader.h
+ * @brief The dataloader which loads data from external csv file
+ * @ingroup ADB_TESTBENCH_DATALOADERS
+ * @note:
+ * - Must have a global config by @ref setConfig
+ * - Can also have a modification config by
+ *@note  Default behavior
+* - create
+* - setConfig and setModConfig (optional), generate R and S internally
+* - call getTupleVectorS/R
+* @note Require configs
+ * - "fileDataLoader_rFile" String The file name of r tuple
+ * - "fileDataLoader_sFile" String The file name of s tuple
+ */
+class FileDataLoader : public AbstractDataLoader {
  protected:
 
   void spilt(const std::string s, const std::string &c, vector<std::string> &v) {
@@ -60,12 +60,14 @@ class FileDataLoader : public AbstractDataLoader{
   * @param newLine THe indicator of a new line. default is "\n"
   * @return The vector of TrackTuplePtr
   */
-  std::vector<TrackTuplePtr> loadDataFromCsv(std::string fname,std::string separator = ",", std::string newLine = "\n");
+  std::vector<TrackTuplePtr> loadDataFromCsv(std::string fname,
+                                             std::string separator = ",",
+                                             std::string newLine = "\n");
  public:
   ConfigMapPtr cfgGlobal;
-  vector<TrackTuplePtr> sTuple,rTuple;
-  FileDataLoader(){}
-  ~FileDataLoader(){}
+  vector<TrackTuplePtr> sTuple, rTuple;
+  FileDataLoader() {}
+  ~FileDataLoader() {}
   /**
  * @brief Set the GLOBAL config map related to this loader
  * @param cfg The config map
@@ -78,8 +80,7 @@ class FileDataLoader : public AbstractDataLoader{
 * @param cfg The config map
 * @return bool whether the config is successfully set
 */
-  virtual bool setModConfig(ConfigMapPtr cfg)
-  {
+  virtual bool setModConfig(ConfigMapPtr cfg) {
     assert(cfg);
     return true;
   }
@@ -87,13 +88,13 @@ class FileDataLoader : public AbstractDataLoader{
    * @brief get the vector of s tuple
    * @return the vector
    */
-  virtual vector<TrackTuplePtr>getTupleVectorS();
+  virtual vector<TrackTuplePtr> getTupleVectorS();
 
   /**
   * @brief get the vector of R tuple
   * @return the vector
   */
-  virtual vector<TrackTuplePtr>getTupleVectorR();
+  virtual vector<TrackTuplePtr> getTupleVectorR();
 
 };
 

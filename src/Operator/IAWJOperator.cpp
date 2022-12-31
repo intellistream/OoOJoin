@@ -16,6 +16,14 @@ bool OoOJoin::IAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (config->existU64("threads")) {
     joinThreads = config->getU64("threads");
   }
+  std::string wmTag = config->tryString("wmTag", "arrival", true);
+  WMTablePtr wmTable = newWMTable();
+  wmGen = wmTable->findWM(wmTag);
+  if (wmGen == nullptr) {
+    INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
+    return false;
+  }
+  INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
   // OP_INFO("selected join threads=" + to_string(joinThreads));
   return true;
 }
@@ -23,7 +31,7 @@ bool OoOJoin::IAWJOperator::start() {
   /**
    * @brief set watermark generator
    */
-  wmGen = newPeriodicalWM();
+  //wmGen = newPeriodicalWM();
   wmGen->setConfig(config);
   wmGen->syncTimeStruct(timeBaseStruct);
   /**

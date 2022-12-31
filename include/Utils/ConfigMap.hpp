@@ -272,14 +272,13 @@ class ConfigMap {
    * @param showWarning Whether show warning logs if not found
    * @return The returned value
    */
-  int64_t tryI64( string key, int64_t defaultValue = 0,bool showWarning=false) {
+  int64_t tryI64(string key, int64_t defaultValue = 0, bool showWarning = false) {
     int64_t ru = defaultValue;
     if (this->existI64(key)) {
       ru = this->getI64(key);
       // INTELLI_INFO(key + " = " + to_string(ru));
     } else {
-      if(showWarning)
-      {
+      if (showWarning) {
         INTELLI_WARNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
       }
       //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
@@ -293,14 +292,13 @@ class ConfigMap {
    *  @param showWarning Whether show warning logs if not found
    * @return The returned value
    */
-   uint64_t tryU64( string key, uint64_t defaultValue = 0,bool showWarning=false) {
+  uint64_t tryU64(string key, uint64_t defaultValue = 0, bool showWarning = false) {
     uint64_t ru = defaultValue;
     if (this->existU64(key)) {
       ru = this->getU64(key);
       // INTELLI_INFO(key + " = " + to_string(ru));
     } else {
-      if(showWarning)
-      {
+      if (showWarning) {
         INTELLI_WARNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
       }
       //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
@@ -315,14 +313,13 @@ class ConfigMap {
    * @param showWarning Whether show warning logs if not found
    * @return The returned value
    */
-  double tryDouble( string key, double defaultValue = 0,bool showWarning=false) {
+  double tryDouble(string key, double defaultValue = 0, bool showWarning = false) {
     double ru = defaultValue;
     if (this->existDouble(key)) {
       ru = this->getDouble(key);
       // INTELLI_INFO(key + " = " + to_string(ru));
     } else {
-      if(showWarning)
-      {
+      if (showWarning) {
         INTELLI_WARNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
       }
       //  WM_WARNNING("Leaving " + key + " as blank, will use " + to_string(defaultValue) + " instead");
@@ -336,14 +333,13 @@ class ConfigMap {
    * @param showWarning Whether show warning logs if not found
    * @return The returned value
    */
-  string tryString(string key, string defaultValue = "",bool showWarning=false) {
+  string tryString(string key, string defaultValue = "", bool showWarning = false) {
     string ru = defaultValue;
     if (this->existString(key)) {
       ru = this->getString(key);
       //INTELLI_INFO(key + " = " + (ru));
     } else {
-      if(showWarning)
-      {
+      if (showWarning) {
         INTELLI_WARNING("Leaving " + key + " as blank, will use " + (defaultValue) + " instead");
       }
       // WM_WARNNING("Leaving " + key + " as blank, will use " + (defaultValue) + " instead");

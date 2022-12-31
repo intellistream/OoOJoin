@@ -10,7 +10,7 @@
 #include <Utils/UtilityFunctions.hpp>
 #include <assert.h>
 #include <Utils/ConfigMap.hpp>
-
+#include <WaterMarker/WMTable.h>
 //#include <Utils/Logger.hpp>
 #define OP_INFO printf
 #define OP_ERROR printf

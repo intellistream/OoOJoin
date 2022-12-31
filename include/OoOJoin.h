@@ -20,7 +20,9 @@
  * @note Require configs in configfile
  * - "windowLenMs" U64 The real world window length in ms
  * - "timeStepUs" U64 The simulation step in us
- * - "watermarkPeriodMs" U64 The real world watermark generation period in ms
+ * - "wmTag" String The name of watermark generator, see WMTable class for all valid tags
+ * - "watermarkTimeMs" U64 The time of watermark assertion in ms, if use the ArrivalWM to generate watermark
+ * - "latenessMs" U64 The time of max allowed event lateness in ms, if use the LatenessWM to generate watermark
  * - "maxArrivalSkewMs" U64 The maximum real-world arrival skewness in ms
  * - "eventRateKTps" U64 The real-world rate of spawn event, in KTuples/s
  * - "keyRange" U64 The range of Key
@@ -129,7 +131,7 @@
  * @{
  */
 #include <WaterMarker/AbstractWaterMarker.h>
-#include <WaterMarker/PeriodicalWM.h>
+#include <WaterMarker/LatenessWM.h>
 /**
  * @}
  */

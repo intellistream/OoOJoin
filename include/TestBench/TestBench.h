@@ -53,21 +53,19 @@ class TestBench {
    * @param tag the name tag of DataLoader
    * @param globalCfg the global config file to load dataset
    */
-  void setDataLoader(std::string tag,ConfigMapPtr globalCfg);
+  void setDataLoader(std::string tag, ConfigMapPtr globalCfg);
   /**
    * @brief get the size of loaded s tuple
    * @return the size
    */
-  size_t sizeOfS()
-  {
+  size_t sizeOfS() {
     return sTuple.size();
   }
   /**
   * @brief get the size of loaded r tuple
   * @return the size
   */
-  size_t sizeOfR()
-  {
+  size_t sizeOfR() {
     return rTuple.size();
   }
   /**
@@ -107,6 +105,13 @@ class TestBench {
    * @return whether the file is written
    */
   bool saveRTuplesToFile(string fname, bool skipZero = false);
+  /**
+  * @brief save the  sTuples to a file
+  * @param fname the name of file
+  * @param skipZero Whether skip the tuples whose processed time is zero
+  * @return whether the file is written
+  */
+  bool saveSTuplesToFile(string fname, bool skipZero = false);
   /**
    * @brief to compute average latency after run a test
    * @return the latency in us

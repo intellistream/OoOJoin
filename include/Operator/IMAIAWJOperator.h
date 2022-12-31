@@ -9,7 +9,7 @@
 #include <Operator/MeanAQPIAWJOperator.h>
 #include <Common/Window.h>
 #include <atomic>
-#include <WaterMarker/PeriodicalWM.h>
+#include <WaterMarker/LatenessWM.h>
 #include <Common/StateOfKey.h>
 namespace OoOJoin {
 
@@ -24,6 +24,7 @@ namespace OoOJoin {
  * - "slideLen" U64: The length of slide
  * - "sLen" U64: The length of S buffer
  * - "rLen" U64: The length of R buffer
+ * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
  * @warning This implementation is putting rotten, just to explore a basic idea of AQP by using historical mean to predict future
  * @warning The predictor and watermarker are currently NOT seperated in this operator, split them in the future!
  * @note In current version, the computation will block feeding
