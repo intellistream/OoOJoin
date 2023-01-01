@@ -18,7 +18,9 @@ sudo apt-get install gcc g++ cmake python3 python3-pip
 ```
 
 ## How to build
-
+### Create a docker for clion
+Please refer to the .md in docker folder
+The docker has minmal gcc/g++/cmake and libtorch, which is good enough.
 ### Build in shell
 
 ```shell
