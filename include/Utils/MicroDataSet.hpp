@@ -174,7 +174,7 @@ class MicroDataSet {
     dType scaling_factor;
     dType sum;
     vector<dType> lut(len);
-    /*
+    /**
      * Compute scaling factor such that
      *
      *   sum (lut[i], i=1..alphabet_size) = 1.0
@@ -182,7 +182,7 @@ class MicroDataSet {
      */
     scaling_factor = 0.0;
     for (size_t i = 1; i <= len; i++) { scaling_factor += 1.0 / pow(i, fac); }
-    /*
+    /**
      * Generate the lookup table
      */
     sum = 0.0;
