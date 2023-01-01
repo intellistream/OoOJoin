@@ -24,6 +24,7 @@ namespace OoOJoin {
  *  @note Default tags
  *  - "random" @ref RandomDataLoader
  *  - "file" @ref FileDataLoader
+ *  - "zipf" @ref ZipfDataLoader
  */
 class DataLoaderTable {
  protected:

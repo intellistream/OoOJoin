@@ -173,7 +173,7 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
     # plt.ylim(y_min, y_max)
 
     plt.grid(axis='y', color='gray')
-    plt.rcParams['axes.unicode_minus']=False#用来正常显示负号
+    plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
     # figure.yaxis.set_major_locator(LogLocator(base=10))
     # figure.xaxis.set_major_locator(LogLocator(base=10))
     plt.xticks(rotation=0, fontsize=TICK_FONT_SIZE)

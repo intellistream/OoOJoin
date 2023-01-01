@@ -64,6 +64,14 @@ class MicroDataSet {
     seed = _seed;
     hasSeed = true;
   }
+  /**
+ * @brief  construction with seed
+ * @param seed The seed for random generator
+ */
+  void setSeed(uint64_t _seed) {
+    seed = _seed;
+    hasSeed = true;
+  }
   ~MicroDataSet() {}
   /** @defgroup MICRO_GENERIC generic
    * @{
@@ -101,6 +109,7 @@ class MicroDataSet {
       gen = std::mt19937_64(rd()); // 以 rd() 播种的标准 mersenne_twister_engine
     } else {
       gen = std::mt19937_64(seed);
+      seed++;
     }
 
     std::uniform_real_distribution<> dis(0, 1);

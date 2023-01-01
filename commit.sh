@@ -1,4 +1,4 @@
-BRANCH=syntax_fixing
+BRANCH=zipf_dataLoader
 git init
 git checkout -b $BRANCH
 git add .
