@@ -3,5 +3,6 @@ add_sources(
         DataLoaderTable.cpp
         AbstractDataLoader.cpp
         RandomDataLoader.cpp
+        ZipfDataLoader.cpp
         FileDataLoader.cpp
 )

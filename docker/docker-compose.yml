@@ -1,11 +1,11 @@
 version: "3.4"
 
 x-defaults: &default
-# 使用当前目录的 Dockerfile 来构建 docker 镜像
+  # 使用当前目录的 Dockerfile 来构建 docker 镜像
   restart: unless-stopped
   build: .
   volumes:
-# 本文件存放于.devcontainer/中，因而此处要把上级目录(源代码目录)挂载到工作目录
+    # 本文件存放于.devcontainer/中，因而此处要把上级目录(源代码目录)挂载到工作目录
     - ..:/home/sutd/projects/
 
 services:
@@ -13,7 +13,7 @@ services:
     <<: *default
     container_name: aliancedb_u22_04_b
     hostname: "aliancedb_u22_04_b"
-# 如果在Dockerfile中修改过用户名，此处也要对应修改用户名和工作目录
+    # 如果在Dockerfile中修改过用户名，此处也要对应修改用户名和工作目录
     user: sutd
     working_dir: /home/sutd/projects/
     ports:
@@ -25,7 +25,7 @@ services:
     stdin_open: true
     tty: true
     privileged: true
-# 同时通过 tailf 命令保持 container 不要退出的状态
+    # 同时通过 tailf 命令保持 container 不要退出的状态
     command:
       bash -c "service ssh restart && tail -f /dev/null"
 
