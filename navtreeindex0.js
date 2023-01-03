@@ -1,6 +1,5 @@
 var NAVTREEINDEX0 =
 {
-"":[3,0,0],
 "AbstractC20Thread_8hpp.html":[5,0,0,4,0],
 "AbstractC20Thread_8hpp.html#a9370b2e09eeeec9419a207c190f4992f":[3,0,0,10],
 "AbstractC20Thread_8hpp.html#a9370b2e09eeeec9419a207c190f4992f":[5,0,0,4,0,2],
@@ -190,6 +189,9 @@ var NAVTREEINDEX0 =
 "WMTable_8h_source.html":[5,0,0,5,3],
 "Window_8h.html":[5,0,0,0,2],
 "Window_8h_source.html":[5,0,0,0,2],
+"ZipfDataLoader_8h.html":[5,0,0,3,5],
+"ZipfDataLoader_8h.html#ga0b265cc405ada8fa7dd8c2f68c7f61aa":[5,0,0,3,5,1],
+"ZipfDataLoader_8h_source.html":[5,0,0,3,5],
 "annotated.html":[4,0],
 "classINTELLI_1_1AbstractC20Thread.html":[2,2,0,0],
 "classINTELLI_1_1AbstractC20Thread.html#a01a2c2b58a19777dc8814076efdb2552":[2,2,0,0,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "classINTELLI_1_1ThreadPerf.html#a90526297620da280f35a6530653e127a":[2,2,0,2,14],
 "classINTELLI_1_1ThreadPerf.html#a938fa4ad262cd85510e7a8c5af125dc4":[2,2,0,2,9],
 "classINTELLI_1_1ThreadPerf.html#a944735b1c69db27336a1cb2e5d6d59f9":[2,2,0,2,4],
-"classINTELLI_1_1ThreadPerf.html#a9abe1ebec22e320999e057d42b5e63fb":[2,2,0,2,7],
-"classINTELLI_1_1ThreadPerf.html#aa2c10bb84875c0ae3b400a61292968f7":[2,2,0,2,3],
-"classINTELLI_1_1ThreadPerf.html#aa6c2aed702a3307ef832206e52494840":[2,2,0,2,8]
+"classINTELLI_1_1ThreadPerf.html#a9abe1ebec22e320999e057d42b5e63fb":[2,2,0,2,7]
 };

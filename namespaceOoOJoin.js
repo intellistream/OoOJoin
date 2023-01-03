@@ -25,6 +25,7 @@ var namespaceOoOJoin =
     [ "FileDataLoader", "classOoOJoin_1_1FileDataLoader.html", "classOoOJoin_1_1FileDataLoader" ],
     [ "RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html", "classOoOJoin_1_1RandomDataLoader" ],
     [ "TestBench", "classOoOJoin_1_1TestBench.html", "classOoOJoin_1_1TestBench" ],
+    [ "ZipfDataLoader", "classOoOJoin_1_1ZipfDataLoader.html", "classOoOJoin_1_1ZipfDataLoader" ],
     [ "AbstractWaterMarker", "classOoOJoin_1_1AbstractWaterMarker.html", "classOoOJoin_1_1AbstractWaterMarker" ],
     [ "ArrivalWM", "classOoOJoin_1_1ArrivalWM.html", "classOoOJoin_1_1ArrivalWM" ],
     [ "LatenessWM", "classOoOJoin_1_1LatenessWM.html", "classOoOJoin_1_1LatenessWM" ],
@@ -59,6 +60,7 @@ var namespaceOoOJoin =
     [ "TuplePtr", "group__INTELLI__COMMON__BASIC.html#ga9f844d18cb527c9bee4b4b4249b742d0", null ],
     [ "valueType", "group__INTELLI__COMMON__BASIC.html#gad62d6ae23f8a7a25f18f121c3a00c524", null ],
     [ "WMTablePtr", "group__ADB__WATERMARKER.html#gaf1485d5d8314a9851f3b4b06b1942871", null ],
+    [ "ZipfDataLoaderPtr", "group__ADB__TESTBENCH__DATALOADERS.html#ga0b265cc405ada8fa7dd8c2f68c7f61aa", null ],
     [ "join_algo_index_t", "group__ADB__JOINALGOS__ABSTRACT.html#ga049ac3be11e850bb46b1445f1d054443", [
       [ "JOINALGO_NULL", "namespaceOoOJoin.html#ga049ac3be11e850bb46b1445f1d054443adbfcb2383643950f33d8d1c905b7f469", null ],
       [ "JOINALGO_NESTEDLOOP", "namespaceOoOJoin.html#ga049ac3be11e850bb46b1445f1d054443a18160a79b0a51b58d9d0c9abd087a3d2", null ],

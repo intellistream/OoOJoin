@@ -5,7 +5,8 @@ var hierarchy =
     ] ],
     [ "OoOJoin::AbstractDataLoader", "classOoOJoin_1_1AbstractDataLoader.html", [
       [ "OoOJoin::FileDataLoader", "classOoOJoin_1_1FileDataLoader.html", null ],
-      [ "OoOJoin::RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html", null ]
+      [ "OoOJoin::RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html", null ],
+      [ "OoOJoin::ZipfDataLoader", "classOoOJoin_1_1ZipfDataLoader.html", null ]
     ] ],
     [ "OoOJoin::AbstractJoinAlgo", "classOoOJoin_1_1AbstractJoinAlgo.html", [
       [ "OoOJoin::NPJ", "classOoOJoin_1_1NPJ.html", null ],

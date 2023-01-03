@@ -1,5 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOoOJoin_1_1AbstractDataLoader.html" title="The abstract class of dataloader." alt="" coords="5,31,216,57"/>
+<area shape="rect" id="node1" href="$classOoOJoin_1_1AbstractDataLoader.html" title="The abstract class of dataloader." alt="" coords="5,56,216,83"/>
 <area shape="rect" id="node2" href="$classOoOJoin_1_1FileDataLoader.html" title="The dataloader which loads data from external csv file." alt="" coords="279,5,459,32"/>
 <area shape="rect" id="node3" href="$classOoOJoin_1_1RandomDataLoader.html" title="The dataloader which produces random key, random value and random skewness." alt="" coords="264,56,475,83"/>
+<area shape="rect" id="node4" href="$classOoOJoin_1_1ZipfDataLoader.html" title="The dataloader which allows zipf distribution of key, value, event time and arrival skewness." alt="" coords="278,107,461,133"/>
 </map>

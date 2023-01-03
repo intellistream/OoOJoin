@@ -37,6 +37,7 @@ var annotated_dup =
       [ "FileDataLoader", "classOoOJoin_1_1FileDataLoader.html", "classOoOJoin_1_1FileDataLoader" ],
       [ "RandomDataLoader", "classOoOJoin_1_1RandomDataLoader.html", "classOoOJoin_1_1RandomDataLoader" ],
       [ "TestBench", "classOoOJoin_1_1TestBench.html", "classOoOJoin_1_1TestBench" ],
+      [ "ZipfDataLoader", "classOoOJoin_1_1ZipfDataLoader.html", "classOoOJoin_1_1ZipfDataLoader" ],
       [ "AbstractWaterMarker", "classOoOJoin_1_1AbstractWaterMarker.html", "classOoOJoin_1_1AbstractWaterMarker" ],
       [ "ArrivalWM", "classOoOJoin_1_1ArrivalWM.html", "classOoOJoin_1_1ArrivalWM" ],
       [ "LatenessWM", "classOoOJoin_1_1LatenessWM.html", "classOoOJoin_1_1LatenessWM" ],

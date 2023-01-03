@@ -119,6 +119,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1FileDataLoader.html">OoOJoin::FileDataLoader</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dataloader which loads data from external csv file.  <a href="classOoOJoin_1_1FileDataLoader.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1ZipfDataLoader.html">OoOJoin::ZipfDataLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dataloader which allows zipf distribution of key, value, event time and arrival skewness.  <a href="classOoOJoin_1_1ZipfDataLoader.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOoOJoin_1_1RandomDataLoader.html">OoOJoin::RandomDataLoader</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dataloader which produces random key, random value and random skewness.  <a href="classOoOJoin_1_1RandomDataLoader.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,6 +158,40 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::FileDataLoad
 <tr class="memitem:gab904bb17430df5fe400b14e2587c0ad1"><td class="memItemLeft" align="right" valign="top">virtual vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gab904bb17430df5fe400b14e2587c0ad1">OoOJoin::FileDataLoader::getTupleVectorR</a> ()</td></tr>
 <tr class="memdesc:gab904bb17430df5fe400b14e2587c0ad1"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the vector of R tuple  <a href="group__ADB__TESTBENCH__DATALOADERS.html#gab904bb17430df5fe400b14e2587c0ad1">More...</a><br /></td></tr>
 <tr class="separator:gab904bb17430df5fe400b14e2587c0ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ad5d3d06e650e2a6924e60edfeccec0"><td class="memItemLeft" align="right" valign="top"><a id="ga1ad5d3d06e650e2a6924e60edfeccec0"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::genArrivalTime</b> (vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> &gt; eventTime, vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> &gt; arrivalSkew)</td></tr>
+<tr class="separator:ga1ad5d3d06e650e2a6924e60edfeccec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47f67239091ff9a21ff65881d1b9f53e"><td class="memItemLeft" align="right" valign="top"><a id="ga47f67239091ff9a21ff65881d1b9f53e"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">OoOJoin::TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::genTuples</b> (vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#ga6e458bcbd0b4c308f65c97ab68911edf">keyType</a> &gt; keyS, vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gad62d6ae23f8a7a25f18f121c3a00c524">valueType</a> &gt; valueS, vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> &gt; eventS, vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> &gt; arrivalS)</td></tr>
+<tr class="separator:ga47f67239091ff9a21ff65881d1b9f53e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10836e66e6a42d937894e35a72e9b4b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga10836e66e6a42d937894e35a72e9b4b2">OoOJoin::ZipfDataLoader::genKey</a> ()</td></tr>
+<tr class="memdesc:ga10836e66e6a42d937894e35a72e9b4b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate the vector of key  <a href="group__ADB__TESTBENCH__DATALOADERS.html#ga10836e66e6a42d937894e35a72e9b4b2">More...</a><br /></td></tr>
+<tr class="separator:ga10836e66e6a42d937894e35a72e9b4b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8765e584d5035e6e5742bea47408f0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaf8765e584d5035e6e5742bea47408f0e">OoOJoin::ZipfDataLoader::genValue</a> ()</td></tr>
+<tr class="memdesc:gaf8765e584d5035e6e5742bea47408f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">enerate the vector of key  <a href="group__ADB__TESTBENCH__DATALOADERS.html#gaf8765e584d5035e6e5742bea47408f0e">More...</a><br /></td></tr>
+<tr class="separator:gaf8765e584d5035e6e5742bea47408f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e6906d9a6440dcf0784f0d2e42bc54f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga2e6906d9a6440dcf0784f0d2e42bc54f">OoOJoin::ZipfDataLoader::genEvent</a> ()</td></tr>
+<tr class="memdesc:ga2e6906d9a6440dcf0784f0d2e42bc54f"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate the vector of event  <a href="group__ADB__TESTBENCH__DATALOADERS.html#ga2e6906d9a6440dcf0784f0d2e42bc54f">More...</a><br /></td></tr>
+<tr class="separator:ga2e6906d9a6440dcf0784f0d2e42bc54f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeedd47f99255377cb4050f9231662fef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaeedd47f99255377cb4050f9231662fef">OoOJoin::ZipfDataLoader::genArrival</a> ()</td></tr>
+<tr class="memdesc:gaeedd47f99255377cb4050f9231662fef"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate the vector of arrival  <a href="group__ADB__TESTBENCH__DATALOADERS.html#gaeedd47f99255377cb4050f9231662fef">More...</a><br /></td></tr>
+<tr class="separator:gaeedd47f99255377cb4050f9231662fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc3aa65edbdd6e81cc6c94d168c608fc"><td class="memItemLeft" align="right" valign="top"><a id="gabc3aa65edbdd6e81cc6c94d168c608fc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gabc3aa65edbdd6e81cc6c94d168c608fc">OoOJoin::ZipfDataLoader::genFinal</a> ()</td></tr>
+<tr class="memdesc:gabc3aa65edbdd6e81cc6c94d168c608fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate the final result of s and r <br /></td></tr>
+<tr class="separator:gabc3aa65edbdd6e81cc6c94d168c608fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5832924e483870bab4662b0f791f87a9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga5832924e483870bab4662b0f791f87a9">OoOJoin::ZipfDataLoader::setConfig</a> (<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</td></tr>
+<tr class="memdesc:ga5832924e483870bab4662b0f791f87a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the GLOBAL config map related to this loader.  <a href="group__ADB__TESTBENCH__DATALOADERS.html#ga5832924e483870bab4662b0f791f87a9">More...</a><br /></td></tr>
+<tr class="separator:ga5832924e483870bab4662b0f791f87a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab05828e84a6e99a15f167f64121d08ac"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gab05828e84a6e99a15f167f64121d08ac">OoOJoin::ZipfDataLoader::setModConfig</a> (<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a> cfg)</td></tr>
+<tr class="memdesc:gab05828e84a6e99a15f167f64121d08ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the modification config map related to this loader.  <a href="group__ADB__TESTBENCH__DATALOADERS.html#gab05828e84a6e99a15f167f64121d08ac">More...</a><br /></td></tr>
+<tr class="separator:gab05828e84a6e99a15f167f64121d08ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeeec00297df32c9891724fc85cf941f8"><td class="memItemLeft" align="right" valign="top">virtual vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaeeec00297df32c9891724fc85cf941f8">OoOJoin::ZipfDataLoader::getTupleVectorS</a> ()</td></tr>
+<tr class="memdesc:gaeeec00297df32c9891724fc85cf941f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the vector of s tuple  <a href="group__ADB__TESTBENCH__DATALOADERS.html#gaeeec00297df32c9891724fc85cf941f8">More...</a><br /></td></tr>
+<tr class="separator:gaeeec00297df32c9891724fc85cf941f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7dd5f4497df6e2752e45390b1835df60"><td class="memItemLeft" align="right" valign="top">virtual vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga7dd5f4497df6e2752e45390b1835df60">OoOJoin::ZipfDataLoader::getTupleVectorR</a> ()</td></tr>
+<tr class="memdesc:ga7dd5f4497df6e2752e45390b1835df60"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the vector of R tuple  <a href="group__ADB__TESTBENCH__DATALOADERS.html#ga7dd5f4497df6e2752e45390b1835df60">More...</a><br /></td></tr>
+<tr class="separator:ga7dd5f4497df6e2752e45390b1835df60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -167,6 +204,90 @@ vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fb
 <tr class="memitem:gad34028825225b149fb56e5b078b544af"><td class="memItemLeft" align="right" valign="top"><a id="gad34028825225b149fb56e5b078b544af"></a>
 vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::FileDataLoader::rTuple</b></td></tr>
 <tr class="separator:gad34028825225b149fb56e5b078b544af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac23fb6cc2af494a61b1a85c66a2d7c2a"><td class="memItemLeft" align="right" valign="top"><a id="gac23fb6cc2af494a61b1a85c66a2d7c2a"></a>
+<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::windowLenMs</b></td></tr>
+<tr class="separator:gac23fb6cc2af494a61b1a85c66a2d7c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga417f5754f4c002bc0db21955e85974f7"><td class="memItemLeft" align="right" valign="top"><a id="ga417f5754f4c002bc0db21955e85974f7"></a>
+<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::timeStepUs</b></td></tr>
+<tr class="separator:ga417f5754f4c002bc0db21955e85974f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad066a1c2f955507e9c7752c146249d0d"><td class="memItemLeft" align="right" valign="top"><a id="gad066a1c2f955507e9c7752c146249d0d"></a>
+<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::watermarkTimeMs</b></td></tr>
+<tr class="separator:gad066a1c2f955507e9c7752c146249d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3b905d70088e6324eb1f7e6e532f672"><td class="memItemLeft" align="right" valign="top"><a id="gaf3b905d70088e6324eb1f7e6e532f672"></a>
+<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::maxArrivalSkewMs</b></td></tr>
+<tr class="separator:gaf3b905d70088e6324eb1f7e6e532f672"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad62f263e66489d19df9cae73cc30bbdf"><td class="memItemLeft" align="right" valign="top"><a id="gad62f263e66489d19df9cae73cc30bbdf"></a>
+<a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::eventRateKTps</b></td></tr>
+<tr class="separator:gad62f263e66489d19df9cae73cc30bbdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1edbee56913570d6a29d11512cac5a1"><td class="memItemLeft" align="right" valign="top"><a id="gad1edbee56913570d6a29d11512cac5a1"></a>
+uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::zipfDataLoader_zipfKey</b></td></tr>
+<tr class="separator:gad1edbee56913570d6a29d11512cac5a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga957228204e81980f24734893532c758b"><td class="memItemLeft" align="right" valign="top"><a id="ga957228204e81980f24734893532c758b"></a>
+uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::zipfDataLoader_zipfValue</b></td></tr>
+<tr class="separator:ga957228204e81980f24734893532c758b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f26b8b9ac25718611d81a2cd6665ecf"><td class="memItemLeft" align="right" valign="top"><a id="ga7f26b8b9ac25718611d81a2cd6665ecf"></a>
+uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::zipfDataLoader_zipfEvent</b></td></tr>
+<tr class="separator:ga7f26b8b9ac25718611d81a2cd6665ecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59db355b25a74d42c987403e41de5f15"><td class="memItemLeft" align="right" valign="top"><a id="ga59db355b25a74d42c987403e41de5f15"></a>
+uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::zipfDataLoader_zipfSkew</b></td></tr>
+<tr class="separator:ga59db355b25a74d42c987403e41de5f15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2040e510913375e2348e3dbdb9814e17"><td class="memItemLeft" align="right" valign="top"><a id="ga2040e510913375e2348e3dbdb9814e17"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#ga6e458bcbd0b4c308f65c97ab68911edf">keyType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::keyS</b></td></tr>
+<tr class="separator:ga2040e510913375e2348e3dbdb9814e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4bae9b3154f5cf734cdc063575e3eaea"><td class="memItemLeft" align="right" valign="top"><a id="ga4bae9b3154f5cf734cdc063575e3eaea"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#ga6e458bcbd0b4c308f65c97ab68911edf">keyType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::keyR</b></td></tr>
+<tr class="separator:ga4bae9b3154f5cf734cdc063575e3eaea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02c644df4f28ed9ea4bd9ce8e2a027ed"><td class="memItemLeft" align="right" valign="top"><a id="ga02c644df4f28ed9ea4bd9ce8e2a027ed"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gad62d6ae23f8a7a25f18f121c3a00c524">valueType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::valueS</b></td></tr>
+<tr class="separator:ga02c644df4f28ed9ea4bd9ce8e2a027ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05da2be57603d2f37b75cb25478acbf1"><td class="memItemLeft" align="right" valign="top"><a id="ga05da2be57603d2f37b75cb25478acbf1"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gad62d6ae23f8a7a25f18f121c3a00c524">valueType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::valueR</b></td></tr>
+<tr class="separator:ga05da2be57603d2f37b75cb25478acbf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c716ad5331f8d9a3296e26a491ab8e6"><td class="memItemLeft" align="right" valign="top"><a id="ga0c716ad5331f8d9a3296e26a491ab8e6"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::eventS</b></td></tr>
+<tr class="separator:ga0c716ad5331f8d9a3296e26a491ab8e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72aada600e55df3816ad39386490ccdd"><td class="memItemLeft" align="right" valign="top"><a id="ga72aada600e55df3816ad39386490ccdd"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::eventR</b></td></tr>
+<tr class="separator:ga72aada600e55df3816ad39386490ccdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21fe61369e40d60fcef36e8fc46a0368"><td class="memItemLeft" align="right" valign="top"><a id="ga21fe61369e40d60fcef36e8fc46a0368"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::arrivalS</b></td></tr>
+<tr class="separator:ga21fe61369e40d60fcef36e8fc46a0368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47ed3a3594036732e71987d85221d372"><td class="memItemLeft" align="right" valign="top"><a id="ga47ed3a3594036732e71987d85221d372"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gaa95f0e41249456afd65caeeb23207042">tsType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::arrivalR</b></td></tr>
+<tr class="separator:ga47ed3a3594036732e71987d85221d372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga916f022e25fa62647f958e683f0f2c91"><td class="memItemLeft" align="right" valign="top"><a id="ga916f022e25fa62647f958e683f0f2c91"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::testSize</b></td></tr>
+<tr class="separator:ga916f022e25fa62647f958e683f0f2c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae765048a9c2936d6be13c0e79cc8d2a8"><td class="memItemLeft" align="right" valign="top"><a id="gae765048a9c2936d6be13c0e79cc8d2a8"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::keyRange</b></td></tr>
+<tr class="separator:gae765048a9c2936d6be13c0e79cc8d2a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf052fab47f3092bcc86ab1188c44a105"><td class="memItemLeft" align="right" valign="top"><a id="gaf052fab47f3092bcc86ab1188c44a105"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::valueRange</b></td></tr>
+<tr class="separator:gaf052fab47f3092bcc86ab1188c44a105"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga94fbb9a4699b0a71b94d55decb3ec2f1"><td class="memItemLeft" align="right" valign="top"><a id="ga94fbb9a4699b0a71b94d55decb3ec2f1"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::zipfDataLoader_zipfKeyFactor</b></td></tr>
+<tr class="separator:ga94fbb9a4699b0a71b94d55decb3ec2f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bd7104393ebd9f4b48d8f08c8d8e49c"><td class="memItemLeft" align="right" valign="top"><a id="ga0bd7104393ebd9f4b48d8f08c8d8e49c"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::zipfDataLoader_zipfValueFactor</b></td></tr>
+<tr class="separator:ga0bd7104393ebd9f4b48d8f08c8d8e49c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1658ba2c8b9f87fbe2a7fb18b9b56a18"><td class="memItemLeft" align="right" valign="top"><a id="ga1658ba2c8b9f87fbe2a7fb18b9b56a18"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::zipfDataLoader_zipfEventFactor</b></td></tr>
+<tr class="separator:ga1658ba2c8b9f87fbe2a7fb18b9b56a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4c9842e682bfea607435349ac27e49e"><td class="memItemLeft" align="right" valign="top"><a id="gab4c9842e682bfea607435349ac27e49e"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::zipfDataLoader_zipfSkewFactor</b></td></tr>
+<tr class="separator:gab4c9842e682bfea607435349ac27e49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacbfc4125ce2f54c9af4f0c852b6a7dff"><td class="memItemLeft" align="right" valign="top"><a id="gacbfc4125ce2f54c9af4f0c852b6a7dff"></a>
+<a class="el" href="classINTELLI_1_1MicroDataSet.html">MicroDataSet</a>&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::md</b></td></tr>
+<tr class="separator:gacbfc4125ce2f54c9af4f0c852b6a7dff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3714d2bd5d1de3bf3be1f337b651d11"><td class="memItemLeft" align="right" valign="top"><a id="gaf3714d2bd5d1de3bf3be1f337b651d11"></a>
+<a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::cfgGlobal</b></td></tr>
+<tr class="separator:gaf3714d2bd5d1de3bf3be1f337b651d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5099ddc3484ff0d21333dbdc68e6e4b9"><td class="memItemLeft" align="right" valign="top"><a id="ga5099ddc3484ff0d21333dbdc68e6e4b9"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::sTuple</b></td></tr>
+<tr class="separator:ga5099ddc3484ff0d21333dbdc68e6e4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2fcfc571b47a652136ebec9fbbd6760a"><td class="memItemLeft" align="right" valign="top"><a id="ga2fcfc571b47a652136ebec9fbbd6760a"></a>
+vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OoOJoin::ZipfDataLoader::rTuple</b></td></tr>
+<tr class="separator:ga2fcfc571b47a652136ebec9fbbd6760a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafee8f3f806352b7976f0944bfe544c0e"><td class="memItemLeft" align="right" valign="top"><a id="gafee8f3f806352b7976f0944bfe544c0e"></a>
 typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1AbstractDataLoader.html">AbstractDataLoader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gafee8f3f806352b7976f0944bfe544c0e">OoOJoin::AbstractDataLoaderPtr</a></td></tr>
 <tr class="memdesc:gafee8f3f806352b7976f0944bfe544c0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1AbstractDataLoader.html">AbstractDataLoader</a>. <br /></td></tr>
@@ -183,6 +304,14 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1FileDataLo
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaf1068f84536dfc3945e619a76664fb94">newFileDataLoader</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1FileDataLoader.html">OoOJoin::FileDataLoader</a>&gt;</td></tr>
 <tr class="memdesc:gaf1068f84536dfc3945e619a76664fb94"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new FileDataLoader under shared pointer. <br /></td></tr>
 <tr class="separator:gaf1068f84536dfc3945e619a76664fb94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b265cc405ada8fa7dd8c2f68c7f61aa"><td class="memItemLeft" align="right" valign="top"><a id="ga0b265cc405ada8fa7dd8c2f68c7f61aa"></a>
+typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1ZipfDataLoader.html">ZipfDataLoader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga0b265cc405ada8fa7dd8c2f68c7f61aa">OoOJoin::ZipfDataLoaderPtr</a></td></tr>
+<tr class="memdesc:ga0b265cc405ada8fa7dd8c2f68c7f61aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1ZipfDataLoader.html">ZipfDataLoader</a>. <br /></td></tr>
+<tr class="separator:ga0b265cc405ada8fa7dd8c2f68c7f61aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4a8539c13942566bdd6a75f5e1124d3"><td class="memItemLeft" align="right" valign="top"><a id="gae4a8539c13942566bdd6a75f5e1124d3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gae4a8539c13942566bdd6a75f5e1124d3">newZipfDataLoader</a>&#160;&#160;&#160;std::make_shared&lt;<a class="el" href="classOoOJoin_1_1ZipfDataLoader.html">OoOJoin::ZipfDataLoader</a>&gt;</td></tr>
+<tr class="memdesc:gae4a8539c13942566bdd6a75f5e1124d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Macro) To creat a new ZipfDataLoader under shared pointer. <br /></td></tr>
+<tr class="separator:gae4a8539c13942566bdd6a75f5e1124d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga07ba8308a3f4cdb9f1c7dba7c12854b6"><td class="memItemLeft" align="right" valign="top"><a id="ga07ba8308a3f4cdb9f1c7dba7c12854b6"></a>
 typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomDataLoader.html">RandomDataLoader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga07ba8308a3f4cdb9f1c7dba7c12854b6">OoOJoin::RandomDataLoaderPtr</a></td></tr>
 <tr class="memdesc:ga07ba8308a3f4cdb9f1c7dba7c12854b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class to describe a shared pointer to <a class="el" href="classOoOJoin_1_1RandomDataLoader.html">RandomDataLoader</a>. <br /></td></tr>
@@ -194,8 +323,120 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomData
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gaeedd47f99255377cb4050f9231662fef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeedd47f99255377cb4050f9231662fef">&#9670;&nbsp;</a></span>genArrival()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZipfDataLoader::genArrival </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>generate the vector of arrival </p>
+<p>use zipf for event</p>
+
+</div>
+</div>
+<a id="ga2e6906d9a6440dcf0784f0d2e42bc54f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2e6906d9a6440dcf0784f0d2e42bc54f">&#9670;&nbsp;</a></span>genEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZipfDataLoader::genEvent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>generate the vector of event </p>
+<p>use zipf for event</p>
+
+</div>
+</div>
+<a id="ga10836e66e6a42d937894e35a72e9b4b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga10836e66e6a42d937894e35a72e9b4b2">&#9670;&nbsp;</a></span>genKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZipfDataLoader::genKey </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>generate the vector of key </p>
+<p>use zipf for key</p>
+
+</div>
+</div>
+<a id="gaf8765e584d5035e6e5742bea47408f0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf8765e584d5035e6e5742bea47408f0e">&#9670;&nbsp;</a></span>genValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZipfDataLoader::genValue </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>enerate the vector of key </p>
+<p>use zipf for value</p>
+
+</div>
+</div>
 <a id="gaaa3038960d3e42daad8b7fba3055fed1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaa3038960d3e42daad8b7fba3055fed1">&#9670;&nbsp;</a></span>getTupleVectorR() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaa3038960d3e42daad8b7fba3055fed1">&#9670;&nbsp;</a></span>getTupleVectorR() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -220,12 +461,12 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomData
 <p>get the vector of R tuple </p>
 <dl class="section return"><dt>Returns</dt><dd>the vector </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a47c80a035fbf2ecc117ede354ed24ba4">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gab904bb17430df5fe400b14e2587c0ad1">OoOJoin::FileDataLoader</a>.</p>
+<p>Reimplemented in <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga7dd5f4497df6e2752e45390b1835df60">OoOJoin::ZipfDataLoader</a>, <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a47c80a035fbf2ecc117ede354ed24ba4">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gab904bb17430df5fe400b14e2587c0ad1">OoOJoin::FileDataLoader</a>.</p>
 
 </div>
 </div>
 <a id="gab904bb17430df5fe400b14e2587c0ad1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab904bb17430df5fe400b14e2587c0ad1">&#9670;&nbsp;</a></span>getTupleVectorR() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gab904bb17430df5fe400b14e2587c0ad1">&#9670;&nbsp;</a></span>getTupleVectorR() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -254,8 +495,38 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomData
 
 </div>
 </div>
+<a id="ga7dd5f4497df6e2752e45390b1835df60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7dd5f4497df6e2752e45390b1835df60">&#9670;&nbsp;</a></span>getTupleVectorR() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt; ZipfDataLoader::getTupleVectorR </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the vector of R tuple </p>
+<dl class="section return"><dt>Returns</dt><dd>the vector </dd></dl>
+
+<p>Reimplemented from <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaaa3038960d3e42daad8b7fba3055fed1">OoOJoin::AbstractDataLoader</a>.</p>
+
+</div>
+</div>
 <a id="gaf5eddbc21e6f2de4a760a345902d91ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf5eddbc21e6f2de4a760a345902d91ef">&#9670;&nbsp;</a></span>getTupleVectorS() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf5eddbc21e6f2de4a760a345902d91ef">&#9670;&nbsp;</a></span>getTupleVectorS() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -280,12 +551,12 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomData
 <p>get the vector of s tuple </p>
 <dl class="section return"><dt>Returns</dt><dd>the vector </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a778c93157a51e5266b0301d24246f240">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga2c197dbdc4655903b59b9a1c43233fe4">OoOJoin::FileDataLoader</a>.</p>
+<p>Reimplemented in <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaeeec00297df32c9891724fc85cf941f8">OoOJoin::ZipfDataLoader</a>, <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a778c93157a51e5266b0301d24246f240">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga2c197dbdc4655903b59b9a1c43233fe4">OoOJoin::FileDataLoader</a>.</p>
 
 </div>
 </div>
 <a id="ga2c197dbdc4655903b59b9a1c43233fe4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2c197dbdc4655903b59b9a1c43233fe4">&#9670;&nbsp;</a></span>getTupleVectorS() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2c197dbdc4655903b59b9a1c43233fe4">&#9670;&nbsp;</a></span>getTupleVectorS() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,6 +566,36 @@ typedef std::shared_ptr&lt; class <a class="el" href="classOoOJoin_1_1RandomData
       <table class="memname">
         <tr>
           <td class="memname">vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt; FileDataLoader::getTupleVectorS </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the vector of s tuple </p>
+<dl class="section return"><dt>Returns</dt><dd>the vector </dd></dl>
+
+<p>Reimplemented from <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gaf5eddbc21e6f2de4a760a345902d91ef">OoOJoin::AbstractDataLoader</a>.</p>
+
+</div>
+</div>
+<a id="gaeeec00297df32c9891724fc85cf941f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeeec00297df32c9891724fc85cf941f8">&#9670;&nbsp;</a></span>getTupleVectorS() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="group__INTELLI__COMMON__BASIC.html#gac8feaf54d6fbdacfed0ed232e9354c7e">TrackTuplePtr</a> &gt; ZipfDataLoader::getTupleVectorS </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -374,7 +675,7 @@ deciding the valid rows</dd></dl>
 </div>
 </div>
 <a id="gae866ca3f61e7924d060ce42d62d628a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae866ca3f61e7924d060ce42d62d628a9">&#9670;&nbsp;</a></span>setConfig() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gae866ca3f61e7924d060ce42d62d628a9">&#9670;&nbsp;</a></span>setConfig() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -406,12 +707,12 @@ deciding the valid rows</dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a4420431e245dfa68ad3a7db635427d70">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gad4315f20770d93c8549a25dee69a68c0">OoOJoin::FileDataLoader</a>.</p>
+<p>Reimplemented in <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga5832924e483870bab4662b0f791f87a9">OoOJoin::ZipfDataLoader</a>, <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a4420431e245dfa68ad3a7db635427d70">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gad4315f20770d93c8549a25dee69a68c0">OoOJoin::FileDataLoader</a>.</p>
 
 </div>
 </div>
 <a id="gad4315f20770d93c8549a25dee69a68c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad4315f20770d93c8549a25dee69a68c0">&#9670;&nbsp;</a></span>setConfig() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gad4315f20770d93c8549a25dee69a68c0">&#9670;&nbsp;</a></span>setConfig() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -447,8 +748,46 @@ deciding the valid rows</dd></dl>
 
 </div>
 </div>
+<a id="ga5832924e483870bab4662b0f791f87a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5832924e483870bab4662b0f791f87a9">&#9670;&nbsp;</a></span>setConfig() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ZipfDataLoader::setConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the GLOBAL config map related to this loader. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>The config map </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
+<p>load some common settings</p>
+
+<p>Reimplemented from <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gae866ca3f61e7924d060ce42d62d628a9">OoOJoin::AbstractDataLoader</a>.</p>
+
+</div>
+</div>
 <a id="ga325834de0cdda703ea47dbdd8b247f6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga325834de0cdda703ea47dbdd8b247f6b">&#9670;&nbsp;</a></span>setModConfig() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga325834de0cdda703ea47dbdd8b247f6b">&#9670;&nbsp;</a></span>setModConfig() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -480,12 +819,12 @@ deciding the valid rows</dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a1ab7b5c79a8d80d7ecfa5fd82d22723f">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">OoOJoin::FileDataLoader</a>.</p>
+<p>Reimplemented in <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#gab05828e84a6e99a15f167f64121d08ac">OoOJoin::ZipfDataLoader</a>, <a class="el" href="classOoOJoin_1_1RandomDataLoader.html#a1ab7b5c79a8d80d7ecfa5fd82d22723f">OoOJoin::RandomDataLoader</a>, and <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga8ec80cec0a00d583fbf1e1de80f606b5">OoOJoin::FileDataLoader</a>.</p>
 
 </div>
 </div>
 <a id="ga8ec80cec0a00d583fbf1e1de80f606b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8ec80cec0a00d583fbf1e1de80f606b5">&#9670;&nbsp;</a></span>setModConfig() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8ec80cec0a00d583fbf1e1de80f606b5">&#9670;&nbsp;</a></span>setModConfig() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -495,6 +834,43 @@ deciding the valid rows</dd></dl>
       <table class="memname">
         <tr>
           <td class="memname">virtual bool OoOJoin::FileDataLoader::setModConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the modification config map related to this loader. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>The config map </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether the config is successfully set </dd></dl>
+
+<p>Reimplemented from <a class="el" href="group__ADB__TESTBENCH__DATALOADERS.html#ga325834de0cdda703ea47dbdd8b247f6b">OoOJoin::AbstractDataLoader</a>.</p>
+
+</div>
+</div>
+<a id="gab05828e84a6e99a15f167f64121d08ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab05828e84a6e99a15f167f64121d08ac">&#9670;&nbsp;</a></span>setModConfig() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool OoOJoin::ZipfDataLoader::setModConfig </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__INTELLI__UTIL__CONFIGS.html#gaeb9674f6f5860b687d73f618962dfcea">ConfigMapPtr</a>&#160;</td>
           <td class="paramname"><em>cfg</em></td><td>)</td>

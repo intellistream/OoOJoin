@@ -1,0 +1,4 @@
+<map id="OoOJoin::ZipfDataLoader" name="OoOJoin::ZipfDataLoader">
+<area shape="rect" id="node1" title="The dataloader which allows zipf distribution of key, value, event time and arrival skewness." alt="" coords="19,80,202,107"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1AbstractDataLoader.html" title="The abstract class of dataloader." alt="" coords="5,5,216,32"/>
+</map>

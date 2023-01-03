@@ -8,5 +8,6 @@ var classINTELLI_1_1MicroDataSet =
     [ "genSmoothTimeStamp", "group__MICRO__TS.html#ga19765940de8d14bbc533d507e62be20a", null ],
     [ "genZipfInt", "group__MICRO__GENERIC.html#ga655634e729cd01d5b4d2c996fe6a0e03", null ],
     [ "genZipfLut", "group__MICRO__GENERIC.html#gad5ab4de190974dcbaa2faca72fc34e90", null ],
-    [ "genZipfTimeStamp", "group__MICRO__TS.html#ga2a4363c83af4c281d3a251676bdf7d2d", null ]
+    [ "genZipfTimeStamp", "group__MICRO__TS.html#ga2a4363c83af4c281d3a251676bdf7d2d", null ],
+    [ "setSeed", "group__INTELLI__UTIL__Micro.html#ga75b1ab66670261c77747d586f6a046f0", null ]
 ];

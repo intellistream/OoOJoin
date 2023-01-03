@@ -1,0 +1,13 @@
+<map id="OoOJoin::ZipfDataLoader" name="OoOJoin::ZipfDataLoader">
+<area shape="rect" id="node1" title="The dataloader which allows zipf distribution of key, value, event time and arrival skewness." alt="" coords="469,480,652,507"/>
+<area shape="rect" id="node2" href="$classOoOJoin_1_1AbstractDataLoader.html" title="The abstract class of dataloader." alt="" coords="5,21,216,48"/>
+<area shape="rect" id="node3" title=" " alt="" coords="31,72,190,99"/>
+<area shape="rect" id="node4" title=" " alt="" coords="77,176,144,203"/>
+<area shape="rect" id="node5" title=" " alt="" coords="73,397,148,424"/>
+<area shape="rect" id="node6" title=" " alt="" coords="21,455,200,481"/>
+<area shape="rect" id="node7" title=" " alt="" coords="56,505,165,532"/>
+<area shape="rect" id="node8" title=" " alt="" coords="81,577,141,604"/>
+<area shape="rect" id="node9" title=" " alt="" coords="43,665,178,692"/>
+<area shape="rect" id="node10" href="$classINTELLI_1_1MicroDataSet.html" title="The all&#45;in&#45;one class for the Micro dataset." alt="" coords="27,716,194,743"/>
+<area shape="rect" id="node11" title=" " alt="" coords="37,773,184,800"/>
+</map>
