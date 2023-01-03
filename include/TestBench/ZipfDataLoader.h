@@ -38,16 +38,16 @@ namespace OoOJoin {
  * - zipfDataLoader_zipfValue U64, in value, 1 for zipf, 0 for random
  * - zipfDataLoader_zipfEvent U64, in event time,  1 for zipf, 0 for random
  * - zipfDataLoader_zipfSkew U64, in arrival skewness,  1 for zipf, 0 for random
- *  - zipfDataLoader_zipfKeyFactor Double, in key,0~1
+ * - zipfDataLoader_zipfKeyFactor Double, in key,0~1
  * - zipfDataLoader_zipfValueFactor Double, in value, 0~1
  * - zipfDataLoader_zipfEventFactor Double, in event time, 0~1
- *  - zipfDataLoader_zipfSkewFactor Double, in event time, 0~1
- * - "windowLenMs" U64 The real world window length in ms
- * - "timeStepUs" U64 The simulation step in us
- *  - "maxArrivalSkewMs" U64 The maximum real-world arrival skewness in ms
- * - "eventRateKTps" U64 The real-world rate of spawn event, in KTuples/s
- * - "keyRange" U64 The range of Key
- * - "valueRange" U64 The range of value
+ * - zipfDataLoader_zipfSkewFactor Double, in event time, 0~1
+ * - windowLenMs U64 The real world window length in ms
+ * - timeStepUs U64 The simulation step in us
+ * - maxArrivalSkewMs U64 The maximum real-world arrival skewness in ms
+ * - eventRateKTps U64 The real-world rate of spawn event, in KTuples/s
+ * - keyRange U64 The range of Key
+ * - valueRange U64 The range of value
  */
 class ZipfDataLoader : public AbstractDataLoader {
  protected:

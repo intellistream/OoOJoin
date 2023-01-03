@@ -1,1 +1,1 @@
-1. add the ZipfDataLoader which enables key, value, eventTime and arrivalSkewness in zipf distribution
+1. fix bugs in documents
