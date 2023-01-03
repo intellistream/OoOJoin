@@ -81,9 +81,9 @@ def draw2yLine(NAME, Com, R1, R2, l1, l2, m1, m2, fname):
     # ax1.set_xticklabels(ax1.get_xticklabels())  # 设置共用的x轴
     plt.xticks(rotation=0, size=TICK_FONT_SIZE)
     plt.yticks(rotation=0, size=TICK_FONT_SIZE)
-    plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
+    plt.rcParams['axes.unicode_minus']=False#用来正常显示负号
     ax2 = ax1.twinx()
-
+    
     # ax2.set_ylabel('latency/us')
     # ax2.set_ylim(0, 0.5)
     lines[1], = ax2.plot(Com, R2, color=LINE_COLORS[1], \
