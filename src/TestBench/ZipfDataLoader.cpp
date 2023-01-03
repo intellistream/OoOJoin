@@ -77,8 +77,8 @@ void ZipfDataLoader::genArrival() {
   vector<tsType> skewS, skewR;
   zipfDataLoader_zipfSkew = cfgGlobal->tryU64("zipfDataLoader_zipfSkew", 1, true);
 
-  if (zipfDataLoader_zipfEvent) {
-    zipfDataLoader_zipfSkewFactor = cfgGlobal->tryDouble("zipfDataLoader_zipfSkew", 0.5, true);
+  if (zipfDataLoader_zipfSkew) {
+    zipfDataLoader_zipfSkewFactor = cfgGlobal->tryDouble("zipfDataLoader_zipfSkewFactor", 0.5, true);
     /**
      * @brief use zipf for event
      */
@@ -90,9 +90,9 @@ void ZipfDataLoader::genArrival() {
 
   } else {
     md.setSeed(1024);
-    skewS = md.genRandInt<valueType>(testSize, valueRange, 1);
+    skewS = md.genRandInt<valueType>(testSize, maxArrivalSkewMs * 1000, 1);
     md.setSeed(4096);
-    skewR = md.genRandInt<valueType>(testSize, valueRange, 1);
+    skewR = md.genRandInt<valueType>(testSize, maxArrivalSkewMs * 1000, 1);
   }
   arrivalS = genArrivalTime(eventS, skewS);
   arrivalR = genArrivalTime(eventR, skewR);
