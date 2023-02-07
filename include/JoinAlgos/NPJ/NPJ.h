@@ -54,9 +54,9 @@ build phase, all threads populate a shared hash table with all tuples
         void inlineMain() override;
 
     public:
-        NPJ_thread() = default;;
+        NPJ_thread() = default;
 
-        ~NPJ_thread() = default;;
+        ~NPJ_thread() = default;
 
         /**
          * @brief Synchronize the time structure with outside setting
