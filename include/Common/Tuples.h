@@ -64,7 +64,7 @@ namespace OoOJoin {
          * @brief convert the tuple into std string
          * @return the std string for this tuple
          */
-        std::string toString();
+        std::string toString() const;
 
         ~Tuple() = default;
     };

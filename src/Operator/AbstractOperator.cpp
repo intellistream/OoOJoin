@@ -4,6 +4,8 @@
 
 #include <Operator/AbstractOperator.h>
 
+#include <utility>
+
 using namespace OoOJoin;
 
 bool OoOJoin::AbstractOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
@@ -33,7 +35,7 @@ size_t OoOJoin::AbstractOperator::getAQPResult() {
 }
 
 bool OoOJoin::AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
-    config = cfg;
+    config = std::move(cfg);
     if (config == nullptr) {
         return false;
     }
