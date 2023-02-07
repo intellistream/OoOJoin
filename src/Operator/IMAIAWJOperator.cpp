@@ -3,7 +3,7 @@
 #include <JoinAlgos/JoinAlgoTable.h>
 
 bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
-    if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
+    if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
         return false;
     }
     std::string wmTag = config->tryString("wmTag", "arrival", true);

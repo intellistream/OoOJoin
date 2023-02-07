@@ -20,7 +20,7 @@ OoOJoin::Tuple::Tuple(OoOJoin::keyType k, OoOJoin::valueType v, tsType et) {
     eventTime = et;
 }
 
-std::string OoOJoin::Tuple::toString() {
+std::string OoOJoin::Tuple::toString() const {
     std::string tmp;
     tmp.append("\t\tkey:" + std::to_string(key));
     tmp.append("\t\tvalue:" + std::to_string(payload));
