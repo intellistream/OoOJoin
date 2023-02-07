@@ -5,10 +5,12 @@
 
 #ifndef INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_
 #define INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_
+
 #include <Operator/AbstractOperator.h>
 #include <Common/Window.h>
 #include <atomic>
 #include <WaterMarker/LatenessWM.h>
+
 namespace OoOJoin {
 /**
  * @class IAWJOperator
@@ -26,70 +28,76 @@ namespace OoOJoin {
  * @note In current version, the computation will block feeding
  * @note operator tag = "IAWJ"
  */
-class IAWJOperator : public AbstractOperator {
- protected:
-  Window myWindow;
-  size_t intermediateResult = 0;
-  string algoTag = "NestedLoopJoin";
-  uint64_t joinThreads = 1;
-  /**
-   * @brief if operator is locked by watermark, it will never accept new incoming
-   * @todo current implementation is putting rotten, fix later
-   */
-  atomic_bool lockedByWaterMark = false;
-  AbstractWaterMarkerPtr wmGen = nullptr;
-  void conductComputation();
- public:
-  IAWJOperator() {}
-  ~IAWJOperator() {}
-  /**
-   * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
-  * @brief Set the config map related to this operator
-  * @param cfg The config map
-   * @return bool whether the config is successfully set
-  */
-  virtual bool setConfig(ConfigMapPtr cfg);
-  /**
- * @brief feed a tuple s into the Operator
- * @param ts The tuple
-  * @warning The current version is simplified and assuming only used in SINGLE THREAD!
-  * @return bool, whether tuple is fed.
- */
-  virtual bool feedTupleS(TrackTuplePtr ts);
+    class IAWJOperator : public AbstractOperator {
+    protected:
+        Window myWindow;
+        size_t intermediateResult = 0;
+        string algoTag = "NestedLoopJoin";
+        uint64_t joinThreads = 1;
+        /**
+         * @brief if operator is locked by watermark, it will never accept new incoming
+         * @todo current implementation is putting rotten, fix later
+         */
+        atomic_bool lockedByWaterMark = false;
+        AbstractWaterMarkerPtr wmGen = nullptr;
 
-  /**
-    * @brief feed a tuple R into the Operator
-    * @param tr The tuple
-    * @warning The current version is simplified and assuming only used in SINGLE THREAD!
-    *  @return bool, whether tuple is fed.
-    */
-  virtual bool feedTupleR(TrackTuplePtr tr);
+        void conductComputation();
 
-  /**
-   * @brief start this operator
-   * @return bool, whether start successfully
-   */
-  virtual bool start();
+    public:
+        IAWJOperator() = default;
 
-  /**
-   * @brief stop this operator
-   * @return bool, whether start successfully
-   */
-  virtual bool stop();
+        ~IAWJOperator() = default;
 
-  /**
-   * @brief get the joined sum result
-   * @return The result
-   */
-  virtual size_t getResult();
+        /**
+         * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
+        * @brief Set the config map related to this operator
+        * @param cfg The config map
+         * @return bool whether the config is successfully set
+        */
+        bool setConfig(ConfigMapPtr cfg) override;
 
-};
+        /**
+       * @brief feed a tuple s into the Operator
+       * @param ts The tuple
+        * @warning The current version is simplified and assuming only used in SINGLE THREAD!
+        * @return bool, whether tuple is fed.
+       */
+        bool feedTupleS(TrackTuplePtr ts) override;
+
+        /**
+          * @brief feed a tuple R into the Operator
+          * @param tr The tuple
+          * @warning The current version is simplified and assuming only used in SINGLE THREAD!
+          *  @return bool, whether tuple is fed.
+          */
+        bool feedTupleR(TrackTuplePtr tr) override;
+
+        /**
+         * @brief start this operator
+         * @return bool, whether start successfully
+         */
+        bool start() override;
+
+        /**
+         * @brief stop this operator
+         * @return bool, whether start successfully
+         */
+        bool stop() override;
+
+        /**
+         * @brief get the joined sum result
+         * @return The result
+         */
+        size_t getResult() override;
+
+    };
+
 /**
  * @ingroup ADB_OPERATORS
  * @typedef IAWJOperatorPtr
  * @brief The class to describe a shared pointer to @ref IAWJOperator
  */
-typedef std::shared_ptr<class IAWJOperator> IAWJOperatorPtr;
+    typedef std::shared_ptr<class IAWJOperator> IAWJOperatorPtr;
 /**
  * @ingroup ADB_OPERATORS
  * @def newIAWJOperator

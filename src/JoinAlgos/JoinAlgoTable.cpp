@@ -4,16 +4,17 @@
 #include <JoinAlgos/JoinAlgoTable.h>
 
 using namespace OoOJoin;
+
 JoinAlgoTable::JoinAlgoTable() {
 //  NPJ npj;
-  algos = {newAbstractJoinAlgo(), \
+    algos = {newAbstractJoinAlgo(), \
           newNestedLoopJoin(), \
           newNPJ(), \
          newNPJSingle()
-  };
-  algoMap["Null"] = newAbstractJoinAlgo();
-  algoMap["NestedLoopJoin"] = newNestedLoopJoin();
-  algoMap["NPJ"] = newNPJ();
-  algoMap["NPJSingle"] = newNPJSingle();
-  //cout<<algos[1]->getAlgoName()<<endl;
+    };
+    algoMap["Null"] = newAbstractJoinAlgo();
+    algoMap["NestedLoopJoin"] = newNestedLoopJoin();
+    algoMap["NPJ"] = newNPJ();
+    algoMap["NPJSingle"] = newNPJSingle();
+    //cout<<algos[1]->getAlgoName()<<endl;
 }

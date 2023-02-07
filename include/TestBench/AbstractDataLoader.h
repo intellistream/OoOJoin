@@ -5,10 +5,12 @@
 
 #ifndef _INCLUDE_TESTBENCH_ABSTRACTDATALOADER_H_
 #define _INCLUDE_TESTBENCH_ABSTRACTDATALOADER_H_
+
 #include <Utils/ConfigMap.hpp>
 #include <Common/Tuples.h>
 #include <assert.h>
 #include <Utils/IntelliLog.h>
+
 using namespace INTELLI;
 #define DATA_INFO INTELLI_INFO
 #define DATA_ERROR INTELLI_ERROR
@@ -36,48 +38,53 @@ namespace OoOJoin {
 * - setConfig and setModConfig (optional), generate R and S internally
 * - call getTupleVectorS/R
  */
-class AbstractDataLoader {
- public:
-  AbstractDataLoader() {}
-  ~AbstractDataLoader() {}
-  /**
- * @brief Set the GLOBAL config map related to this loader
- * @param cfg The config map
-  * @return bool whether the config is successfully set
- */
-  virtual bool setConfig(ConfigMapPtr cfg) {
-    assert(cfg);
-    return true;
-  }
-  /**
-* @brief Set the modification config map related to this loader
-* @param cfg The config map
-* @return bool whether the config is successfully set
-*/
-  virtual bool setModConfig(ConfigMapPtr cfg) {
-    assert(cfg);
-    return true;
-  }
-  /**
-   * @brief get the vector of s tuple
-   * @return the vector
-   */
-  virtual vector<TrackTuplePtr> getTupleVectorS() {
+    class AbstractDataLoader {
+    public:
+        AbstractDataLoader() = default;
 
-    vector<TrackTuplePtr> ru;
-    return ru;
+        ~AbstractDataLoader() = default;
 
-  }
-  /**
-  * @brief get the vector of R tuple
-  * @return the vector
-  */
-  virtual vector<TrackTuplePtr> getTupleVectorR() {
-    vector<TrackTuplePtr> ru;
-    return ru;
+        /**
+       * @brief Set the GLOBAL config map related to this loader
+       * @param cfg The config map
+        * @return bool whether the config is successfully set
+       */
+        virtual bool setConfig(ConfigMapPtr cfg) {
+            assert(cfg);
+            return true;
+        }
 
-  }
-};
+        /**
+      * @brief Set the modification config map related to this loader
+      * @param cfg The config map
+      * @return bool whether the config is successfully set
+      */
+        virtual bool setModConfig(ConfigMapPtr cfg) {
+            assert(cfg);
+            return true;
+        }
+
+        /**
+         * @brief get the vector of s tuple
+         * @return the vector
+         */
+        virtual vector<TrackTuplePtr> getTupleVectorS() {
+
+            vector<TrackTuplePtr> ru;
+            return ru;
+
+        }
+
+        /**
+        * @brief get the vector of R tuple
+        * @return the vector
+        */
+        virtual vector<TrackTuplePtr> getTupleVectorR() {
+            vector<TrackTuplePtr> ru;
+            return ru;
+
+        }
+    };
 
 /**
  * @ingroup ADB_TESTBENCH_DATALOADERS
@@ -85,7 +92,7 @@ class AbstractDataLoader {
  * @brief The class to describe a shared pointer to @ref AbstractDataLoader
 
  */
-typedef std::shared_ptr<class AbstractDataLoader> AbstractDataLoaderPtr;
+    typedef std::shared_ptr<class AbstractDataLoader> AbstractDataLoaderPtr;
 /**
  * @ingroup ADB_TESTBENCH_DATALOADERS
  * @def newAbstractDataLoader
