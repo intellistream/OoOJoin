@@ -5,10 +5,11 @@
 
 #ifndef ADB_INCLUDE_OPERATOR_ABSTRACTOPERATOR_H_
 #define ADB_INCLUDE_OPERATOR_ABSTRACTOPERATOR_H_
+
 #include <Common/Window.h>
 #include <Common/Tuples.h>
 #include <Utils/UtilityFunctions.hpp>
-#include <assert.h>
+#include <cassert>
 #include <Utils/ConfigMap.hpp>
 #include <WaterMarker/WMTable.h>
 //#include <Utils/Logger.hpp>
@@ -32,107 +33,117 @@ namespace OoOJoin {
 /**
 * @todo Finish the watermark generator part
 */
-class AbstractOperator {
- protected:
-  struct timeval timeBaseStruct;
-  size_t windowLen = 0;
-  size_t slideLen = 0;
-  size_t sLen = 0, rLen = 0;
-  int threads = 0;
-  tsType timeStep = 0;
-  tsType timeBreakDown_all = 0;
-  /**
-   *@brief set the final processed time for all tuples
-   */
-  void setFinalProcessedTime();
- public:
-  ConfigMapPtr config = nullptr;
-  AbstractOperator() {}
-  ~AbstractOperator() {}
+    class AbstractOperator {
+    protected:
+        struct timeval timeBaseStruct{};
+        size_t windowLen = 0;
+        size_t slideLen = 0;
+        size_t sLen = 0, rLen = 0;
+        int threads = 0;
+        tsType timeStep = 0;
+        tsType timeBreakDown_all = 0;
 
-  /**
-   * @brief Set the window parameters of the whole operator
-   * @param _wl window length
-   * @param _sli slide length
-   */
-  void setWindow(size_t _wl, size_t _sli) {
-    windowLen = _wl;
-    slideLen = _sli;
-  }
-  /**
-   * @brief Set buffer length of S and R buffer
-   * @param _sLen the length of S buffer
-   * @param _rLen the length of R buffer
-   */
-  void setBufferLen(size_t _sLen, size_t _rLen) {
-    sLen = _sLen;
-    rLen = _rLen;
-  }
+        /**
+         *@brief set the final processed time for all tuples
+         */
+        void setFinalProcessedTime();
 
-  /**
-   * @brief Synchronize the time structure with outside setting
-   * @param tv The outside time structure
-   */
-  void syncTimeStruct(struct timeval tv) {
-    timeBaseStruct = tv;
-  }
-  /**
-  * @brief Set the config map related to this operator
-  * @param cfg The config map
-   * @return bool whether the config is successfully set
-  */
-  virtual bool setConfig(ConfigMapPtr cfg);
-  /**
-  * @brief feed a tuple s into the Operator
-  * @param ts The tuple
-   * @warning The current version is simplified and assuming only used in SINGLE THREAD!
-   * @return bool, whether tuple is fed.
-  */
-  virtual bool feedTupleS(TrackTuplePtr ts);
+    public:
+        ConfigMapPtr config = nullptr;
 
-  /**
-    * @brief feed a tuple R into the Operator
-    * @param tr The tuple
-    * @warning The current version is simplified and assuming only used in SINGLE THREAD!
-    *  @return bool, whether tuple is fed.
-    */
-  virtual bool feedTupleR(TrackTuplePtr tr);
+        AbstractOperator() = default;
 
-  /**
-   * @brief start this operator
-   * @return bool, whether start successfully
-   */
-  virtual bool start();
+        ~AbstractOperator() = default;
 
-  /**
-   * @brief stop this operator
-   * @return bool, whether start successfully
-   */
-  virtual bool stop();
+        /**
+         * @brief Set the window parameters of the whole operator
+         * @param _wl window length
+         * @param _sli slide length
+         */
+        void setWindow(size_t _wl, size_t _sli) {
+            windowLen = _wl;
+            slideLen = _sli;
+        }
 
-  /**
-   * @brief get the joined sum result
-   * @return The result
-   */
-  virtual size_t getResult();
-  /**
-   * @brief get the joined sum result under AQP estimation
-   * @return The result
-   */
-  virtual size_t getAQPResult();
-  /**
-   * @brief get the break down information of processing time
-   * @warning should check the nullptr of output
-   * @return The ConfigMapPtr which contains breakdown information, null if no breakdown supported
-   */
-  virtual ConfigMapPtr getTimeBreakDown();
-};
+        /**
+         * @brief Set buffer length of S and R buffer
+         * @param _sLen the length of S buffer
+         * @param _rLen the length of R buffer
+         */
+        void setBufferLen(size_t _sLen, size_t _rLen) {
+            sLen = _sLen;
+            rLen = _rLen;
+        }
+
+        /**
+         * @brief Synchronize the time structure with outside setting
+         * @param tv The outside time structure
+         */
+        void syncTimeStruct(struct timeval tv) {
+            timeBaseStruct = tv;
+        }
+
+        /**
+        * @brief Set the config map related to this operator
+        * @param cfg The config map
+         * @return bool whether the config is successfully set
+        */
+        virtual bool setConfig(ConfigMapPtr cfg);
+
+        /**
+        * @brief feed a tuple s into the Operator
+        * @param ts The tuple
+         * @warning The current version is simplified and assuming only used in SINGLE THREAD!
+         * @return bool, whether tuple is fed.
+        */
+        virtual bool feedTupleS(TrackTuplePtr ts);
+
+        /**
+          * @brief feed a tuple R into the Operator
+          * @param tr The tuple
+          * @warning The current version is simplified and assuming only used in SINGLE THREAD!
+          *  @return bool, whether tuple is fed.
+          */
+        virtual bool feedTupleR(TrackTuplePtr tr);
+
+        /**
+         * @brief start this operator
+         * @return bool, whether start successfully
+         */
+        virtual bool start();
+
+        /**
+         * @brief stop this operator
+         * @return bool, whether start successfully
+         */
+        virtual bool stop();
+
+        /**
+         * @brief get the joined sum result
+         * @return The result
+         */
+        virtual size_t getResult();
+
+        /**
+         * @brief get the joined sum result under AQP estimation
+         * @return The result
+         */
+        virtual size_t getAQPResult();
+
+        /**
+         * @brief get the break down information of processing time
+         * @warning should check the nullptr of output
+         * @return The ConfigMapPtr which contains breakdown information, null if no breakdown supported
+         */
+        virtual ConfigMapPtr getTimeBreakDown();
+    };
+
 /**
  * @ingroup ADB_OPERATORS
  * @typedef AbstractOperatorPtr
  * @brief The class to describe a shared pointer to @ref AbstractOperator
  */
-typedef std::shared_ptr<class AbstractOperator> AbstractOperatorPtr;
+    typedef std::shared_ptr<class AbstractOperator> AbstractOperatorPtr;
 /**
  * @ingroup ADB_OPERATORS
  * @def newAbstractOperator

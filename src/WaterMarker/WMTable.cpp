@@ -5,8 +5,10 @@
 #include <WaterMarker/WMTable.h>
 #include <WaterMarker/LatenessWM.h>
 #include <WaterMarker/ArrivalWM.h>
+
 using namespace OoOJoin;
+
 OoOJoin::WMTable::WMTable() {
-  wmMap["arrival"] = newArrivalWM();
-  wmMap["lateness"] = newLatenessWM();
+    wmMap["arrival"] = newArrivalWM();
+    wmMap["lateness"] = newLatenessWM();
 }

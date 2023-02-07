@@ -5,11 +5,13 @@
 
 #ifndef _JOINALGO_ABSTRACTJOINALGO_H_
 #define _JOINALGO_ABSTRACTJOINALGO_H_
+
 #include <Common/Window.h>
 #include <string>
 #include <memory>
 #include <assert.h>
 #include <Utils/ConfigMap.hpp>
+#include <utility>
 //#include <Utils/Logger.hpp>/
 using namespace INTELLI;
 #define ALGO_INFO INTELLI_INFO
@@ -33,59 +35,65 @@ namespace OoOJoin {
  * @class AbstractJoinAlgo JoinAlgos/AbstractJoinAlgo.h
  * @brief The abstraction to describe a join algorithm, providing virtual function of join
  */
-class AbstractJoinAlgo {
- protected:
-  std::string nameTag;
-  struct timeval timeBaseStruct;
-  //tsType timeStep;
- public:
-  ConfigMapPtr config;
-  AbstractJoinAlgo() {
-    setAlgoName("NULL");
-  }
-  ~AbstractJoinAlgo() {}
-  /**
-  * @brief Set the config map related to this Algorithm
-  * @param cfg The config map
-   * @return bool whether the config is successfully set
-  */
-  virtual bool setConfig(ConfigMapPtr cfg);
-  /**
-  * @brief The function to execute join,
-  * @param windS The window of S tuples
-   * @param windR The window of R tuples
-   * @param threads The threads for executing this join
-  * @return The joined tuples
-   * @note Please at least mark the final processed time at rTuples
-  */
-  virtual size_t join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
-                      C20Buffer<OoOJoin::TrackTuplePtr> windR,
-                      int threads = 1);
-  /**
-   * @brief set the name of algorithm
-   * @param name Algorithm name
-   */
-  void setAlgoName(std::string name) {
-    nameTag = name;
-  }
-  /**
-  * @brief get the name of algorithm
-  * @return The name
-  */
-  std::string getAlgoName() {
-    return nameTag;
-  }
+    class AbstractJoinAlgo {
+    protected:
+        std::string nameTag;
+        struct timeval timeBaseStruct{};
+        //tsType timeStep;
+    public:
+        ConfigMapPtr config;
 
-  /**
-   * @brief Synchronize the time structure with outside setting
-   * @param tv The outside time structure
-   */
-  void syncTimeStruct(struct timeval tv) {
-    timeBaseStruct = tv;
-  }
-};
+        AbstractJoinAlgo() {
+            setAlgoName("NULL");
+        }
 
-typedef std::shared_ptr<AbstractJoinAlgo> AbstractJoinAlgoPtr;
+        ~AbstractJoinAlgo() = default;
+
+        /**
+        * @brief Set the config map related to this Algorithm
+        * @param cfg The config map
+         * @return bool whether the config is successfully set
+        */
+        virtual bool setConfig(ConfigMapPtr cfg);
+
+        /**
+        * @brief The function to execute join,
+        * @param windS The window of S tuples
+         * @param windR The window of R tuples
+         * @param threads The threads for executing this join
+        * @return The joined tuples
+         * @note Please at least mark the final processed time at rTuples
+        */
+        virtual size_t join(C20Buffer <OoOJoin::TrackTuplePtr> windS,
+                            C20Buffer <OoOJoin::TrackTuplePtr> windR,
+                            int threads = 1);
+
+        /**
+         * @brief set the name of algorithm
+         * @param name Algorithm name
+         */
+        void setAlgoName(std::string name) {
+            nameTag = std::move(name);
+        }
+
+        /**
+        * @brief get the name of algorithm
+        * @return The name
+        */
+        std::string getAlgoName() {
+            return nameTag;
+        }
+
+        /**
+         * @brief Synchronize the time structure with outside setting
+         * @param tv The outside time structure
+         */
+        void syncTimeStruct(struct timeval tv) {
+            timeBaseStruct = tv;
+        }
+    };
+
+    typedef std::shared_ptr<AbstractJoinAlgo> AbstractJoinAlgoPtr;
 #define  newAbstractJoinAlgo() std::make_shared<AbstractJoinAlgo>()
 /**
  * @}

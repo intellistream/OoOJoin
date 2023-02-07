@@ -5,9 +5,9 @@
 #include <Operator/OperatorTable.h>
 
 namespace OoOJoin {
-OperatorTable::OperatorTable() {
-  operatorMap["IAWJ"] = newIAWJOperator();
-  operatorMap["MeanAQP"] = newMeanAQPIAWJOperator();
-  operatorMap["IMA"] = newIMAIAWJOperator();
-}
+    OperatorTable::OperatorTable() {
+        operatorMap["IAWJ"] = newIAWJOperator();
+        operatorMap["MeanAQP"] = newMeanAQPIAWJOperator();
+        operatorMap["IMA"] = newIMAIAWJOperator();
+    }
 } // OoOJoin

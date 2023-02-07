@@ -5,268 +5,284 @@
 #include <TestBench/TestBench.h>
 #include <Utils/UtilityFunctions.hpp>
 #include <algorithm>
+#include <utility>
 #include <Utils/IntelliLog.h>
 #include <TestBench/RandomDataLoader.h>
+
 using namespace INTELLI;
 using namespace OoOJoin;
 using namespace std;
+
 void OoOJoin::TestBench::OoOSort(std::vector<TrackTuplePtr> &arr) {
-  size_t i, j;
-  TrackTuplePtr temp;
-  size_t len = arr.size();
-  for (i = 0; i < len - 1; i++)
-    for (j = 0; j < len - 1 - i; j++)
-      if (arr[j]->arrivalTime > arr[j + 1]->arrivalTime) {
-        temp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
-      }
+    size_t i, j;
+    TrackTuplePtr temp;
+    size_t len = arr.size();
+    for (i = 0; i < len - 1; i++)
+        for (j = 0; j < len - 1 - i; j++)
+            if (arr[j]->arrivalTime > arr[j + 1]->arrivalTime) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
 }
+
 void OoOJoin::TestBench::forceInOrder(std::vector<TrackTuplePtr> &arr) {
-  size_t len = arr.size();
-  size_t i;
-  for (i = 0; i < len; i++) {
-    arr[i]->arrivalTime = arr[i]->eventTime;
-  }
+    size_t len = arr.size();
+    size_t i;
+    for (i = 0; i < len; i++) {
+        arr[i]->arrivalTime = arr[i]->eventTime;
+    }
 }
+
 void OoOJoin::TestBench::inOrderSort(std::vector<TrackTuplePtr> &arr) {
-  size_t i, j;
-  TrackTuplePtr temp;
-  size_t len = arr.size();
-  for (i = 0; i < len - 1; i++) {
-    arr[i]->arrivalTime = arr[i]->eventTime;
-    for (j = 0; j < len - 1 - i; j++)
-      if (arr[j]->eventTime > arr[j + 1]->eventTime) {
-        temp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
-      }
-  }
+    size_t i, j;
+    TrackTuplePtr temp;
+    size_t len = arr.size();
+    for (i = 0; i < len - 1; i++) {
+        arr[i]->arrivalTime = arr[i]->eventTime;
+        for (j = 0; j < len - 1 - i; j++)
+            if (arr[j]->eventTime > arr[j + 1]->eventTime) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+    }
 }
+
 void OoOJoin::TestBench::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<TrackTuplePtr> _s) {
-  rTuple = _r;
-  sTuple = _s;
+    rTuple = std::move(_r);
+    sTuple = std::move(_s);
 }
+
 bool OoOJoin::TestBench::setOperator(OoOJoin::AbstractOperatorPtr op, ConfigMapPtr cfg) {
-  testOp = op;
-  opConfig = cfg;
-  if (opConfig == nullptr) {
-    return false;
-  }
-  if (opConfig->existU64("timeStep")) {
-    timeStep = opConfig->getU64("timeStep");
-    // TB_INFO("Feeding time step=" + to_string(timeStep) + "us");
-  } else {
-    //  TB_WARNNING("No setting of timeStep, use 1\n");
-    timeStep = 1;
-  }
-  return true;
+    testOp = std::move(op);
+    opConfig = std::move(cfg);
+    if (opConfig == nullptr) {
+        return false;
+    }
+    if (opConfig->existU64("timeStep")) {
+        timeStep = opConfig->getU64("timeStep");
+        // TB_INFO("Feeding time step=" + to_string(timeStep) + "us");
+    } else {
+        //  TB_WARNNING("No setting of timeStep, use 1\n");
+        timeStep = 1;
+    }
+    return true;
 }
+
 void OoOJoin::TestBench::inlineTest() {
-  struct timeval timeStart;
-  size_t testSize = (rTuple.size() > sTuple.size()) ? sTuple.size() : rTuple.size();
-  size_t rPos = 0, sPos = 0;
-  size_t tNow = 0;
-  size_t tMaxS = sTuple[testSize - 1]->arrivalTime;
-  size_t tMaxR = rTuple[testSize - 1]->arrivalTime;
-  size_t tMax = (tMaxS > tMaxR) ? tMaxS : tMaxR;
-  size_t tNextS = 0, tNextR = 0;
-  /*for(size_t i=0;i<testSize;i++)
-  {
-   TB_INFO(sTuple[i]->toString());
-  }*/
-  testOp->setConfig(opConfig);
-  gettimeofday(&timeStart, NULL);
-  testOp->syncTimeStruct(timeStart);
-  testOp->start();
-  while (tNow < tMax) {
-    tNow = UtilityFunctions::timeLastUs(timeStart);
-    //INTELLI_INFO("T=" << tNow);
-    while (tNow >= tNextS) {
-      if (sPos <= testSize - 1) {
-        testOp->feedTupleS(sTuple[sPos]);
-        sPos++;
-        if (sPos <= testSize - 1) {
-          tNextS = sTuple[sPos]->arrivalTime;
-        } else {
-          tNextS = -1;
-          //  INTELLI_INFO("NO MORE S");
-          break;
+    struct timeval timeStart;
+    size_t testSize = (rTuple.size() > sTuple.size()) ? sTuple.size() : rTuple.size();
+    size_t rPos = 0, sPos = 0;
+    size_t tNow = 0;
+    size_t tMaxS = sTuple[testSize - 1]->arrivalTime;
+    size_t tMaxR = rTuple[testSize - 1]->arrivalTime;
+    size_t tMax = (tMaxS > tMaxR) ? tMaxS : tMaxR;
+    size_t tNextS = 0, tNextR = 0;
+    /*for(size_t i=0;i<testSize;i++)
+    {
+     TB_INFO(sTuple[i]->toString());
+    }*/
+    testOp->setConfig(opConfig);
+    gettimeofday(&timeStart, NULL);
+    testOp->syncTimeStruct(timeStart);
+    testOp->start();
+    while (tNow < tMax) {
+        tNow = UtilityFunctions::timeLastUs(timeStart);
+        //INTELLI_INFO("T=" << tNow);
+        while (tNow >= tNextS) {
+            if (sPos <= testSize - 1) {
+                testOp->feedTupleS(sTuple[sPos]);
+                sPos++;
+                if (sPos <= testSize - 1) {
+                    tNextS = sTuple[sPos]->arrivalTime;
+                } else {
+                    tNextS = -1;
+                    //  INTELLI_INFO("NO MORE S");
+                    break;
+                }
+
+            }
+
         }
+        //INTELLI_INFO("detect R");
+        while (tNow >= tNextR) {
+            if (rPos <= testSize - 1) {
+                testOp->feedTupleR(rTuple[rPos]);
+                //INTELLI_INFO("feed"+rTuple[rPos]->toString()+"at "+ to_string(tNow));
+                rPos++;
+                if (rPos <= testSize - 1) {
+                    tNextR = rTuple[rPos]->arrivalTime;
 
-      }
-
-    }
-    //INTELLI_INFO("detect R");
-    while (tNow >= tNextR) {
-      if (rPos <= testSize - 1) {
-        testOp->feedTupleR(rTuple[rPos]);
-        //INTELLI_INFO("feed"+rTuple[rPos]->toString()+"at "+ to_string(tNow));
-        rPos++;
-        if (rPos <= testSize - 1) {
-          tNextR = rTuple[rPos]->arrivalTime;
-
-        } else {
-          tNextR = -1;
-          //  INTELLI_INFO("NO MORE R");
-          break;
+                } else {
+                    tNextR = -1;
+                    //  INTELLI_INFO("NO MORE R");
+                    break;
+                }
+            }
         }
-      }
+        //usleep(20);
     }
-    //usleep(20);
-  }
-  testOp->stop();
+    testOp->stop();
 }
+
 size_t OoOJoin::TestBench::OoOTest(bool additionalSort) {
-  if (additionalSort) {
-    OoOSort(rTuple);
-    OoOSort(sTuple);
-  }
-  inlineTest();
-  AQPResult = testOp->getAQPResult();
-  return testOp->getResult();
+    if (additionalSort) {
+        OoOSort(rTuple);
+        OoOSort(sTuple);
+    }
+    inlineTest();
+    AQPResult = testOp->getAQPResult();
+    return testOp->getResult();
 }
 
 size_t OoOJoin::TestBench::inOrderTest(bool additionalSort) {
-  forceInOrder(rTuple);
-  forceInOrder(sTuple);
-  if (additionalSort) {
-    inOrderSort(rTuple);
-    inOrderSort(sTuple);
-  }
-  inlineTest();
-  return testOp->getResult();
+    forceInOrder(rTuple);
+    forceInOrder(sTuple);
+    if (additionalSort) {
+        inOrderSort(rTuple);
+        inOrderSort(sTuple);
+    }
+    inlineTest();
+    return testOp->getResult();
 }
+
 void OoOJoin::TestBench::logRTuples(bool skipZero) {
-  //   TB_INFO("/***Printing the rTuples in the following***/");
-  size_t rLen = rTuple.size();
-  for (size_t i = 0; i < rLen; i++) {
-    if (skipZero && rTuple[i]->processedTime == 0) {
+    //   TB_INFO("/***Printing the rTuples in the following***/");
+    size_t rLen = rTuple.size();
+    for (size_t i = 0; i < rLen; i++) {
+        if (skipZero && rTuple[i]->processedTime == 0) {
 
-    } else {
-      //TB_INFO(rTuple[i]->toString());
+        } else {
+            //TB_INFO(rTuple[i]->toString());
+        }
+
     }
-
-  }
-  // TB_INFO("/***Done***/");
+    // TB_INFO("/***Done***/");
 }
+
 bool OoOJoin::TestBench::saveRTuplesToFile(std::string fname, bool skipZero) {
-  ofstream of;
-  of.open(fname);
-  if (of.fail()) {
-    return false;
-  }
-  of << "key,value,eventTime,arrivalTime,processedTime\n";
-  size_t rLen = rTuple.size();
-  for (size_t i = 0; i < rLen; i++) {
-    if (skipZero && rTuple[i]->processedTime == 0) {
-
-    } else {
-      TrackTuplePtr tp = rTuple[i];
-      string line = to_string(tp->key) + "," + to_string(tp->payload) + "," + to_string(tp->eventTime) + ","
-          + to_string(tp->arrivalTime) + "," + to_string(tp->processedTime) + "\n";
-      of << line;
+    ofstream of;
+    of.open(fname);
+    if (of.fail()) {
+        return false;
     }
+    of << "key,value,eventTime,arrivalTime,processedTime\n";
+    size_t rLen = rTuple.size();
+    for (size_t i = 0; i < rLen; i++) {
+        if (skipZero && rTuple[i]->processedTime == 0) {
 
-  }
-  of.close();
-  return true;
+        } else {
+            TrackTuplePtr tp = rTuple[i];
+            string line = to_string(tp->key) + "," + to_string(tp->payload) + "," + to_string(tp->eventTime) + ","
+                          + to_string(tp->arrivalTime) + "," + to_string(tp->processedTime) + "\n";
+            of << line;
+        }
+
+    }
+    of.close();
+    return true;
 }
 
 bool OoOJoin::TestBench::saveSTuplesToFile(std::string fname, bool skipZero) {
-  ofstream of;
-  of.open(fname);
-  if (of.fail()) {
-    return false;
-  }
-  of << "key,value,eventTime,arrivalTime,processedTime\n";
-  size_t rLen = rTuple.size();
-  for (size_t i = 0; i < rLen; i++) {
-    if (skipZero && rTuple[i]->processedTime == 0) {
-
-    } else {
-      TrackTuplePtr tp = rTuple[i];
-      string line = to_string(tp->key) + "," + to_string(tp->payload) + "," + to_string(tp->eventTime) + ","
-          + to_string(tp->arrivalTime) + "," + to_string(tp->processedTime) + "\n";
-      of << line;
+    ofstream of;
+    of.open(fname);
+    if (of.fail()) {
+        return false;
     }
+    of << "key,value,eventTime,arrivalTime,processedTime\n";
+    size_t rLen = rTuple.size();
+    for (size_t i = 0; i < rLen; i++) {
+        if (skipZero && rTuple[i]->processedTime == 0) {
 
-  }
-  of.close();
-  return true;
+        } else {
+            TrackTuplePtr tp = rTuple[i];
+            string line = to_string(tp->key) + "," + to_string(tp->payload) + "," + to_string(tp->eventTime) + ","
+                          + to_string(tp->arrivalTime) + "," + to_string(tp->processedTime) + "\n";
+            of << line;
+        }
+
+    }
+    of.close();
+    return true;
 }
+
 double OoOJoin::TestBench::getAvgLatency() {
-  size_t rLen = rTuple.size();
-  size_t nonZeroCnt = 0;
-  double sum = 0;
-  for (size_t i = 0; i < rLen; i++) {
-    if (rTuple[i]->processedTime >= rTuple[i]->arrivalTime && rTuple[i]->processedTime != 0) {
-      double temp = rTuple[i]->processedTime - rTuple[i]->arrivalTime;
-      sum += temp;
-      nonZeroCnt++;
+    size_t rLen = rTuple.size();
+    size_t nonZeroCnt = 0;
+    double sum = 0;
+    for (size_t i = 0; i < rLen; i++) {
+        if (rTuple[i]->processedTime >= rTuple[i]->arrivalTime && rTuple[i]->processedTime != 0) {
+            double temp = rTuple[i]->processedTime - rTuple[i]->arrivalTime;
+            sum += temp;
+            nonZeroCnt++;
+        }
     }
-  }
-  return sum / nonZeroCnt;
+    return sum / nonZeroCnt;
 }
+
 double OoOJoin::TestBench::getThroughput() {
-  size_t rLen = rTuple.size();
-  tsType minArrival = rTuple[0]->arrivalTime;
-  tsType maxProcessed = 0;
-  for (size_t i = 0; i < rLen; i++) {
-    if (rTuple[i]->processedTime >= maxProcessed) {
-      maxProcessed = rTuple[i]->processedTime;
+    size_t rLen = rTuple.size();
+    tsType minArrival = rTuple[0]->arrivalTime;
+    tsType maxProcessed = 0;
+    for (size_t i = 0; i < rLen; i++) {
+        if (rTuple[i]->processedTime >= maxProcessed) {
+            maxProcessed = rTuple[i]->processedTime;
+        }
+        if (rTuple[i]->arrivalTime <= minArrival) {
+            minArrival = rTuple[i]->arrivalTime;
+        }
     }
-    if (rTuple[i]->arrivalTime <= minArrival) {
-      minArrival = rTuple[i]->arrivalTime;
+    double elapsedTime = (maxProcessed - minArrival);
+    if (elapsedTime <= 0) {
+        TB_WARNNING("No valid elapsed time, maybe there is no joined result?");
+        return 0;
     }
-  }
-  double elapsedTime = (maxProcessed - minArrival);
-  if (elapsedTime <= 0) {
-    TB_WARNNING("No valid elapsed time, maybe there is no joined result?");
-    return 0;
-  }
-  double thr = rLen;
-  thr = thr * 1e6 / elapsedTime;
-  return thr;
+    double thr = rLen;
+    thr = thr * 1e6 / elapsedTime;
+    return thr;
 }
+
 double OoOJoin::TestBench::getLatencyPercentage(double fraction) {
-  size_t rLen = rTuple.size();
-  size_t nonZeroCnt = 0;
-  vector<tsType> validLatency;
-  for (size_t i = 0; i < rLen; i++) {
-    if (rTuple[i]->processedTime >= rTuple[i]->arrivalTime && rTuple[i]->processedTime != 0) {
-      validLatency.push_back(rTuple[i]->processedTime - rTuple[i]->arrivalTime);
-      nonZeroCnt++;
+    size_t rLen = rTuple.size();
+    size_t nonZeroCnt = 0;
+    vector<tsType> validLatency;
+    for (size_t i = 0; i < rLen; i++) {
+        if (rTuple[i]->processedTime >= rTuple[i]->arrivalTime && rTuple[i]->processedTime != 0) {
+            validLatency.push_back(rTuple[i]->processedTime - rTuple[i]->arrivalTime);
+            nonZeroCnt++;
+        }
     }
-  }
-  if (nonZeroCnt == 0) {
-    TB_WARNNING("No valid latency, maybe there is no joined result?");
-    return 0;
-  }
-  std::sort(validLatency.begin(), validLatency.end());
-  double t = nonZeroCnt;
-  t = t * fraction;
-  size_t idx = (size_t) t + 1;
-  if (idx >= validLatency.size()) {
-    idx = validLatency.size() - 1;
-  }
-  return validLatency[idx];
+    if (nonZeroCnt == 0) {
+        TB_WARNNING("No valid latency, maybe there is no joined result?");
+        return 0;
+    }
+    std::sort(validLatency.begin(), validLatency.end());
+    double t = nonZeroCnt;
+    t = t * fraction;
+    size_t idx = (size_t) t + 1;
+    if (idx >= validLatency.size()) {
+        idx = validLatency.size() - 1;
+    }
+    return validLatency[idx];
 
 }
+
 ConfigMapPtr OoOJoin::TestBench::getTimeBreakDown() {
-  if (testOp != nullptr) {
-    return testOp->getTimeBreakDown();
-  }
-  return nullptr;
+    if (testOp != nullptr) {
+        return testOp->getTimeBreakDown();
+    }
+    return nullptr;
 }
+
 void OoOJoin::TestBench::setDataLoader(std::string tag, ConfigMapPtr globalCfg) {
-  DataLoaderTablePtr dt = newDataLoaderTable();
-  AbstractDataLoaderPtr dl = dt->findDataLoader(tag);
-  if (dl == nullptr) {
-    TB_WARNNING("Invalid DataLoader [" + tag + "], use random instead");
-    dl = newRandomDataLoader();
-  }
-  dl->setConfig(globalCfg);
-  setDataSet(dl->getTupleVectorS(), dl->getTupleVectorR());
-  TB_INFO("Using DataLoader [" + tag + "]");
+    DataLoaderTablePtr dt = newDataLoaderTable();
+    AbstractDataLoaderPtr dl = dt->findDataLoader(tag);
+    if (dl == nullptr) {
+        TB_WARNNING("Invalid DataLoader [" + tag + "], use random instead");
+        dl = newRandomDataLoader();
+    }
+    dl->setConfig(globalCfg);
+    setDataSet(dl->getTupleVectorS(), dl->getTupleVectorR());
+    TB_INFO("Using DataLoader [" + tag + "]");
 }
