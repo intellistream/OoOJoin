@@ -31,6 +31,8 @@ message(STATUS "sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++
 set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Werror=return-type -Werror=unused-variable -Werror=unused-parameter")
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DNO_RACE_CHECK -DIntelliStream_DEBUG_MODE=1")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wno-ignored-qualifiers -Wno-sign-compare -O3")
+set(OOO_JOIN_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/lib)
+
 
 # Set LOGGING_LEVEL Flag
 if (IntelliStream_LOGGING_LEVEL)
@@ -69,6 +71,7 @@ add_library(IntelliStream SHARED ${IntelliStream_SOURCE_FILES} ${IntelliStream_H
 target_include_directories(IntelliStream PUBLIC "include")
 target_include_directories(IntelliStream PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
 target_link_libraries(IntelliStream PUBLIC ${LIBRARIES})
+include_directories(${OOO_JOIN_INCLUDE_DIR})
 
 #Add benchmarks with command
 add_subdirectory(benchmark)

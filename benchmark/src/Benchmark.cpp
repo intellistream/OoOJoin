@@ -49,8 +49,8 @@ void runTestBenchAdj(string configName = "config.csv", string outPrefix = "") {
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
     string operatorTag = "IAWJ";
     string loaderTag = "random";
-    //uint64_t keyRange;
 
+    //uint64_t keyRange;
     windowLenMs = cfg->tryU64("windowLenMs", 10, true);
     timeStepUs = cfg->tryU64("timeStepUs", 40, true);
     //watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10,true);

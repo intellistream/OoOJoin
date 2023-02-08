@@ -4,4 +4,5 @@ add_sources(
         MeanAQPIAWJOperator.cpp
         IMAIAWJOperator.cpp
         OperatorTable.cpp
+        MSMJOperator.cpp
 )
