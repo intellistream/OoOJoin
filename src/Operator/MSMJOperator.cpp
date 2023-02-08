@@ -46,6 +46,7 @@ bool OoOJoin::MSMJOperator::start() {
     return true;
 }
 
+//Using this function to join
 void OoOJoin::MSMJOperator::conductComputation() {
     JoinAlgoTable jt;
     AbstractJoinAlgoPtr algo = jt.findAlgo(algoTag);
