@@ -5,8 +5,28 @@
 #include <Common/Window.h>
 #include <atomic>
 #include <WaterMarker/LatenessWM.h>
+#include "Operator/MSMJ/kslack/k_slack.h"
 
 namespace OoOJoin {
+    /**
+ * @ingroup ADB_OPERATORS
+ * @typedef MSWJOperatorPtr
+ * @brief The class to describe a shared pointer to @ref MSWJOperator
+ */
+
+    typedef std::shared_ptr<class Stream> StreamPtr;
+    typedef std::shared_ptr<class MSMJOperator> MSMJOperatorPtr;
+    typedef std::shared_ptr<class KSlack> KSlackPtr;
+    typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
+    typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
+    typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
+/**
+ * @ingroup ADB_OPERATORS
+ * @def newMSWJOperator
+ * @brief (Macro) To creat a new @ref MSWJOperator under shared pointer.
+ */
+#define newMSMJOperator std::make_shared<OoOJoin::MSMJOperator>
+
 /**
  * @class MSWJOperator
  * @ingroup ADB_OPERATORS
@@ -38,8 +58,24 @@ namespace OoOJoin {
 
         void conductComputation();
 
+    private:
+        //流
+        StreamPtr streamS;
+        StreamPtr streamR;
+
+        //bufferSizeManager,  is used to update K(bufferSize)
+        BufferSizeManagerPtr bufferSizeManager{};
+
+        //statisticsManager, is used to statistic
+        StatisticsManagerPtr statisticsManager{};
+
+        //TupleProductivityProfiler,is used to get productivity of tuple at join stage.
+        TupleProductivityProfilerPtr tupleProductivityProfiler{};
+
+        SynchronizerPtr synchronizer{};
+
     public:
-        MSMJOperator() = default;
+        MSMJOperator();
 
         ~MSMJOperator() = default;
 
@@ -87,17 +123,5 @@ namespace OoOJoin {
 
     };
 
-/**
- * @ingroup ADB_OPERATORS
- * @typedef MSWJOperatorPtr
- * @brief The class to describe a shared pointer to @ref MSWJOperator
- */
-    typedef std::shared_ptr<class MSMJOperator> MSMJOperatorPtr;
-/**
- * @ingroup ADB_OPERATORS
- * @def newMSWJOperator
- * @brief (Macro) To creat a new @ref MSWJOperator under shared pointer.
- */
-#define newMSMJOperator std::make_shared<OoOJoin::MSMJOperator>
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_

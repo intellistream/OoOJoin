@@ -11,20 +11,29 @@
 #include <set>
 #include <list>
 #include <mutex>
-#include "common/define.h"
-#include "operator/stream_operator.h"
+#include "Operator/MSMJ/operator/stream_operator.h"
+#include "Operator/MSMJ/common/define.h"
+#include "Common/Tuples.h"
 
+typedef std::shared_ptr<class Stream> StreamPtr;
+typedef std::shared_ptr<class KSlack> KSlackPtr;
+typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
+typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
+typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
+typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
+typedef std::shared_ptr<class StreamOperator> StreamOperatorPtr;
 
+using namespace OoOJoin;
 class Synchronizer {
 public:
-    explicit Synchronizer(int stream_count, StreamOperator *stream_operator);
+    explicit Synchronizer(int stream_count, StreamOperatorPtr stream_operator);
 
     ~Synchronizer() = default;
 
     //同步过程
-    auto synchronize_stream(std::queue<Tuple> &input) -> void;
+    auto synchronize_stream(TrackTuple &input) -> void;
 
-    auto get_output() -> std::queue<Tuple>;
+    auto get_output() -> std::queue<TrackTuple>;
 
 private:
 
@@ -32,13 +41,13 @@ private:
     std::mutex latch_;
 
     //SyncBuf缓冲区映射
-    phmap::parallel_flat_hash_map<int, phmap::btree_set<Tuple, TupleComparator>> sync_buffer_map_{};
+    phmap::parallel_flat_hash_map<int, phmap::btree_set<TrackTuple, TupleComparator>> sync_buffer_map_{};
 
     //同步输出区
-    std::queue<Tuple> output_{};
+    std::queue<TrackTuple> output_{};
 
     //观察区
-    std::queue<Tuple> watch_output_{};
+    std::queue<TrackTuple> watch_output_{};
 
     //Tsync
     int T_sync_{};
@@ -50,7 +59,7 @@ private:
     int own_stream_{};
 
     //连接器
-    StreamOperator *stream_operator_;
+    StreamOperatorPtr stream_operator_;
 };
 
 

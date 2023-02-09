@@ -1,6 +1,15 @@
 #include <Operator/MSMJOperator.h>
 #include <JoinAlgos/JoinAlgoTable.h>
 
+
+OoOJoin::MSMJOperator::MSMJOperator() {
+    tupleProductivityProfiler = std::make_unique<TupleProductivityProfiler>();
+    statisticsManager = std::make_unique<StatisticsManager>(tupleProductivityProfiler);
+    bufferSizeManager = std::make_unique<BufferSizeManager>(statisticsManager, tupleProductivityProfiler);
+    kslack = std::make_unique<KSlack>(nullptr,);
+}
+
+
 bool OoOJoin::MSMJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
         return false;
@@ -58,6 +67,9 @@ void OoOJoin::MSMJOperator::conductComputation() {
 }
 
 bool OoOJoin::MSMJOperator::stop() {
+    kslackR->disorder_handling();
+    kslackS->disorder_handling();
+
     /**
      */
     if (lockedByWaterMark) {
@@ -79,31 +91,23 @@ bool OoOJoin::MSMJOperator::stop() {
 }
 
 bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
-    bool shouldGenWM;
-    if (lockedByWaterMark) {
-        return false;
-    }
-    myWindow.feedTupleS(ts);
-    shouldGenWM = wmGen->reportTupleS(ts, 1);
-    if (shouldGenWM) {
-        lockedByWaterMark = true;
-        // run computation
-        conductComputation();
+    if (!ts->isEnd) {
+        streamS->push_tuple(*ts);
+    } else {
+        streamS->set_id(1);
+        KSlackPtr kslackS = std::make_shared<KSlack>(streamS, bufferSizeManager, statisticsManager, synchronizer);
+        kslackS->disorder_handling();
     }
     return true;
 }
 
 bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
-    bool shouldGenWM;
-    if (lockedByWaterMark) {
-        return false;
-    }
-    myWindow.feedTupleR(tr);
-    shouldGenWM = wmGen->reportTupleR(tr, 1);
-    if (shouldGenWM) {
-        lockedByWaterMark = true;
-        // run computation
-        conductComputation();
+    if (!tr->isEnd) {
+        streamR->push_tuple(*tr);
+    } else {
+        streamR->set_id(2);
+        KSlackPtr kslackR = std::make_shared<KSlack>(streamR, bufferSizeManager, statisticsManager, synchronizer);
+        kslackR->disorder_handling();
     }
     return true;
 }
@@ -111,3 +115,5 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 size_t OoOJoin::MSMJOperator::getResult() {
     return intermediateResult;
 }
+
+

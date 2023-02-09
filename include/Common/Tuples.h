@@ -148,6 +148,10 @@ namespace OoOJoin {
     public:
         tsType processedTime = 0;
 
+        bool isEnd = false;
+        tsType delay = 0;
+        int streamId = 0;
+
         /**
         * @brief construct with key
         * @param k the key

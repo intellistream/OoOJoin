@@ -12,6 +12,15 @@
 #include "parallel-hashmap/parallel_hashmap/phmap.h"
 #include <parallel-hashmap/parallel_hashmap/btree.h>
 
+
+typedef std::shared_ptr<class Stream> StreamPtr;
+typedef std::shared_ptr<class KSlack> KSlackPtr;
+typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
+typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
+typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
+typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
+
+
 class TupleProductivityProfiler {
 public:
 

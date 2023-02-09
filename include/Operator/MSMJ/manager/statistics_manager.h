@@ -9,14 +9,22 @@
 #include <vector>
 #include <unordered_map>
 #include <mutex>
-#include "profiler/tuple_productivity_profiler.h"
-#include "common/define.h"
 #include <parallel-hashmap/parallel_hashmap/phmap.h>
+#include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
+#include "Common/Tuples.h"
+
+typedef std::shared_ptr<class Stream> StreamPtr;
+typedef std::shared_ptr<class KSlack> KSlackPtr;
+typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
+typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
+typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
+typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
+
 
 class StatisticsManager {
 public:
 
-    explicit StatisticsManager(TupleProductivityProfiler *profiler);
+    explicit StatisticsManager(TupleProductivityProfilerPtr profiler);
 
     ~StatisticsManager() = default;
 
@@ -29,7 +37,7 @@ public:
     //|wi^l|的估计
     auto wil(int l, int stream_id, int K) -> int;
 
-    auto add_record(int stream_id, Tuple tuple) -> void;
+    auto add_record(int stream_id, OoOJoin::TrackTuple tuple) -> void;
 
     auto add_record(int stream_id, int T, int K) -> void;
 
@@ -57,7 +65,7 @@ private:
     phmap::parallel_flat_hash_map<int, int> R_stat_map_{};
 
     //历史流Si输入记录的映射
-    phmap::parallel_flat_hash_map<int, std::vector<Tuple>> record_map_{};
+    phmap::parallel_flat_hash_map<int, std::vector<OoOJoin::TrackTuple>> record_map_{};
 
     //历史流Si的T记录
     phmap::parallel_flat_hash_map<int, int> T_map_{};
@@ -72,7 +80,7 @@ private:
     phmap::parallel_flat_hash_map<int, std::vector<double>> histogram_map_{};
 
     //元组生产力
-    TupleProductivityProfiler *productivity_profiler_;
+    TupleProductivityProfilerPtr productivity_profiler_;
 };
 
 

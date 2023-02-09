@@ -10,6 +10,7 @@
 #include <queue>
 #include <mutex>
 #include "parallel-hashmap/parallel_hashmap/phmap.h"
+#include "Common/Tuples.h"
 
 //系统参数定义
 //搜索粒度
@@ -62,8 +63,8 @@ struct Tuple {
 
 struct TupleComparator {
     //按到达时间来排序
-    bool operator()(Tuple e1, Tuple e2) const {
-        return e1.ts == e2.ts ? e1.id < e2.id : e1.ts < e2.ts;
+    bool operator()(OoOJoin::TrackTuple e1, OoOJoin::TrackTuple e2) const {
+        return e1.eventTime < e2.eventTime;
     }
 };
 
@@ -71,19 +72,21 @@ struct TupleComparator {
 class Stream {
 public:
 
-    explicit Stream(int stream_id, int window_size, std::queue<Tuple> tuple_list);
+    explicit Stream(int stream_id, int window_size, std::queue<OoOJoin::TrackTuple> tuple_list);
 
     ~Stream() = default;
 
-    auto get_window_size() -> int;
+    auto get_window_size() const -> int;
 
-    auto get_id() -> int;
+    auto get_id() const -> int;
 
-    auto get_tuple_list() -> std::queue<Tuple>;
+    auto get_tuple_list() -> std::queue<OoOJoin::TrackTuple>;
 
     auto pop_tuple() -> void;
 
-    auto push_tuple(Tuple tuple) -> void;
+    auto push_tuple(OoOJoin::TrackTuple tuple) -> void;
+
+    auto set_id(int id) -> void;
 
 private:
 
@@ -94,7 +97,7 @@ private:
     int stream_id_{};
 
     //元组
-    std::queue<Tuple> tuple_list_{};
+    std::queue<OoOJoin::TrackTuple> tuple_list_{};
 };
 
 

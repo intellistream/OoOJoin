@@ -7,12 +7,19 @@
 
 
 #include "statistics_manager.h"
-#include "profiler/tuple_productivity_profiler.h"
+#include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
+
+typedef std::shared_ptr<class Stream> StreamPtr;
+typedef std::shared_ptr<class KSlack> KSlackPtr;
+typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
+typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
+typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
+typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
 
 class BufferSizeManager {
 public:
 
-    explicit BufferSizeManager(StatisticsManager *statistics_manager, TupleProductivityProfiler *profiler);
+    explicit BufferSizeManager(StatisticsManagerPtr statistics_manager, TupleProductivityProfilerPtr profiler);
 
     ~BufferSizeManager() = default;
 
@@ -28,10 +35,10 @@ private:
     std::mutex latch_;
 
     //数据统计器
-    StatisticsManager *statistics_manager_;
+    StatisticsManagerPtr statistics_manager_;
 
     //元组生产力
-    TupleProductivityProfiler *productivity_profiler_;
+    TupleProductivityProfilerPtr productivity_profiler_;
 
 };
 

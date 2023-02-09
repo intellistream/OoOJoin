@@ -8,6 +8,7 @@
 #include <utility>
 #include <Utils/IntelliLog.h>
 #include <TestBench/RandomDataLoader.h>
+#include "Operator/MSMJOperator.h"
 
 using namespace INTELLI;
 using namespace OoOJoin;
@@ -71,59 +72,11 @@ bool OoOJoin::TestBench::setOperator(OoOJoin::AbstractOperatorPtr op, ConfigMapP
 }
 
 void OoOJoin::TestBench::inlineTest() {
-    struct timeval timeStart;
-    size_t testSize = (rTuple.size() > sTuple.size()) ? sTuple.size() : rTuple.size();
-    size_t rPos = 0, sPos = 0;
-    size_t tNow = 0;
-    size_t tMaxS = sTuple[testSize - 1]->arrivalTime;
-    size_t tMaxR = rTuple[testSize - 1]->arrivalTime;
-    size_t tMax = (tMaxS > tMaxR) ? tMaxS : tMaxR;
-    size_t tNextS = 0, tNextR = 0;
-    /*for(size_t i=0;i<testSize;i++)
-    {
-     TB_INFO(sTuple[i]->toString());
-    }*/
-    testOp->setConfig(opConfig);
-    gettimeofday(&timeStart, NULL);
-    testOp->syncTimeStruct(timeStart);
-    testOp->start();
-    while (tNow < tMax) {
-        tNow = UtilityFunctions::timeLastUs(timeStart);
-        //INTELLI_INFO("T=" << tNow);
-        while (tNow >= tNextS) {
-            if (sPos <= testSize - 1) {
-                testOp->feedTupleS(sTuple[sPos]);
-                sPos++;
-                if (sPos <= testSize - 1) {
-                    tNextS = sTuple[sPos]->arrivalTime;
-                } else {
-                    tNextS = -1;
-                    //  INTELLI_INFO("NO MORE S");
-                    break;
-                }
-
-            }
-
-        }
-        //INTELLI_INFO("detect R");
-        while (tNow >= tNextR) {
-            if (rPos <= testSize - 1) {
-                testOp->feedTupleR(rTuple[rPos]);
-                //INTELLI_INFO("feed"+rTuple[rPos]->toString()+"at "+ to_string(tNow));
-                rPos++;
-                if (rPos <= testSize - 1) {
-                    tNextR = rTuple[rPos]->arrivalTime;
-
-                } else {
-                    tNextR = -1;
-                    //  INTELLI_INFO("NO MORE R");
-                    break;
-                }
-            }
-        }
-        //usleep(20);
+    if (opConfig->getString("operator") == "MSMJ") {
+        inlineTestOfMSMJ();
+    } else {
+        inlineTestOfCommon();
     }
-    testOp->stop();
 }
 
 size_t OoOJoin::TestBench::OoOTest(bool additionalSort) {
@@ -285,4 +238,123 @@ void OoOJoin::TestBench::setDataLoader(std::string tag, ConfigMapPtr globalCfg) 
     dl->setConfig(globalCfg);
     setDataSet(dl->getTupleVectorS(), dl->getTupleVectorR());
     TB_INFO("Using DataLoader [" + tag + "]");
+}
+
+void TestBench::inlineTestOfCommon() {
+    struct timeval timeStart{};
+    size_t testSize = (rTuple.size() > sTuple.size()) ? sTuple.size() : rTuple.size();
+    size_t rPos = 0, sPos = 0;
+    size_t tNow = 0;
+    size_t tMaxS = sTuple[testSize - 1]->arrivalTime;
+    size_t tMaxR = rTuple[testSize - 1]->arrivalTime;
+    size_t tMax = (tMaxS > tMaxR) ? tMaxS : tMaxR;
+    size_t tNextS = 0, tNextR = 0;
+    /*for(size_t i=0;i<testSize;i++)
+    {
+     TB_INFO(sTuple[i]->toString());
+    }*/
+    testOp->setConfig(opConfig);
+    gettimeofday(&timeStart, nullptr);
+    testOp->syncTimeStruct(timeStart);
+    testOp->start();
+    while (tNow < tMax) {
+        tNow = UtilityFunctions::timeLastUs(timeStart);
+        //INTELLI_INFO("T=" << tNow);
+        while (tNow >= tNextS) {
+            if (sPos <= testSize - 1) {
+                testOp->feedTupleS(sTuple[sPos]);
+                sPos++;
+                if (sPos <= testSize - 1) {
+                    tNextS = sTuple[sPos]->arrivalTime;
+                } else {
+                    tNextS = -1;
+                    //  INTELLI_INFO("NO MORE S");
+                    break;
+                }
+
+            }
+
+        }
+        //INTELLI_INFO("detect R");
+        while (tNow >= tNextR) {
+            if (rPos <= testSize - 1) {
+                testOp->feedTupleR(rTuple[rPos]);
+                //INTELLI_INFO("feed"+rTuple[rPos]->toString()+"at "+ to_string(tNow));
+                rPos++;
+                if (rPos <= testSize - 1) {
+                    tNextR = rTuple[rPos]->arrivalTime;
+
+                } else {
+                    tNextR = -1;
+                    //  INTELLI_INFO("NO MORE R");
+                    break;
+                }
+            }
+        }
+        //usleep(20);
+    }
+    testOp->stop();
+}
+
+void TestBench::inlineTestOfMSMJ() {
+    struct timeval timeStart{};
+    size_t testSize = (rTuple.size() > sTuple.size()) ? sTuple.size() : rTuple.size();
+    size_t rPos = 0, sPos = 0;
+    size_t tNow = 0;
+    size_t tMaxS = sTuple[testSize - 1]->arrivalTime;
+    size_t tMaxR = rTuple[testSize - 1]->arrivalTime;
+    size_t tMax = (tMaxS > tMaxR) ? tMaxS : tMaxR;
+    size_t tNextS = 0, tNextR = 0;
+    /*for(size_t i=0;i<testSize;i++)
+    {
+     TB_INFO(sTuple[i]->toString());
+    }*/
+    testOp->setConfig(opConfig);
+    gettimeofday(&timeStart, nullptr);
+    testOp->syncTimeStruct(timeStart);
+    testOp->start();
+    while (tNow < tMax) {
+        tNow = UtilityFunctions::timeLastUs(timeStart);
+        //INTELLI_INFO("T=" << tNow);
+        while (tNow >= tNextS) {
+            if (sPos <= testSize - 1) {
+                testOp->feedTupleS(sTuple[sPos]);
+                sPos++;
+                if (sPos <= testSize - 1) {
+                    tNextS = sTuple[sPos]->arrivalTime;
+                } else {
+                    tNextS = -1;
+                    //pass a end flag to operator
+                    TrackTuplePtr endFlagTuple = newTrackTuple(1);
+                    endFlagTuple->isEnd = true;
+                    testOp->feedTupleS(endFlagTuple);
+                    //  INTELLI_INFO("NO MORE S");
+                    break;
+                }
+
+            }
+
+        }
+        //INTELLI_INFO("detect R");
+        while (tNow >= tNextR) {
+            if (rPos <= testSize - 1) {
+                testOp->feedTupleR(rTuple[rPos]);
+                //INTELLI_INFO("feed"+rTuple[rPos]->toString()+"at "+ to_string(tNow));
+                rPos++;
+                if (rPos <= testSize - 1) {
+                    tNextR = rTuple[rPos]->arrivalTime;
+
+                } else {
+                    tNextR = -1;
+                    TrackTuplePtr endFlagTuple = newTrackTuple(1);
+                    endFlagTuple->isEnd = true;
+                    testOp->feedTupleR(endFlagTuple);
+                    //  INTELLI_INFO("NO MORE R");
+                    break;
+                }
+            }
+        }
+        //usleep(20);
+    }
+    testOp->stop();
 }

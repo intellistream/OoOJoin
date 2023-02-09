@@ -35,8 +35,10 @@ namespace OoOJoin {
  */
     class TestBench {
     protected:
+        //be used to make a comparation
         void inOrderSort(std::vector<TrackTuplePtr> &arr);
 
+        //true sort
         void OoOSort(std::vector<TrackTuplePtr> &arr);
 
         void inlineTest();
@@ -44,6 +46,12 @@ namespace OoOJoin {
         void forceInOrder(std::vector<TrackTuplePtr> &arr);
 
         tsType timeStep = 1;
+
+    private:
+
+        void inlineTestOfCommon();
+
+        void inlineTestOfMSMJ();
 
     public:
         std::vector<TrackTuplePtr> rTuple;

@@ -10,25 +10,31 @@
 #include <unordered_map>
 #include <list>
 #include <mutex>
-#include "profiler/tuple_productivity_profiler.h"
-#include "common/define.h"
 #include "parallel-hashmap/parallel_hashmap/phmap.h"
+#include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
+#include "Operator/MSMJ/common/define.h"
 
+typedef std::shared_ptr<class Stream> StreamPtr;
+typedef std::shared_ptr<class KSlack> KSlackPtr;
+typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
+typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
+typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
+typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
 
 class StreamOperator {
 public:
 
-    explicit StreamOperator(TupleProductivityProfiler *profiler);
+    explicit StreamOperator(TupleProductivityProfilerPtr profiler);
 
     ~StreamOperator() = default;
 
-    auto mswj_execution(std::queue<Tuple> &input) -> void;
+    auto mswj_execution(std::queue<OoOJoin::TrackTuple> &input) -> void;
 
-    auto get_result() -> std::queue<Tuple>;
+    auto get_result() -> std::queue<OoOJoin::TrackTuple>;
 
 private:
 
-    auto can_join_(Tuple t1, Tuple t2) -> bool;
+    auto can_join_(OoOJoin::TrackTuple t1, OoOJoin::TrackTuple t2) -> bool;
 
     //互斥锁
     std::mutex latch_;
@@ -37,13 +43,13 @@ private:
     int T_op_{};
 
     //window map
-    phmap::parallel_flat_hash_map<int, std::list<Tuple>> window_map_{};
+    phmap::parallel_flat_hash_map<int, std::list<OoOJoin::TrackTuple>> window_map_{};
 
     //结果元组
-    std::queue<Tuple> result_{};
+    std::queue<OoOJoin::TrackTuple> result_{};
 
     //元组生产力监视器
-    TupleProductivityProfiler *productivity_profiler_;
+    TupleProductivityProfilerPtr productivity_profiler_;
 
 };
 
