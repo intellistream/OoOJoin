@@ -12,6 +12,7 @@
 #include <parallel-hashmap/parallel_hashmap/phmap.h>
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 #include "Common/Tuples.h"
+#include "Utils/ConfigMap.hpp"
 
 typedef std::shared_ptr<class Stream> StreamPtr;
 typedef std::shared_ptr<class KSlack> KSlackPtr;
@@ -58,11 +59,15 @@ private:
     //离散随机变量Di的概率分布函数fDi
     auto fD(int d, int stream_id) -> double;
 
+    INTELLI::ConfigMapPtr opConfig;
+
     //互斥锁
     std::mutex latch_;
 
     //Rstat窗口大小
     phmap::parallel_flat_hash_map<int, int> R_stat_map_{};
+
+    phmap::parallel_flat_hash_map<int, Stream *> stream_map_{};
 
     //历史流Si输入记录的映射
     phmap::parallel_flat_hash_map<int, std::vector<OoOJoin::TrackTuple>> record_map_{};

@@ -32,11 +32,13 @@ public:
 
     auto disorder_handling() -> void;
 
-    auto get_output() -> std::queue<Tuple>;
+    auto get_output() -> std::queue<TrackTuple>;
 
     auto get_id() -> int;
 
 private:
+
+    INTELLI::ConfigMapPtr opConfig;
 
     //输出区
     std::queue<OoOJoin::TrackTuple> output_;

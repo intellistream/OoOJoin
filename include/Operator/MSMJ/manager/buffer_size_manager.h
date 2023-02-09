@@ -5,9 +5,10 @@
 #ifndef DISORDERHANDLINGSYSTEM_BUFFER_SIZE_MANAGER_H
 #define DISORDERHANDLINGSYSTEM_BUFFER_SIZE_MANAGER_H
 
-
+#include "Operator/MSMJ/common/define.h"
 #include "statistics_manager.h"
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
+#include "Utils/ConfigMap.hpp"
 
 typedef std::shared_ptr<class Stream> StreamPtr;
 typedef std::shared_ptr<class KSlack> KSlackPtr;
@@ -15,6 +16,8 @@ typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
 typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
 typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
 typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
+
+using namespace OoOJoin;
 
 class BufferSizeManager {
 public:
@@ -31,8 +34,12 @@ private:
     //论文中的函数γ(L,T)
     auto y(int stream_id, int K) -> double;
 
+    INTELLI::ConfigMapPtr opConfig;
+
     //互斥锁
     std::mutex latch_;
+
+    phmap::parallel_flat_hash_map<int, Stream *> stream_map_{};
 
     //数据统计器
     StatisticsManagerPtr statistics_manager_;

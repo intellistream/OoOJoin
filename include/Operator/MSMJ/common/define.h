@@ -36,30 +36,10 @@ constexpr double confidenceValue{0.5};
 
 class Stream;
 
-struct Tuple;
-
-extern phmap::parallel_flat_hash_map<int, Stream *> stream_map;
-
-extern std::mutex global_lock;
-
 //获得离散随机变量Di(粗粒度延迟)的值
 auto get_D(int delay) -> int;
 
-//输出用
-auto print(std::queue<Tuple> q) -> void;
 
-struct Tuple {
-    //表示来自输入流Si
-    int streamId;
-    //第几个到达的元组
-    int id;
-    //时间戳
-    int ts;
-    //延迟
-    int delay;
-
-    Tuple(int streamId, int id, int ts) : streamId(streamId), id(id), ts(ts) {}
-};
 
 struct TupleComparator {
     //按到达时间来排序

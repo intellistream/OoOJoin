@@ -24,6 +24,7 @@ typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
 typedef std::shared_ptr<class StreamOperator> StreamOperatorPtr;
 
 using namespace OoOJoin;
+
 class Synchronizer {
 public:
     explicit Synchronizer(int stream_count, StreamOperatorPtr stream_operator);
@@ -31,11 +32,13 @@ public:
     ~Synchronizer() = default;
 
     //同步过程
-    auto synchronize_stream(TrackTuple &input) -> void;
+    auto synchronize_stream(std::queue<TrackTuple> &input) -> void;
 
     auto get_output() -> std::queue<TrackTuple>;
 
 private:
+
+    INTELLI::ConfigMapPtr opConfig;
 
     //互斥锁
     std::mutex latch_;

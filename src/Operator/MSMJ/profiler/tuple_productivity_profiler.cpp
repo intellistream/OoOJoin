@@ -2,8 +2,8 @@
 // Created by 86183 on 2023/1/9.
 //
 
-#include "profiler/tuple_productivity_profiler.h"
-#include "common/define.h"
+
+#include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 
 auto TupleProductivityProfiler::get_join_record_map() -> phmap::parallel_flat_hash_map<int, int> {
     return join_record_map_;
@@ -48,6 +48,11 @@ auto TupleProductivityProfiler::get_select_ratio(int K) -> double {
 
 auto TupleProductivityProfiler::get_requirement_recall() -> double {
     std::lock_guard<std::mutex> lock(latch_);
+
+    double userRecall  = opConfig->getDouble("userRecall");
+    int P  = opConfig->getI64("P");
+    int L  = opConfig->getI64("L");
+
     int max_D = cross_join_map_.end()->first;
     int N_true_L = 0;
     for (int d = 0; d <= max_D; d++) {

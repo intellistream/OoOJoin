@@ -10,6 +10,7 @@
 #include <map>
 #include <mutex>
 #include "parallel-hashmap/parallel_hashmap/phmap.h"
+#include "Utils/ConfigMap.hpp"
 #include <parallel-hashmap/parallel_hashmap/btree.h>
 
 
@@ -41,6 +42,8 @@ public:
     auto get_requirement_recall() -> double;
 
 private:
+
+    INTELLI::ConfigMapPtr opConfig;
 
     //互斥锁
     std::mutex latch_;

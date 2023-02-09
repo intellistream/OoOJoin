@@ -13,6 +13,7 @@
 #include "parallel-hashmap/parallel_hashmap/phmap.h"
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 #include "Operator/MSMJ/common/define.h"
+#include "Utils/ConfigMap.hpp"
 
 typedef std::shared_ptr<class Stream> StreamPtr;
 typedef std::shared_ptr<class KSlack> KSlackPtr;
@@ -35,6 +36,8 @@ public:
 private:
 
     auto can_join_(OoOJoin::TrackTuple t1, OoOJoin::TrackTuple t2) -> bool;
+
+    INTELLI::ConfigMapPtr opConfig;
 
     //互斥锁
     std::mutex latch_;

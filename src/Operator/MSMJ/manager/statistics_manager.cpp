@@ -8,6 +8,7 @@
 #include <iostream>
 #include <utility>
 #include "Operator/MSMJ/manager/statistics_manager.h"
+#include "Operator/MSMJ/common/define.h"
 
 
 StatisticsManager::StatisticsManager(TupleProductivityProfilerPtr profiler) {
@@ -15,7 +16,7 @@ StatisticsManager::StatisticsManager(TupleProductivityProfilerPtr profiler) {
 }
 
 
-auto StatisticsManager::add_record(int stream_id,  OoOJoin::TrackTuple tuple) -> void {
+auto StatisticsManager::add_record(int stream_id, OoOJoin::TrackTuple tuple) -> void {
     std::lock_guard<std::mutex> lock(latch_);
     record_map_[stream_id].push_back(tuple);
 }
@@ -30,14 +31,14 @@ auto StatisticsManager::add_record(int stream_id, int T, int K) -> void {
 
 auto StatisticsManager::get_maxD(int stream_id) -> int {
     std::lock_guard<std::mutex> lock(latch_);
-    int max_D = 0;
+    uint64_t max_D = 0;
 
     if (record_map_.find(stream_id) == record_map_.end()) {
         return max_D;
     }
 
     for (auto it: record_map_[stream_id]) {
-        max_D = std::max(max_D, it.delay);
+        max_D = std::max(max_D, it.eventTime);
     }
     return max_D;
 }
@@ -45,6 +46,8 @@ auto StatisticsManager::get_maxD(int stream_id) -> int {
 
 auto StatisticsManager::get_R_stat(int stream_id) -> int {
     std::vector<OoOJoin::TrackTuple> record = record_map_[stream_id];
+    int confidenceValue = opConfig->getI64("confidenceValue");
+
     if (record.empty()) {
         return 1;
     }
@@ -149,6 +152,7 @@ auto StatisticsManager::get_future_ksync(int stream_id) -> int {
 }
 
 
+#define maxDelay 100
 //概率分布函数fD
 auto StatisticsManager::fD(int d, int stream_id) -> double {
     int R_stat = get_R_stat(stream_id);
@@ -157,7 +161,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
         return -1;
     }
 
-    std::vector< OoOJoin::TrackTuple> record = record_map_[stream_id];
+    std::vector<OoOJoin::TrackTuple> record = record_map_[stream_id];
     if (record.empty()) {
         return 1;
     }
@@ -278,7 +282,7 @@ auto StatisticsManager::fDk(int d, int stream_id, int K) -> double {
 }
 
 auto StatisticsManager::wil(int l, int stream_id, int K) -> int {
-    int wi = stream_map[stream_id]->get_window_size();
+    int wi = stream_map_[stream_id]->get_window_size();
     int ni = wi / b;
     int res = 0;
     double ri = productivity_profiler_->get_join_record_map()[stream_id] * 1.0 / wi;

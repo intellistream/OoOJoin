@@ -24,6 +24,8 @@ auto BufferSizeManager::k_search(int stream_id) -> int {
         return 1;
     }
 
+    int g = opConfig->getI64("g");
+
     int k = 0;
     while (k <= max_DH && y(stream_id, k) < productivity_profiler_->get_requirement_recall()) {
         k = k + g;
@@ -37,7 +39,10 @@ auto BufferSizeManager::y(int stream_id, int K) -> double {
     double sel_radio = productivity_profiler_->get_select_ratio(K);
 
     int wil = 0;
-    int m = stream_map.size();
+    int m = stream_map_.size();
+
+    //basicWindow
+    int b = opConfig->getI64("b");
 
     //分子
     int numerator = 0;
@@ -47,7 +52,7 @@ auto BufferSizeManager::y(int stream_id, int K) -> double {
             if (j == i) {
                 continue;
             }
-            int wj = stream_map[j]->get_window_size();
+            int wj = stream_map_[j]->get_window_size();
             int nj = wj / b;
             int sum = 0;
             for (int l = 1; l <= nj; l++) {
@@ -66,7 +71,7 @@ auto BufferSizeManager::y(int stream_id, int K) -> double {
             if (j == i) {
                 continue;
             }
-            res *= stream_map[j]->get_window_size();
+            res *= stream_map_[j]->get_window_size();
         }
         denominator += res;
     }
