@@ -27,12 +27,12 @@ public:
     ~BufferSizeManager() = default;
 
     //自适应K值算法
-    auto k_search(int stream_id) -> int;
+    auto k_search(uint64_t stream_id) -> uint64_t;
 
 private:
 
     //论文中的函数γ(L,T)
-    auto y(int stream_id, int K) -> double;
+    auto y(uint64_t K) -> double;
 
     INTELLI::ConfigMapPtr opConfig;
 

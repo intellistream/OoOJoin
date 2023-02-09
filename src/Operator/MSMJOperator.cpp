@@ -6,7 +6,6 @@ OoOJoin::MSMJOperator::MSMJOperator() {
     tupleProductivityProfiler = std::make_unique<TupleProductivityProfiler>();
     statisticsManager = std::make_unique<StatisticsManager>(tupleProductivityProfiler);
     bufferSizeManager = std::make_unique<BufferSizeManager>(statisticsManager, tupleProductivityProfiler);
-    kslack = std::make_unique<KSlack>(nullptr,);
 }
 
 
@@ -67,9 +66,6 @@ void OoOJoin::MSMJOperator::conductComputation() {
 }
 
 bool OoOJoin::MSMJOperator::stop() {
-    kslackR->disorder_handling();
-    kslackS->disorder_handling();
-
     /**
      */
     if (lockedByWaterMark) {

@@ -17,45 +17,44 @@ BufferSizeManager::BufferSizeManager(StatisticsManagerPtr statistics_manager, Tu
  * @param L  - buffer-size manager的自适应时间间隔
  * @param g  K*搜索粒度
  */
-auto BufferSizeManager::k_search(int stream_id) -> int {
-    int max_DH = statistics_manager_->get_maxD(stream_id);
+auto BufferSizeManager::k_search(uint64_t stream_id) -> uint64_t {
+    uint64_t max_DH = statistics_manager_->get_maxD(stream_id);
 
     if (max_DH == 0) {
         return 1;
     }
 
-    int g = opConfig->getI64("g");
+    uint64_t g = opConfig->getI64("g");
 
-    int k = 0;
-    while (k <= max_DH && y(stream_id, k) < productivity_profiler_->get_requirement_recall()) {
+    uint64_t k = 0;
+    while (k <= max_DH && y(k) < productivity_profiler_->get_requirement_recall()) {
         k = k + g;
     }
     return k;
 }
 
-auto BufferSizeManager::y(int stream_id, int K) -> double {
+auto BufferSizeManager::y(uint64_t K) -> double {
     std::lock_guard<std::mutex> lock(latch_);
     //SEL比值
     double sel_radio = productivity_profiler_->get_select_ratio(K);
 
-    int wil = 0;
-    int m = stream_map_.size();
+    uint64_t m = stream_map_.size();
 
     //basicWindow
-    int b = opConfig->getI64("b");
+    uint64_t b = opConfig->getI64("b");
 
     //分子
-    int numerator = 0;
-    for (int i = 1; i <= m; i++) {
-        int res = 1;
-        for (int j = 1; j <= m; j++) {
+    uint64_t numerator = 0;
+    for (uint64_t i = 1; i <= m; i++) {
+        uint64_t res = 1;
+        for (uint64_t j = 1; j <= m; j++) {
             if (j == i) {
                 continue;
             }
-            int wj = stream_map_[j]->get_window_size();
-            int nj = wj / b;
-            int sum = 0;
-            for (int l = 1; l <= nj; l++) {
+            uint64_t wj = stream_map_[j]->get_window_size();
+            uint64_t nj = wj / b;
+            uint64_t sum = 0;
+            for (uint64_t l = 1; l <= nj; l++) {
                 sum += statistics_manager_->wil(l, j, K);
             }
             res *= sum;
@@ -64,10 +63,10 @@ auto BufferSizeManager::y(int stream_id, int K) -> double {
     }
 
     //分母
-    int denominator = 0;
-    for (int i = 1; i <= m; i++) {
-        int res = 1;
-        for (int j = 1; j <= m; j++) {
+    uint64_t denominator = 0;
+    for (uint64_t i = 1; i <= m; i++) {
+        uint64_t res = 1;
+        for (uint64_t j = 1; j <= m; j++) {
             if (j == i) {
                 continue;
             }
@@ -80,7 +79,7 @@ auto BufferSizeManager::y(int stream_id, int K) -> double {
         return 1;
     }
 
-    return static_cast<int>(sel_radio * numerator / denominator);
+    return static_cast<uint64_t>(sel_radio * numerator / denominator);
 }
 
 

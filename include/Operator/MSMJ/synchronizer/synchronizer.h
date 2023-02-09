@@ -27,7 +27,7 @@ using namespace OoOJoin;
 
 class Synchronizer {
 public:
-    explicit Synchronizer(int stream_count, StreamOperatorPtr stream_operator);
+    explicit Synchronizer(uint64_t stream_count, StreamOperatorPtr stream_operator);
 
     ~Synchronizer() = default;
 
@@ -44,7 +44,7 @@ private:
     std::mutex latch_;
 
     //SyncBuf缓冲区映射
-    phmap::parallel_flat_hash_map<int, phmap::btree_set<TrackTuple, TupleComparator>> sync_buffer_map_{};
+    phmap::parallel_flat_hash_map<uint64_t, phmap::btree_set<TrackTuple, TupleComparator>> sync_buffer_map_{};
 
     //同步输出区
     std::queue<TrackTuple> output_{};
@@ -53,13 +53,13 @@ private:
     std::queue<TrackTuple> watch_output_{};
 
     //Tsync
-    int T_sync_{};
+    uint64_t T_sync_{};
 
     //stream的数量
-    int stream_count_{};
+    uint64_t stream_count_{};
 
     //当前缓冲区拥有tuple的流的数量
-    int own_stream_{};
+    uint64_t own_stream_{};
 
     //连接器
     StreamOperatorPtr stream_operator_;

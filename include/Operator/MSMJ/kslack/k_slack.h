@@ -34,7 +34,7 @@ public:
 
     auto get_output() -> std::queue<TrackTuple>;
 
-    auto get_id() -> int;
+    auto get_id() -> uint64_t;
 
 private:
 

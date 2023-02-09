@@ -21,12 +21,13 @@ auto KSlack::get_output() -> std::queue<OoOJoin::TrackTuple> {
     return watch_output_;
 }
 
-auto KSlack::get_id() -> int {
+auto KSlack::get_id() -> uint64_t {
     return stream_->get_id();
 }
 
 //K-Slack算法对无序流进行处理
 auto KSlack::disorder_handling() -> void {
+    uint64_t L = opConfig->getI64("L");
     while (!stream_->get_tuple_list().empty()) {
         TrackTuple tuple = stream_->get_tuple_list().front();
 

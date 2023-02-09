@@ -10,17 +10,17 @@
 
 #include "Operator/MSMJ/common/define.h"
 
-Stream::Stream(int stream_id, int window_size, std::queue<OoOJoin::TrackTuple> tuple_list) {
+Stream::Stream(uint64_t stream_id, uint64_t window_size, std::queue<OoOJoin::TrackTuple> tuple_list) {
     stream_id_ = stream_id;
     window_size_ = window_size;
     tuple_list_ = std::move(tuple_list);
 }
 
-auto Stream::get_window_size() const -> int {
+auto Stream::get_window_size() const -> uint64_t {
     return window_size_;
 }
 
-auto Stream::get_id() const -> int {
+auto Stream::get_id() const -> uint64_t {
     return stream_id_;
 }
 

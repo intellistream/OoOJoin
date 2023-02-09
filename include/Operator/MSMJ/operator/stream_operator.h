@@ -46,7 +46,7 @@ private:
     int T_op_{};
 
     //window map
-    phmap::parallel_flat_hash_map<int, std::list<OoOJoin::TrackTuple>> window_map_{};
+    phmap::parallel_flat_hash_map<uint64_t, std::list<OoOJoin::TrackTuple>> window_map_{};
 
     //结果元组
     std::queue<OoOJoin::TrackTuple> result_{};
