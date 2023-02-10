@@ -20,6 +20,8 @@ namespace OoOJoin {
     typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
     typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
     typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
+    typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
+    typedef std::shared_ptr<class StreamOperator> StreamOperatorPtr;
 /**
  * @ingroup ADB_OPERATORS
  * @def newMSWJOperator
@@ -73,6 +75,8 @@ namespace OoOJoin {
         TupleProductivityProfilerPtr tupleProductivityProfiler{};
 
         SynchronizerPtr synchronizer{};
+
+        StreamOperatorPtr streamOperator{};
 
     public:
         MSMJOperator();

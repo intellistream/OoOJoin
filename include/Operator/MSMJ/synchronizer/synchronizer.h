@@ -36,6 +36,8 @@ public:
 
     auto get_output() -> std::queue<TrackTuple>;
 
+    auto setConfig(INTELLI::ConfigMapPtr opConfig) -> void;
+
 private:
 
     INTELLI::ConfigMapPtr opConfig;

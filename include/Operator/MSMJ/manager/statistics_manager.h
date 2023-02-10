@@ -42,6 +42,7 @@ public:
 
     auto add_record(uint64_t stream_id, uint64_t T, uint64_t K) -> void;
 
+    auto setConfig(INTELLI::ConfigMapPtr opConfig) -> void;
 
 private:
     auto inline get_D(uint64_t delay) -> uint64_t {

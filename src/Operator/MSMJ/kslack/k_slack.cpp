@@ -81,4 +81,8 @@ auto KSlack::disorder_handling() -> void {
 
 }
 
+auto KSlack::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {
+    this->opConfig = std::move(opConfig);
+}
+
 

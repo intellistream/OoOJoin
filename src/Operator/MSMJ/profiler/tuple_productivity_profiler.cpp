@@ -5,7 +5,9 @@
 
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 
-auto TupleProductivityProfiler::get_join_record_map() -> phmap::parallel_flat_hash_map<uint64_t , uint64_t> {
+#include <utility>
+
+auto TupleProductivityProfiler::get_join_record_map() -> phmap::parallel_flat_hash_map<uint64_t, uint64_t> {
     return join_record_map_;
 }
 
@@ -49,9 +51,9 @@ auto TupleProductivityProfiler::get_select_ratio(uint64_t K) -> double {
 auto TupleProductivityProfiler::get_requirement_recall() -> double {
     std::lock_guard<std::mutex> lock(latch_);
 
-    double userRecall  = opConfig->getDouble("userRecall");
-    uint64_t P  = opConfig->getI64("P");
-    uint64_t L  = opConfig->getI64("L");
+    double userRecall = opConfig->getDouble("userRecall");
+    uint64_t P = opConfig->getI64("P");
+    uint64_t L = opConfig->getI64("L");
 
     uint64_t max_D = cross_join_map_.end()->first;
     uint64_t N_true_L = 0;
@@ -72,4 +74,8 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
     //requirement_recall大于等于这个值
     double requirement_recall = (userRecall * (N_true_P_L + N_true_L) - N_prod_P_L) * 1.0 / N_true_L;
     return requirement_recall;
+}
+
+auto TupleProductivityProfiler::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {
+    this->opConfig = std::move(opConfig);
 }

@@ -3,9 +3,25 @@
 
 
 OoOJoin::MSMJOperator::MSMJOperator() {
-    tupleProductivityProfiler = std::make_unique<TupleProductivityProfiler>();
-    statisticsManager = std::make_unique<StatisticsManager>(tupleProductivityProfiler);
-    bufferSizeManager = std::make_unique<BufferSizeManager>(statisticsManager, tupleProductivityProfiler);
+    uint64_t streamCount = 1;
+
+    if (config->exist("StreamCount")) {
+        streamCount = config->getI64("StreamCount");
+    } else {
+        INTELLI_INFO("You should give the param of streamCount");
+    }
+
+    tupleProductivityProfiler = std::make_shared<TupleProductivityProfiler>();
+    statisticsManager = std::make_shared<StatisticsManager>(tupleProductivityProfiler);
+    bufferSizeManager = std::make_shared<BufferSizeManager>(statisticsManager, tupleProductivityProfiler);
+    synchronizer = std::make_shared<Synchronizer>(streamCount, streamOperator);
+    streamOperator = std::make_shared<StreamOperator>(tupleProductivityProfiler);
+
+    tupleProductivityProfiler->setConfig(config);
+    statisticsManager->setConfig(config);
+    bufferSizeManager->setConfig(config);
+    synchronizer->setConfig(config);
+    streamOperator->setConfig(config);
 }
 
 
@@ -109,7 +125,7 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 }
 
 size_t OoOJoin::MSMJOperator::getResult() {
-    return intermediateResult;
+    return streamOperator->getJoinResultCount();
 }
 
 

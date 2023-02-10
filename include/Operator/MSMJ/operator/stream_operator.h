@@ -35,6 +35,8 @@ public:
 
     auto getJoinResultCount() -> int;
 
+    auto setConfig(INTELLI::ConfigMapPtr opConfig) -> void;
+
 private:
 
     auto can_join_(OoOJoin::TrackTuple t1, OoOJoin::TrackTuple t2) -> bool;

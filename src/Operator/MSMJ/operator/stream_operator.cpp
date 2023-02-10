@@ -96,6 +96,10 @@ auto StreamOperator::getJoinResultCount() -> int {
     return result_.size();
 }
 
+auto StreamOperator::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {
+    this->opConfig = std::move(opConfig);
+}
+
 
 
 

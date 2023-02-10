@@ -36,6 +36,8 @@ public:
 
     auto get_id() -> uint64_t;
 
+    auto setConfig(INTELLI::ConfigMapPtr opConfig) -> void;
+
 private:
 
     INTELLI::ConfigMapPtr opConfig;

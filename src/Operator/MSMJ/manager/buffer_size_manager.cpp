@@ -82,5 +82,9 @@ auto BufferSizeManager::y(uint64_t K) -> double {
     return static_cast<uint64_t>(sel_radio * numerator / denominator);
 }
 
+auto BufferSizeManager::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {
+    this->opConfig = std::move(opConfig);
+}
+
 
 

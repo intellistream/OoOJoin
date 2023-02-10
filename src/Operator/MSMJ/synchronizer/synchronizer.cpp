@@ -57,3 +57,7 @@ auto Synchronizer::synchronize_stream(std::queue<TrackTuple> &input) -> void {
     }
 }
 
+auto Synchronizer::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {
+    this->opConfig = std::move(opConfig);
+}
+

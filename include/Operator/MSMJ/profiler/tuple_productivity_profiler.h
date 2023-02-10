@@ -41,6 +41,8 @@ public:
 
     auto get_requirement_recall() -> double;
 
+    auto setConfig(INTELLI::ConfigMapPtr opConfig) -> void;
+
 private:
 
     INTELLI::ConfigMapPtr opConfig;

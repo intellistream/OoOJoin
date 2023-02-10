@@ -307,5 +307,9 @@ auto StatisticsManager::wil(uint64_t l, uint64_t stream_id, uint64_t K) -> uint6
     return res;
 }
 
+auto StatisticsManager::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {
+    this->opConfig = std::move(opConfig);
+}
+
 
 
