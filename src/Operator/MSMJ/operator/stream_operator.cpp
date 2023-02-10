@@ -18,7 +18,7 @@ auto StreamOperator::can_join_(OoOJoin::TrackTuple t1, OoOJoin::TrackTuple t2) -
     return t1.delay == t2.delay + 2;
 }
 
-auto StreamOperator::get_result() -> std::queue<OoOJoin::TrackTuple> {
+auto StreamOperator::get_result() -> std::queue<std::vector<OoOJoin::TrackTuple>> {
     return result_;
 }
 
@@ -64,8 +64,8 @@ auto StreamOperator::mswj_execution(std::queue<OoOJoin::TrackTuple> &input) -> v
             productivity_profiler_->update_cross_join(delay, cross_join);
 
             //连接
-            int res_size = 1;
-            result_.push(tuple);
+            vector<TrackTuple> join_tuple;
+            join_tuple.push_back(tuple);
             for (auto &it: window_map_) {
                 if (it.first == stream_id) {
                     continue;
@@ -74,22 +74,26 @@ auto StreamOperator::mswj_execution(std::queue<OoOJoin::TrackTuple> &input) -> v
                     auto tuple_j = it.second.front();
                     it.second.pop_front();
                     if (can_join_(tuple, tuple_j)) {
-                        res_size++;
                         //时间戳定义为ei.ts
                         tuple_j.eventTime = tuple.eventTime;
-                        result_.push(tuple_j);
+                        join_tuple.push_back(tuple_j);
                     }
                 }
             }
 
+            result_.push(join_tuple);
             //更新join result map
-            productivity_profiler_->update_join_res(delay, res_size);
+            productivity_profiler_->update_join_res(delay, join_tuple.size());
 
             window_map_[stream_id].push_back(tuple);
         } else if (tuple.eventTime > T_op_ - window_map_[stream_id].size()) {
             window_map_[stream_id].push_back(tuple);
         }
     }
+}
+
+auto StreamOperator::getJoinResultCount() -> int {
+    return result_.size();
 }
 
 

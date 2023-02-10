@@ -31,7 +31,9 @@ public:
 
     auto mswj_execution(std::queue<OoOJoin::TrackTuple> &input) -> void;
 
-    auto get_result() -> std::queue<OoOJoin::TrackTuple>;
+    auto get_result() -> std::queue<std::vector<OoOJoin::TrackTuple>>;
+
+    auto getJoinResultCount() -> int;
 
 private:
 
@@ -49,7 +51,7 @@ private:
     phmap::parallel_flat_hash_map<uint64_t, std::list<OoOJoin::TrackTuple>> window_map_{};
 
     //结果元组
-    std::queue<OoOJoin::TrackTuple> result_{};
+    std::queue<std::vector<OoOJoin::TrackTuple>> result_{};
 
     //元组生产力监视器
     TupleProductivityProfilerPtr productivity_profiler_;
