@@ -32,6 +32,9 @@ mkdir build && cd build
 make 
 ```
 
+You should see this: https://en.cppreference.com/w/cpp/compiler_support/20#C.2B.2B20_library_features
+to know if your compiler is adapted to cpp20
+
 ## Code Structure
 
 - benchmark -- application code to use the generated shared library
