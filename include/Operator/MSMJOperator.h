@@ -78,6 +78,8 @@ namespace OoOJoin {
 
         ~MSMJOperator() = default;
 
+        void init(ConfigMapPtr config);
+
         /**
          * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
         * @brief Set the config map related to this operator

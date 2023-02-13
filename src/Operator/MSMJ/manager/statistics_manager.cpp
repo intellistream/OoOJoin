@@ -12,7 +12,7 @@
 
 
 StatisticsManager::StatisticsManager(TupleProductivityProfilerPtr profiler,
-                                     phmap::parallel_flat_hash_map<uint64_t , Stream *> stream_map) {
+                                     phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map) {
     productivity_profiler_ = std::move(profiler);
     stream_map_ = std::move(stream_map);
 }
@@ -48,7 +48,8 @@ auto StatisticsManager::get_maxD(uint64_t stream_id) -> uint64_t {
 
 auto StatisticsManager::get_R_stat(uint64_t stream_id) -> uint64_t {
     std::vector<OoOJoin::TrackTuple> record = record_map_[stream_id];
-    uint64_t confidenceValue = opConfig->getU64("confidenceValue");
+
+    uint64_t confidenceValue = opConfig->getDouble("confidenceValue");
 
     if (record.empty()) {
         return 1;

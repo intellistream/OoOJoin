@@ -178,16 +178,9 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
 //    operatorTag = cfg->tryString("operator", "MSMJ");
 //    loaderTag = cfg->tryString("dataLoader", "random");
 
-    OperatorTablePtr opTable = newOperatorTable();
-
-    AbstractOperatorPtr msmj = opTable->findOperator(operatorTag);
 
     INTELLI_INFO("Try use " + operatorTag + " operator");
 
-    if (msmj == nullptr) {
-        msmj = newMSMJOperator();
-        INTELLI_INFO("No " + operatorTag + " operator, will use MSMJ instead");
-    }
 
     cfg->edit("operator", "MSMJ");
     cfg->edit("dataLoader", "random");
@@ -210,6 +203,19 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
     cfg->edit("P", (uint64_t) 4);
     cfg->edit("maxDelay", (uint64_t) 100);
     cfg->edit("StreamCount", (uint64_t) 2);
+
+    OperatorTablePtr opTable = newOperatorTable();
+
+    AbstractOperatorPtr abstractOperator = opTable->findOperator(operatorTag);
+
+    MSMJOperatorPtr msmj = shared_ptr<MSMJOperator>(reinterpret_cast<MSMJOperator *>(abstractOperator.get()));
+
+    msmj->init(cfg);
+
+    if (msmj == nullptr) {
+        msmj = newMSMJOperator();
+        INTELLI_INFO("No " + operatorTag + " operator, will use MSMJ instead");
+    }
 
     //set operator as msmj
     tbOoO.setOperator(msmj, cfg);

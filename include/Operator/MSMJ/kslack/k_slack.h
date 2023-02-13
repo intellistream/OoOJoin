@@ -45,7 +45,7 @@ private:
     phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map_{};
 
     //输出区
-    std::queue<OoOJoin::TrackTuple> output_;
+    std::queue<OoOJoin::TrackTuple> output_{};
 
     //观察区(用于最后的结果观察)
     std::queue<OoOJoin::TrackTuple> watch_output_;

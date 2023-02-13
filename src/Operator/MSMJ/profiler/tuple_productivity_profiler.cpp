@@ -7,7 +7,7 @@
 
 #include <utility>
 
-auto TupleProductivityProfiler::get_join_record_map() -> phmap::parallel_flat_hash_map<uint64_t, uint64_t> {
+auto TupleProductivityProfiler::get_join_record_map() -> phmap::parallel_flat_hash_map<int, int> {
     return join_record_map_;
 }
 
@@ -40,7 +40,13 @@ auto TupleProductivityProfiler::get_select_ratio(uint64_t K) -> double {
     }
     uint64_t M_DM_sum = 0;
     uint64_t Mx_DM_sum = 0;
-    for (uint64_t d = 0; d <= (--join_result_map_.end())->first; d++) {
+
+    if (join_result_map_.empty()) {
+        return 1;
+    }
+
+    for (uint64_t d = 0; d <= (--join_result_map_.end())->first && join_result_map_.find(d) != join_result_map_.end() &&
+                         cross_join_map_.find(d) != cross_join_map_.end(); d++) {
         Mx_DM_sum += cross_join_map_[d];
         M_DM_sum += join_result_map_[d];
     }
@@ -55,23 +61,28 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
     uint64_t P = opConfig->getU64("P");
     uint64_t L = opConfig->getU64("L");
 
-    uint64_t max_D = cross_join_map_.end()->first;
+    uint64_t max_D = 0;
+    if (!cross_join_map_.empty()) {
+        max_D = (--cross_join_map_.end())->first;
+    }
+
     uint64_t N_true_L = 0;
-    for (int d = 0; d <= max_D; d++) {
+    for (int d = 0; d <= max_D && join_result_map_.find(d) != join_result_map_.end(); d++) {
         N_true_L += join_result_map_[d];
     }
 
     uint64_t N_true_P_L = 0;
-    for (int d = max_D * (1 - (P - L) / L); d <= max_D; d++) {
+    for (int d = max_D * (1 - (P - L) / L); d <= max_D && join_result_map_.find(d) != join_result_map_.end(); d++) {
         N_true_P_L += join_result_map_[d];
     }
 
     uint64_t N_prod_P_L = 0;
-    for (int d = max_D * (1 - (P - L) / L); d <= max_D; d++) {
+    for (int d = max_D * (1 - (P - L) / L); d <= max_D && join_result_map_.find(d) != join_result_map_.end(); d++) {
         N_prod_P_L += join_result_map_[d];
     }
 
     //requirement_recall大于等于这个值
+    if (N_true_L == 0)return userRecall;
     double requirement_recall = (userRecall * (N_true_P_L + N_true_L) - N_prod_P_L) * 1.0 / N_true_L;
     return requirement_recall;
 }

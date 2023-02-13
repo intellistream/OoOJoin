@@ -29,7 +29,7 @@ public:
 
     ~TupleProductivityProfiler() = default;
 
-    auto get_join_record_map() -> phmap::parallel_flat_hash_map<uint64_t, uint64_t>;
+    auto get_join_record_map() -> phmap::parallel_flat_hash_map<int, int>;
 
     auto add_join_record(uint64_t stream_id, uint64_t count) -> void;
 
@@ -51,13 +51,13 @@ private:
     std::mutex latch_;
 
     //到达join operator的元组数量记录
-    phmap::parallel_flat_hash_map<uint64_t, uint64_t> join_record_map_{};
+    phmap::parallel_flat_hash_map<int, int> join_record_map_{};
 
     //the join operator records both the number of cross-join result size,
-    phmap::btree_map<uint64_t, uint64_t> cross_join_map_{};
+    phmap::btree_map<int, int> cross_join_map_{};
 
     //the number of join results, using map for sorting
-    phmap::btree_map<uint64_t, uint64_t> join_result_map_{};
+    phmap::btree_map<int, int> join_result_map_{};
 
 };
 

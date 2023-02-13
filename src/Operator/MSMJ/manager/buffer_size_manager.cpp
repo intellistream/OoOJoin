@@ -7,7 +7,7 @@
 #include <utility>
 
 BufferSizeManager::BufferSizeManager(StatisticsManagerPtr statistics_manager, TupleProductivityProfilerPtr profiler,
-                                     phmap::parallel_flat_hash_map<uint64_t , Stream *> stream_map) {
+                                     phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map) {
     statistics_manager_ = std::move(statistics_manager);
     productivity_profiler_ = std::move(profiler);
     stream_map_ = std::move(stream_map);
@@ -26,7 +26,12 @@ auto BufferSizeManager::k_search(uint64_t stream_id) -> uint64_t {
         return 1;
     }
 
-    uint64_t g = opConfig->getU64("g");
+    uint64_t g = 1;
+    if (opConfig->exist("g")) {
+        g = opConfig->getU64("g");
+    } else {
+        INTELLI::INTELLI_INFO("Param g should be given");
+    }
 
     uint64_t k = 0;
     while (k <= max_DH && y(k) < productivity_profiler_->get_requirement_recall()) {

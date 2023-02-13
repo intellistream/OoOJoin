@@ -7,22 +7,6 @@ static void *task(void *p) {
 }
 
 OoOJoin::MSMJOperator::MSMJOperator() {
-    streamR = std::make_shared<Stream>((uint64_t) 1, (uint64_t) 2);
-    streamS = std::make_shared<Stream>((uint64_t) 2, (uint64_t) 2);
-
-    stream_map[(uint64_t) 1] = streamR.get();
-    stream_map[(uint64_t) 2] = streamS.get();
-
-    tupleProductivityProfiler = std::make_shared<TupleProductivityProfiler>();
-    statisticsManager = std::make_shared<StatisticsManager>(tupleProductivityProfiler, stream_map);
-    bufferSizeManager = std::make_shared<BufferSizeManager>(statisticsManager, tupleProductivityProfiler, stream_map);
-    streamOperator = std::make_shared<StreamOperator>(tupleProductivityProfiler);
-    synchronizer = std::make_shared<Synchronizer>(2, streamOperator);
-
-    tupleProductivityProfiler->setConfig(config);
-    statisticsManager->setConfig(config);
-    bufferSizeManager->setConfig(config);
-    synchronizer->setConfig(config);
 }
 
 
@@ -128,6 +112,9 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
                                                      stream_map);
         kslackR->setConfig(config);
 
+        pthread_t t2 = 2;
+        pthread_create(&t2, NULL, &task, kslackR.get());
+        pthread_join(t2, NULL);
 
     }
     return true;
@@ -135,6 +122,25 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 
 size_t OoOJoin::MSMJOperator::getResult() {
     return streamOperator->getJoinResultCount();
+}
+
+void MSMJOperator::init(ConfigMapPtr config) {
+    streamR = std::make_shared<Stream>((uint64_t) 1, (uint64_t) 2);
+    streamS = std::make_shared<Stream>((uint64_t) 2, (uint64_t) 2);
+
+    stream_map[(uint64_t) 1] = streamR.get();
+    stream_map[(uint64_t) 2] = streamS.get();
+
+    tupleProductivityProfiler = std::make_shared<TupleProductivityProfiler>();
+    statisticsManager = std::make_shared<StatisticsManager>(tupleProductivityProfiler, stream_map);
+    bufferSizeManager = std::make_shared<BufferSizeManager>(statisticsManager, tupleProductivityProfiler, stream_map);
+    streamOperator = std::make_shared<StreamOperator>(tupleProductivityProfiler);
+    synchronizer = std::make_shared<Synchronizer>(2, streamOperator);
+
+    tupleProductivityProfiler->setConfig(config);
+    statisticsManager->setConfig(config);
+    bufferSizeManager->setConfig(config);
+    synchronizer->setConfig(config);
 }
 
 
