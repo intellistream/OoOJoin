@@ -7,19 +7,22 @@ static void *task(void *p) {
 }
 
 OoOJoin::MSMJOperator::MSMJOperator() {
+    streamR = std::make_shared<Stream>((uint64_t) 1, (uint64_t) 2);
+    streamS = std::make_shared<Stream>((uint64_t) 2, (uint64_t) 2);
+
+    stream_map[(uint64_t) 1] = streamR.get();
+    stream_map[(uint64_t) 2] = streamS.get();
+
     tupleProductivityProfiler = std::make_shared<TupleProductivityProfiler>();
-    statisticsManager = std::make_shared<StatisticsManager>(tupleProductivityProfiler);
-    bufferSizeManager = std::make_shared<BufferSizeManager>(statisticsManager, tupleProductivityProfiler);
-    synchronizer = std::make_shared<Synchronizer>(2, streamOperator);
+    statisticsManager = std::make_shared<StatisticsManager>(tupleProductivityProfiler, stream_map);
+    bufferSizeManager = std::make_shared<BufferSizeManager>(statisticsManager, tupleProductivityProfiler, stream_map);
     streamOperator = std::make_shared<StreamOperator>(tupleProductivityProfiler);
+    synchronizer = std::make_shared<Synchronizer>(2, streamOperator);
 
     tupleProductivityProfiler->setConfig(config);
     statisticsManager->setConfig(config);
     bufferSizeManager->setConfig(config);
     synchronizer->setConfig(config);
-
-    streamR = std::make_shared<Stream>((uint64_t) 1, (uint64_t) 2);
-    streamS = std::make_shared<Stream>((uint64_t) 2, (uint64_t) 2);
 }
 
 
@@ -105,7 +108,8 @@ bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
         streamS->push_tuple(*ts);
     } else {
         streamS->set_id(1);
-        KSlackPtr kslackS = std::make_shared<KSlack>(streamS, bufferSizeManager, statisticsManager, synchronizer);
+        KSlackPtr kslackS = std::make_shared<KSlack>(streamS, bufferSizeManager, statisticsManager, synchronizer,
+                                                     stream_map);
         kslackS->setConfig(config);
 
         pthread_t t1 = 1;
@@ -120,7 +124,8 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         streamR->push_tuple(*tr);
     } else {
         streamR->set_id(2);
-        KSlackPtr kslackR = std::make_shared<KSlack>(streamR, bufferSizeManager, statisticsManager, synchronizer);
+        KSlackPtr kslackR = std::make_shared<KSlack>(streamR, bufferSizeManager, statisticsManager, synchronizer,
+                                                     stream_map);
         kslackR->setConfig(config);
 
 

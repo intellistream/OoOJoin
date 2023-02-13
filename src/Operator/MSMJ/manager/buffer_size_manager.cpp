@@ -6,9 +6,11 @@
 
 #include <utility>
 
-BufferSizeManager::BufferSizeManager(StatisticsManagerPtr statistics_manager, TupleProductivityProfilerPtr profiler) {
+BufferSizeManager::BufferSizeManager(StatisticsManagerPtr statistics_manager, TupleProductivityProfilerPtr profiler,
+                                     phmap::parallel_flat_hash_map<uint64_t , Stream *> stream_map) {
     statistics_manager_ = std::move(statistics_manager);
     productivity_profiler_ = std::move(profiler);
+    stream_map_ = std::move(stream_map);
 }
 
 

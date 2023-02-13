@@ -25,7 +25,8 @@ typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
 class StatisticsManager {
 public:
 
-    explicit StatisticsManager(TupleProductivityProfilerPtr profiler);
+    explicit StatisticsManager(TupleProductivityProfilerPtr profiler,
+                               phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map);
 
     ~StatisticsManager() = default;
 

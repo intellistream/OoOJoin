@@ -9,11 +9,12 @@
 using namespace OoOJoin;
 
 KSlack::KSlack(StreamPtr stream, BufferSizeManagerPtr buffer_size_manager, StatisticsManagerPtr statistics_manager,
-               SynchronizerPtr synchronizer) {
+               SynchronizerPtr synchronizer, phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map) {
     stream_ = std::move(stream);
     buffer_size_manager_ = std::move(buffer_size_manager);
     statistics_manager_ = std::move(statistics_manager);
     synchronizer_ = std::move(synchronizer);
+    stream_map_ = std::move(stream_map);
 }
 
 

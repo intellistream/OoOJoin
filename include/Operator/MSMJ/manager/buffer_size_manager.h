@@ -22,7 +22,8 @@ using namespace OoOJoin;
 class BufferSizeManager {
 public:
 
-    explicit BufferSizeManager(StatisticsManagerPtr statistics_manager, TupleProductivityProfilerPtr profiler);
+    explicit BufferSizeManager(StatisticsManagerPtr statistics_manager, TupleProductivityProfilerPtr profiler,
+                               phmap::parallel_flat_hash_map<uint64_t , Stream *> stream_map);
 
     ~BufferSizeManager() = default;
 
@@ -41,7 +42,7 @@ private:
     //互斥锁
     std::mutex latch_;
 
-    phmap::parallel_flat_hash_map<int, Stream *> stream_map_{};
+    phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map_{};
 
     //数据统计器
     StatisticsManagerPtr statistics_manager_;

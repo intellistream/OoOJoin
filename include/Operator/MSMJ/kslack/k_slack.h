@@ -26,7 +26,7 @@ class KSlack {
 public:
 
     explicit KSlack(StreamPtr stream, BufferSizeManagerPtr buffer_size_manager, StatisticsManagerPtr statistics_manager,
-                    SynchronizerPtr synchronizer);
+                    SynchronizerPtr synchronizer, phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map);
 
     ~KSlack() = default;
 
@@ -41,6 +41,8 @@ public:
 private:
 
     INTELLI::ConfigMapPtr opConfig;
+
+    phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map_{};
 
     //输出区
     std::queue<OoOJoin::TrackTuple> output_;

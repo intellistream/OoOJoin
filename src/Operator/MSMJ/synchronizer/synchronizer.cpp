@@ -3,11 +3,12 @@
 //
 
 #include <iostream>
+#include <utility>
 #include "Operator/MSMJ/synchronizer/synchronizer.h"
 
 Synchronizer::Synchronizer(uint64_t stream_count, StreamOperatorPtr stream_operator) {
     stream_count_ = stream_count;
-    stream_operator_ = stream_operator;
+    stream_operator_ = std::move(stream_operator);
 }
 
 

@@ -11,8 +11,10 @@
 #include "Operator/MSMJ/common/define.h"
 
 
-StatisticsManager::StatisticsManager(TupleProductivityProfilerPtr profiler) {
+StatisticsManager::StatisticsManager(TupleProductivityProfilerPtr profiler,
+                                     phmap::parallel_flat_hash_map<uint64_t , Stream *> stream_map) {
     productivity_profiler_ = std::move(profiler);
+    stream_map_ = std::move(stream_map);
 }
 
 
