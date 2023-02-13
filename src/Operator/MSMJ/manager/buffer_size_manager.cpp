@@ -24,7 +24,7 @@ auto BufferSizeManager::k_search(uint64_t stream_id) -> uint64_t {
         return 1;
     }
 
-    uint64_t g = opConfig->getI64("g");
+    uint64_t g = opConfig->getU64("g");
 
     uint64_t k = 0;
     while (k <= max_DH && y(k) < productivity_profiler_->get_requirement_recall()) {
@@ -41,7 +41,7 @@ auto BufferSizeManager::y(uint64_t K) -> double {
     uint64_t m = stream_map_.size();
 
     //basicWindow
-    uint64_t b = opConfig->getI64("b");
+    uint64_t b = opConfig->getU64("b");
 
     //分子
     uint64_t numerator = 0;

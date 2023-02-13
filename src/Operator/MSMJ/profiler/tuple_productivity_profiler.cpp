@@ -52,8 +52,8 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
     std::lock_guard<std::mutex> lock(latch_);
 
     double userRecall = opConfig->getDouble("userRecall");
-    uint64_t P = opConfig->getI64("P");
-    uint64_t L = opConfig->getI64("L");
+    uint64_t P = opConfig->getU64("P");
+    uint64_t L = opConfig->getU64("L");
 
     uint64_t max_D = cross_join_map_.end()->first;
     uint64_t N_true_L = 0;

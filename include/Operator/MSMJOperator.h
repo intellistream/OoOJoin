@@ -1,5 +1,5 @@
-#ifndef INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_
-#define INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_
+#ifndef INTELLISTREAM_INCLUDE_OPERATOR_MSMJOPERATOR_H_
+#define INTELLISTREAM_INCLUDE_OPERATOR_MSMJOPERATOR_H_
 
 #include <Operator/AbstractOperator.h>
 #include <Common/Window.h>
@@ -22,12 +22,6 @@ namespace OoOJoin {
     typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
     typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
     typedef std::shared_ptr<class StreamOperator> StreamOperatorPtr;
-/**
- * @ingroup ADB_OPERATORS
- * @def newMSWJOperator
- * @brief (Macro) To creat a new @ref MSWJOperator under shared pointer.
- */
-#define newMSMJOperator std::make_shared<OoOJoin::MSMJOperator>
 
 /**
  * @class MSWJOperator
@@ -61,7 +55,7 @@ namespace OoOJoin {
         void conductComputation();
 
     private:
-        //流
+        //Stream
         StreamPtr streamS;
         StreamPtr streamR;
 
@@ -126,6 +120,13 @@ namespace OoOJoin {
         size_t getResult() override;
 
     };
+
+    /**
+ * @ingroup ADB_OPERATORS
+ * @def newMSWJOperator
+ * @brief (Macro) To creat a new @ref MSWJOperator under shared pointer.
+ */
+#define newMSMJOperator std::make_shared<OoOJoin::MSMJOperator>
 
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_

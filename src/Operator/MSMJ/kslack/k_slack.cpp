@@ -27,7 +27,7 @@ auto KSlack::get_id() -> uint64_t {
 
 //K-Slack算法对无序流进行处理
 auto KSlack::disorder_handling() -> void {
-    uint64_t L = opConfig->getI64("L");
+    uint64_t L = opConfig->getU64("L");
     while (!stream_->get_tuple_list().empty()) {
         TrackTuple tuple = stream_->get_tuple_list().front();
 

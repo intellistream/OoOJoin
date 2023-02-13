@@ -228,7 +228,7 @@ ConfigMapPtr OoOJoin::TestBench::getTimeBreakDown() {
     return nullptr;
 }
 
-void OoOJoin::TestBench::setDataLoader(std::string tag, ConfigMapPtr globalCfg) {
+void OoOJoin::TestBench::setDataLoader(const std::string& tag, ConfigMapPtr globalCfg) {
     DataLoaderTablePtr dt = newDataLoaderTable();
     AbstractDataLoaderPtr dl = dt->findDataLoader(tag);
     if (dl == nullptr) {

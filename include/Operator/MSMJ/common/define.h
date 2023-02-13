@@ -23,7 +23,7 @@ struct TupleComparator {
 class Stream {
 public:
 
-    explicit Stream(uint64_t stream_id, uint64_t window_size, std::queue<OoOJoin::TrackTuple> tuple_list);
+    explicit Stream(uint64_t stream_id, uint64_t window_size);
 
     ~Stream() = default;
 

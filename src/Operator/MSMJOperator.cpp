@@ -1,27 +1,25 @@
 #include <Operator/MSMJOperator.h>
 #include <JoinAlgos/JoinAlgoTable.h>
 
+static void *task(void *p) {
+    reinterpret_cast<KSlack *>(p)->disorder_handling();
+    return nullptr;
+}
 
 OoOJoin::MSMJOperator::MSMJOperator() {
-    uint64_t streamCount = 1;
-
-    if (config->exist("StreamCount")) {
-        streamCount = config->getI64("StreamCount");
-    } else {
-        INTELLI_INFO("You should give the param of streamCount");
-    }
-
     tupleProductivityProfiler = std::make_shared<TupleProductivityProfiler>();
     statisticsManager = std::make_shared<StatisticsManager>(tupleProductivityProfiler);
     bufferSizeManager = std::make_shared<BufferSizeManager>(statisticsManager, tupleProductivityProfiler);
-    synchronizer = std::make_shared<Synchronizer>(streamCount, streamOperator);
+    synchronizer = std::make_shared<Synchronizer>(2, streamOperator);
     streamOperator = std::make_shared<StreamOperator>(tupleProductivityProfiler);
 
     tupleProductivityProfiler->setConfig(config);
     statisticsManager->setConfig(config);
     bufferSizeManager->setConfig(config);
     synchronizer->setConfig(config);
-    streamOperator->setConfig(config);
+
+    streamR = std::make_shared<Stream>((uint64_t) 1, (uint64_t) 2);
+    streamS = std::make_shared<Stream>((uint64_t) 2, (uint64_t) 2);
 }
 
 
@@ -108,7 +106,11 @@ bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     } else {
         streamS->set_id(1);
         KSlackPtr kslackS = std::make_shared<KSlack>(streamS, bufferSizeManager, statisticsManager, synchronizer);
-        kslackS->disorder_handling();
+        kslackS->setConfig(config);
+
+        pthread_t t1 = 1;
+        pthread_create(&t1, NULL, &task, kslackS.get());
+        pthread_join(t1, NULL);
     }
     return true;
 }
@@ -119,7 +121,9 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     } else {
         streamR->set_id(2);
         KSlackPtr kslackR = std::make_shared<KSlack>(streamR, bufferSizeManager, statisticsManager, synchronizer);
-        kslackR->disorder_handling();
+        kslackR->setConfig(config);
+
+
     }
     return true;
 }

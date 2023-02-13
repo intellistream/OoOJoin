@@ -69,7 +69,7 @@ namespace OoOJoin {
          * @param tag the name tag of DataLoader
          * @param globalCfg the global config file to load dataset
          */
-        void setDataLoader(std::string tag, ConfigMapPtr globalCfg);
+        void setDataLoader(const std::string& tag, ConfigMapPtr globalCfg);
 
         /**
          * @brief get the size of loaded s tuple

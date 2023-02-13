@@ -46,7 +46,7 @@ auto StatisticsManager::get_maxD(uint64_t stream_id) -> uint64_t {
 
 auto StatisticsManager::get_R_stat(uint64_t stream_id) -> uint64_t {
     std::vector<OoOJoin::TrackTuple> record = record_map_[stream_id];
-    uint64_t confidenceValue = opConfig->getI64("confidenceValue");
+    uint64_t confidenceValue = opConfig->getU64("confidenceValue");
 
     if (record.empty()) {
         return 1;
@@ -269,7 +269,7 @@ auto StatisticsManager::fD(uint64_t d, uint64_t stream_id) -> double {
 
 auto StatisticsManager::fDk(uint64_t d, uint64_t stream_id, uint64_t K) -> double {
     uint64_t k_sync = get_future_ksync(stream_id);
-    uint64_t g = opConfig->getI64("g");
+    uint64_t g = opConfig->getU64("g");
 
     double res = 0;
 
@@ -285,8 +285,8 @@ auto StatisticsManager::fDk(uint64_t d, uint64_t stream_id, uint64_t K) -> doubl
 }
 
 auto StatisticsManager::wil(uint64_t l, uint64_t stream_id, uint64_t K) -> uint64_t {
-    uint64_t b = opConfig->getI64("b");
-    uint64_t g = opConfig->getI64("g");
+    uint64_t b = opConfig->getU64("b");
+    uint64_t g = opConfig->getU64("g");
     uint64_t wi = stream_map_[stream_id]->get_window_size();
     uint64_t ni = wi / b;
     uint64_t res = 0;

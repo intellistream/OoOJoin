@@ -70,7 +70,7 @@ get_headers(IntelliStream_HEADER_FILES)
 add_library(IntelliStream SHARED ${IntelliStream_SOURCE_FILES} ${IntelliStream_HEADER_FILES} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 target_include_directories(IntelliStream PUBLIC "include")
 target_include_directories(IntelliStream PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
-target_link_libraries(IntelliStream PUBLIC ${LIBRARIES})
+target_link_libraries(IntelliStream PUBLIC ${LIBRARIES} pthread)
 include_directories(${OOO_JOIN_INCLUDE_DIR})
 
 #Add benchmarks with command
@@ -78,6 +78,8 @@ add_subdirectory(benchmark)
 
 #Add tests (based on GTest suits)
 add_subdirectory(test)
+
+add_definitions("-Wall -g")
 
 install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStream)
 # copy scripts

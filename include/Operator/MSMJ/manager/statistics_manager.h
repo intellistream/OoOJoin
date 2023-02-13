@@ -46,7 +46,7 @@ public:
 
 private:
     auto inline get_D(uint64_t delay) -> uint64_t {
-        uint64_t g = opConfig->getI64("g");
+        uint64_t g = opConfig->getU64("g");
         return delay % g == 0 ? delay / g : delay / g + 1;
     }
 

@@ -140,5 +140,6 @@ namespace OoOJoin {
  under shared pointer.
  */
 #define newIMAIAWJOperator std::make_shared<OoOJoin::IMAIAWJOperator>
+
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPIMAIAWJOperator_H_
