@@ -3,7 +3,6 @@
 //
 
 #include "Operator/MSMJ/manager/buffer_size_manager.h"
-#include "Operator/MSMJ/manager/statistics_manager.h"
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 #include "Operator/MSMJ/common/define.h"
 

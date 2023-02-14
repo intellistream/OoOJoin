@@ -64,17 +64,17 @@ namespace OoOJoin {
         std::queue<MSMJ::Tuple> rTupleList{};
 
         //bufferSizeManager,  is used to update K(bufferSize)
-        BufferSizeManagerPtr bufferSizeManager{};
+        MSMJ::BufferSizeManager *bufferSizeManager{};
 
         //statisticsManager, is used to statistic
-        StatisticsManagerPtr statisticsManager{};
+        MSMJ::StatisticsManager *statisticsManager{};
 
         //TupleProductivityProfiler,is used to get productivity of tuple at join stage.
-        TupleProductivityProfilerPtr tupleProductivityProfiler{};
+        MSMJ::TupleProductivityProfiler *tupleProductivityProfiler{};
 
-        SynchronizerPtr synchronizer{};
+        MSMJ::Synchronizer *synchronizer{};
 
-        StreamOperatorPtr streamOperator{};
+        MSMJ::StreamOperator *streamOperator{};
 
     public:
         MSMJOperator();

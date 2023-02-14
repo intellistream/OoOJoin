@@ -5,7 +5,6 @@
 #include <iostream>
 #include "Operator/MSMJ/kslack/k_slack.h"
 #include "Operator/MSMJ/common/define.h"
-#include "Operator/MSMJ/manager/statistics_manager.h"
 #include "Operator/MSMJ/synchronizer/synchronizer.h"
 #include "Operator/MSMJ/manager/buffer_size_manager.h"
 
@@ -21,10 +20,7 @@ KSlack::KSlack(Stream *stream, BufferSizeManager *buffer_size_manager, Statistic
 
 
 KSlack::~KSlack() {
-    delete stream_;
-    delete buffer_size_manager_;
-    delete statistics_manager_;
-    delete synchronizer_;
+
 }
 
 
