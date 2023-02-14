@@ -12,18 +12,18 @@
 
 
 StatisticsManager::StatisticsManager(TupleProductivityProfilerPtr profiler,
-                                     phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map) {
+                                     phmap::parallel_flat_hash_map<int, Stream *> stream_map) {
     productivity_profiler_ = std::move(profiler);
     stream_map_ = std::move(stream_map);
 }
 
 
-auto StatisticsManager::add_record(uint64_t stream_id, OoOJoin::TrackTuple tuple) -> void {
+auto StatisticsManager::add_record(int stream_id, OoOJoin::TrackTuple tuple) -> void {
     std::lock_guard<std::mutex> lock(latch_);
     record_map_[stream_id].push_back(tuple);
 }
 
-auto StatisticsManager::add_record(uint64_t stream_id, uint64_t T, uint64_t K) -> void {
+auto StatisticsManager::add_record(int stream_id, int T, int K) -> void {
     std::lock_guard<std::mutex> lock(latch_);
     T_map_[stream_id] = T;
     K_map_[stream_id] = K;
@@ -31,47 +31,47 @@ auto StatisticsManager::add_record(uint64_t stream_id, uint64_t T, uint64_t K) -
 }
 
 
-auto StatisticsManager::get_maxD(uint64_t stream_id) -> uint64_t {
+auto StatisticsManager::get_maxD(int stream_id) -> int {
     std::lock_guard<std::mutex> lock(latch_);
-    uint64_t max_D = 0;
+    int max_D = 0;
 
     if (record_map_.find(stream_id) == record_map_.end()) {
         return max_D;
     }
 
     for (auto it: record_map_[stream_id]) {
-        max_D = std::max(max_D, it.eventTime);
+        max_D = std::max(max_D, (int) it.eventTime);
     }
     return max_D;
 }
 
 
-auto StatisticsManager::get_R_stat(uint64_t stream_id) -> uint64_t {
+auto StatisticsManager::get_R_stat(int stream_id) -> int {
     std::vector<OoOJoin::TrackTuple> record = record_map_[stream_id];
 
-    uint64_t confidenceValue = opConfig->getDouble("confidenceValue");
+    double confidenceValue = opConfig->getDouble("confidenceValue");
 
     if (record.empty()) {
         return 1;
     }
 
     //当前Rstat大小
-    uint64_t R_stat = 2;
+    int R_stat = 2;
     if (R_stat_map_.find(stream_id) != R_stat_map_.end()) {
         R_stat = R_stat_map_[stream_id];
     }
 
     //窗口
-    std::list<uint64_t> window1_list;
-    std::list<uint64_t> window0_list;
+    std::list<int> window1_list;
+    std::list<int> window0_list;
 
     //维护sum变量,方便取平均值
-    uint64_t sum_w0 = 0;
-    uint64_t sum_w1 = 0;
+    int sum_w0 = 0;
+    int sum_w1 = 0;
 
     //取出record里面当前R_stat大小范围的数据,并计算频率，用频率估计概率
-    for (uint64_t i = record.size() - 1; i >= std::max((uint64_t) record.size() - R_stat, (uint64_t) 0); i--) {
-        uint64_t xi = get_D(record[i].delay);
+    for (int i = record.size() - 1; i >= std::max((int) record.size() - R_stat, 0); i--) {
+        int xi = get_D(record[i].delay);
         window1_list.push_back(xi);
         sum_w1 += xi;
     }
@@ -79,7 +79,7 @@ auto StatisticsManager::get_R_stat(uint64_t stream_id) -> uint64_t {
     double e_cut = 0;
     while (window1_list.size() > 1) {
         //将窗口分为w0,w1两部分
-        uint64_t w1_front = window1_list.front();
+        int w1_front = window1_list.front();
         window0_list.push_back(w1_front);
         window1_list.pop_front();
         sum_w1 -= w1_front;
@@ -96,19 +96,19 @@ auto StatisticsManager::get_R_stat(uint64_t stream_id) -> uint64_t {
         }
     }
 
-    return (uint64_t) window1_list.size();
+    return window1_list.size() == 0 ? 1 : window1_list.size();
 }
 
 
 //获取Ksync的值，Ksync = iT - ki - min{iT - ki| i∈[1,latch_]}
-auto StatisticsManager::get_ksync(uint64_t stream_id) -> uint64_t {
+auto StatisticsManager::get_ksync(int stream_id) -> int {
     if (T_map_.find(stream_id) == T_map_.end()
         || K_map_.find(stream_id) == K_map_.end()
         || record_map_.empty()) {
         return 1;
     }
 
-    uint64_t min_iT_ki = T_map_[stream_id] - K_map_[stream_id];
+    int min_iT_ki = T_map_[stream_id] - K_map_[stream_id];
 
     for (auto it: record_map_) {
         min_iT_ki = std::min(min_iT_ki, T_map_[it.first] - K_map_[it.first]);
@@ -118,27 +118,27 @@ auto StatisticsManager::get_ksync(uint64_t stream_id) -> uint64_t {
 
 
 //获取平均值，目的是为了预测未来的k_sync
-auto StatisticsManager::get_avg_ksync(uint64_t stream_id) -> uint64_t {
-    uint64_t sum_ksync_i = 0;
-    uint64_t R_stat = get_R_stat(stream_id);
-    std::vector<uint64_t> ksync_list = ksync_map_[stream_id];
+auto StatisticsManager::get_avg_ksync(int stream_id) -> int {
+    int sum_ksync_i = 0;
+    int R_stat = get_R_stat(stream_id);
+    std::vector<int> ksync_list = ksync_map_[stream_id];
     if (ksync_list.empty()) {
         return 1;
     }
 
     //找出R_stat范围内的ksync_i的总和，再取平均值
-    for (uint64_t i = ksync_list.size() - 1; i >= std::max((uint64_t) ksync_list.size() - R_stat, (uint64_t) 0); i--) {
+    for (int i = ksync_list.size() - 1; i >= std::max((uint64_t) ksync_list.size() - R_stat, (uint64_t) 0); i--) {
         sum_ksync_i += ksync_map_[stream_id][i];
     }
-    uint64_t avg_ksync_i = sum_ksync_i / R_stat;
+    int avg_ksync_i = sum_ksync_i / R_stat;
 
     return avg_ksync_i == 0 ? 1 : avg_ksync_i;
 }
 
 //公式见论文page 7
-auto StatisticsManager::get_future_ksync(uint64_t stream_id) -> uint64_t {
-    uint64_t avg_ksync_i = get_avg_ksync(stream_id);
-    uint64_t min_ksync = INT8_MAX;
+auto StatisticsManager::get_future_ksync(int stream_id) -> int {
+    int avg_ksync_i = get_avg_ksync(stream_id);
+    int min_ksync = INT8_MAX;
 
     //找到j != i的所有avg_ksync的最小值
     for (auto it: ksync_map_) {
@@ -158,8 +158,8 @@ auto StatisticsManager::get_future_ksync(uint64_t stream_id) -> uint64_t {
 #define maxDelay 100
 
 //概率分布函数fD
-auto StatisticsManager::fD(uint64_t d, uint64_t stream_id) -> double {
-    uint64_t R_stat = get_R_stat(stream_id);
+auto StatisticsManager::fD(int d, int stream_id) -> double {
+    int R_stat = get_R_stat(stream_id);
 
     if (record_map_.find(stream_id) == record_map_.end()) {
         return -1;
@@ -172,8 +172,8 @@ auto StatisticsManager::fD(uint64_t d, uint64_t stream_id) -> double {
 
     //取出record里面R_stat大小范围的数据,并计算频率，用频率估计概率
     std::map<int, int> rate_map;
-    for (uint64_t i = record.size() - 1; i >= std::max((uint64_t) record.size() - R_stat, (uint64_t) 0); i--) {
-        uint64_t Di = get_D(record[i].delay);
+    for (int i = record.size() - 1; i >= std::max((int) record.size() - R_stat, 0); i--) {
+        int Di = get_D(record[i].delay);
         rate_map[Di] = rate_map.find(Di) == rate_map.end() ? 1 : rate_map[Di] + 1;
     }
 
@@ -207,7 +207,7 @@ auto StatisticsManager::fD(uint64_t d, uint64_t stream_id) -> double {
     }
 
     //如果d没有记录，则做折线插值估计 , 双指针中心扩散法
-    uint64_t hi_size = histogram_map_[stream_id].size();
+    int hi_size = histogram_map_[stream_id].size();
     int left = d - 1, right = d + 1;
     while (left >= 0 && right < hi_size) {
         if (histogram_map_[stream_id][left] != 0 && histogram_map_[stream_id][right] != 0) {
@@ -270,14 +270,14 @@ auto StatisticsManager::fD(uint64_t d, uint64_t stream_id) -> double {
     return histogram_map_[stream_id][d];
 }
 
-auto StatisticsManager::fDk(uint64_t d, uint64_t stream_id, uint64_t K) -> double {
-    uint64_t k_sync = get_future_ksync(stream_id);
+auto StatisticsManager::fDk(int d, int stream_id, int K) -> double {
+    int k_sync = get_future_ksync(stream_id);
     uint64_t g = opConfig->getU64("g");
 
     double res = 0;
 
     if (d == 0) {
-        for (uint64_t i = 0; i <= (k_sync + K) / g; i++) {
+        for (int i = 0; i <= (k_sync + K) / g; i++) {
             res += fD(i, stream_id);
         }
     } else {
@@ -287,24 +287,24 @@ auto StatisticsManager::fDk(uint64_t d, uint64_t stream_id, uint64_t K) -> doubl
     return res;
 }
 
-auto StatisticsManager::wil(uint64_t l, uint64_t stream_id, uint64_t K) -> uint64_t {
+auto StatisticsManager::wil(int l, int stream_id, int K) -> int {
     uint64_t b = opConfig->getU64("b");
     uint64_t g = opConfig->getU64("g");
-    uint64_t wi = stream_map_[stream_id]->get_window_size();
-    uint64_t ni = wi / b;
-    uint64_t res = 0;
+    int wi = stream_map_[stream_id]->get_window_size();
+    int ni = wi / b;
+    int res = 0;
     double ri = productivity_profiler_->get_join_record_map()[stream_id] * 1.0 / wi;
 
     if (l <= ni - 1 && l >= 1) {
-        for (uint64_t i = 0; i <= (l - 1) * b / g; i++) {
+        for (int i = 0; i <= (l - 1) * b / g; i++) {
             res += fDk(i, stream_id, K);
         }
-        res = static_cast<uint64_t>(ri * b * res);
+        res = static_cast<int>(ri * b * res);
     } else if (l == ni) {
-        for (uint64_t i = 0; i <= (ni - 1) * b / g; i++) {
+        for (int i = 0; i <= (ni - 1) * b / g; i++) {
             res += fDk(i, stream_id, K);
         }
-        res = static_cast<uint64_t>(ri * (wi - (ni - 1) * b) * res);
+        res = static_cast<int>(ri * (wi - (ni - 1) * b) * res);
     }
 
     return res;

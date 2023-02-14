@@ -7,7 +7,7 @@
 #include <utility>
 
 BufferSizeManager::BufferSizeManager(StatisticsManagerPtr statistics_manager, TupleProductivityProfilerPtr profiler,
-                                     phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map) {
+                                     phmap::parallel_flat_hash_map<int, Stream *> stream_map) {
     statistics_manager_ = std::move(statistics_manager);
     productivity_profiler_ = std::move(profiler);
     stream_map_ = std::move(stream_map);
@@ -19,8 +19,8 @@ BufferSizeManager::BufferSizeManager(StatisticsManagerPtr statistics_manager, Tu
  * @param L  - buffer-size manager的自适应时间间隔
  * @param g  K*搜索粒度
  */
-auto BufferSizeManager::k_search(uint64_t stream_id) -> uint64_t {
-    uint64_t max_DH = statistics_manager_->get_maxD(stream_id);
+auto BufferSizeManager::k_search(int stream_id) -> int {
+    int max_DH = statistics_manager_->get_maxD(stream_id);
 
     if (max_DH == 0) {
         return 1;
@@ -33,35 +33,35 @@ auto BufferSizeManager::k_search(uint64_t stream_id) -> uint64_t {
         INTELLI::INTELLI_INFO("Param g should be given");
     }
 
-    uint64_t k = 0;
+    int k = 0;
     while (k <= max_DH && y(k) < productivity_profiler_->get_requirement_recall()) {
         k = k + g;
     }
     return k;
 }
 
-auto BufferSizeManager::y(uint64_t K) -> double {
+auto BufferSizeManager::y(int K) -> double {
     std::lock_guard<std::mutex> lock(latch_);
     //SEL比值
     double sel_radio = productivity_profiler_->get_select_ratio(K);
 
-    uint64_t m = stream_map_.size();
+    int m = stream_map_.size();
 
     //basicWindow
     uint64_t b = opConfig->getU64("b");
 
     //分子
-    uint64_t numerator = 0;
-    for (uint64_t i = 1; i <= m; i++) {
-        uint64_t res = 1;
-        for (uint64_t j = 1; j <= m; j++) {
+    int numerator = 0;
+    for (int i = 1; i <= m; i++) {
+        int res = 1;
+        for (int j = 1; j <= m; j++) {
             if (j == i) {
                 continue;
             }
-            uint64_t wj = stream_map_[j]->get_window_size();
-            uint64_t nj = wj / b;
-            uint64_t sum = 0;
-            for (uint64_t l = 1; l <= nj; l++) {
+            int wj = stream_map_[j]->get_window_size();
+            int nj = wj / b;
+            int sum = 0;
+            for (int l = 1; l <= nj; l++) {
                 sum += statistics_manager_->wil(l, j, K);
             }
             res *= sum;
@@ -70,10 +70,10 @@ auto BufferSizeManager::y(uint64_t K) -> double {
     }
 
     //分母
-    uint64_t denominator = 0;
-    for (uint64_t i = 1; i <= m; i++) {
-        uint64_t res = 1;
-        for (uint64_t j = 1; j <= m; j++) {
+    int denominator = 0;
+    for (int i = 1; i <= m; i++) {
+        int res = 1;
+        for (int j = 1; j <= m; j++) {
             if (j == i) {
                 continue;
             }
@@ -86,7 +86,7 @@ auto BufferSizeManager::y(uint64_t K) -> double {
         return 1;
     }
 
-    return static_cast<uint64_t>(sel_radio * numerator / denominator);
+    return static_cast<int>(sel_radio * numerator / denominator);
 }
 
 auto BufferSizeManager::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {

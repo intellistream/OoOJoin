@@ -23,26 +23,26 @@ class BufferSizeManager {
 public:
 
     explicit BufferSizeManager(StatisticsManagerPtr statistics_manager, TupleProductivityProfilerPtr profiler,
-                               phmap::parallel_flat_hash_map<uint64_t , Stream *> stream_map);
+                               phmap::parallel_flat_hash_map<int, Stream *> stream_map);
 
     ~BufferSizeManager() = default;
 
     //自适应K值算法
-    auto k_search(uint64_t stream_id) -> uint64_t;
+    auto k_search(int stream_id) -> int;
 
     auto setConfig(INTELLI::ConfigMapPtr opConfig) -> void;
 
 private:
 
     //论文中的函数γ(L,T)
-    auto y(uint64_t K) -> double;
+    auto y(int K) -> double;
 
     INTELLI::ConfigMapPtr opConfig;
 
     //互斥锁
     std::mutex latch_;
 
-    phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map_{};
+    phmap::parallel_flat_hash_map<int, Stream *> stream_map_{};
 
     //数据统计器
     StatisticsManagerPtr statistics_manager_;

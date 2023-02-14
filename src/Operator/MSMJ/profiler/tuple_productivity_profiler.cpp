@@ -11,41 +11,41 @@ auto TupleProductivityProfiler::get_join_record_map() -> phmap::parallel_flat_ha
     return join_record_map_;
 }
 
-auto TupleProductivityProfiler::add_join_record(uint64_t stream_id, uint64_t count) -> void {
+auto TupleProductivityProfiler::add_join_record(int stream_id, int count) -> void {
     std::lock_guard<std::mutex> lock(latch_);
     join_record_map_[stream_id] = count;
 }
 
-auto TupleProductivityProfiler::update_cross_join(uint64_t Di, uint64_t res) -> void {
+auto TupleProductivityProfiler::update_cross_join(int Di, int res) -> void {
     std::lock_guard<std::mutex> lock(latch_);
     cross_join_map_[Di] = res;
 }
 
-auto TupleProductivityProfiler::update_join_res(uint64_t Di, uint64_t res) -> void {
+auto TupleProductivityProfiler::update_join_res(int Di, int res) -> void {
     std::lock_guard<std::mutex> lock(latch_);
     join_result_map_[Di] = res;
 }
 
-auto TupleProductivityProfiler::get_select_ratio(uint64_t K) -> double {
+auto TupleProductivityProfiler::get_select_ratio(int K) -> double {
     std::lock_guard<std::mutex> lock(latch_);
     if (join_result_map_.empty() || cross_join_map_.empty()) {
         return 1;
 
     }
-    uint64_t M_sum = 0;
-    uint64_t Mx_sum = 0;
-    for (uint64_t d = 0; d <= K; d++) {
+    int M_sum = 0;
+    int Mx_sum = 0;
+    for (int d = 0; d <= K; d++) {
         M_sum += join_result_map_[d];
         Mx_sum += cross_join_map_[d];
     }
-    uint64_t M_DM_sum = 0;
-    uint64_t Mx_DM_sum = 0;
+    int M_DM_sum = 0;
+    int Mx_DM_sum = 0;
 
     if (join_result_map_.empty()) {
         return 1;
     }
 
-    for (uint64_t d = 0; d <= (--join_result_map_.end())->first && join_result_map_.find(d) != join_result_map_.end() &&
+    for (int d = 0; d <= (--join_result_map_.end())->first && join_result_map_.find(d) != join_result_map_.end() &&
                          cross_join_map_.find(d) != cross_join_map_.end(); d++) {
         Mx_DM_sum += cross_join_map_[d];
         M_DM_sum += join_result_map_[d];
@@ -61,22 +61,22 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
     uint64_t P = opConfig->getU64("P");
     uint64_t L = opConfig->getU64("L");
 
-    uint64_t max_D = 0;
+    int max_D = 0;
     if (!cross_join_map_.empty()) {
         max_D = (--cross_join_map_.end())->first;
     }
 
-    uint64_t N_true_L = 0;
+    int N_true_L = 0;
     for (int d = 0; d <= max_D && join_result_map_.find(d) != join_result_map_.end(); d++) {
         N_true_L += join_result_map_[d];
     }
 
-    uint64_t N_true_P_L = 0;
+    int N_true_P_L = 0;
     for (int d = max_D * (1 - (P - L) / L); d <= max_D && join_result_map_.find(d) != join_result_map_.end(); d++) {
         N_true_P_L += join_result_map_[d];
     }
 
-    uint64_t N_prod_P_L = 0;
+    int N_prod_P_L = 0;
     for (int d = max_D * (1 - (P - L) / L); d <= max_D && join_result_map_.find(d) != join_result_map_.end(); d++) {
         N_prod_P_L += join_result_map_[d];
     }

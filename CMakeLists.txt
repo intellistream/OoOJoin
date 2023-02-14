@@ -33,6 +33,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DNO_RACE_CHECK -DIntelliStream_DEBUG_MODE=1")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wno-ignored-qualifiers -Wno-sign-compare -O3")
 set(OOO_JOIN_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/lib)
 
+add_definitions("-Wall -g")
 
 # Set LOGGING_LEVEL Flag
 if (IntelliStream_LOGGING_LEVEL)
@@ -79,7 +80,7 @@ add_subdirectory(benchmark)
 #Add tests (based on GTest suits)
 add_subdirectory(test)
 
-add_definitions("-Wall -g")
+
 
 install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStream)
 # copy scripts

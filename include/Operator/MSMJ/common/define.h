@@ -23,15 +23,15 @@ struct TupleComparator {
 class Stream {
 public:
 
-    explicit Stream(uint64_t stream_id, uint64_t window_size);
+    explicit Stream(int stream_id, int window_size);
 
     ~Stream() = default;
 
-    auto get_window_size() const -> uint64_t;
+    auto get_window_size() const -> int;
 
-    auto get_id() const -> uint64_t;
+    auto get_id() const -> int;
 
-    auto get_tuple_list() -> std::queue<OoOJoin::TrackTuple>;
+    auto get_tuple_list() -> std::queue<OoOJoin::TrackTuple> &;
 
     auto pop_tuple() -> void;
 
@@ -42,10 +42,10 @@ public:
 private:
 
     //论文中的Wi
-    uint64_t window_size_{};
+    int window_size_{};
 
     //流id
-    uint64_t stream_id_{};
+    int stream_id_{};
 
     //元组
     std::queue<OoOJoin::TrackTuple> tuple_list_{};

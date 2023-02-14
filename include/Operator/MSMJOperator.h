@@ -55,7 +55,7 @@ namespace OoOJoin {
         void conductComputation();
 
     private:
-        phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map{};
+        phmap::parallel_flat_hash_map<int, Stream *> stream_map{};
         //Stream
         StreamPtr streamS;
         StreamPtr streamR;

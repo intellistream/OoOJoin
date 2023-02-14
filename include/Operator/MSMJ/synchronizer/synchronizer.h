@@ -27,7 +27,7 @@ using namespace OoOJoin;
 
 class Synchronizer {
 public:
-    explicit Synchronizer(uint64_t stream_count, StreamOperatorPtr stream_operator);
+    explicit Synchronizer(int stream_count, StreamOperatorPtr stream_operator);
 
     ~Synchronizer() = default;
 
@@ -55,13 +55,13 @@ private:
     std::queue<TrackTuple> watch_output_{};
 
     //Tsync
-    uint64_t T_sync_{};
+    int T_sync_{};
 
     //stream的数量
-    uint64_t stream_count_{};
+    int stream_count_{};
 
     //当前缓冲区拥有tuple的流的数量
-    uint64_t own_stream_{};
+    int own_stream_{};
 
     //连接器
     StreamOperatorPtr stream_operator_;

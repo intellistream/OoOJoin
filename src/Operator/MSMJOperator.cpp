@@ -125,11 +125,11 @@ size_t OoOJoin::MSMJOperator::getResult() {
 }
 
 void MSMJOperator::init(ConfigMapPtr config) {
-    streamR = std::make_shared<Stream>((uint64_t) 1, (uint64_t) 2);
-    streamS = std::make_shared<Stream>((uint64_t) 2, (uint64_t) 2);
+    streamR = std::make_shared<Stream>(1, 2);
+    streamS = std::make_shared<Stream>(2, 2);
 
-    stream_map[(uint64_t) 1] = streamR.get();
-    stream_map[(uint64_t) 2] = streamS.get();
+    stream_map[1] = streamR.get();
+    stream_map[2] = streamS.get();
 
     tupleProductivityProfiler = std::make_shared<TupleProductivityProfiler>();
     statisticsManager = std::make_shared<StatisticsManager>(tupleProductivityProfiler, stream_map);

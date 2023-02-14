@@ -9,7 +9,7 @@
 using namespace OoOJoin;
 
 KSlack::KSlack(StreamPtr stream, BufferSizeManagerPtr buffer_size_manager, StatisticsManagerPtr statistics_manager,
-               SynchronizerPtr synchronizer, phmap::parallel_flat_hash_map<uint64_t, Stream *> stream_map) {
+               SynchronizerPtr synchronizer, phmap::parallel_flat_hash_map<int, Stream *> stream_map) {
     stream_ = std::move(stream);
     buffer_size_manager_ = std::move(buffer_size_manager);
     statistics_manager_ = std::move(statistics_manager);
@@ -22,21 +22,18 @@ auto KSlack::get_output() -> std::queue<OoOJoin::TrackTuple> {
     return watch_output_;
 }
 
-auto KSlack::get_id() -> uint64_t {
+auto KSlack::get_id() -> int {
     return stream_->get_id();
 }
 
 //K-Slack算法对无序流进行处理
 auto KSlack::disorder_handling() -> void {
     uint64_t L = opConfig->getU64("L");
-    auto it = stream_->get_tuple_list();
-    bool it_empty = it.empty();
-    std::cout << it_empty;
     while (!stream_->get_tuple_list().empty()) {
         TrackTuple tuple = stream_->get_tuple_list().front();
 
         //更新local time
-        current_time_ = std::max(current_time_, tuple.eventTime);
+        current_time_ = std::max(current_time_, (int) tuple.eventTime);
 
         //每L个时间单位调整K值
         if (current_time_ != 0 && current_time_ % L == 0) {

@@ -53,6 +53,14 @@ void OoOJoin::TestBench::inOrderSort(std::vector<TrackTuplePtr> &arr) {
 void OoOJoin::TestBench::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<TrackTuplePtr> _s) {
     rTuple = std::move(_r);
     sTuple = std::move(_s);
+    std::vector<TrackTuplePtr> r_;
+    std::vector<TrackTuplePtr> s_;
+    for (int i = 0; i < 100; i++) {
+        r_.push_back(rTuple[i]);
+        s_.push_back(sTuple[i]);
+    }
+    rTuple = std::move(r_);
+    sTuple = std::move(s_);
 }
 
 bool OoOJoin::TestBench::setOperator(OoOJoin::AbstractOperatorPtr op, ConfigMapPtr cfg) {
@@ -228,7 +236,7 @@ ConfigMapPtr OoOJoin::TestBench::getTimeBreakDown() {
     return nullptr;
 }
 
-void OoOJoin::TestBench::setDataLoader(const std::string& tag, ConfigMapPtr globalCfg) {
+void OoOJoin::TestBench::setDataLoader(const std::string &tag, ConfigMapPtr globalCfg) {
     DataLoaderTablePtr dt = newDataLoaderTable();
     AbstractDataLoaderPtr dl = dt->findDataLoader(tag);
     if (dl == nullptr) {
