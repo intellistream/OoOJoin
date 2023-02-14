@@ -10,67 +10,54 @@
 #include <queue>
 #include <set>
 #include "Operator/MSMJ/common/define.h"
-#include "Operator/MSMJ/manager/buffer_size_manager.h"
 #include "Operator/MSMJ/synchronizer/synchronizer.h"
 #include "Operator/MSMJ/manager/statistics_manager.h"
-#include "Common/Tuples.h"
+#include "Operator/MSMJ/manager/buffer_size_manager.h"
 
-typedef std::shared_ptr<class Stream> StreamPtr;
-typedef std::shared_ptr<class KSlack> KSlackPtr;
-typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
-typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
-typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
-typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
+namespace MSMJ {
+    class KSlack {
+    public:
 
-class KSlack {
-public:
+        explicit KSlack(Stream *stream, BufferSizeManager *buffer_size_manager, StatisticsManager *statistics_manager,
+                        Synchronizer *synchronizer);
 
-    explicit KSlack(StreamPtr stream, BufferSizeManagerPtr buffer_size_manager, StatisticsManagerPtr statistics_manager,
-                    SynchronizerPtr synchronizer, phmap::parallel_flat_hash_map<int, Stream *> stream_map);
+        ~KSlack();
 
-    ~KSlack() = default;
+        auto disorder_handling() -> void;
 
-    auto disorder_handling() -> void;
+        auto get_output() -> std::queue<Tuple>;
 
-    auto get_output() -> std::queue<TrackTuple>;
+        auto get_id() -> int;
 
-    auto get_id() -> int;
+    private:
 
-    auto setConfig(INTELLI::ConfigMapPtr opConfig) -> void;
+        //输出区
+        std::queue<Tuple> output_;
 
-private:
+        //观察区(用于最后的结果观察)
+        std::queue<Tuple> watch_output_;
 
-    INTELLI::ConfigMapPtr opConfig{};
+        //缓冲区大小,相当于论文的K值,注：缓冲区大小并不是指集合的大小，而是以时间为单位来度量的
+        size_t buffer_size_{1};
 
-    phmap::parallel_flat_hash_map<int, Stream *> stream_map_{};
+        //当前时间(相当于论文的T值)
+        int current_time_{};
 
-    //输出区
-    std::queue<OoOJoin::TrackTuple> output_{};
+        //传输过来的流
+        Stream *stream_;
 
-    //观察区(用于最后的结果观察)
-    std::queue<OoOJoin::TrackTuple> watch_output_{};
+        //缓冲区(用随时保持有序的红黑树)
+        std::set<Tuple, TupleComparator> buffer_;
 
-    //缓冲区大小,相当于论文的K值,注：缓冲区大小并不是指集合的大小，而是以时间为单位来度量的
-    size_t buffer_size_{1};
+        //缓冲区管理器
+        BufferSizeManager *buffer_size_manager_;
 
-    //当前时间(相当于论文的T值)
-    int current_time_{};
+        //数据统计管理器
+        StatisticsManager *statistics_manager_;
 
-    //传输过来的流
-    StreamPtr stream_{};
-
-    //缓冲区(用随时保持有序的红黑树)
-    std::set<OoOJoin::TrackTuple, TupleComparator> buffer_{};
-
-    //缓冲区管理器
-    BufferSizeManagerPtr buffer_size_manager_{};
-
-    //数据统计管理器
-    StatisticsManagerPtr statistics_manager_{};
-
-    //同步器
-    SynchronizerPtr synchronizer_{};
-};
-
+        //同步器
+        Synchronizer *synchronizer_;
+    };
+}
 
 #endif //DISORDERHANDLINGSYSTEM_K_SLACK_H

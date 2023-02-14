@@ -13,59 +13,45 @@
 #include <mutex>
 #include "Operator/MSMJ/operator/stream_operator.h"
 #include "Operator/MSMJ/common/define.h"
-#include "Common/Tuples.h"
 
-typedef std::shared_ptr<class Stream> StreamPtr;
-typedef std::shared_ptr<class KSlack> KSlackPtr;
-typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
-typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
-typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
-typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
-typedef std::shared_ptr<class StreamOperator> StreamOperatorPtr;
+namespace MSMJ {
+    class Synchronizer {
+    public:
+        explicit Synchronizer(int stream_count, StreamOperator *stream_operator);
 
-using namespace OoOJoin;
+        ~Synchronizer() = default;
 
-class Synchronizer {
-public:
-    explicit Synchronizer(int stream_count, StreamOperatorPtr stream_operator);
+        //同步过程
+        auto synchronize_stream(std::queue<Tuple> &input) -> void;
 
-    ~Synchronizer() = default;
+        auto get_output() -> std::queue<Tuple>;
 
-    //同步过程
-    auto synchronize_stream(std::queue<TrackTuple> &input) -> void;
+    private:
 
-    auto get_output() -> std::queue<TrackTuple>;
+        //互斥锁
+        std::mutex latch_;
 
-    auto setConfig(INTELLI::ConfigMapPtr opConfig) -> void;
+        //SyncBuf缓冲区映射
+        phmap::parallel_flat_hash_map<int, phmap::btree_set<Tuple, TupleComparator>> sync_buffer_map_{};
 
-private:
+        //同步输出区
+        std::queue<Tuple> output_{};
 
-    INTELLI::ConfigMapPtr opConfig;
+        //观察区
+        std::queue<Tuple> watch_output_{};
 
-    //互斥锁
-    std::mutex latch_;
+        //Tsync
+        int T_sync_{};
 
-    //SyncBuf缓冲区映射
-    phmap::parallel_flat_hash_map<uint64_t, phmap::btree_set<TrackTuple, TupleComparator>> sync_buffer_map_{};
+        //stream的数量
+        int stream_count_{};
 
-    //同步输出区
-    std::queue<TrackTuple> output_{};
+        //当前缓冲区拥有tuple的流的数量
+        int own_stream_{};
 
-    //观察区
-    std::queue<TrackTuple> watch_output_{};
+        //连接器
+        StreamOperator *stream_operator_;
+    };
 
-    //Tsync
-    int T_sync_{};
-
-    //stream的数量
-    int stream_count_{};
-
-    //当前缓冲区拥有tuple的流的数量
-    int own_stream_{};
-
-    //连接器
-    StreamOperatorPtr stream_operator_;
-};
-
-
+}
 #endif //DISORDERHANDLINGSYSTEM_SYNCHRONIZER_H

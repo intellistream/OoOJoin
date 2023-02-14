@@ -6,19 +6,18 @@
 #include <list>
 #include <complex>
 #include <iostream>
-#include <utility>
 #include "Operator/MSMJ/manager/statistics_manager.h"
 #include "Operator/MSMJ/common/define.h"
+#include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 
+using namespace MSMJ;
 
-StatisticsManager::StatisticsManager(TupleProductivityProfilerPtr profiler,
-                                     phmap::parallel_flat_hash_map<int, Stream *> stream_map) {
-    productivity_profiler_ = std::move(profiler);
-    stream_map_ = std::move(stream_map);
+StatisticsManager::StatisticsManager(TupleProductivityProfiler *profiler) {
+    productivity_profiler_ = profiler;
 }
 
 
-auto StatisticsManager::add_record(int stream_id, OoOJoin::TrackTuple tuple) -> void {
+auto StatisticsManager::add_record(int stream_id, Tuple tuple) -> void {
     std::lock_guard<std::mutex> lock(latch_);
     record_map_[stream_id].push_back(tuple);
 }
@@ -40,17 +39,14 @@ auto StatisticsManager::get_maxD(int stream_id) -> int {
     }
 
     for (auto it: record_map_[stream_id]) {
-        max_D = std::max(max_D, (int) it.eventTime);
+        max_D = std::max(max_D, it.delay);
     }
     return max_D;
 }
 
 
 auto StatisticsManager::get_R_stat(int stream_id) -> int {
-    std::vector<OoOJoin::TrackTuple> record = record_map_[stream_id];
-
-    double confidenceValue = opConfig->getDouble("confidenceValue");
-
+    std::vector<Tuple> record = record_map_[stream_id];
     if (record.empty()) {
         return 1;
     }
@@ -96,7 +92,7 @@ auto StatisticsManager::get_R_stat(int stream_id) -> int {
         }
     }
 
-    return window1_list.size() == 0 ? 1 : window1_list.size();
+    return window1_list.size();
 }
 
 
@@ -127,7 +123,7 @@ auto StatisticsManager::get_avg_ksync(int stream_id) -> int {
     }
 
     //找出R_stat范围内的ksync_i的总和，再取平均值
-    for (int i = ksync_list.size() - 1; i >= std::max((uint64_t) ksync_list.size() - R_stat, (uint64_t) 0); i--) {
+    for (int i = ksync_list.size() - 1; i >= std::max((int) ksync_list.size() - R_stat, 0); i--) {
         sum_ksync_i += ksync_map_[stream_id][i];
     }
     int avg_ksync_i = sum_ksync_i / R_stat;
@@ -155,8 +151,6 @@ auto StatisticsManager::get_future_ksync(int stream_id) -> int {
 }
 
 
-#define maxDelay 100
-
 //概率分布函数fD
 auto StatisticsManager::fD(int d, int stream_id) -> double {
     int R_stat = get_R_stat(stream_id);
@@ -165,7 +159,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
         return -1;
     }
 
-    std::vector<OoOJoin::TrackTuple> record = record_map_[stream_id];
+    std::vector<Tuple> record = record_map_[stream_id];
     if (record.empty()) {
         return 1;
     }
@@ -254,7 +248,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
 
     //此时left和right分别指向了有实际数据的点，可用折线估计概率
     //直线方程： y =  (p_r - p_l)/(right - left)(x - left) + p_l
-    double p_d = (p_r - p_l) / (right - left) * ((int) d - left) + p_l;
+    double p_d = (p_r - p_l) / (right - left) * (d - left) + p_l;
 
     //更新直方图
     histogram_map_[stream_id][d] = p_d;
@@ -272,8 +266,6 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
 
 auto StatisticsManager::fDk(int d, int stream_id, int K) -> double {
     int k_sync = get_future_ksync(stream_id);
-    uint64_t g = opConfig->getU64("g");
-
     double res = 0;
 
     if (d == 0) {
@@ -288,9 +280,7 @@ auto StatisticsManager::fDk(int d, int stream_id, int K) -> double {
 }
 
 auto StatisticsManager::wil(int l, int stream_id, int K) -> int {
-    uint64_t b = opConfig->getU64("b");
-    uint64_t g = opConfig->getU64("g");
-    int wi = stream_map_[stream_id]->get_window_size();
+    int wi = stream_map[stream_id]->get_window_size();
     int ni = wi / b;
     int res = 0;
     double ri = productivity_profiler_->get_join_record_map()[stream_id] * 1.0 / wi;
@@ -308,10 +298,6 @@ auto StatisticsManager::wil(int l, int stream_id, int K) -> int {
     }
 
     return res;
-}
-
-auto StatisticsManager::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {
-    this->opConfig = std::move(opConfig);
 }
 
 

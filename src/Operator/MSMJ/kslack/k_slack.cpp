@@ -3,22 +3,32 @@
 //
 
 #include <iostream>
-#include <utility>
 #include "Operator/MSMJ/kslack/k_slack.h"
+#include "Operator/MSMJ/common/define.h"
+#include "Operator/MSMJ/manager/statistics_manager.h"
+#include "Operator/MSMJ/synchronizer/synchronizer.h"
+#include "Operator/MSMJ/manager/buffer_size_manager.h"
 
-using namespace OoOJoin;
+using namespace MSMJ;
 
-KSlack::KSlack(StreamPtr stream, BufferSizeManagerPtr buffer_size_manager, StatisticsManagerPtr statistics_manager,
-               SynchronizerPtr synchronizer, phmap::parallel_flat_hash_map<int, Stream *> stream_map) {
-    stream_ = std::move(stream);
-    buffer_size_manager_ = std::move(buffer_size_manager);
-    statistics_manager_ = std::move(statistics_manager);
-    synchronizer_ = std::move(synchronizer);
-    stream_map_ = std::move(stream_map);
+KSlack::KSlack(Stream *stream, BufferSizeManager *buffer_size_manager, StatisticsManager *statistics_manager,
+               Synchronizer *synchronizer) {
+    stream_ = stream;
+    buffer_size_manager_ = buffer_size_manager;
+    statistics_manager_ = statistics_manager;
+    synchronizer_ = synchronizer;
 }
 
 
-auto KSlack::get_output() -> std::queue<OoOJoin::TrackTuple> {
+KSlack::~KSlack() {
+    delete stream_;
+    delete buffer_size_manager_;
+    delete statistics_manager_;
+    delete synchronizer_;
+}
+
+
+auto KSlack::get_output() -> std::queue<Tuple> {
     return watch_output_;
 }
 
@@ -28,12 +38,11 @@ auto KSlack::get_id() -> int {
 
 //K-Slack算法对无序流进行处理
 auto KSlack::disorder_handling() -> void {
-    uint64_t L = opConfig->getU64("L");
     while (!stream_->get_tuple_list().empty()) {
-        TrackTuple tuple = stream_->get_tuple_list().front();
+        Tuple tuple = stream_->get_tuple_list().front();
 
         //更新local time
-        current_time_ = std::max(current_time_, (int) tuple.eventTime);
+        current_time_ = std::max(current_time_, tuple.ts);
 
         //每L个时间单位调整K值
         if (current_time_ != 0 && current_time_ % L == 0) {
@@ -41,7 +50,7 @@ auto KSlack::disorder_handling() -> void {
         }
 
         //计算出tuple的delay,T - ts, 方便统计管理器统计记录
-        tuple.delay = current_time_ - tuple.eventTime;
+        tuple.delay = current_time_ - tuple.ts;
 
         //加入statistics_manager的历史记录统计表以及T值
         statistics_manager_->add_record(stream_->get_id(), tuple);
@@ -49,10 +58,10 @@ auto KSlack::disorder_handling() -> void {
 
         //先让缓冲区所有满足条件的tuple出队进入输出区
         while (!buffer_.empty()) {
-            TrackTuple tuple = *buffer_.begin();
+            Tuple tuple = *buffer_.begin();
 
             //对应论文的公式：ei. ts + Ki <= T
-            if (tuple.eventTime + buffer_size_ > current_time_) {
+            if (tuple.ts + buffer_size_ > current_time_) {
                 break;
             }
 
@@ -80,10 +89,6 @@ auto KSlack::disorder_handling() -> void {
     //将剩下的output_加入同步器
     synchronizer_->synchronize_stream(output_);
 
-}
-
-auto KSlack::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {
-    this->opConfig = std::move(opConfig);
 }
 
 

@@ -3,14 +3,15 @@
 //
 
 #include "Operator/MSMJ/manager/buffer_size_manager.h"
+#include "Operator/MSMJ/manager/statistics_manager.h"
+#include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
+#include "Operator/MSMJ/common/define.h"
 
-#include <utility>
+using namespace MSMJ;
 
-BufferSizeManager::BufferSizeManager(StatisticsManagerPtr statistics_manager, TupleProductivityProfilerPtr profiler,
-                                     phmap::parallel_flat_hash_map<int, Stream *> stream_map) {
-    statistics_manager_ = std::move(statistics_manager);
-    productivity_profiler_ = std::move(profiler);
-    stream_map_ = std::move(stream_map);
+BufferSizeManager::BufferSizeManager(StatisticsManager *statistics_manager, TupleProductivityProfiler *profiler) {
+    statistics_manager_ = statistics_manager;
+    productivity_profiler_ = profiler;
 }
 
 
@@ -26,13 +27,6 @@ auto BufferSizeManager::k_search(int stream_id) -> int {
         return 1;
     }
 
-    uint64_t g = 1;
-    if (opConfig->exist("g")) {
-        g = opConfig->getU64("g");
-    } else {
-        INTELLI::INTELLI_INFO("Param g should be given");
-    }
-
     int k = 0;
     while (k <= max_DH && y(k) < productivity_profiler_->get_requirement_recall()) {
         k = k + g;
@@ -45,10 +39,7 @@ auto BufferSizeManager::y(int K) -> double {
     //SEL比值
     double sel_radio = productivity_profiler_->get_select_ratio(K);
 
-    int m = stream_map_.size();
-
-    //basicWindow
-    uint64_t b = opConfig->getU64("b");
+    int m = stream_map.size();
 
     //分子
     int numerator = 0;
@@ -58,7 +49,7 @@ auto BufferSizeManager::y(int K) -> double {
             if (j == i) {
                 continue;
             }
-            int wj = stream_map_[j]->get_window_size();
+            int wj = stream_map[j]->get_window_size();
             int nj = wj / b;
             int sum = 0;
             for (int l = 1; l <= nj; l++) {
@@ -77,7 +68,7 @@ auto BufferSizeManager::y(int K) -> double {
             if (j == i) {
                 continue;
             }
-            res *= stream_map_[j]->get_window_size();
+            res *= stream_map[j]->get_window_size();
         }
         denominator += res;
     }
@@ -87,10 +78,6 @@ auto BufferSizeManager::y(int K) -> double {
     }
 
     return static_cast<int>(sel_radio * numerator / denominator);
-}
-
-auto BufferSizeManager::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {
-    this->opConfig = std::move(opConfig);
 }
 
 

@@ -14,14 +14,14 @@ namespace OoOJoin {
  * @brief The class to describe a shared pointer to @ref MSWJOperator
  */
 
-    typedef std::shared_ptr<class Stream> StreamPtr;
+    typedef std::shared_ptr<class MSMJ::Stream> StreamPtr;
     typedef std::shared_ptr<class MSMJOperator> MSMJOperatorPtr;
-    typedef std::shared_ptr<class KSlack> KSlackPtr;
-    typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
-    typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
-    typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
-    typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
-    typedef std::shared_ptr<class StreamOperator> StreamOperatorPtr;
+    typedef std::shared_ptr<class MSMJ::KSlack> KSlackPtr;
+    typedef std::shared_ptr<class MSMJ::BufferSizeManager> BufferSizeManagerPtr;
+    typedef std::shared_ptr<class MSMJ::StatisticsManager> StatisticsManagerPtr;
+    typedef std::shared_ptr<class MSMJ::TupleProductivityProfiler> TupleProductivityProfilerPtr;
+    typedef std::shared_ptr<class MSMJ::Synchronizer> SynchronizerPtr;
+    typedef std::shared_ptr<class MSMJ::StreamOperator> StreamOperatorPtr;
 
 /**
  * @class MSWJOperator
@@ -55,10 +55,13 @@ namespace OoOJoin {
         void conductComputation();
 
     private:
-        phmap::parallel_flat_hash_map<int, Stream *> stream_map{};
+//        phmap::parallel_flat_hash_map<int, Stream *> stream_map{};
         //Stream
-        StreamPtr streamS;
-        StreamPtr streamR;
+//        StreamPtr streamS;
+//        StreamPtr streamR;
+
+        std::queue<MSMJ::Tuple> sTupleList{};
+        std::queue<MSMJ::Tuple> rTupleList{};
 
         //bufferSizeManager,  is used to update K(bufferSize)
         BufferSizeManagerPtr bufferSizeManager{};

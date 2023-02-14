@@ -2,30 +2,31 @@
 // Created by 86183 on 2023/1/8.
 //
 
-#include <iostream>
-#include <utility>
-#include "Common/Tuples.h"
-#include "Operator/MSMJ/operator/stream_operator.h"
-#include "Operator/MSMJ/kslack/k_slack.h"
 
-StreamOperator::StreamOperator(TupleProductivityProfilerPtr profiler) {
-    productivity_profiler_ = std::move(profiler);
+
+#include "Operator/MSMJ/operator/stream_operator.h"
+#include "Operator/MSMJ/common/define.h"
+
+using namespace MSMJ;
+
+StreamOperator::StreamOperator(TupleProductivityProfiler *profiler) {
+    productivity_profiler_ = profiler;
 }
 
 
 //连接条件,根据实际生产由程序员指定
-auto StreamOperator::can_join_(OoOJoin::TrackTuple t1, OoOJoin::TrackTuple t2) -> bool {
-    return t1.delay == t2.delay + 2;
+auto StreamOperator::can_join_(Tuple t1, Tuple t2) -> bool {
+    return t1.ts == t2.ts;
 }
 
-auto StreamOperator::get_result() -> std::queue<std::vector<OoOJoin::TrackTuple>> {
+auto StreamOperator::get_result() -> std::queue<std::vector<Tuple>> {
     return result_;
 }
 
-auto StreamOperator::mswj_execution(std::queue<OoOJoin::TrackTuple> &input) -> void {
+auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
     std::lock_guard<std::mutex> lock(latch_);
     while (!input.empty()) {
-        TrackTuple tuple = input.front();
+        Tuple tuple = input.front();
         input.pop();
         int stream_id = tuple.streamId;
 
@@ -36,8 +37,8 @@ auto StreamOperator::mswj_execution(std::queue<OoOJoin::TrackTuple> &input) -> v
         //计算cross-join的结果大小
         int cross_join = 1;
 
-        if (tuple.eventTime >= T_op_) {
-            T_op_ = tuple.eventTime;
+        if (tuple.ts >= T_op_) {
+            T_op_ = tuple.ts;
 
             for (auto &it: window_map_) {
                 //统计window内元组数量数据
@@ -48,9 +49,9 @@ auto StreamOperator::mswj_execution(std::queue<OoOJoin::TrackTuple> &input) -> v
                 }
 
                 for (auto iter = it.second.begin(); iter != it.second.end();) {
-                    auto tuple_j = *iter;
+                    Tuple tuple_j = *iter;
                     cross_join++;
-                    if (tuple_j.eventTime < tuple.eventTime - it.second.size()) {
+                    if (tuple_j.ts < tuple.ts - it.second.size()) {
                         it.second.erase(iter++);
                         cross_join--;
                     } else {
@@ -64,40 +65,32 @@ auto StreamOperator::mswj_execution(std::queue<OoOJoin::TrackTuple> &input) -> v
             productivity_profiler_->update_cross_join(delay, cross_join);
 
             //连接
-            vector<TrackTuple> join_tuple;
+            std::vector<Tuple> join_tuple;
             join_tuple.push_back(tuple);
             for (auto &it: window_map_) {
                 if (it.first == stream_id) {
                     continue;
                 }
                 while (!it.second.empty()) {
-                    auto tuple_j = it.second.front();
+                    Tuple tuple_j = it.second.front();
                     it.second.pop_front();
                     if (can_join_(tuple, tuple_j)) {
                         //时间戳定义为ei.ts
-                        tuple_j.eventTime = tuple.eventTime;
+                        tuple_j.ts = tuple.ts;
                         join_tuple.push_back(tuple_j);
                     }
                 }
             }
-
             result_.push(join_tuple);
+
             //更新join result map
             productivity_profiler_->update_join_res(delay, join_tuple.size());
 
             window_map_[stream_id].push_back(tuple);
-        } else if (tuple.eventTime > T_op_ - window_map_[stream_id].size()) {
+        } else if (tuple.ts > T_op_ - window_map_[stream_id].size()) {
             window_map_[stream_id].push_back(tuple);
         }
     }
-}
-
-auto StreamOperator::getJoinResultCount() -> int {
-    return result_.size();
-}
-
-auto StreamOperator::setConfig(INTELLI::ConfigMapPtr opConfig) -> void {
-    this->opConfig = std::move(opConfig);
 }
 
 

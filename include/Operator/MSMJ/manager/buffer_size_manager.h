@@ -5,52 +5,38 @@
 #ifndef DISORDERHANDLINGSYSTEM_BUFFER_SIZE_MANAGER_H
 #define DISORDERHANDLINGSYSTEM_BUFFER_SIZE_MANAGER_H
 
-#include "Operator/MSMJ/common/define.h"
+
 #include "statistics_manager.h"
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
-#include "Utils/ConfigMap.hpp"
 
-typedef std::shared_ptr<class Stream> StreamPtr;
-typedef std::shared_ptr<class KSlack> KSlackPtr;
-typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
-typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
-typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
-typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
+namespace MSMJ {
 
-using namespace OoOJoin;
+    class BufferSizeManager {
+    public:
 
-class BufferSizeManager {
-public:
+        explicit BufferSizeManager(StatisticsManager *statistics_manager, TupleProductivityProfiler *profiler);
 
-    explicit BufferSizeManager(StatisticsManagerPtr statistics_manager, TupleProductivityProfilerPtr profiler,
-                               phmap::parallel_flat_hash_map<int, Stream *> stream_map);
+        ~BufferSizeManager() = default;
 
-    ~BufferSizeManager() = default;
+        //自适应K值算法
+        auto k_search(int stream_id) -> int;
 
-    //自适应K值算法
-    auto k_search(int stream_id) -> int;
+    private:
 
-    auto setConfig(INTELLI::ConfigMapPtr opConfig) -> void;
+        //论文中的函数γ(L,T)
+        auto y(int K) -> double;
 
-private:
+        //互斥锁
+        std::mutex latch_;
 
-    //论文中的函数γ(L,T)
-    auto y(int K) -> double;
+        //数据统计器
+        StatisticsManager *statistics_manager_;
 
-    INTELLI::ConfigMapPtr opConfig;
+        //元组生产力
+        TupleProductivityProfiler *productivity_profiler_;
 
-    //互斥锁
-    std::mutex latch_;
+    };
 
-    phmap::parallel_flat_hash_map<int, Stream *> stream_map_{};
-
-    //数据统计器
-    StatisticsManagerPtr statistics_manager_;
-
-    //元组生产力
-    TupleProductivityProfilerPtr productivity_profiler_;
-
-};
-
+}
 
 #endif //DISORDERHANDLINGSYSTEM_BUFFER_SIZE_MANAGER_H

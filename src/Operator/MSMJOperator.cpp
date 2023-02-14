@@ -2,7 +2,7 @@
 #include <JoinAlgos/JoinAlgoTable.h>
 
 static void *task(void *p) {
-    reinterpret_cast<KSlack *>(p)->disorder_handling();
+    reinterpret_cast<MSMJ::KSlack *>(p)->disorder_handling();
     return nullptr;
 }
 
@@ -89,12 +89,13 @@ bool OoOJoin::MSMJOperator::stop() {
 
 bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     if (!ts->isEnd) {
-        streamS->push_tuple(*ts);
+        MSMJ::Tuple tuple(1, -1, ts->eventTime);
+        sTupleList.push(tuple);
     } else {
-        streamS->set_id(1);
-        KSlackPtr kslackS = std::make_shared<KSlack>(streamS, bufferSizeManager, statisticsManager, synchronizer,
-                                                     stream_map);
-        kslackS->setConfig(config);
+        StreamPtr stream = std::make_shared<MSMJ::Stream>(1, windowLen, sTupleList);
+        KSlackPtr kslackS = std::make_shared<MSMJ::KSlack>(stream.get(), bufferSizeManager.get(),
+                                                           statisticsManager.get(), synchronizer.get());
+//        kslackS->setConfig(config);
 
         pthread_t t1 = 1;
         pthread_create(&t1, NULL, &task, kslackS.get());
@@ -105,42 +106,40 @@ bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
 
 bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     if (!tr->isEnd) {
-        streamR->push_tuple(*tr);
+        MSMJ::Tuple tuple(2, -1, tr->eventTime);
+        rTupleList.push(tuple);
     } else {
-        streamR->set_id(2);
-        KSlackPtr kslackR = std::make_shared<KSlack>(streamR, bufferSizeManager, statisticsManager, synchronizer,
-                                                     stream_map);
-        kslackR->setConfig(config);
+        StreamPtr stream = std::make_shared<MSMJ::Stream>(2, windowLen, rTupleList);
+        KSlackPtr kslackR = std::make_shared<MSMJ::KSlack>(stream.get(), bufferSizeManager.get(),
+                                                           statisticsManager.get(), synchronizer.get());
+//        kslackS->setConfig(config);
 
         pthread_t t2 = 2;
         pthread_create(&t2, NULL, &task, kslackR.get());
         pthread_join(t2, NULL);
-
     }
     return true;
 }
 
 size_t OoOJoin::MSMJOperator::getResult() {
-    return streamOperator->getJoinResultCount();
+//    return streamOperator->getJoinResultCount();
+    return 1;
 }
 
-void MSMJOperator::init(ConfigMapPtr config) {
-    streamR = std::make_shared<Stream>(1, 2);
-    streamS = std::make_shared<Stream>(2, 2);
+void OoOJoin::MSMJOperator::init(ConfigMapPtr config) {
+    config = nullptr;
 
-    stream_map[1] = streamR.get();
-    stream_map[2] = streamS.get();
+    tupleProductivityProfiler = std::make_shared<MSMJ::TupleProductivityProfiler>();
+    statisticsManager = std::make_shared<MSMJ::StatisticsManager>(tupleProductivityProfiler.get());
+    bufferSizeManager = std::make_shared<MSMJ::BufferSizeManager>(statisticsManager.get(),
+                                                                  tupleProductivityProfiler.get());
+    streamOperator = std::make_shared<MSMJ::StreamOperator>(tupleProductivityProfiler.get());
+    synchronizer = std::make_shared<MSMJ::Synchronizer>(2, streamOperator.get());
 
-    tupleProductivityProfiler = std::make_shared<TupleProductivityProfiler>();
-    statisticsManager = std::make_shared<StatisticsManager>(tupleProductivityProfiler, stream_map);
-    bufferSizeManager = std::make_shared<BufferSizeManager>(statisticsManager, tupleProductivityProfiler, stream_map);
-    streamOperator = std::make_shared<StreamOperator>(tupleProductivityProfiler);
-    synchronizer = std::make_shared<Synchronizer>(2, streamOperator);
-
-    tupleProductivityProfiler->setConfig(config);
-    statisticsManager->setConfig(config);
-    bufferSizeManager->setConfig(config);
-    synchronizer->setConfig(config);
+//    tupleProductivityProfiler->setConfig(config);
+//    statisticsManager->setConfig(config);
+//    bufferSizeManager->setConfig(config);
+//    synchronizer->setConfig(config);
 }
 
 

@@ -12,5 +12,6 @@ add_sources(
         MSMJ/profiler/tuple_productivity_profiler.cpp
         MSMJ/synchronizer/synchronizer.cpp
         MSMJ/common/stream.cpp
+        MSMJ/common/define.cpp
 )
 

@@ -10,55 +10,45 @@
 #include <unordered_map>
 #include <list>
 #include <mutex>
-#include "parallel-hashmap/parallel_hashmap/phmap.h"
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 #include "Operator/MSMJ/common/define.h"
-#include "Utils/ConfigMap.hpp"
 
-typedef std::shared_ptr<class Stream> StreamPtr;
-typedef std::shared_ptr<class KSlack> KSlackPtr;
-typedef std::shared_ptr<class BufferSizeManager> BufferSizeManagerPtr;
-typedef std::shared_ptr<class StatisticsManager> StatisticsManagerPtr;
-typedef std::shared_ptr<class TupleProductivityProfiler> TupleProductivityProfilerPtr;
-typedef std::shared_ptr<class Synchronizer> SynchronizerPtr;
+namespace MSMJ {
 
-class StreamOperator {
-public:
 
-    explicit StreamOperator(TupleProductivityProfilerPtr profiler);
+    class StreamOperator {
+    public:
 
-    ~StreamOperator() = default;
+        explicit StreamOperator(TupleProductivityProfiler *profiler);
 
-    auto mswj_execution(std::queue<OoOJoin::TrackTuple> &input) -> void;
+        ~StreamOperator() = default;
 
-    auto get_result() -> std::queue<std::vector<OoOJoin::TrackTuple>>;
+        auto mswj_execution(std::queue<Tuple> &input) -> void;
 
-    auto getJoinResultCount() -> int;
+        auto get_result() -> std::queue<std::vector<Tuple>>;
 
-    auto setConfig(INTELLI::ConfigMapPtr opConfig) -> void;
+    private:
 
-private:
+        auto can_join_(Tuple t1, Tuple t2) -> bool;
 
-    auto can_join_(OoOJoin::TrackTuple t1, OoOJoin::TrackTuple t2) -> bool;
+        //互斥锁
+        std::mutex latch_;
 
-    INTELLI::ConfigMapPtr opConfig;
+        //连接时的T
+        int T_op_{};
 
-    //互斥锁
-    std::mutex latch_;
+        //window map
+        phmap::parallel_flat_hash_map<int, std::list<Tuple>> window_map_{};
 
-    //连接时的T
-    int T_op_{};
+        //结果元组
+        std::queue<std::vector<Tuple>> result_{};
 
-    //window map
-    phmap::parallel_flat_hash_map<int, std::list<OoOJoin::TrackTuple>> window_map_{};
+        //元组生产力监视器
+        TupleProductivityProfiler *productivity_profiler_;
 
-    //结果元组
-    std::queue<std::vector<OoOJoin::TrackTuple>> result_{};
+    };
 
-    //元组生产力监视器
-    TupleProductivityProfilerPtr productivity_profiler_;
-
-};
+}
 
 
 #endif //DISORDERHANDLINGSYSTEM_STREAM_OPERATOR_H
