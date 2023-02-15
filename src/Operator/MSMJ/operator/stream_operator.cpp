@@ -13,14 +13,6 @@ StreamOperator::StreamOperator(TupleProductivityProfiler *profiler) :
         productivity_profiler_(profiler) {}
 
 
-//连接条件,根据实际生产由程序员指定
-auto StreamOperator::can_join_(Tuple t1, Tuple t2) -> bool {
-    return t1.ts == t2.ts;
-}
-
-auto StreamOperator::get_result() -> std::queue<std::vector<Tuple>> {
-    return result_;
-}
 
 auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
     std::lock_guard<std::mutex> lock(latch_);
@@ -64,8 +56,8 @@ auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
             productivity_profiler_->update_cross_join(delay, cross_join);
 
             //连接
-            std::vector<Tuple> join_tuple;
-            join_tuple.push_back(tuple);
+            std::unordered_map<int, std::vector<Tuple>> tempJoinMap;
+            int res = 1;
             for (auto &it: window_map_) {
                 if (it.first == stream_id) {
                     continue;
@@ -76,14 +68,30 @@ auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
                     if (can_join_(tuple, tuple_j)) {
                         //时间戳定义为ei.ts
                         tuple_j.ts = tuple.ts;
-                        join_tuple.push_back(tuple_j);
+                        tempJoinMap[it.first].push_back(tuple_j);
                     }
                 }
             }
-            result_.push(join_tuple);
+
+            int tempCount = 1;
+            //统计res,先统计二路join
+            for (auto it: tempJoinMap) {
+                tempCount *= it.second.size();
+                for (auto l: it.second) {
+                    std::vector<Tuple> tempVec;
+                    tempVec.push_back(tuple);
+                    tempVec.push_back(l);
+                    result_.push(tempVec);
+                }
+            }
+
+            res += tempCount;
+
+            joinResultCount_ += res;
+
 
             //更新join result map
-            productivity_profiler_->update_join_res(delay, join_tuple.size());
+            productivity_profiler_->update_join_res(delay, res);
 
             window_map_[stream_id].push_back(tuple);
         } else if (tuple.ts > T_op_ - window_map_[stream_id].size()) {
@@ -91,6 +99,7 @@ auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
         }
     }
 }
+
 
 
 

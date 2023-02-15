@@ -25,16 +25,21 @@ namespace MSMJ {
 
         auto mswj_execution(std::queue<Tuple> &input) -> void;
 
-        auto get_result() -> std::queue<std::vector<Tuple>>;
+        auto inline get_result() -> std::queue<std::vector<Tuple>> {
+            return result_;
+        }
 
         auto inline getJoinResultCount() -> int {
-            return result_.size();
+            return joinResultCount_;
         }
 
     private:
 
-        auto can_join_(Tuple t1, Tuple t2) -> bool;
+        static auto inline can_join_(Tuple t1, Tuple t2) -> bool {
+            return t1.key == t2.key;
+        };
 
+        int joinResultCount_{};
         //互斥锁
         std::mutex latch_;
 

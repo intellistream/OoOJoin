@@ -46,6 +46,8 @@ namespace OoOJoin {
         size_t intermediateResult = 0;
         string algoTag = "NestedLoopJoin";
         uint64_t joinThreads = 1;
+        tsType lastTimeOfR = 0;
+
         /**
          * @brief if operator is locked by watermark, it will never accept new incoming
          * @todo current implementation is putting rotten, fix later
@@ -63,6 +65,9 @@ namespace OoOJoin {
 
         std::queue<MSMJ::Tuple> sTupleList{};
         std::queue<MSMJ::Tuple> rTupleList{};
+
+        //save rTuple record
+        std::vector<TrackTuplePtr > rTupleRecord{};
 
         //bufferSizeManager,  is used to update K(bufferSize)
         BufferSizeManagerPtr bufferSizeManager{};

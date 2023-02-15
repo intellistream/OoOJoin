@@ -48,7 +48,13 @@ namespace MSMJ {
 //输出用
     auto print(std::queue<Tuple> q) -> void;
 
+    typedef uint64_t keyType;    /*!< Type of the join key, default uint64_t */
+    typedef uint64_t valueType;  /*!< Type of the payload, default uint64_t */
     struct Tuple {
+        keyType key;
+        valueType payload;
+        uint64_t arrivalTime;
+        uint64_t processedTime;
         //表示来自输入流Si
         int streamId;
         //第几个到达的元组
