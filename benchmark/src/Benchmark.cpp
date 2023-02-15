@@ -204,14 +204,25 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
     cfg->edit("maxDelay", (uint64_t) 100);
     cfg->edit("StreamCount", (uint64_t) 2);
 
-    OperatorTablePtr opTable = newOperatorTable();
+//    OperatorTablePtr opTable = newOperatorTable();
+//
+//    AbstractOperatorPtr abstractOperator = opTable->findOperator(operatorTag);
+//
+//    MSMJOperatorPtr msmj = shared_ptr<MSMJOperator>(reinterpret_cast<MSMJOperator *>(abstractOperator.get()));
+//
+//    msmj->init(cfg);
 
-    AbstractOperatorPtr abstractOperator = opTable->findOperator(operatorTag);
+    auto tupleProductivityProfiler = std::make_shared<MSMJ::TupleProductivityProfiler>();
+    auto statisticsManager = std::make_shared<MSMJ::StatisticsManager>(tupleProductivityProfiler.get());
+    auto bufferSizeManager = std::make_shared<MSMJ::BufferSizeManager>(statisticsManager.get(),
+                                                                       tupleProductivityProfiler.get());
+    auto streamOperator = std::make_shared<MSMJ::StreamOperator>(tupleProductivityProfiler.get());
+    auto synchronizer = std::make_shared<MSMJ::Synchronizer>(2, streamOperator.get());
 
-    MSMJOperatorPtr msmj = shared_ptr<MSMJOperator>(reinterpret_cast<MSMJOperator *>(abstractOperator.get()));
 
-    msmj->init(cfg);
-
+    MSMJOperatorPtr msmj = std::make_shared<MSMJOperator>(bufferSizeManager, tupleProductivityProfiler,
+                                                          synchronizer,
+                                                          streamOperator, statisticsManager);
     if (msmj == nullptr) {
         msmj = newMSMJOperator();
         INTELLI_INFO("No " + operatorTag + " operator, will use MSMJ instead");

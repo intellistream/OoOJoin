@@ -6,9 +6,6 @@ static void *task(void *p) {
     return nullptr;
 }
 
-OoOJoin::MSMJOperator::MSMJOperator() {
-}
-
 
 bool OoOJoin::MSMJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
@@ -92,13 +89,12 @@ bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
         MSMJ::Tuple tuple(1, -1, ts->eventTime);
         sTupleList.push(tuple);
     } else {
-        MSMJ::Stream *stream = new MSMJ::Stream(1, windowLen, sTupleList);
-        MSMJ::KSlack *kslackS = new MSMJ::KSlack(stream, bufferSizeManager,
-                                                 statisticsManager, synchronizer);
+        StreamPtr stream = std::make_shared<MSMJ::Stream>(1, windowLen, sTupleList);
+        KSlackPtr kslackS = std::make_shared<MSMJ::KSlack>(stream.get(), bufferSizeManager.get(), statisticsManager.get(), synchronizer.get());
 //        kslackS->setConfig(config);
 
         pthread_t t1 = 1;
-        pthread_create(&t1, NULL, &task, kslackS);
+        pthread_create(&t1, NULL, &task, kslackS.get());
         pthread_join(t1, NULL);
     }
     return true;
@@ -109,32 +105,30 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         MSMJ::Tuple tuple(2, -1, tr->eventTime);
         rTupleList.push(tuple);
     } else {
-        MSMJ::Stream *stream = new MSMJ::Stream(2, windowLen, rTupleList);
-        MSMJ::KSlack *kslackR = new MSMJ::KSlack(stream, bufferSizeManager,
-                                                 statisticsManager, synchronizer);
+        StreamPtr stream = std::make_shared<MSMJ::Stream>(2, windowLen, rTupleList);
+        KSlackPtr kslackR = std::make_shared<MSMJ::KSlack>(stream.get(), bufferSizeManager.get(), statisticsManager.get(), synchronizer.get());
 //        kslackS->setConfig(config);
 
         pthread_t t2 = 2;
-        pthread_create(&t2, NULL, &task, kslackR);
+        pthread_create(&t2, NULL, &task, kslackR.get());
         pthread_join(t2, NULL);
     }
     return true;
 }
 
 size_t OoOJoin::MSMJOperator::getResult() {
-//    return streamOperator->getJoinResultCount();
-    return 1;
+    return streamOperator->getJoinResultCount();
 }
 
 void OoOJoin::MSMJOperator::init(ConfigMapPtr config) {
-    config = nullptr;
+    config->edit("a", "s");
 
-    tupleProductivityProfiler = new MSMJ::TupleProductivityProfiler();
-    statisticsManager = new MSMJ::StatisticsManager(tupleProductivityProfiler);
-    bufferSizeManager = new MSMJ::BufferSizeManager(statisticsManager,
-                                                    tupleProductivityProfiler);
-    streamOperator = new MSMJ::StreamOperator(tupleProductivityProfiler);
-    synchronizer = new MSMJ::Synchronizer(2, streamOperator);
+    tupleProductivityProfiler = std::make_shared<MSMJ::TupleProductivityProfiler>();
+    statisticsManager = std::make_shared<MSMJ::StatisticsManager>(tupleProductivityProfiler.get());
+    bufferSizeManager = std::make_shared<MSMJ::BufferSizeManager>(statisticsManager.get(),
+                                                    tupleProductivityProfiler.get());
+    streamOperator = std::make_shared<MSMJ::StreamOperator>(tupleProductivityProfiler.get());
+    synchronizer = std::make_shared<MSMJ::Synchronizer>(2, streamOperator.get());
 
 //    tupleProductivityProfiler->setConfig(config);
 //    statisticsManager->setConfig(config);

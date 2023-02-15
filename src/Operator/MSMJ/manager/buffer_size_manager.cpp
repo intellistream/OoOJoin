@@ -8,10 +8,9 @@
 
 using namespace MSMJ;
 
-BufferSizeManager::BufferSizeManager(StatisticsManager *statistics_manager, TupleProductivityProfiler *profiler) {
-    statistics_manager_ = statistics_manager;
-    productivity_profiler_ = profiler;
-}
+BufferSizeManager::BufferSizeManager(StatisticsManager *statistics_manager, TupleProductivityProfiler *profiler) :
+        statistics_manager_(statistics_manager),
+        productivity_profiler_(profiler) {}
 
 
 /**

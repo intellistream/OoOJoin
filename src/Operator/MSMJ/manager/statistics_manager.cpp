@@ -12,9 +12,7 @@
 
 using namespace MSMJ;
 
-StatisticsManager::StatisticsManager(TupleProductivityProfiler *profiler) {
-    productivity_profiler_ = profiler;
-}
+StatisticsManager::StatisticsManager(TupleProductivityProfiler *profiler) : productivity_profiler_(profiler) {}
 
 
 auto StatisticsManager::add_record(int stream_id, Tuple tuple) -> void {

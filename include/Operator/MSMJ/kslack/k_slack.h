@@ -15,6 +15,7 @@
 #include "Operator/MSMJ/manager/buffer_size_manager.h"
 
 namespace MSMJ {
+
     class KSlack {
     public:
 

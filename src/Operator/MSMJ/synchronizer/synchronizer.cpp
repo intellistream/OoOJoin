@@ -7,10 +7,9 @@
 #include "Operator/MSMJ/operator/stream_operator.h"
 
 using namespace MSMJ;
-Synchronizer::Synchronizer(int stream_count, StreamOperator *stream_operator) {
-    stream_count_ = stream_count;
-    stream_operator_ = stream_operator;
-}
+
+Synchronizer::Synchronizer(int stream_count, StreamOperator *stream_operator) : stream_count_(stream_count),
+                                                                                stream_operator_(stream_operator) {}
 
 
 auto Synchronizer::get_output() -> std::queue<Tuple> {
@@ -19,7 +18,7 @@ auto Synchronizer::get_output() -> std::queue<Tuple> {
 
 
 //从k-slack发送过来的流
-auto Synchronizer:: synchronize_stream(std::queue<Tuple> &input) -> void {
+auto Synchronizer::synchronize_stream(std::queue<Tuple> &input) -> void {
     std::lock_guard<std::mutex> lock(latch_);
     while (!input.empty()) {
         Tuple tuple = input.front();

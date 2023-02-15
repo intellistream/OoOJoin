@@ -4,6 +4,7 @@
 #include <Operator/AbstractOperator.h>
 #include <Common/Window.h>
 #include <atomic>
+#include <utility>
 #include <WaterMarker/LatenessWM.h>
 #include "Operator/MSMJ/kslack/k_slack.h"
 
@@ -64,20 +65,34 @@ namespace OoOJoin {
         std::queue<MSMJ::Tuple> rTupleList{};
 
         //bufferSizeManager,  is used to update K(bufferSize)
-        MSMJ::BufferSizeManager *bufferSizeManager{};
+        BufferSizeManagerPtr bufferSizeManager{};
 
         //statisticsManager, is used to statistic
-        MSMJ::StatisticsManager *statisticsManager{};
+        StatisticsManagerPtr statisticsManager{};
 
         //TupleProductivityProfiler,is used to get productivity of tuple at join stage.
-        MSMJ::TupleProductivityProfiler *tupleProductivityProfiler{};
+        TupleProductivityProfilerPtr tupleProductivityProfiler{};
 
-        MSMJ::Synchronizer *synchronizer{};
+        SynchronizerPtr synchronizer{};
 
-        MSMJ::StreamOperator *streamOperator{};
+        StreamOperatorPtr streamOperator{};
+
+        bool sEnd{};
+        bool rEnd{};
 
     public:
-        MSMJOperator();
+        MSMJOperator() = default;
+
+        MSMJOperator(BufferSizeManagerPtr bufferSizeManager, TupleProductivityProfilerPtr tupleProductivityProfiler,
+                     SynchronizerPtr synchronizer, StreamOperatorPtr streamOperator,
+                     StatisticsManagerPtr statisticsManager) : bufferSizeManager(std::move(bufferSizeManager)),
+                                                               statisticsManager(std::move(statisticsManager)),
+                                                               tupleProductivityProfiler(
+                                                                       std::move(tupleProductivityProfiler)),
+                                                               synchronizer(std::move(synchronizer)),
+                                                               streamOperator(std::move(streamOperator)) {
+
+        }
 
         ~MSMJOperator() = default;
 

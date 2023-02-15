@@ -9,9 +9,8 @@
 
 using namespace MSMJ;
 
-StreamOperator::StreamOperator(TupleProductivityProfiler *profiler) {
-    productivity_profiler_ = profiler;
-}
+StreamOperator::StreamOperator(TupleProductivityProfiler *profiler) :
+        productivity_profiler_(profiler) {}
 
 
 //连接条件,根据实际生产由程序员指定

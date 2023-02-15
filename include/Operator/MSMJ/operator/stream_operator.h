@@ -27,6 +27,10 @@ namespace MSMJ {
 
         auto get_result() -> std::queue<std::vector<Tuple>>;
 
+        auto inline getJoinResultCount() -> int {
+            return result_.size();
+        }
+
     private:
 
         auto can_join_(Tuple t1, Tuple t2) -> bool;

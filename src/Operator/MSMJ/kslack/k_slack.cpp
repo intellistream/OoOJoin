@@ -11,12 +11,11 @@
 using namespace MSMJ;
 
 KSlack::KSlack(Stream *stream, BufferSizeManager *buffer_size_manager, StatisticsManager *statistics_manager,
-               Synchronizer *synchronizer) {
-    stream_ = stream;
-    buffer_size_manager_ = buffer_size_manager;
-    statistics_manager_ = statistics_manager;
-    synchronizer_ = synchronizer;
-}
+               Synchronizer *synchronizer) :
+        stream_(stream),
+        buffer_size_manager_(buffer_size_manager),
+        statistics_manager_(statistics_manager),
+        synchronizer_(synchronizer) {}
 
 
 KSlack::~KSlack() {
