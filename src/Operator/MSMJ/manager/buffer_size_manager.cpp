@@ -29,7 +29,7 @@ auto BufferSizeManager::k_search(int stream_id) -> int {
     while (k <= max_DH && y(k) < productivity_profiler_->get_requirement_recall()) {
         k = k + g;
     }
-    return k;
+    return k == 0 ? 1 : k;
 }
 
 auto BufferSizeManager::y(int K) -> double {

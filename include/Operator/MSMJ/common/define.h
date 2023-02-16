@@ -20,7 +20,7 @@ namespace MSMJ {
     constexpr int L{3};
 
 //最大延迟
-    constexpr int maxDelay = 100;
+    constexpr int maxDelay = INT16_MAX;
 
 //用户期待的recall率
     constexpr double userRecall{0.4};

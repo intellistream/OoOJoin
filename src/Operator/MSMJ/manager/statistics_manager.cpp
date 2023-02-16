@@ -99,7 +99,7 @@ auto StatisticsManager::get_ksync(int stream_id) -> int {
     if (T_map_.find(stream_id) == T_map_.end()
         || K_map_.find(stream_id) == K_map_.end()
         || record_map_.empty()) {
-        return 1;
+        return 0;
     }
 
     int min_iT_ki = T_map_[stream_id] - K_map_[stream_id];
@@ -115,9 +115,10 @@ auto StatisticsManager::get_ksync(int stream_id) -> int {
 auto StatisticsManager::get_avg_ksync(int stream_id) -> int {
     int sum_ksync_i = 0;
     int R_stat = get_R_stat(stream_id);
+
     std::vector<int> ksync_list = ksync_map_[stream_id];
     if (ksync_list.empty()) {
-        return 1;
+        return 0;
     }
 
     //找出R_stat范围内的ksync_i的总和，再取平均值
@@ -126,19 +127,21 @@ auto StatisticsManager::get_avg_ksync(int stream_id) -> int {
     }
     int avg_ksync_i = sum_ksync_i / R_stat;
 
-    return avg_ksync_i == 0 ? 1 : avg_ksync_i;
+    return avg_ksync_i == 0 ? 0 : avg_ksync_i;
 }
 
 //公式见论文page 7
 auto StatisticsManager::get_future_ksync(int stream_id) -> int {
+    if (ksync_map_.empty()) {
+        return 0;
+    }
+
     int avg_ksync_i = get_avg_ksync(stream_id);
     int min_ksync = INT32_MAX;
 
     //找到j != i的所有avg_ksync的最小值
     for (auto it: ksync_map_) {
-        if (it.first == stream_id) {
-            continue;
-        }
+
         min_ksync = std::min(min_ksync, get_avg_ksync(it.first));
     }
 
@@ -239,6 +242,12 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
                 right--;
             }
         }
+    }
+
+    if (left == right) {
+        histogram_map_[stream_id][left] /= 2;
+        histogram_map_[stream_id][d] = histogram_map_[stream_id][left];
+        return histogram_map_[stream_id][d];
     }
 
     double p_l = histogram_map_[stream_id][left];

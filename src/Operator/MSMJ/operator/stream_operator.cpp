@@ -13,7 +13,6 @@ StreamOperator::StreamOperator(TupleProductivityProfiler *profiler) :
         productivity_profiler_(profiler) {}
 
 
-
 auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
     std::lock_guard<std::mutex> lock(latch_);
     while (!input.empty()) {
@@ -75,7 +74,7 @@ auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
 
             int tempCount = 1;
             //统计res,先统计二路join
-            for (auto it: tempJoinMap) {
+            for (const auto& it: tempJoinMap) {
                 tempCount *= it.second.size();
                 for (auto l: it.second) {
                     std::vector<Tuple> tempVec;

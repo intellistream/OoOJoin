@@ -2,6 +2,7 @@
 // Created by 86183 on 2023/1/9.
 //
 
+#include <iostream>
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 #include "parallel-hashmap/parallel_hashmap/phmap.h"
 #include "Operator/MSMJ/common/define.h"
@@ -51,6 +52,11 @@ auto TupleProductivityProfiler::get_select_ratio(int K) -> double {
 
 auto TupleProductivityProfiler::get_requirement_recall() -> double {
     std::lock_guard<std::mutex> lock(latch_);
+
+    if (cross_join_map_.empty()) {
+        return userRecall;
+    }
+
     int max_D = (--cross_join_map_.end())->first;
     int N_true_L = 0;
     for (int d = 0; d <= max_D; d++) {
@@ -67,6 +73,9 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
         N_prod_P_L += join_result_map_[d];
     }
 
+    if (N_true_L == 0) {
+        return userRecall;
+    }
     //requirement_recall大于等于这个值
     double requirement_recall = (userRecall * (N_true_P_L + N_true_L) - N_prod_P_L) * 1.0 / N_true_L;
     return requirement_recall;

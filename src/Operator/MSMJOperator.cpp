@@ -83,14 +83,15 @@ bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
         tuple.arrivalTime = ts->arrivalTime;
         sTupleList.push(tuple);
     } else {
-        StreamPtr stream = std::make_shared<MSMJ::Stream>(1, 0, sTupleList);
+        StreamPtr stream = std::make_shared<MSMJ::Stream>(1, 10, sTupleList);
+
         KSlackPtr kslackS = std::make_shared<MSMJ::KSlack>(stream.get(), bufferSizeManager.get(),
                                                            statisticsManager.get(), synchronizer.get());
 //        kslackS->setConfig(config);
 
         pthread_t t1 = 1;
-        pthread_create(&t1, NULL, &task, kslackS.get());
-        pthread_join(t1, NULL);
+        pthread_create(&t1, nullptr, &task, kslackS.get());
+        pthread_join(t1, nullptr);
         lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
     }
     return true;
@@ -105,7 +106,8 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         rTupleList.push(tuple);
         rTupleRecord.push_back(tr);
     } else {
-        StreamPtr stream = std::make_shared<MSMJ::Stream>(2, 0, rTupleList);
+        StreamPtr stream = std::make_shared<MSMJ::Stream>(2, 10, rTupleList);
+
         KSlackPtr kslackR = std::make_shared<MSMJ::KSlack>(stream.get(), bufferSizeManager.get(),
                                                            statisticsManager.get(), synchronizer.get());
 //        kslackS->setConfig(config);
