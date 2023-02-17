@@ -5,7 +5,7 @@
 #include "Operator/MSMJ/common/define.h"
 
 namespace MSMJ {
-    phmap::parallel_flat_hash_map<int, Stream *> stream_map;
+    phmap::parallel_flat_hash_map<int, int> stream_map;
 
 
 //获得离散随机变量Di的值,如果delay(ei) ∈(kg,(k+1)g]，则Di=k+1

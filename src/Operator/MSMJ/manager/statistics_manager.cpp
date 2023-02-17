@@ -287,7 +287,7 @@ auto StatisticsManager::fDk(int d, int stream_id, int K) -> double {
 }
 
 auto StatisticsManager::wil(int l, int stream_id, int K) -> int {
-    int wi = stream_map[stream_id]->get_window_size();
+    int wi = stream_map[stream_id];
     int ni = wi / b;
     int res = 0;
     double ri = productivity_profiler_->get_join_record_map()[stream_id] * 1.0 / wi;

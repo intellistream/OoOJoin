@@ -38,7 +38,7 @@ namespace MSMJ {
 
     struct Tuple;
 
-    extern phmap::parallel_flat_hash_map<int, Stream *> stream_map;
+    extern phmap::parallel_flat_hash_map<int, int> stream_map;
 
     extern std::mutex global_lock;
 

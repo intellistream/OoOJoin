@@ -47,7 +47,7 @@ auto BufferSizeManager::y(int K) -> double {
             if (j == i) {
                 continue;
             }
-            int wj = stream_map[j]->get_window_size();
+            int wj = stream_map[j];
             int nj = wj / b;
             int sum = 0;
             for (int l = 1; l <= nj; l++) {
@@ -66,7 +66,7 @@ auto BufferSizeManager::y(int K) -> double {
             if (j == i) {
                 continue;
             }
-            res *= stream_map[j]->get_window_size();
+            res *= stream_map[j];
         }
         denominator += res;
     }
