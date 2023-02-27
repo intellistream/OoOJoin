@@ -26,8 +26,6 @@ namespace MSMJ {
 
         auto disorder_handling() -> void;
 
-        auto get_output() -> std::queue<Tuple>;
-
         auto get_id() -> int;
 
     private:
@@ -44,8 +42,11 @@ namespace MSMJ {
         //当前时间(相当于论文的T值)
         int current_time_{};
 
-        //传输过来的流
-        Stream *stream_;
+        //流id
+        int stream_id_{};
+
+        //元组
+        std::queue<Tuple> tuple_list_{};
 
         //缓冲区(用随时保持有序的红黑树)
         std::set<Tuple, TupleComparator> buffer_;

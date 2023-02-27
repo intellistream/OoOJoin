@@ -14,10 +14,7 @@ StreamOperator::StreamOperator(TupleProductivityProfiler *profiler) :
         productivity_profiler_(profiler) {}
 
 
-auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
-    while (!input.empty()) {
-        Tuple tuple = input.front();
-        input.pop();
+auto StreamOperator::mswj_execution(Tuple tuple) -> void {
         int stream_id = tuple.streamId;
 
         //计算Di
@@ -105,7 +102,6 @@ auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
         } else if (tuple.ts > T_op_ - window_map_[stream_id].size()) {
             window_map_[stream_id].push_back(tuple);
         }
-    }
 }
 
 

@@ -19,43 +19,43 @@ auto Synchronizer::get_output() -> std::queue<Tuple> {
 
 
 //从k-slack发送过来的流
-auto Synchronizer::synchronize_stream(std::queue<Tuple> &input) -> void {
-    while (!input.empty()) {
-        Tuple tuple = input.front();
-        int stream_id = tuple.streamId;
-        input.pop();
-        if (tuple.ts > T_sync_) {
-            if (sync_buffer_map_.find(stream_id) == sync_buffer_map_.end() || sync_buffer_map_[stream_id].empty()) {
-                //下一步要插入tuple了
-                own_stream_++;
-            }
-            sync_buffer_map_[stream_id].insert(tuple);
-            //检测是否缓冲区拥有所有流的tuple
-            while (own_stream_ == stream_count_) {
-                //找到Tsync
-                T_sync_ = INT32_MAX;
-                for (auto it: sync_buffer_map_) {
-                    T_sync_ = std::min(T_sync_, it.second.begin()->ts);
-                }
-
-                for (auto &it: sync_buffer_map_) {
-                    //将所有等于Tsync的元组输出
-                    while (it.second.begin()->ts == T_sync_) {
-                        output_.push(*it.second.begin());
-                        it.second.erase(it.second.begin());
-                    }
-                    if (it.second.empty()) {
-                        own_stream_--;
-                    }
-                }
-            }
-        } else {
-            output_.push(tuple);
+auto Synchronizer::synchronize_stream(Tuple tuple) -> void {
+    int stream_id = tuple.streamId;
+    if (tuple.ts > T_sync_) {
+        if (sync_buffer_map_.find(stream_id) == sync_buffer_map_.end() || sync_buffer_map_[stream_id].empty()) {
+            //下一步要插入tuple了
+            own_stream_++;
         }
+        sync_buffer_map_[stream_id].insert(tuple);
+        //检测是否缓冲区拥有所有流的tuple
+        while (own_stream_ == stream_count_) {
+            //找到Tsync
+            T_sync_ = INT32_MAX;
+            for (auto it: sync_buffer_map_) {
+                T_sync_ = std::min(T_sync_, it.second.begin()->ts);
+            }
 
+            for (auto &it: sync_buffer_map_) {
+                //将所有等于Tsync的元组输出
+                while (it.second.begin()->ts == T_sync_) {
+                    std::async(std::launch::async, [&] {
+                        stream_operator_->mswj_execution(*it.second.begin());
+                    }).get();
+//                        output_.push(*it.second.begin());
+                    it.second.erase(it.second.begin());
+                }
+                if (it.second.empty()) {
+                    own_stream_--;
+                }
+            }
+        }
+    } else {
         std::async(std::launch::async, [&] {
-            stream_operator_->mswj_execution(output_);
+            stream_operator_->mswj_execution(tuple);
         }).get();
+//            output_.push(tuple);
     }
+
+
 }
 

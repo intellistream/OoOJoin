@@ -23,7 +23,7 @@ namespace MSMJ {
 
         ~StreamOperator() = default;
 
-        auto mswj_execution(std::queue<Tuple> &input) -> void;
+        auto mswj_execution(Tuple tuple) -> void;
 
         auto inline get_result() -> std::queue<std::vector<Tuple>> {
             return result_;

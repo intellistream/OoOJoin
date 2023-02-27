@@ -22,7 +22,7 @@ namespace MSMJ {
         ~Synchronizer() = default;
 
         //同步过程
-        auto synchronize_stream(std::queue<Tuple> &input) -> void;
+        auto synchronize_stream(Tuple tuple) -> void;
 
         auto get_output() -> std::queue<Tuple>;
 
