@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <future>
 #include "Operator/MSMJ/kslack/k_slack.h"
 #include "Operator/MSMJ/common/define.h"
 #include "Operator/MSMJ/synchronizer/synchronizer.h"
@@ -81,8 +82,13 @@ auto KSlack::disorder_handling() -> void {
         watch_output_.push(*buffer_.begin());
         buffer_.erase(buffer_.begin());
     }
-    //将剩下的output_加入同步器
-    synchronizer_->synchronize_stream(output_);
+
+    auto fut = std::async(std::launch::async, [&] {
+        //将output_加入同步器
+        synchronizer_->synchronize_stream(output_);
+    });
+
+    fut.get();
 
 }
 

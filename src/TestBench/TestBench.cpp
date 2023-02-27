@@ -55,7 +55,7 @@ void OoOJoin::TestBench::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<T
     sTuple = std::move(_s);
     std::vector<TrackTuplePtr> r_;
     std::vector<TrackTuplePtr> s_;
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 100; i++) {
         r_.push_back(rTuple[i]);
         s_.push_back(sTuple[i]);
     }

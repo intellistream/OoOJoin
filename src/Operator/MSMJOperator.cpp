@@ -106,7 +106,7 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         rTupleRecord.push_back(tr);
     } else {
         StreamPtr stream = std::make_shared<MSMJ::Stream>(2, 10, rTupleList);
-        MSMJ::stream_map[2] = stream->get_window_size();
+
         KSlackPtr kslackR = std::make_shared<MSMJ::KSlack>(stream.get(), bufferSizeManager.get(),
                                                            statisticsManager.get(), synchronizer.get());
 //        kslackS->setConfig(config);
