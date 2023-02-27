@@ -38,10 +38,8 @@ auto Synchronizer::synchronize_stream(Tuple tuple) -> void {
             for (auto &it: sync_buffer_map_) {
                 //将所有等于Tsync的元组输出
                 while (it.second.begin()->ts == T_sync_) {
-                    std::async(std::launch::async, [&] {
-                        stream_operator_->mswj_execution(*it.second.begin());
-                    }).get();
-//                        output_.push(*it.second.begin());
+                    stream_operator_->mswj_execution(*it.second.begin());
+
                     it.second.erase(it.second.begin());
                 }
                 if (it.second.empty()) {
@@ -50,10 +48,8 @@ auto Synchronizer::synchronize_stream(Tuple tuple) -> void {
             }
         }
     } else {
-        std::async(std::launch::async, [&] {
-            stream_operator_->mswj_execution(tuple);
-        }).get();
-//            output_.push(tuple);
+        stream_operator_->mswj_execution(tuple);
+
     }
 
 
