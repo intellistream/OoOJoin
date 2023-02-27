@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <future>
 #include "Operator/MSMJ/synchronizer/synchronizer.h"
 #include "Operator/MSMJ/operator/stream_operator.h"
 
@@ -19,7 +20,6 @@ auto Synchronizer::get_output() -> std::queue<Tuple> {
 
 //从k-slack发送过来的流
 auto Synchronizer::synchronize_stream(std::queue<Tuple> &input) -> void {
-    std::lock_guard<std::mutex> lock(latch_);
     while (!input.empty()) {
         Tuple tuple = input.front();
         int stream_id = tuple.streamId;
@@ -42,7 +42,6 @@ auto Synchronizer::synchronize_stream(std::queue<Tuple> &input) -> void {
                     //将所有等于Tsync的元组输出
                     while (it.second.begin()->ts == T_sync_) {
                         output_.push(*it.second.begin());
-                        watch_output_.push(*it.second.begin());
                         it.second.erase(it.second.begin());
                     }
                     if (it.second.empty()) {
@@ -52,9 +51,11 @@ auto Synchronizer::synchronize_stream(std::queue<Tuple> &input) -> void {
             }
         } else {
             output_.push(tuple);
-            watch_output_.push(tuple);
         }
-        stream_operator_->mswj_execution(output_);
+
+        std::async(std::launch::async, [&] {
+            stream_operator_->mswj_execution(output_);
+        }).get();
     }
 }
 

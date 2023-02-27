@@ -4,6 +4,7 @@
 
 
 
+#include <future>
 #include "Operator/MSMJ/operator/stream_operator.h"
 #include "Operator/MSMJ/common/define.h"
 
@@ -14,7 +15,6 @@ StreamOperator::StreamOperator(TupleProductivityProfiler *profiler) :
 
 
 auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
-    std::lock_guard<std::mutex> lock(latch_);
     while (!input.empty()) {
         Tuple tuple = input.front();
         input.pop();
@@ -31,8 +31,12 @@ auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
             T_op_ = tuple.ts;
 
             for (auto &it: window_map_) {
-                //统计window内元组数量数据
-                productivity_profiler_->add_join_record(stream_id, it.second.size());
+
+                std::async(std::launch::async, [&] {
+                    //统计window内元组数量数据
+                    productivity_profiler_->add_join_record(stream_id, it.second.size());
+                }).get();
+
 
                 if (it.first == stream_id) {
                     continue;
@@ -51,8 +55,11 @@ auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
 
             }
 
-            //更新cross_join_map
-            productivity_profiler_->update_cross_join(delay, cross_join);
+            std::async(std::launch::async, [&] {
+                //更新cross_join_map
+                productivity_profiler_->update_cross_join(delay, cross_join);
+            }).get();
+
 
             //连接
             std::unordered_map<int, std::vector<Tuple>> tempJoinMap;
@@ -89,8 +96,10 @@ auto StreamOperator::mswj_execution(std::queue<Tuple> &input) -> void {
             joinResultCount_ += res;
 
 
-            //更新join result map
-            productivity_profiler_->update_join_res(delay, res);
+            std::async(std::launch::async, [&] {
+                //更新join result map
+                productivity_profiler_->update_join_res(delay, res);
+            }).get();
 
             window_map_[stream_id].push_back(tuple);
         } else if (tuple.ts > T_op_ - window_map_[stream_id].size()) {
