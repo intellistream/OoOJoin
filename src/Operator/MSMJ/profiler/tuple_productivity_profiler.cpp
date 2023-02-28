@@ -9,7 +9,7 @@
 
 using namespace MSMJ;
 
-auto TupleProductivityProfiler::get_join_record_map() -> phmap::parallel_flat_hash_map<int, int> {
+auto TupleProductivityProfiler::get_join_record_map() -> std::vector<int> {
     return join_record_map_;
 }
 
@@ -19,55 +19,69 @@ auto TupleProductivityProfiler::add_join_record(int stream_id, int count) -> voi
 
 auto TupleProductivityProfiler::update_cross_join(int Di, int res) -> void {
     cross_join_map_[Di] = res;
+    cross_join_pos_.push_back(Di);
 }
 
 auto TupleProductivityProfiler::update_join_res(int Di, int res) -> void {
     join_result_map_[Di] = res;
+    join_result_pos_.push_back(Di);
 }
 
 auto TupleProductivityProfiler::get_select_ratio(int K) -> double {
-//    std::lock_guard<std::mutex> lock(latch_);
-    if (join_result_map_.empty() || cross_join_map_.empty()) {
+    if (cross_join_pos_.empty() || join_result_pos_.empty()) {
         return 1;
-
     }
+
     int M_sum = 0;
     int Mx_sum = 0;
-    for (int d = 0; d <= K; d++) {
-        M_sum += join_result_map_[d];
-        Mx_sum += cross_join_map_[d];
+
+    for (int d = 0; d < join_result_pos_.size(); d++) {
+        if (join_result_pos_[d] > K) {
+            continue;
+        }
+        M_sum += join_result_map_[join_result_pos_[d]];
+        Mx_sum += cross_join_map_[cross_join_pos_[d]];
     }
+
+    //边界情况
+    if (Mx_sum == 0) {
+        return 1;
+    }
+
     int M_DM_sum = 0;
     int Mx_DM_sum = 0;
-    for (int d = 0; d <= (--join_result_map_.end())->first; d++) {
-        Mx_DM_sum += cross_join_map_[d];
-        M_DM_sum += join_result_map_[d];
+    for (int d = 0; d < join_result_pos_.size(); d++) {
+        Mx_DM_sum += cross_join_map_[cross_join_pos_[d]];
+        M_DM_sum += join_result_map_[join_result_pos_[d]];
     }
     double res = (M_sum * 1.0 / Mx_sum) * (Mx_DM_sum * 1.0 / M_DM_sum);
     return res;
 }
 
 auto TupleProductivityProfiler::get_requirement_recall() -> double {
-//    std::lock_guard<std::mutex> lock(latch_);
-
     if (cross_join_map_.empty()) {
         return userRecall;
     }
 
-    int max_D = (--cross_join_map_.end())->first;
+    int max_D = 0;
+
+    for (int i = 0; i < join_result_pos_.size(); i++) {
+        max_D = std::max(max_D, cross_join_map_[join_result_pos_[i]]);
+    }
+
     int N_true_L = 0;
-    for (int d = 0; d <= max_D; d++) {
-        N_true_L += join_result_map_[d];
+    for (int d = 0; d < join_result_pos_.size(); d++) {
+        N_true_L += join_result_map_[join_result_pos_[d]];
     }
 
     int N_true_P_L = 0;
-    for (int d = max_D * (1 - (P - L) / L); d <= max_D; d++) {
-        N_true_P_L += join_result_map_[d];
+    for (int d = max_D * (1 - (P - L) / L); d < join_result_pos_.size(); d++) {
+        N_true_P_L += join_result_map_[join_result_pos_[d]];
     }
 
     int N_prod_P_L = 0;
-    for (int d = max_D * (1 - (P - L) / L); d <= max_D; d++) {
-        N_prod_P_L += join_result_map_[d];
+    for (int d = max_D * (1 - (P - L) / L); d < join_result_pos_.size(); d++) {
+        N_prod_P_L += join_result_map_[join_result_pos_[d]];
     }
 
     if (N_true_L == 0) {
@@ -76,4 +90,10 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
     //requirement_recall大于等于这个值
     double requirement_recall = (userRecall * (N_true_P_L + N_true_L) - N_prod_P_L) * 1.0 / N_true_L;
     return std::max(requirement_recall, (double) 1);
+}
+
+TupleProductivityProfiler::TupleProductivityProfiler() {
+    join_record_map_.resize(3);
+    cross_join_map_.resize(maxDelay);
+    join_result_map_.resize(maxDelay);
 }

@@ -18,11 +18,11 @@ namespace MSMJ {
     class TupleProductivityProfiler {
     public:
 
-        TupleProductivityProfiler() = default;
+        TupleProductivityProfiler();
 
         ~TupleProductivityProfiler() = default;
 
-        auto get_join_record_map() -> phmap::parallel_flat_hash_map<int, int>;
+        auto get_join_record_map() -> std::vector<int>;
 
         auto add_join_record(int stream_id, int count) -> void;
 
@@ -36,17 +36,16 @@ namespace MSMJ {
 
     private:
 
-        //互斥锁
-        std::mutex latch_;
-
         //到达join operator的元组数量记录
-        phmap::parallel_flat_hash_map<int, int> join_record_map_{};
+        std::vector<int> join_record_map_{};
 
         //the join operator records both the number of cross-join result size,
-        phmap::btree_map<int, int> cross_join_map_{};
+        std::vector<int> cross_join_map_{0};
+        std::vector<int> cross_join_pos_{};
 
         //the number of join results, using map for sorting
-        phmap::btree_map<int, int> join_result_map_{};
+        std::vector<int> join_result_map_{0};
+        std::vector<int> join_result_pos_{};
 
     };
 

@@ -22,17 +22,14 @@ namespace MSMJ {
         ~Synchronizer() = default;
 
         //同步过程
-        auto synchronize_stream(Tuple tuple) -> void;
+        auto synchronize_stream(Tuple *tuple) -> void;
 
         auto get_output() -> std::queue<Tuple>;
 
     private:
 
-        //互斥锁
-        std::mutex latch_;
-
         //SyncBuf缓冲区映射
-        phmap::parallel_flat_hash_map<int, phmap::btree_set<Tuple, TupleComparator>> sync_buffer_map_{};
+        std::vector<phmap::btree_set<Tuple, TupleComparator>> sync_buffer_map_{};
 
         //同步输出区
         std::queue<Tuple> output_{};

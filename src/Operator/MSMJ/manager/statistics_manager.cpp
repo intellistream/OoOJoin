@@ -12,7 +12,15 @@
 
 using namespace MSMJ;
 
-StatisticsManager::StatisticsManager(TupleProductivityProfiler *profiler) : productivity_profiler_(profiler) {}
+StatisticsManager::StatisticsManager(TupleProductivityProfiler *profiler) : productivity_profiler_(profiler) {
+    record_map_.resize(3);
+    ksync_map_.resize(3);
+    R_stat_map_.resize(3);
+    T_map_.resize(3);
+    K_map_.resize(3);
+    histogram_map_.resize(3);
+    histogram_pos_.resize(3);
+}
 
 
 auto StatisticsManager::add_record(int stream_id, Tuple tuple) -> void {
@@ -30,7 +38,7 @@ auto StatisticsManager::get_maxD(int stream_id) -> int {
 //    std::lock_guard<std::mutex> lock(latch_);
     int max_D = 0;
 
-    if (record_map_.find(stream_id) == record_map_.end()) {
+    if (record_map_[stream_id].empty()) {
         return max_D;
     }
 
@@ -49,7 +57,7 @@ auto StatisticsManager::get_R_stat(int stream_id) -> int {
 
     //当前Rstat大小
     int R_stat = 2;
-    if (R_stat_map_.find(stream_id) != R_stat_map_.end()) {
+    if (R_stat_map_[stream_id] != 0) {
         R_stat = R_stat_map_[stream_id];
     }
 
@@ -94,16 +102,17 @@ auto StatisticsManager::get_R_stat(int stream_id) -> int {
 
 //获取Ksync的值，Ksync = iT - ki - min{iT - ki| i∈[1,latch_]}
 auto StatisticsManager::get_ksync(int stream_id) -> int {
-    if (T_map_.find(stream_id) == T_map_.end()
-        || K_map_.find(stream_id) == K_map_.end()
+    if (T_map_[stream_id] == 0
+        || K_map_[stream_id] == 0
         || record_map_.empty()) {
         return 0;
     }
 
     int min_iT_ki = T_map_[stream_id] - K_map_[stream_id];
 
-    for (auto it: record_map_) {
-        min_iT_ki = std::min(min_iT_ki, T_map_[it.first] - K_map_[it.first]);
+    for (int i = 0; i < record_map_.size(); i++) {
+        if (record_map_[i].empty())continue;
+        min_iT_ki = std::min(min_iT_ki, T_map_[i] - K_map_[i]);
     }
     return T_map_[stream_id] - K_map_[stream_id] - min_iT_ki;
 }
@@ -138,9 +147,9 @@ auto StatisticsManager::get_future_ksync(int stream_id) -> int {
     int min_ksync = INT32_MAX;
 
     //找到j != i的所有avg_ksync的最小值
-    for (auto it: ksync_map_) {
-
-        min_ksync = std::min(min_ksync, get_avg_ksync(it.first));
+    for (int i = 0; i < ksync_map_.size(); i++) {
+        if (ksync_map_[i].empty())continue;
+        min_ksync = std::min(min_ksync, get_avg_ksync(i));
     }
 
     if (min_ksync == INT32_MAX) {
@@ -154,7 +163,7 @@ auto StatisticsManager::get_future_ksync(int stream_id) -> int {
 auto StatisticsManager::fD(int d, int stream_id) -> double {
     int R_stat = get_R_stat(stream_id);
 
-    if (record_map_.find(stream_id) == record_map_.end()) {
+    if (record_map_[stream_id].empty()) {
         return -1;
     }
 
@@ -171,7 +180,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
     }
 
     //用直方图模拟
-    if (histogram_map_.find(stream_id) == histogram_map_.end()) {
+    if (histogram_map_[stream_id].empty()) {
         histogram_map_[stream_id].resize(maxDelay);
     }
 
@@ -182,6 +191,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
             histogram_map_[stream_id][it.first] = (histogram_map_[stream_id][it.first] + it.second * 1.0 / R_stat) / 2;
         } else {
             histogram_map_[stream_id][it.first] = it.second * 1.0 / R_stat;
+            histogram_pos_[stream_id].push_back(it.first);
         }
         sum_p += histogram_map_[stream_id][it.first];
     }
@@ -190,9 +200,9 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
     if (histogram_map_[stream_id][d] != 0) {
         //前面可能更新过了直方图，返回前做一次归一化
         if (sum_p != 0) {
-            for (auto &it: histogram_map_[stream_id]) {
-                if (it != 0) {
-                    it /= sum_p;
+            for (int i = 0; i < histogram_pos_.size(); i++) {
+                if (histogram_map_[stream_id][histogram_pos_[stream_id][i]] != 0) {
+                    histogram_map_[stream_id][histogram_pos_[stream_id][i]] /= sum_p;
                 }
             }
         }
@@ -245,6 +255,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
     if (left == right) {
         histogram_map_[stream_id][left] /= 2;
         histogram_map_[stream_id][d] = histogram_map_[stream_id][left];
+        histogram_pos_[stream_id].push_back(histogram_map_[stream_id][left]);
         return histogram_map_[stream_id][d];
     }
 
@@ -257,12 +268,13 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
 
     //更新直方图
     histogram_map_[stream_id][d] = p_d;
+    histogram_pos_[stream_id].push_back(p_d);
 
     //归一化
     sum_p += p_d;
-    for (auto &it: histogram_map_[stream_id]) {
-        if (it != 0) {
-            it /= sum_p;
+    for (int i = 0; i < histogram_pos_.size(); i++) {
+        if (histogram_map_[stream_id][histogram_pos_[stream_id][i]] != 0) {
+            histogram_map_[stream_id][histogram_pos_[stream_id][i]] /= sum_p;
         }
     }
 

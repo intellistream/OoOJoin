@@ -64,7 +64,7 @@ auto KSlack::disorder_handling() -> void {
             //满足上述公式，加入输出区
 
             //加入同步器
-            synchronizer_->synchronize_stream(tuple);
+            synchronizer_->synchronize_stream(&tuple);
 
 
             buffer_.erase(buffer_.begin());
@@ -79,11 +79,9 @@ auto KSlack::disorder_handling() -> void {
 
     //将buffer区剩下的元素加入output
     while (!buffer_.empty()) {
-
-
+        Tuple syn_tuple = *buffer_.begin();
         //加入同步器
-        synchronizer_->synchronize_stream(*buffer_.begin());
-
+        synchronizer_->synchronize_stream(&syn_tuple);
 
         buffer_.erase(buffer_.begin());
     }

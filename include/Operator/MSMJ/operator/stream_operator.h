@@ -23,7 +23,7 @@ namespace MSMJ {
 
         ~StreamOperator() = default;
 
-        auto mswj_execution(Tuple tuple) -> void;
+        auto mswj_execution(Tuple *tuple) -> void;
 
         auto inline get_result() -> std::queue<std::vector<Tuple>> {
             return result_;
@@ -40,14 +40,12 @@ namespace MSMJ {
         };
 
         int joinResultCount_{};
-        //互斥锁
-        std::mutex latch_;
 
         //连接时的T
         int T_op_{};
 
         //window map
-        phmap::parallel_flat_hash_map<int, std::list<Tuple>> window_map_{};
+        std::vector<std::list<Tuple>> window_map_{};
 
         //结果元组
         std::queue<std::vector<Tuple>> result_{};

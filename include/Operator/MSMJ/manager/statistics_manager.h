@@ -56,22 +56,23 @@ namespace MSMJ {
         std::mutex latch_;
 
         //Rstat窗口大小
-        phmap::parallel_flat_hash_map<int, int> R_stat_map_{};
+        std::vector<int> R_stat_map_{0};
 
         //历史流Si输入记录的映射
-        phmap::parallel_flat_hash_map<int, std::vector<Tuple>> record_map_{};
+        std::vector<std::vector<Tuple>> record_map_{};
 
         //历史流Si的T记录
-        phmap::parallel_flat_hash_map<int, int> T_map_{};
+        std::vector<int> T_map_{0};
 
         //历史流的K记录
-        phmap::parallel_flat_hash_map<int, int> K_map_{};
+        std::vector<int> K_map_{0};
 
         //保存所有的K_sync，方便抽取样本预测未来的ksync
-        phmap::parallel_flat_hash_map<int, std::vector<int>> ksync_map_{};
+        std::vector<std::vector<int>> ksync_map_{};
 
         //直方图映射
-        phmap::parallel_flat_hash_map<int, std::vector<double>> histogram_map_{};
+        std::vector<std::vector<double>> histogram_map_{};
+        std::vector<std::vector<int>> histogram_pos_{};
 
         //元组生产力
         TupleProductivityProfiler *productivity_profiler_;
