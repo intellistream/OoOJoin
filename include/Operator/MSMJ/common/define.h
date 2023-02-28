@@ -13,40 +13,10 @@
 
 namespace MSMJ {
 //系统参数定义
-//搜索粒度
-    constexpr int g{1};
-
-//自适应时间间隔
-    constexpr int L{3};
-
-//最大延迟
-    constexpr int maxDelay = INT16_MAX;
-
-//用户期待的recall率
-    constexpr double userRecall{0.4};
-
-//用户设定的时间P
-    constexpr int P{4};
-
-//basic window size
-    constexpr int b{1};
-
-//用于估计R的可信度值，范围(0,1)
-    constexpr double confidenceValue{0.5};
 
     class Stream;
 
     struct Tuple;
-
-    extern phmap::parallel_flat_hash_map<int, int> stream_map;
-
-    extern std::mutex global_lock;
-
-//获得离散随机变量Di(粗粒度延迟)的值
-    auto get_D(int delay) -> int;
-
-//输出用
-    auto print(std::queue<Tuple> q) -> void;
 
     typedef uint64_t keyType;    /*!< Type of the join key, default uint64_t */
     typedef uint64_t valueType;  /*!< Type of the payload, default uint64_t */

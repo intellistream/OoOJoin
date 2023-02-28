@@ -10,6 +10,7 @@
 #include <map>
 #include <mutex>
 #include "parallel-hashmap/parallel_hashmap/phmap.h"
+#include "Utils/ConfigMap.hpp"
 #include <parallel-hashmap/parallel_hashmap/btree.h>
 
 namespace MSMJ {
@@ -18,7 +19,7 @@ namespace MSMJ {
     class TupleProductivityProfiler {
     public:
 
-        TupleProductivityProfiler();
+        TupleProductivityProfiler(INTELLI::ConfigMapPtr config);
 
         ~TupleProductivityProfiler() = default;
 
@@ -34,7 +35,11 @@ namespace MSMJ {
 
         auto get_requirement_recall() -> double;
 
+        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+
     private:
+
+        INTELLI::ConfigMapPtr cfg = nullptr;
 
         //到达join operator的元组数量记录
         std::vector<int> join_record_map_{};

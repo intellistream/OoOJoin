@@ -86,7 +86,7 @@ bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
         StreamPtr stream = std::make_shared<MSMJ::Stream>(1, 10, sTupleList);
         KSlackPtr kslackS = std::make_shared<MSMJ::KSlack>(stream.get(), bufferSizeManager.get(),
                                                            statisticsManager.get(), synchronizer.get());
-//        kslackS->setConfig(config);
+        kslackS->setConfig(config);
 
         pthread_t t1 = 1;
         pthread_create(&t1, nullptr, &task, kslackS.get());
@@ -109,7 +109,7 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 
         KSlackPtr kslackR = std::make_shared<MSMJ::KSlack>(stream.get(), bufferSizeManager.get(),
                                                            statisticsManager.get(), synchronizer.get());
-//        kslackS->setConfig(config);
+        kslackR->setConfig(config);
 
         pthread_t t2 = 2;
         pthread_create(&t2, NULL, &task, kslackR.get());
@@ -129,19 +129,7 @@ size_t OoOJoin::MSMJOperator::getResult() {
 }
 
 void OoOJoin::MSMJOperator::init(ConfigMapPtr config) {
-    config->edit("a", "s");
-
-    tupleProductivityProfiler = std::make_shared<MSMJ::TupleProductivityProfiler>();
-    statisticsManager = std::make_shared<MSMJ::StatisticsManager>(tupleProductivityProfiler.get());
-    bufferSizeManager = std::make_shared<MSMJ::BufferSizeManager>(statisticsManager.get(),
-                                                                  tupleProductivityProfiler.get());
-    streamOperator = std::make_shared<MSMJ::StreamOperator>(tupleProductivityProfiler.get());
-    synchronizer = std::make_shared<MSMJ::Synchronizer>(2, streamOperator.get());
-
-//    tupleProductivityProfiler->setConfig(config);
-//    statisticsManager->setConfig(config);
-//    bufferSizeManager->setConfig(config);
-//    synchronizer->setConfig(config);
+    config->getU64("init");
 }
 
 

@@ -4,19 +4,18 @@
 
 #include <iostream>
 #include <future>
+#include <utility>
 #include "Operator/MSMJ/synchronizer/synchronizer.h"
 #include "Operator/MSMJ/operator/stream_operator.h"
 
 using namespace MSMJ;
 
-Synchronizer::Synchronizer(int stream_count, StreamOperator *stream_operator) : stream_count_(stream_count),
-                                                                                stream_operator_(stream_operator) {
-    sync_buffer_map_.resize(3);
-}
-
-
-auto Synchronizer::get_output() -> std::queue<Tuple> {
-    return watch_output_;
+Synchronizer::Synchronizer(int stream_count, StreamOperator *stream_operator, INTELLI::ConfigMapPtr config)
+        : cfg(std::move(config)),
+          stream_count_(stream_count),
+          stream_operator_(stream_operator) {
+    int streamCount = cfg->getU64("StreamCount");
+    sync_buffer_map_.resize(streamCount + 1);
 }
 
 
@@ -24,9 +23,7 @@ auto Synchronizer::get_output() -> std::queue<Tuple> {
 auto Synchronizer::synchronize_stream(Tuple *syn_tuple) -> void {
     Tuple tuple = *syn_tuple;
     int stream_id = tuple.streamId;
-    if (stream_id != 1 && stream_id != 2) {
-        std::cout << "err" << std::endl;
-    }
+
     if (tuple.ts > T_sync_) {
         if (sync_buffer_map_[stream_id].empty()) {
             //下一步要插入tuple了
@@ -65,5 +62,9 @@ auto Synchronizer::synchronize_stream(Tuple *syn_tuple) -> void {
     }
 
 
+}
+
+auto Synchronizer::setConfig(INTELLI::ConfigMapPtr config) -> void {
+    cfg = std::move(config);
 }
 

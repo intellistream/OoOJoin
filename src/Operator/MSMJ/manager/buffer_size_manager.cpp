@@ -20,7 +20,7 @@ BufferSizeManager::BufferSizeManager(StatisticsManager *statistics_manager, Tupl
  */
 auto BufferSizeManager::k_search(int stream_id) -> int {
     int max_DH = statistics_manager_->get_maxD(stream_id);
-
+    int g = cfg->getU64("g");
     if (max_DH == 0) {
         return 1;
     }
@@ -33,11 +33,11 @@ auto BufferSizeManager::k_search(int stream_id) -> int {
 }
 
 auto BufferSizeManager::y(int K) -> double {
-//    std::lock_guard<std::mutex> lock(latch_);
+    int b = cfg->getU64("b");
     //SEL比值
     double sel_radio = productivity_profiler_->get_select_ratio(K);
 
-    int m = stream_map.size();
+    int m = cfg->getU64("StreamCount");
 
     //分子
     int numerator = 0;
@@ -47,7 +47,8 @@ auto BufferSizeManager::y(int K) -> double {
             if (j == i) {
                 continue;
             }
-            int wj = stream_map[j];
+            std::string key = "Stream_" + std::to_string(j);
+            int wj = cfg->getU64(key);
             int nj = wj / b;
             int sum = 0;
             for (int l = 1; l <= nj; l++) {
@@ -66,7 +67,8 @@ auto BufferSizeManager::y(int K) -> double {
             if (j == i) {
                 continue;
             }
-            res *= stream_map[j];
+            std::string key = "Stream_" + std::to_string(j);
+            res *= cfg->getU64(key);;
         }
         denominator += res;
     }
@@ -76,6 +78,10 @@ auto BufferSizeManager::y(int K) -> double {
     }
 
     return static_cast<int>(sel_radio * numerator / denominator);
+}
+
+auto BufferSizeManager::setConfig(INTELLI::ConfigMapPtr config) -> void {
+    cfg = std::move(config);
 }
 
 

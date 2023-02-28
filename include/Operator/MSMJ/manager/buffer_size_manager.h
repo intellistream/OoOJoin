@@ -21,13 +21,14 @@ namespace MSMJ {
         //自适应K值算法
         auto k_search(int stream_id) -> int;
 
+        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+
     private:
 
         //论文中的函数γ(L,T)
         auto y(int K) -> double;
 
-        //互斥锁
-        std::mutex latch_;
+        INTELLI::ConfigMapPtr cfg = nullptr;
 
         //数据统计器
         StatisticsManager *statistics_manager_;

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <utility>
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 #include "parallel-hashmap/parallel_hashmap/phmap.h"
 #include "Operator/MSMJ/common/define.h"
@@ -59,6 +60,9 @@ auto TupleProductivityProfiler::get_select_ratio(int K) -> double {
 }
 
 auto TupleProductivityProfiler::get_requirement_recall() -> double {
+    double userRecall = cfg->getDouble("userRecall");
+    int L = cfg->getU64("L");
+    int P = cfg->getU64("P");
     if (cross_join_map_.empty()) {
         return userRecall;
     }
@@ -92,8 +96,15 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
     return std::max(requirement_recall, (double) 1);
 }
 
-TupleProductivityProfiler::TupleProductivityProfiler() {
-    join_record_map_.resize(3);
+TupleProductivityProfiler::TupleProductivityProfiler(INTELLI::ConfigMapPtr config) :
+        cfg(std::move(config)) {
+    int maxDelay = cfg->getU64("maxDelay");
+    int streamCount = cfg->getU64("StreamCount");
+    join_record_map_.resize(streamCount + 1);
     cross_join_map_.resize(maxDelay);
     join_result_map_.resize(maxDelay);
+}
+
+auto TupleProductivityProfiler::setConfig(INTELLI::ConfigMapPtr config) -> void {
+    cfg = std::move(config);
 }

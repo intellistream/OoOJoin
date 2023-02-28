@@ -201,8 +201,10 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
     cfg->edit("b", (uint64_t) 1);
     cfg->edit("confidenceValue", 0.5);
     cfg->edit("P", (uint64_t) 4);
-    cfg->edit("maxDelay", (uint64_t) 100);
+    cfg->edit("maxDelay", (uint64_t) INT16_MAX);
     cfg->edit("StreamCount", (uint64_t) 2);
+    cfg->edit("Stream_1", (uint64_t) 0);
+    cfg->edit("Stream_2", (uint64_t) 0);
 
 //    OperatorTablePtr opTable = newOperatorTable();
 //
@@ -212,13 +214,14 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
 //
 //    msmj->init(cfg);
 
-    auto tupleProductivityProfiler = std::make_shared<MSMJ::TupleProductivityProfiler>();
-    auto statisticsManager = std::make_shared<MSMJ::StatisticsManager>(tupleProductivityProfiler.get());
+    auto tupleProductivityProfiler = std::make_shared<MSMJ::TupleProductivityProfiler>(cfg);
+    auto statisticsManager = std::make_shared<MSMJ::StatisticsManager>(tupleProductivityProfiler.get(), cfg);
     auto bufferSizeManager = std::make_shared<MSMJ::BufferSizeManager>(statisticsManager.get(),
                                                                        tupleProductivityProfiler.get());
-    auto streamOperator = std::make_shared<MSMJ::StreamOperator>(tupleProductivityProfiler.get());
-    auto synchronizer = std::make_shared<MSMJ::Synchronizer>(2, streamOperator.get());
+    auto streamOperator = std::make_shared<MSMJ::StreamOperator>(tupleProductivityProfiler.get(), cfg);
+    auto synchronizer = std::make_shared<MSMJ::Synchronizer>(2, streamOperator.get(), cfg);
 
+    bufferSizeManager->setConfig(cfg);
 
     MSMJOperatorPtr msmj = std::make_shared<MSMJOperator>(bufferSizeManager, tupleProductivityProfiler,
                                                           synchronizer,

@@ -12,13 +12,14 @@
 #include <parallel-hashmap/parallel_hashmap/phmap.h>
 #include "Operator/MSMJ/common/define.h"
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
+#include "Utils/ConfigMap.hpp"
 
 namespace MSMJ {
 
     class StatisticsManager {
     public:
 
-        explicit StatisticsManager(TupleProductivityProfiler *profiler);
+        explicit StatisticsManager(TupleProductivityProfiler *profiler, INTELLI::ConfigMapPtr config);
 
         ~StatisticsManager() = default;
 
@@ -35,6 +36,13 @@ namespace MSMJ {
 
         auto add_record(int stream_id, int T, int K) -> void;
 
+        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+
+        //获得离散随机变量Di的值,如果delay(ei) ∈(kg,(k+1)g]，则Di=k+1
+        auto inline get_D(int delay) -> int {
+            int g = cfg->getU64("g");
+            return delay % g == 0 ? delay / g : delay / g + 1;
+        }
 
     private:
         //获得Ksync
@@ -52,8 +60,8 @@ namespace MSMJ {
         //离散随机变量Di的概率分布函数fDi
         auto fD(int d, int stream_id) -> double;
 
-        //互斥锁
-        std::mutex latch_;
+        INTELLI::ConfigMapPtr cfg = nullptr;
+
 
         //Rstat窗口大小
         std::vector<int> R_stat_map_{0};

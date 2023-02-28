@@ -19,7 +19,7 @@ namespace MSMJ {
     class StreamOperator {
     public:
 
-        explicit StreamOperator(TupleProductivityProfiler *profiler);
+        explicit StreamOperator(TupleProductivityProfiler *profiler, INTELLI::ConfigMapPtr config);
 
         ~StreamOperator() = default;
 
@@ -33,11 +33,16 @@ namespace MSMJ {
             return joinResultCount_;
         }
 
+        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+
+
     private:
 
         static auto inline can_join_(Tuple t1, Tuple t2) -> bool {
             return t1.key == t2.key;
         };
+
+        INTELLI::ConfigMapPtr cfg = nullptr;
 
         int joinResultCount_{};
 

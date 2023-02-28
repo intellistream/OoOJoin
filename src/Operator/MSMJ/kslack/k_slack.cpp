@@ -39,6 +39,7 @@ auto KSlack::disorder_handling() -> void {
         //更新local time
         current_time_ = std::max(current_time_, tuple.ts);
 
+        int L = cfg->getU64("L");
         //每L个时间单位调整K值
         if (current_time_ != 0 && current_time_ % L == 0) {
             buffer_size_ = buffer_size_manager_->k_search(stream_id_);
@@ -87,6 +88,10 @@ auto KSlack::disorder_handling() -> void {
     }
 
 
+}
+
+auto KSlack::setConfig(INTELLI::ConfigMapPtr config) -> void {
+    cfg = std::move(config);
 }
 
 

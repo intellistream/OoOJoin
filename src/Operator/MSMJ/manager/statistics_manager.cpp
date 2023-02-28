@@ -6,20 +6,23 @@
 #include <list>
 #include <complex>
 #include <iostream>
+#include <utility>
 #include "Operator/MSMJ/manager/statistics_manager.h"
 #include "Operator/MSMJ/common/define.h"
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 
 using namespace MSMJ;
 
-StatisticsManager::StatisticsManager(TupleProductivityProfiler *profiler) : productivity_profiler_(profiler) {
-    record_map_.resize(3);
-    ksync_map_.resize(3);
-    R_stat_map_.resize(3);
-    T_map_.resize(3);
-    K_map_.resize(3);
-    histogram_map_.resize(3);
-    histogram_pos_.resize(3);
+StatisticsManager::StatisticsManager(TupleProductivityProfiler *profiler, INTELLI::ConfigMapPtr config)
+        : cfg(std::move(config)), productivity_profiler_(profiler) {
+    int streamCount = cfg->getU64("StreamCount");
+    record_map_.resize(streamCount + 1);
+    ksync_map_.resize(streamCount + 1);
+    R_stat_map_.resize(streamCount + 1);
+    T_map_.resize(streamCount + 1);
+    K_map_.resize(streamCount + 1);
+    histogram_map_.resize(streamCount + 1);
+    histogram_pos_.resize(streamCount + 1);
 }
 
 
@@ -50,6 +53,7 @@ auto StatisticsManager::get_maxD(int stream_id) -> int {
 
 
 auto StatisticsManager::get_R_stat(int stream_id) -> int {
+    double confidenceValue = cfg->getDouble("confidenceValue");
     std::vector<Tuple> record = record_map_[stream_id];
     if (record.empty()) {
         return 1;
@@ -161,6 +165,7 @@ auto StatisticsManager::get_future_ksync(int stream_id) -> int {
 
 //概率分布函数fD
 auto StatisticsManager::fD(int d, int stream_id) -> double {
+    int maxDelay = cfg->getU64("maxDelay");
     int R_stat = get_R_stat(stream_id);
 
     if (record_map_[stream_id].empty()) {
@@ -283,6 +288,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
 
 auto StatisticsManager::fDk(int d, int stream_id, int K) -> double {
     int k_sync = get_future_ksync(stream_id);
+    int g = cfg->getU64("g");
     double res = 0;
 
     if (d == 0) {
@@ -297,7 +303,10 @@ auto StatisticsManager::fDk(int d, int stream_id, int K) -> double {
 }
 
 auto StatisticsManager::wil(int l, int stream_id, int K) -> int {
-    int wi = stream_map[stream_id];
+    int b = cfg->getU64("b");
+    int g = cfg->getU64("g");
+    std::string key = "Stream_" + std::to_string(stream_id);
+    int wi = cfg->getU64(key);;
     int ni = wi / b;
     int res = 0;
     double ri = productivity_profiler_->get_join_record_map()[stream_id] * 1.0 / wi;
@@ -315,6 +324,10 @@ auto StatisticsManager::wil(int l, int stream_id, int K) -> int {
     }
 
     return res;
+}
+
+auto StatisticsManager::setConfig(INTELLI::ConfigMapPtr config) -> void {
+    cfg = std::move(config);
 }
 
 

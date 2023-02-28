@@ -28,7 +28,11 @@ namespace MSMJ {
 
         auto get_id() -> int;
 
+        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+
     private:
+
+        INTELLI::ConfigMapPtr cfg = nullptr;
 
         //输出区
         std::queue<Tuple> output_;

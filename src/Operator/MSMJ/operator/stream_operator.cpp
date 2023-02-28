@@ -5,14 +5,16 @@
 
 
 #include <future>
+#include <utility>
 #include "Operator/MSMJ/operator/stream_operator.h"
 #include "Operator/MSMJ/common/define.h"
 
 using namespace MSMJ;
 
-StreamOperator::StreamOperator(TupleProductivityProfiler *profiler) :
-        productivity_profiler_(profiler) {
-    window_map_.resize(3);
+StreamOperator::StreamOperator(TupleProductivityProfiler *profiler, INTELLI::ConfigMapPtr config) :
+        cfg(std::move(config)), productivity_profiler_(profiler) {
+    int streamCount = cfg->getU64("StreamCount");
+    window_map_.resize(streamCount + 1);
 }
 
 
@@ -100,6 +102,10 @@ auto StreamOperator::mswj_execution(Tuple *join_tuple) -> void {
     } else if (tuple.ts > T_op_ - window_map_[stream_id].size()) {
         window_map_[stream_id].push_back(tuple);
     }
+}
+
+auto StreamOperator::setConfig(INTELLI::ConfigMapPtr config) -> void {
+    cfg = std::move(config);
 }
 
 

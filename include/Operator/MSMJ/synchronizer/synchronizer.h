@@ -13,20 +13,23 @@
 #include <mutex>
 #include "Operator/MSMJ/operator/stream_operator.h"
 #include "Operator/MSMJ/common/define.h"
+#include "Utils/ConfigMap.hpp"
 
 namespace MSMJ {
     class Synchronizer {
     public:
-        explicit Synchronizer(int stream_count, StreamOperator *stream_operator);
+        explicit Synchronizer(int stream_count, StreamOperator *stream_operator, INTELLI::ConfigMapPtr config);
 
         ~Synchronizer() = default;
 
         //同步过程
         auto synchronize_stream(Tuple *tuple) -> void;
 
-        auto get_output() -> std::queue<Tuple>;
+        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
 
     private:
+
+        INTELLI::ConfigMapPtr cfg = nullptr;
 
         //SyncBuf缓冲区映射
         std::vector<phmap::btree_set<Tuple, TupleComparator>> sync_buffer_map_{};
