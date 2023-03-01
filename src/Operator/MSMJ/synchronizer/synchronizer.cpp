@@ -14,7 +14,6 @@ Synchronizer::Synchronizer(int stream_count, StreamOperator *stream_operator, IN
         : cfg(std::move(config)),
           stream_count_(stream_count),
           stream_operator_(stream_operator) {
-    int streamCount = cfg->getU64("StreamCount");
     sync_buffer_map_.resize(streamCount + 1);
 }
 

@@ -20,24 +20,24 @@ BufferSizeManager::BufferSizeManager(StatisticsManager *statistics_manager, Tupl
  */
 auto BufferSizeManager::k_search(int stream_id) -> int {
     int max_DH = statistics_manager_->get_maxD(stream_id);
-    int g = cfg->getU64("g");
     if (max_DH == 0) {
         return 1;
     }
 
     int k = 0;
-    while (k <= max_DH && y(k) < productivity_profiler_->get_requirement_recall()) {
+
+    auto recall = productivity_profiler_->get_requirement_recall();
+    while (k <= max_DH && y(k) < recall) {
         k = k + g;
     }
     return k == 0 ? 1 : k;
 }
 
 auto BufferSizeManager::y(int K) -> double {
-    int b = cfg->getU64("b");
     //SEL比值
     double sel_radio = productivity_profiler_->get_select_ratio(K);
 
-    int m = cfg->getU64("StreamCount");
+    int m = streamCount;
 
     //分子
     int numerator = 0;
@@ -73,7 +73,7 @@ auto BufferSizeManager::y(int K) -> double {
         denominator += res;
     }
 
-    if (denominator == 0) {
+    if (denominator == 0 || numerator == 0 || sel_radio == 0) {
         return 1;
     }
 

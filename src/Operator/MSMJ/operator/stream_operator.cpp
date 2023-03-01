@@ -13,7 +13,6 @@ using namespace MSMJ;
 
 StreamOperator::StreamOperator(TupleProductivityProfiler *profiler, INTELLI::ConfigMapPtr config) :
         cfg(std::move(config)), productivity_profiler_(profiler) {
-    int streamCount = cfg->getU64("StreamCount");
     window_map_.resize(streamCount + 1);
 }
 

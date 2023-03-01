@@ -13,6 +13,28 @@
 
 namespace MSMJ {
 //系统参数定义
+//搜索粒度
+    extern int g;
+
+//自适应时间间隔
+    extern int L;
+
+//最大延迟
+    extern int maxDelay;
+
+//用户期待的recall率
+    extern double userRecall;
+
+//用户设定的时间P
+    extern int P;
+
+//basic window size
+    extern int b;
+
+//用于估计R的可信度值，范围(0,1)
+    extern double confidenceValue;
+
+    extern int streamCount;
 
     class Stream;
 

@@ -15,7 +15,6 @@ using namespace MSMJ;
 
 StatisticsManager::StatisticsManager(TupleProductivityProfiler *profiler, INTELLI::ConfigMapPtr config)
         : cfg(std::move(config)), productivity_profiler_(profiler) {
-    int streamCount = cfg->getU64("StreamCount");
     record_map_.resize(streamCount + 1);
     ksync_map_.resize(streamCount + 1);
     R_stat_map_.resize(streamCount + 1);
@@ -53,7 +52,6 @@ auto StatisticsManager::get_maxD(int stream_id) -> int {
 
 
 auto StatisticsManager::get_R_stat(int stream_id) -> int {
-    double confidenceValue = cfg->getDouble("confidenceValue");
     std::vector<Tuple> record = record_map_[stream_id];
     if (record.empty()) {
         return 1;
@@ -165,7 +163,6 @@ auto StatisticsManager::get_future_ksync(int stream_id) -> int {
 
 //概率分布函数fD
 auto StatisticsManager::fD(int d, int stream_id) -> double {
-    int maxDelay = cfg->getU64("maxDelay");
     int R_stat = get_R_stat(stream_id);
 
     if (record_map_[stream_id].empty()) {
@@ -198,14 +195,17 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
             histogram_map_[stream_id][it.first] = it.second * 1.0 / R_stat;
             histogram_pos_[stream_id].push_back(it.first);
         }
-        sum_p += histogram_map_[stream_id][it.first];
+    }
+
+    for (int i = 0; i < histogram_pos_[stream_id].size(); i++) {
+        sum_p += histogram_map_[stream_id][histogram_pos_[stream_id][i]];
     }
 
     //如果d已经有现成的概率，则直接返回即可
     if (histogram_map_[stream_id][d] != 0) {
         //前面可能更新过了直方图，返回前做一次归一化
         if (sum_p != 0) {
-            for (int i = 0; i < histogram_pos_.size(); i++) {
+            for (int i = 0; i < histogram_pos_[stream_id].size(); i++) {
                 if (histogram_map_[stream_id][histogram_pos_[stream_id][i]] != 0) {
                     histogram_map_[stream_id][histogram_pos_[stream_id][i]] /= sum_p;
                 }
@@ -216,9 +216,12 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
 
     //如果d没有记录，则做折线插值估计 , 双指针中心扩散法
     int hi_size = histogram_map_[stream_id].size();
+
+    bool flag = false;
     int left = d - 1, right = d + 1;
     while (left >= 0 && right < hi_size) {
         if (histogram_map_[stream_id][left] != 0 && histogram_map_[stream_id][right] != 0) {
+            flag = true;
             break;
         }
         if (histogram_map_[stream_id][left] == 0) {
@@ -229,30 +232,37 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
         }
     }
 
-    if (left < 0) {
-        left = d + 1, right = d + 2;
-        while (right < hi_size) {
-            if (histogram_map_[stream_id][left] != 0 && histogram_map_[stream_id][right] != 0) {
-                break;
+    if (!flag) {
+        if (left < 0) {
+            left = d + 1, right = d + 2;
+            while (right < hi_size) {
+                if (histogram_map_[stream_id][left] != 0 && histogram_map_[stream_id][right] != 0) {
+                    break;
+                }
+                if (histogram_map_[stream_id][left] == 0) {
+                    left++;
+                }
+                if (histogram_map_[stream_id][right] == 0) {
+                    right++;
+                }
             }
-            if (histogram_map_[stream_id][left] == 0) {
-                left++;
-            }
-            if (histogram_map_[stream_id][right] == 0) {
-                right++;
-            }
-        }
-    } else if (right >= hi_size) {
-        left = d - 2, right = d - 1;
-        while (left >= 0) {
-            if (histogram_map_[stream_id][left] != 0 && histogram_map_[stream_id][right] != 0) {
-                break;
-            }
-            if (histogram_map_[stream_id][left] == 0) {
-                left--;
-            }
-            if (histogram_map_[stream_id][right] == 0) {
-                right--;
+        } else if (right >= hi_size) {
+            if (d - 1 < 0 || d - 2 < 0) {
+                //说明此时左边已经没有元素了,直接break
+                right = left;
+            } else {
+                left = d - 2, right = d - 1;
+                while (left >= 0) {
+                    if (histogram_map_[stream_id][left] != 0 && histogram_map_[stream_id][right] != 0) {
+                        break;
+                    }
+                    if (histogram_map_[stream_id][left] == 0) {
+                        left--;
+                    }
+                    if (histogram_map_[stream_id][right] == 0) {
+                        right--;
+                    }
+                }
             }
         }
     }
@@ -260,7 +270,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
     if (left == right) {
         histogram_map_[stream_id][left] /= 2;
         histogram_map_[stream_id][d] = histogram_map_[stream_id][left];
-        histogram_pos_[stream_id].push_back(histogram_map_[stream_id][left]);
+        histogram_pos_[stream_id].push_back(d);
         return histogram_map_[stream_id][d];
     }
 
@@ -271,13 +281,16 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
     //直线方程： y =  (p_r - p_l)/(right - left)(x - left) + p_l
     double p_d = (p_r - p_l) / (right - left) * (d - left) + p_l;
 
+    if (p_d < 0) {
+        p_d = 1;
+    }
     //更新直方图
     histogram_map_[stream_id][d] = p_d;
-    histogram_pos_[stream_id].push_back(p_d);
+    histogram_pos_[stream_id].push_back(d);
 
     //归一化
     sum_p += p_d;
-    for (int i = 0; i < histogram_pos_.size(); i++) {
+    for (int i = 0; i < histogram_pos_[stream_id].size(); i++) {
         if (histogram_map_[stream_id][histogram_pos_[stream_id][i]] != 0) {
             histogram_map_[stream_id][histogram_pos_[stream_id][i]] /= sum_p;
         }
@@ -288,7 +301,6 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
 
 auto StatisticsManager::fDk(int d, int stream_id, int K) -> double {
     int k_sync = get_future_ksync(stream_id);
-    int g = cfg->getU64("g");
     double res = 0;
 
     if (d == 0) {
@@ -299,31 +311,29 @@ auto StatisticsManager::fDk(int d, int stream_id, int K) -> double {
         res = fD(d + (K + k_sync) / g, stream_id);
     }
 
-    return res;
+    return std::abs(res);
 }
 
 auto StatisticsManager::wil(int l, int stream_id, int K) -> int {
-    int b = cfg->getU64("b");
-    int g = cfg->getU64("g");
     std::string key = "Stream_" + std::to_string(stream_id);
     int wi = cfg->getU64(key);;
     int ni = wi / b;
-    int res = 0;
+    double res = 0;
     double ri = productivity_profiler_->get_join_record_map()[stream_id] * 1.0 / wi;
 
     if (l <= ni - 1 && l >= 1) {
         for (int i = 0; i <= (l - 1) * b / g; i++) {
             res += fDk(i, stream_id, K);
         }
-        res = static_cast<int>(ri * b * res);
+        res = std::ceil(ri * b * res);
     } else if (l == ni) {
         for (int i = 0; i <= (ni - 1) * b / g; i++) {
             res += fDk(i, stream_id, K);
         }
-        res = static_cast<int>(ri * (wi - (ni - 1) * b) * res);
+        res = std::ceil(ri * (wi - (ni - 1) * b) * res);
     }
 
-    return res;
+    return std::abs(res);
 }
 
 auto StatisticsManager::setConfig(INTELLI::ConfigMapPtr config) -> void {

@@ -36,7 +36,10 @@ auto TupleProductivityProfiler::get_select_ratio(int K) -> double {
     int M_sum = 0;
     int Mx_sum = 0;
 
+    int temp = 0;
     for (int d = 0; d < join_result_pos_.size(); d++) {
+        if (temp == cross_join_pos_[d])continue;
+        temp = cross_join_pos_[d];
         if (join_result_pos_[d] > K) {
             continue;
         }
@@ -51,7 +54,11 @@ auto TupleProductivityProfiler::get_select_ratio(int K) -> double {
 
     int M_DM_sum = 0;
     int Mx_DM_sum = 0;
+
+    temp = 0;
     for (int d = 0; d < join_result_pos_.size(); d++) {
+        if (temp == cross_join_pos_[d])continue;
+        temp = cross_join_pos_[d];
         Mx_DM_sum += cross_join_map_[cross_join_pos_[d]];
         M_DM_sum += join_result_map_[join_result_pos_[d]];
     }
@@ -60,9 +67,6 @@ auto TupleProductivityProfiler::get_select_ratio(int K) -> double {
 }
 
 auto TupleProductivityProfiler::get_requirement_recall() -> double {
-    double userRecall = cfg->getDouble("userRecall");
-    int L = cfg->getU64("L");
-    int P = cfg->getU64("P");
     if (cross_join_map_.empty()) {
         return userRecall;
     }
@@ -74,17 +78,28 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
     }
 
     int N_true_L = 0;
+    int temp = -1;
     for (int d = 0; d < join_result_pos_.size(); d++) {
+        if (temp == join_result_pos_[d])continue;
+        temp = join_result_pos_[d];
         N_true_L += join_result_map_[join_result_pos_[d]];
     }
 
     int N_true_P_L = 0;
-    for (int d = max_D * (1 - (P - L) / L); d < join_result_pos_.size(); d++) {
+    temp = -1;
+    for (int d = 0; d < join_result_pos_.size(); d++) {
+        if (temp == join_result_pos_[d])continue;
+        temp = join_result_pos_[d];
+        if (d < max_D * (1 - (P - L) / L))continue;
         N_true_P_L += join_result_map_[join_result_pos_[d]];
     }
 
     int N_prod_P_L = 0;
-    for (int d = max_D * (1 - (P - L) / L); d < join_result_pos_.size(); d++) {
+    temp = -1;
+    for (int d = 0; d < join_result_pos_.size(); d++) {
+        if (temp == join_result_pos_[d])continue;
+        temp = join_result_pos_[d];
+        if (d < max_D * (1 - (P - L) / L))continue;
         N_prod_P_L += join_result_map_[join_result_pos_[d]];
     }
 
@@ -93,13 +108,14 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
     }
     //requirement_recall大于等于这个值
     double requirement_recall = (userRecall * (N_true_P_L + N_true_L) - N_prod_P_L) * 1.0 / N_true_L;
+    if (requirement_recall > 1) {
+        std::cout << "h";
+    }
     return std::max(requirement_recall, (double) 1);
 }
 
 TupleProductivityProfiler::TupleProductivityProfiler(INTELLI::ConfigMapPtr config) :
         cfg(std::move(config)) {
-    int maxDelay = cfg->getU64("maxDelay");
-    int streamCount = cfg->getU64("StreamCount");
     join_record_map_.resize(streamCount + 1);
     cross_join_map_.resize(maxDelay);
     join_result_map_.resize(maxDelay);

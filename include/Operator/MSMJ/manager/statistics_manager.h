@@ -40,7 +40,6 @@ namespace MSMJ {
 
         //获得离散随机变量Di的值,如果delay(ei) ∈(kg,(k+1)g]，则Di=k+1
         auto inline get_D(int delay) -> int {
-            int g = cfg->getU64("g");
             return delay % g == 0 ? delay / g : delay / g + 1;
         }
 

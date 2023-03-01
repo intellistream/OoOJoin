@@ -195,12 +195,12 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
     cfg->edit("rLen", (uint64_t) tbOoO.sizeOfS());
     cfg->edit("sLen", (uint64_t) tbOoO.sizeOfR());
 
-    cfg->edit("g", (uint64_t) 1);
-    cfg->edit("L", (uint64_t) 3);
-    cfg->edit("userRecall", 0.4);
-    cfg->edit("b", (uint64_t) 1);
+    cfg->edit("g", (uint64_t) 10);
+    cfg->edit("L", (uint64_t) 1000);
+    cfg->edit("userRecall", 0.99999);
+    cfg->edit("b", (uint64_t) 10);
     cfg->edit("confidenceValue", 0.5);
-    cfg->edit("P", (uint64_t) 4);
+    cfg->edit("P", (uint64_t) 10);
     cfg->edit("maxDelay", (uint64_t) INT16_MAX);
     cfg->edit("StreamCount", (uint64_t) 2);
     cfg->edit("Stream_1", (uint64_t) 0);
