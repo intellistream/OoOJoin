@@ -8,7 +8,7 @@ bool OoOJoin::ArrivalWM::setConfig(INTELLI::ConfigMapPtr cfg) {
     if (!AbstractWaterMarker::setConfig(cfg)) {
         return false;
     }
-    watermarkTime = cfg->tryU64("watermarkTimeMs", 10, true) * 1000;
+     watermarkTime = cfg->tryU64("watermarkTimeMs", 10, true) * 1000;
     return true;
 }
 

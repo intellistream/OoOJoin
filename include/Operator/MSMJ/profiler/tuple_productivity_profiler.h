@@ -11,6 +11,7 @@
 #include <mutex>
 #include "parallel-hashmap/parallel_hashmap/phmap.h"
 #include "Utils/ConfigMap.hpp"
+#include "Operator/MSMJ/common/define.h"
 #include <parallel-hashmap/parallel_hashmap/btree.h>
 
 namespace MSMJ {
@@ -36,6 +37,11 @@ namespace MSMJ {
         auto get_requirement_recall() -> double;
 
         auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+
+        //获得离散随机变量Di的值,如果delay(ei) ∈(kg,(k+1)g]，则Di=k+1
+        static auto inline get_D(int delay) -> int {
+            return delay % g == 0 ? delay / g : delay / g + 1;
+        }
 
     private:
 

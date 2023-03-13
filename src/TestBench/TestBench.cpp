@@ -15,16 +15,9 @@ using namespace OoOJoin;
 using namespace std;
 
 void OoOJoin::TestBench::OoOSort(std::vector<TrackTuplePtr> &arr) {
-    size_t i, j;
-    TrackTuplePtr temp;
-    size_t len = arr.size();
-    for (i = 0; i < len - 1; i++)
-        for (j = 0; j < len - 1 - i; j++)
-            if (arr[j]->arrivalTime > arr[j + 1]->arrivalTime) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
+    std::sort(arr.begin(), arr.end(), [](const TrackTuplePtr &t1, const TrackTuplePtr &t2) {
+        return t1->arrivalTime < t2->arrivalTime;
+    });
 }
 
 void OoOJoin::TestBench::forceInOrder(std::vector<TrackTuplePtr> &arr) {
@@ -36,17 +29,12 @@ void OoOJoin::TestBench::forceInOrder(std::vector<TrackTuplePtr> &arr) {
 }
 
 void OoOJoin::TestBench::inOrderSort(std::vector<TrackTuplePtr> &arr) {
-    size_t i, j;
-    TrackTuplePtr temp;
     size_t len = arr.size();
-    for (i = 0; i < len - 1; i++) {
+    std::sort(arr.begin(), arr.end(), [](const TrackTuplePtr &t1, const TrackTuplePtr &t2) {
+        return t1->eventTime < t2->eventTime;
+    });
+    for (size_t i = 0; i < len - 1; i++) {
         arr[i]->arrivalTime = arr[i]->eventTime;
-        for (j = 0; j < len - 1 - i; j++)
-            if (arr[j]->eventTime > arr[j + 1]->eventTime) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
     }
 }
 
@@ -55,7 +43,7 @@ void OoOJoin::TestBench::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<T
     sTuple = std::move(_s);
 //    std::vector<TrackTuplePtr> r_;
 //    std::vector<TrackTuplePtr> s_;
-//    for(int i = 0;i < 50;i++){
+//    for(int i = 0;i < 100000;i++){
 //        r_.push_back(rTuple[i]);
 //        s_.push_back(sTuple[i]);
 //    }

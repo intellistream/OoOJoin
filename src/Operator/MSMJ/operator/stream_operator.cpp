@@ -54,7 +54,8 @@ auto StreamOperator::mswj_execution(Tuple *join_tuple) -> void {
         }
 
         //更新cross_join_map
-        productivity_profiler_->update_cross_join(delay, cross_join);
+
+        productivity_profiler_->update_cross_join(get_D(delay), cross_join);
 
         //连接
         std::unordered_map<int, std::vector<Tuple>> tempJoinMap;
@@ -95,7 +96,7 @@ auto StreamOperator::mswj_execution(Tuple *join_tuple) -> void {
         joinResultCount_ += res;
 
         //更新join result map
-        productivity_profiler_->update_join_res(delay, res);
+        productivity_profiler_->update_join_res(get_D(delay), res);
 
         window_map_[stream_id].push_back(tuple);
     } else if (tuple.ts > T_op_ - window_map_[stream_id].size()) {

@@ -68,7 +68,7 @@ auto TupleProductivityProfiler::get_select_ratio(int K) -> double {
 
 auto TupleProductivityProfiler::get_requirement_recall() -> double {
     if (cross_join_map_.empty()) {
-        return userRecall;
+        return 1;
     }
 
     int max_D = 0;
@@ -79,7 +79,7 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
 
     int N_true_L = 0;
     int temp = -1;
-    for (int d = 0; d < join_result_pos_.size(); d++) {
+    for (int d = 0; d < max_D; d++) {
         if (temp == join_result_pos_[d])continue;
         temp = join_result_pos_[d];
         N_true_L += join_result_map_[join_result_pos_[d]];
@@ -87,7 +87,7 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
 
     int N_true_P_L = 0;
     temp = -1;
-    for (int d = 0; d < join_result_pos_.size(); d++) {
+    for (int d = 0; d < max_D; d++) {
         if (temp == join_result_pos_[d])continue;
         temp = join_result_pos_[d];
         if (d < max_D * (1 - (P - L) / L))continue;
@@ -96,7 +96,7 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
 
     int N_prod_P_L = 0;
     temp = -1;
-    for (int d = 0; d < join_result_pos_.size(); d++) {
+    for (int d = 0; d < max_D; d++) {
         if (temp == join_result_pos_[d])continue;
         temp = join_result_pos_[d];
         if (d < max_D * (1 - (P - L) / L))continue;

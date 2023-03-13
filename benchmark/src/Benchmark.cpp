@@ -19,6 +19,10 @@
 using namespace std;
 using namespace OoOJoin;
 
+constexpr static int SECONDS = 1000000;
+constexpr static int MICRO_SECONDS = 1;
+constexpr static int MILLION_SECONDS = 1000;
+
 /**
  * @defgroup OJ_BENCHMARK The benchmark program
  * @brief run the test bench and allow adjusting
@@ -47,8 +51,8 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     size_t OoORu = 0, realRu = 0;
     //load global configs
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
-    string operatorTag = "IAWJ";
-    string loaderTag = "random";
+    string operatorTag = "";
+    string loaderTag = "";
 
     //uint64_t keyRange;
     windowLenMs = cfg->tryU64("windowLenMs", 10, true);
@@ -56,11 +60,13 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     //watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10,true);
     maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
 
+    windowLenMs = 1000;
+    maxArrivalSkewMs = 50000;
     INTELLI_INFO("window len= " + to_string(windowLenMs) + "ms ");
     // eventRateKTps = tryU64(cfg, "eventRateKTps", 10);
     //keyRange = tryU64(cfg, "keyRange", 10);
     operatorTag = cfg->tryString("operator", "IAWJ");
-    loaderTag = cfg->tryString("dataLoader", "random");
+    loaderTag = cfg->tryString("dataLoader", "file");
     AbstractOperatorPtr iawj = opTable->findOperator(operatorTag);
 
     INTELLI_INFO("Try use " + operatorTag + " operator");
@@ -69,9 +75,14 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
         iawj = newIAWJOperator();
         INTELLI_INFO("No " + operatorTag + " operator, will use IAWJ instead");
     }
+
     cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
     //cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
     cfg->edit("timeStep", (uint64_t) timeStepUs);
+
+    //Dataset files
+    cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/1000ms_1tLowDelayData.csv");
+    cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/1000ms_1tLowDelayData.csv");
 
     TestBench tb, tbOoO;
     //set data
@@ -79,6 +90,12 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
 
     cfg->edit("rLen", (uint64_t) tbOoO.sizeOfS());
     cfg->edit("sLen", (uint64_t) tbOoO.sizeOfR());
+    cfg->edit("watermarkTimeMs", (uint64_t) (windowLenMs + maxArrivalSkewMs));
+    cfg->edit("latenessMs", (uint64_t) 0);
+    cfg->edit("earlierEmitMs", (uint64_t) 0);
+
+
+
     //set operator as iawj
     tbOoO.setOperator(iawj, cfg);
 
@@ -109,9 +126,6 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     /**
      * disable all possible OoO related settings, as we will test the expected in-order results
      */
-    cfg->edit("watermarkTimeMs", (uint64_t) (windowLenMs + maxArrivalSkewMs));
-    cfg->edit("latenessMs", (uint64_t) 0);
-    cfg->edit("earlierEmitMs", (uint64_t) 0);
     tb.setDataLoader(loaderTag, cfg);
     tb.setOperator(iawj, cfg);
 
@@ -164,7 +178,7 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
     //load global configs
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
     string operatorTag = "MSMJ";
-    string loaderTag = "random";
+    string loaderTag = "file";
 
     //uint64_t keyRange;
     windowLenMs = cfg->tryU64("windowLenMs", 10, true);
@@ -183,10 +197,14 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
 
 
     cfg->edit("operator", "MSMJ");
-    cfg->edit("dataLoader", "random");
+    cfg->edit("dataLoader", "file");
     cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
     //cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
     cfg->edit("timeStep", (uint64_t) timeStepUs);
+
+    //Dataset files
+    cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/1000ms_1tLowDelayData.csv");
+    cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/1000ms_1tLowDelayData.csv");
 
     TestBench tb, tbOoO;
     //set data
@@ -195,12 +213,12 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
     cfg->edit("rLen", (uint64_t) tbOoO.sizeOfS());
     cfg->edit("sLen", (uint64_t) tbOoO.sizeOfR());
 
-    cfg->edit("g", (uint64_t) 10);
-    cfg->edit("L", (uint64_t) 1000);
-    cfg->edit("userRecall", 0.99999);
-    cfg->edit("b", (uint64_t) 10);
+    cfg->edit("g", (uint64_t) 10 * MILLION_SECONDS);
+    cfg->edit("L", (uint64_t) 50 * MILLION_SECONDS);
+    cfg->edit("userRecall", 0.99);
+    cfg->edit("b", (uint64_t) 10 * MILLION_SECONDS);
     cfg->edit("confidenceValue", 0.5);
-    cfg->edit("P", (uint64_t) 10);
+    cfg->edit("P", (uint64_t) 10 * SECONDS);
     cfg->edit("maxDelay", (uint64_t) INT16_MAX);
     cfg->edit("StreamCount", (uint64_t) 2);
     cfg->edit("Stream_1", (uint64_t) 0);
