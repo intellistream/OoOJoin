@@ -96,11 +96,9 @@ namespace MSMJ {
 
         string algoTag = "MSWJNestedLoopJoin";
 
-        ConfigMapPtr config = nullptr;
-
         uint64_t joinThreads = 1;
 
-        INTELLI::ConfigMapPtr cfg = nullptr;
+        INTELLI::ConfigMapPtr config;
 
         //元组生产力监视器
         TupleProductivityProfiler *productivity_profiler_;

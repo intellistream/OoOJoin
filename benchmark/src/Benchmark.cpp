@@ -186,8 +186,7 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
     timeStepUs = cfg->tryU64("timeStepUs", 40, true);
     //watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10,true);
     maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
-    windowLenMs = 1000;
-    maxArrivalSkewMs = 50000;
+
     INTELLI_INFO("window len= " + to_string(windowLenMs) + "ms ");
     // eventRateKTps = tryU64(cfg, "eventRateKTps", 10);
     //keyRange = tryU64(cfg, "keyRange", 10);

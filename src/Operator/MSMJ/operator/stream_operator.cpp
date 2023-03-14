@@ -15,7 +15,7 @@
 using namespace MSMJ;
 
 StreamOperator::StreamOperator(TupleProductivityProfiler *profiler, INTELLI::ConfigMapPtr config) :
-        cfg(std::move(config)), productivity_profiler_(profiler) {
+        config(std::move(config)), productivity_profiler_(profiler) {
 }
 
 
@@ -272,24 +272,18 @@ auto StreamOperator::mswj_execution(Tuple *join_tuple) -> bool {
 }
 
 
-auto StreamOperator::setConfig(INTELLI::ConfigMapPtr config) -> bool {
-    cfg = std::move(config);
-    // read the algorithm name
-    if (cfg->existString("algo")) {
-        algoTag = cfg->getString("algo");
+auto StreamOperator::setConfig(INTELLI::ConfigMapPtr cfg) -> bool {
+    if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
+        return false;
     }
-    // OP_INFO("selected join algorithm=" + algoTag);
-    if (cfg->existU64("threads")) {
-        joinThreads = cfg->getU64("threads");
-    }
-    std::string wmTag = cfg->tryString("wmTag", "arrival", true);
-    OoOJoin::WMTablePtr wmTable = newWMTable();
+    std::string wmTag = config->tryString("wmTag", "arrival", true);
+    WMTablePtr wmTable = newWMTable();
     wmGen = wmTable->findWM(wmTag);
     if (wmGen == nullptr) {
         INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
+        return false;
     }
     INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
-
     return true;
 }
 
