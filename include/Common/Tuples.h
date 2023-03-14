@@ -148,6 +148,7 @@ namespace OoOJoin {
     public:
         tsType processedTime = 0;
 
+        tsType delay = 0;
         bool isEnd = false;
 
         /**

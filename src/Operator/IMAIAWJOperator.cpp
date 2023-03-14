@@ -44,7 +44,8 @@ bool OoOJoin::IMAIAWJOperator::start() {
     timeBreakDown_prediction = 0;
     timeBreakDown_index = 0;
     timeBreakDown_join = 0;
-    timeBreakDown_all = 0;timeTrackingStartNoClaim(timeBreakDown_all);
+    timeBreakDown_all = 0;
+    timeTrackingStartNoClaim(timeBreakDown_all);
     return true;
 }
 

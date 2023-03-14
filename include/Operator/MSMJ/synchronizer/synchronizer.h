@@ -29,6 +29,8 @@ namespace MSMJ {
 
     private:
 
+        std::mutex mutex;
+
         INTELLI::ConfigMapPtr cfg = nullptr;
 
         //SyncBuf缓冲区映射

@@ -12,6 +12,8 @@
 #include <assert.h>
 #include <Utils/ConfigMap.hpp>
 #include <utility>
+#include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
+
 //#include <Utils/Logger.hpp>/
 using namespace INTELLI;
 #define ALGO_INFO INTELLI_INFO
@@ -39,8 +41,12 @@ namespace OoOJoin {
     protected:
         std::string nameTag;
         struct timeval timeBaseStruct{};
+
         //tsType timeStep;
     public:
+        //元组生产力监视器
+        MSMJ::TupleProductivityProfiler *productivity_profiler_;
+
         ConfigMapPtr config;
 
         AbstractJoinAlgo() {

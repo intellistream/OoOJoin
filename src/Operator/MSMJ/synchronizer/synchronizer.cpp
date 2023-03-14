@@ -47,9 +47,9 @@ auto Synchronizer::synchronize_stream(Tuple *syn_tuple) -> void {
                 //将所有等于Tsync的元组输出
                 while (it.begin()->ts == T_sync_) {
                     stream_operator_->mswj_execution(&(*it.begin()));
-
                     it.erase(it.begin());
                 }
+
                 if (it.empty()) {
                     own_stream_--;
                 }

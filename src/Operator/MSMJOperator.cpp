@@ -8,26 +8,11 @@ static void *task(void *p) {
 
 
 bool OoOJoin::MSMJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
-    if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
+    if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
         return false;
     }
-    // read the algorithm name
-    if (config->existString("algo")) {
-        algoTag = config->getString("algo");
-    }
-    // OP_INFO("selected join algorithm=" + algoTag);
-    if (config->existU64("threads")) {
-        joinThreads = config->getU64("threads");
-    }
-    std::string wmTag = config->tryString("wmTag", "arrival", true);
-    WMTablePtr wmTable = newWMTable();
-    wmGen = wmTable->findWM(wmTag);
-    if (wmGen == nullptr) {
-        INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
-        return false;
-    }
-    INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
-    // OP_INFO("selected join threads=" + to_string(joinThreads));
+    streamOperator->setConfig(cfg);
+
     return true;
 }
 
@@ -36,42 +21,14 @@ bool OoOJoin::MSMJOperator::start() {
      * @brief set watermark generator
      */
     //wmGen = newPeriodicalWM();
-    wmGen->setConfig(config);
-    wmGen->syncTimeStruct(timeBaseStruct);
-    /**
-     * @note:
-    */
-    wmGen->creatWindow(0, windowLen);
-    /**
-     * @brief set window
-     */
-    myWindow.setRange(0, windowLen);
-    myWindow.init(sLen, rLen, 1);
-    intermediateResult = 0;
-    lockedByWaterMark = false;
-    return true;
+    return streamOperator->start();
 }
 
-//Using this function to join
-void OoOJoin::MSMJOperator::conductComputation() {
-    JoinAlgoTable jt;
-    AbstractJoinAlgoPtr algo = jt.findAlgo(algoTag);
-    //NestedLoopJoin nj;
-    algo->setConfig(config);
-    algo->syncTimeStruct(timeBaseStruct);
-    // OP_INFO("Invoke algorithm=" + algo->getAlgoName());
-    intermediateResult = algo->join(myWindow.windowS, myWindow.windowR, joinThreads);
-}
 
 bool OoOJoin::MSMJOperator::stop() {
     /**
      */
-    if (lockedByWaterMark) {
-        WM_INFO("early terminate by watermark, already have results");
-    }
-    if (!lockedByWaterMark) {
-        WM_INFO("No watermark encountered, compute now");
-    }
+    streamOperator->stop();
     return true;
 }
 
@@ -124,12 +81,17 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     return true;
 }
 
+
 size_t OoOJoin::MSMJOperator::getResult() {
-    return streamOperator->getJoinResultCount();
+
+    return streamOperator->getResult();
+    // return confirmedResult;
 }
 
-void OoOJoin::MSMJOperator::init(ConfigMapPtr config) {
-    config->getU64("init");
+size_t OoOJoin::MSMJOperator::getAQPResult() {
+    return streamOperator->getAQPResult();
 }
+
+
 
 

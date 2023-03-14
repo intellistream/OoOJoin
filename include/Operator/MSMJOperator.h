@@ -7,6 +7,9 @@
 #include <utility>
 #include <WaterMarker/LatenessWM.h>
 #include "Operator/MSMJ/kslack/k_slack.h"
+#include <Operator/MeanAQPIAWJOperator.h>
+#include <WaterMarker/LatenessWM.h>
+#include <Common/StateOfKey.h>
 
 namespace OoOJoin {
     /**
@@ -40,22 +43,26 @@ namespace OoOJoin {
  * @note In current version, the computation will block feeding
  * @note operator tag = "MSWJ"
  */
-    class MSMJOperator : public AbstractOperator {
+    class MSMJOperator : public MeanAQPIAWJOperator  {
     protected:
-        Window myWindow;
-        size_t intermediateResult = 0;
-        string algoTag = "NestedLoopJoin";
-        uint64_t joinThreads = 1;
-        tsType lastTimeOfR = 0;
 
-        /**
-         * @brief if operator is locked by watermark, it will never accept new incoming
-         * @todo current implementation is putting rotten, fix later
-         */
-        atomic_bool lockedByWaterMark = false;
-        AbstractWaterMarkerPtr wmGen = nullptr;
+        class IMAStateOfKey : public MeanStateOfKey {
+        public:
+            // size_t arrivedTupleCnt = 0;
+            //  double arrivalSkew = 0, sigmaArrivalSkew = 0;
+            // TrackTuplePtr lastEventTuple = nullptr, lastArrivalTuple = nullptr;
+            // tsType  lastSeenTime=0;
+            //size_t lastEstimateAllTuples=0;
+            double lastUnarrivedTuples = 0;
 
-        void conductComputation();
+            // size_t lastAdded=0;
+            IMAStateOfKey() = default;
+
+            ~IMAStateOfKey() = default;
+        };
+
+        typedef std::shared_ptr<IMAStateOfKey> IMAStateOfKeyPtr;
+#define newIMAStateOfKey std::make_shared<IMAStateOfKey>
 
     private:
 //        phmap::parallel_flat_hash_map<int, Stream *> stream_map{};
@@ -63,11 +70,13 @@ namespace OoOJoin {
 //        StreamPtr streamS;
 //        StreamPtr streamR;
 
+        bool created = false;
+
         std::queue<MSMJ::Tuple> sTupleList{};
         std::queue<MSMJ::Tuple> rTupleList{};
 
         //save rTuple record
-        std::vector<TrackTuplePtr > rTupleRecord{};
+        std::vector<TrackTuplePtr> rTupleRecord{};
 
         //bufferSizeManager,  is used to update K(bufferSize)
         BufferSizeManagerPtr bufferSizeManager{};
@@ -100,8 +109,6 @@ namespace OoOJoin {
         }
 
         ~MSMJOperator() = default;
-
-        void init(ConfigMapPtr config);
 
         /**
          * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
@@ -144,6 +151,12 @@ namespace OoOJoin {
          * @return The result
          */
         size_t getResult() override;
+
+        /**
+         * @brief get the joined sum result under AQP
+         * @return The result
+         */
+        size_t getAQPResult() override;
 
     };
 
