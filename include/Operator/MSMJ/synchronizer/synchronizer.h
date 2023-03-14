@@ -27,6 +27,8 @@ namespace MSMJ {
 
         auto setConfig(INTELLI::ConfigMapPtr config) -> void;
 
+        //连接器
+        StreamOperator *stream_operator_;
     private:
 
         std::mutex mutex;
@@ -51,8 +53,7 @@ namespace MSMJ {
         //当前缓冲区拥有tuple的流的数量
         int own_stream_{};
 
-        //连接器
-        StreamOperator *stream_operator_;
+
     };
 
 }

@@ -242,9 +242,14 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
 
     bufferSizeManager->setConfig(cfg);
 
+    auto kSlackS = std::make_shared<MSMJ::KSlack>(1, bufferSizeManager.get(), statisticsManager.get(),
+                                                  synchronizer.get());
+    auto kSlackR = std::make_shared<MSMJ::KSlack>(2, bufferSizeManager.get(), statisticsManager.get(),
+                                                  synchronizer.get());
+
     MSMJOperatorPtr msmj = std::make_shared<MSMJOperator>(bufferSizeManager, tupleProductivityProfiler,
                                                           synchronizer,
-                                                          streamOperator, statisticsManager);
+                                                          streamOperator, statisticsManager, kSlackR, kSlackS);
     msmj->setConfig(cfg);
     if (msmj == nullptr) {
         msmj = newMSMJOperator();

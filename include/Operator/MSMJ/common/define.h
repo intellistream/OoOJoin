@@ -56,13 +56,20 @@ namespace MSMJ {
         //延迟
         int delay{};
 
+        //标识符
+        bool end;
+
         Tuple(int streamId, int id, int ts) : streamId(streamId), id(id), ts(ts) {}
+
+        bool operator<(const Tuple &other) const {
+            return ts > other.ts;
+        }
     };
 
     struct TupleComparator {
         //按到达时间来排序
         bool operator()(Tuple e1, Tuple e2) const {
-            return e1.ts == e2.ts ? e1.id < e2.id : e1.ts < e2.ts;
+            return e1.ts < e2.ts;
         }
     };
 

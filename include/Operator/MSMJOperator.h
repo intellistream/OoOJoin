@@ -43,7 +43,7 @@ namespace OoOJoin {
  * @note In current version, the computation will block feeding
  * @note operator tag = "MSWJ"
  */
-    class MSMJOperator : public MeanAQPIAWJOperator  {
+    class MSMJOperator : public MeanAQPIAWJOperator {
     protected:
 
         class IMAStateOfKey : public MeanStateOfKey {
@@ -78,6 +78,9 @@ namespace OoOJoin {
         //save rTuple record
         std::vector<TrackTuplePtr> rTupleRecord{};
 
+        KSlackPtr kSlackS{};
+        KSlackPtr kSlackR{};
+
         //bufferSizeManager,  is used to update K(bufferSize)
         BufferSizeManagerPtr bufferSizeManager{};
 
@@ -99,14 +102,24 @@ namespace OoOJoin {
 
         MSMJOperator(BufferSizeManagerPtr bufferSizeManager, TupleProductivityProfilerPtr tupleProductivityProfiler,
                      SynchronizerPtr synchronizer, StreamOperatorPtr streamOperator,
-                     StatisticsManagerPtr statisticsManager) : bufferSizeManager(std::move(bufferSizeManager)),
-                                                               statisticsManager(std::move(statisticsManager)),
-                                                               tupleProductivityProfiler(
-                                                                       std::move(tupleProductivityProfiler)),
-                                                               synchronizer(std::move(synchronizer)),
-                                                               streamOperator(std::move(streamOperator)) {
-
-        }
+                     StatisticsManagerPtr statisticsManager, KSlackPtr kSlackR, KSlackPtr kSlackS) : bufferSizeManager(
+                std::move(bufferSizeManager)),
+                                                                                                     statisticsManager(
+                                                                                                             std::move(
+                                                                                                                     statisticsManager)),
+                                                                                                     tupleProductivityProfiler(
+                                                                                                             std::move(
+                                                                                                                     tupleProductivityProfiler)),
+                                                                                                     synchronizer(
+                                                                                                             std::move(
+                                                                                                                     synchronizer)),
+                                                                                                     streamOperator(
+                                                                                                             std::move(
+                                                                                                                     streamOperator)),
+                                                                                                     kSlackR(std::move(
+                                                                                                             kSlackR)),
+                                                                                                     kSlackS(std::move(
+                                                                                                             kSlackS)) {}
 
         ~MSMJOperator() = default;
 

@@ -19,17 +19,19 @@ namespace MSMJ {
     class KSlack {
     public:
 
-        explicit KSlack(Stream *stream, BufferSizeManager *buffer_size_manager, StatisticsManager *statistics_manager,
+        explicit KSlack(int streamId, BufferSizeManager *buffer_size_manager, StatisticsManager *statistics_manager,
                         Synchronizer *synchronizer);
 
         ~KSlack();
 
-        auto disorder_handling() -> void;
+        auto disorder_handling(Tuple &tuple) -> void;
 
         auto get_id() -> int;
 
         auto setConfig(INTELLI::ConfigMapPtr config) -> void;
 
+        //同步器
+        Synchronizer *synchronizer_;
     private:
 
         INTELLI::ConfigMapPtr cfg = nullptr;
@@ -49,11 +51,9 @@ namespace MSMJ {
         //流id
         int stream_id_{};
 
-        //元组
-        std::queue<Tuple> tuple_list_{};
-
         //缓冲区(用随时保持有序的红黑树)
-        std::set<Tuple, TupleComparator> buffer_;
+//        std::set<Tuple, TupleComparator> buffer_;
+        std::priority_queue<Tuple> buffer_;
 
         //缓冲区管理器
         BufferSizeManager *buffer_size_manager_;
@@ -61,8 +61,6 @@ namespace MSMJ {
         //数据统计管理器
         StatisticsManager *statistics_manager_;
 
-        //同步器
-        Synchronizer *synchronizer_;
     };
 }
 
