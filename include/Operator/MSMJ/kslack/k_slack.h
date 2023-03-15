@@ -38,7 +38,7 @@ namespace MSMJ {
 
 
         //缓冲区大小,相当于论文的K值,注：缓冲区大小并不是指集合的大小，而是以时间为单位来度量的
-        size_t buffer_size_{1};
+        size_t buffer_size_{0};
 
         //当前时间(相当于论文的T值)
         int current_time_{};
