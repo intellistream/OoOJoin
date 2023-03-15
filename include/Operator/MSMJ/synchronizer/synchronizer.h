@@ -31,12 +31,12 @@ namespace MSMJ {
         StreamOperator *stream_operator_;
     private:
 
-        std::mutex mutex;
+        std::shared_mutex mu;
 
         INTELLI::ConfigMapPtr cfg = nullptr;
 
         //SyncBuf缓冲区映射
-        std::vector<phmap::btree_set<Tuple, TupleComparator>> sync_buffer_map_{};
+        std::vector<std::priority_queue<Tuple>> sync_buffer_map_{};
 
         //同步输出区
         std::queue<Tuple> output_{};

@@ -28,30 +28,41 @@ auto Synchronizer::synchronize_stream(Tuple *syn_tuple) -> void {
             //下一步要插入tuple了
             own_stream_++;
         }
-        sync_buffer_map_[stream_id].insert(tuple);
+        sync_buffer_map_[stream_id].push(tuple);
+
         //检测是否缓冲区拥有所有流的tuple
         while (own_stream_ == stream_count_) {
             //找到Tsync
             T_sync_ = INT32_MAX;
-            for (auto it: sync_buffer_map_) {
-                if (it.empty()) {
-                    continue;
+
+            //这里要读
+            {
+                std::shared_lock<std::shared_mutex> lock(mu);
+                for (auto it: sync_buffer_map_) {
+                    if (it.empty()) {
+                        continue;
+                    }
+                    T_sync_ = std::min(T_sync_, it.top().ts);
                 }
-                T_sync_ = std::min(T_sync_, it.begin()->ts);
             }
 
-            for (auto &it: sync_buffer_map_) {
-                if (it.empty()) {
-                    continue;
-                }
-                //将所有等于Tsync的元组输出
-                while (it.begin()->ts == T_sync_) {
-                    stream_operator_->mswj_execution(&(*it.begin()));
-                    it.erase(it.begin());
-                }
+            //这里要写
+            {
+                std::unique_lock<std::shared_mutex> lock(mu);
+                for (auto &it: sync_buffer_map_) {
+                    if (it.empty()) {
+                        continue;
+                    }
+                    //将所有等于Tsync的元组输出
+                    while (!it.empty() && it.top().ts == T_sync_) {
+                        Tuple item = it.top();
+                        stream_operator_->mswj_execution(&item);
+                        it.pop();
+                    }
 
-                if (it.empty()) {
-                    own_stream_--;
+                    if (it.empty()) {
+                        own_stream_--;
+                    }
                 }
             }
         }
