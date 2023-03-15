@@ -18,12 +18,12 @@ auto TupleProductivityProfiler::add_join_record(int stream_id, int count) -> voi
     join_record_map_[stream_id] = count;
 }
 
-auto TupleProductivityProfiler::update_cross_join(int Di, int res) -> void {
+auto TupleProductivityProfiler::update_cross_join(int Di, size_t res) -> void {
     cross_join_map_[Di] = res;
     cross_join_pos_.push_back(Di);
 }
 
-auto TupleProductivityProfiler::update_join_res(int Di, int res) -> void {
+auto TupleProductivityProfiler::update_join_res(int Di, size_t res) -> void {
     join_result_map_[Di] += res;
     join_result_pos_.push_back(Di);
 }
@@ -71,7 +71,7 @@ auto TupleProductivityProfiler::get_requirement_recall() -> double {
         return 1;
     }
 
-    int max_D = 0;
+    size_t max_D = 0;
 
     for (int i = 0; i < join_result_pos_.size(); i++) {
         max_D = std::max(max_D, cross_join_map_[join_result_pos_[i]]);

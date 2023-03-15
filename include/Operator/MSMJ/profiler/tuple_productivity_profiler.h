@@ -28,9 +28,9 @@ namespace MSMJ {
 
         auto add_join_record(int stream_id, int count) -> void;
 
-        auto update_cross_join(int Di, int res) -> void;
+        auto update_cross_join(int Di, size_t res) -> void;
 
-        auto update_join_res(int Di, int res) -> void;
+        auto update_join_res(int Di, size_t res) -> void;
 
         auto get_select_ratio(int K) -> double;
 
@@ -51,11 +51,11 @@ namespace MSMJ {
         std::vector<int> join_record_map_{};
 
         //the join operator records both the number of cross-join result size,
-        std::vector<int> cross_join_map_{0};
+        std::vector<size_t> cross_join_map_{0};
         std::vector<int> cross_join_pos_{};
 
         //the number of join results, using map for sorting
-        std::vector<int> join_result_map_{0};
+        std::vector<size_t> join_result_map_{0};
         std::vector<int> join_result_pos_{};
 
     };

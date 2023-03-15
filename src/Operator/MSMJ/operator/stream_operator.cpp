@@ -234,6 +234,8 @@ auto StreamOperator::mswj_execution(const TrackTuplePtr &trackTuple) -> bool {
         }
     } else {
         if (rIsInWindow) {
+            productivity_profiler_->update_cross_join(get_D(trackTuple->delay),
+                                                      myWindow.windowR.size() * myWindow.windowS.size());
 
             IMAStateOfKeyPtr sk;timeTrackingStart(tt_index);
             AbstractStateOfKeyPtr skrf = stateOfKeyTableR->getByKey(trackTuple->key);
@@ -262,6 +264,13 @@ auto StreamOperator::mswj_execution(const TrackTuplePtr &trackTuple) -> bool {
                         (py->lastUnarrivedTuples + py->arrivedTupleCnt);
                 intermediateResult +=
                         (futureTuplesR + sk->arrivedTupleCnt) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+
+                productivity_profiler_->update_join_res(get_D(trackTuple->delay),
+                                                        (futureTuplesR + sk->arrivedTupleCnt) *
+                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+                                                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt));
+
             }
             timeBreakDown_join += timeTrackingEnd(tt_join);
             sk->lastUnarrivedTuples = futureTuplesR;

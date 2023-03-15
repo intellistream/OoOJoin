@@ -51,8 +51,11 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     size_t OoORu = 0, realRu = 0;
     //load global configs
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
-    string operatorTag = "";
-    string loaderTag = "";
+    string operatorTag = "IMA";
+    string loaderTag = "file";
+
+    cfg->edit("operator", "IMA");
+    cfg->edit("dataLoader", "file");
 
     //uint64_t keyRange;
     windowLenMs = cfg->tryU64("windowLenMs", 10, true);
@@ -60,22 +63,59 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     //watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10,true);
     maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
 
-    windowLenMs = 1000;
-    maxArrivalSkewMs = 50000;
+//    windowLenMs = 1000;
+//    maxArrivalSkewMs = 50000;
     INTELLI_INFO("window len= " + to_string(windowLenMs) + "ms ");
     // eventRateKTps = tryU64(cfg, "eventRateKTps", 10);
     //keyRange = tryU64(cfg, "keyRange", 10);
-    operatorTag = cfg->tryString("operator", "IAWJ");
-    loaderTag = cfg->tryString("dataLoader", "file");
-    IAWJOperatorPtr iawj = newIAWJOperator();
-//    AbstractOperatorPtr iawj = opTable->findOperator(operatorTag);
+//    IAWJOperatorPtr iawj = newIAWJOperator();
+
+    AbstractOperatorPtr iawj;
+    MSMJOperatorPtr msmj;
+    if (operatorTag == "IAWJ") {
+        iawj = newIAWJOperator();
+    } else if (operatorTag == "MSMJ") {
+        cfg->edit("g", (uint64_t) 10 * MILLION_SECONDS);
+        cfg->edit("L", (uint64_t) 50 * MILLION_SECONDS);
+        cfg->edit("userRecall", 0.4);
+        cfg->edit("b", (uint64_t) 10 * MILLION_SECONDS);
+        cfg->edit("confidenceValue", 0.5);
+        cfg->edit("P", (uint64_t) 10 * SECONDS);
+        cfg->edit("maxDelay", (uint64_t) INT16_MAX);
+        cfg->edit("StreamCount", (uint64_t) 2);
+        cfg->edit("Stream_1", (uint64_t) 0);
+        cfg->edit("Stream_2", (uint64_t) 0);
+
+        auto tupleProductivityProfiler = std::make_shared<MSMJ::TupleProductivityProfiler>(cfg);
+        auto statisticsManager = std::make_shared<MSMJ::StatisticsManager>(tupleProductivityProfiler.get(), cfg);
+        auto bufferSizeManager = std::make_shared<MSMJ::BufferSizeManager>(statisticsManager.get(),
+                                                                           tupleProductivityProfiler.get());
+        auto streamOperator = std::make_shared<MSMJ::StreamOperator>(tupleProductivityProfiler.get(), cfg);
+        auto synchronizer = std::make_shared<MSMJ::Synchronizer>(2, streamOperator.get(), cfg);
+
+        bufferSizeManager->setConfig(cfg);
+
+        auto kSlackS = std::make_shared<MSMJ::KSlack>(1, bufferSizeManager.get(), statisticsManager.get(),
+                                                      synchronizer.get());
+        auto kSlackR = std::make_shared<MSMJ::KSlack>(2, bufferSizeManager.get(), statisticsManager.get(),
+                                                      synchronizer.get());
+
+        msmj = std::make_shared<MSMJOperator>(bufferSizeManager, tupleProductivityProfiler,
+                                              synchronizer,
+                                              streamOperator, statisticsManager, kSlackR, kSlackS);
+
+        msmj->setConfig(cfg);
+    } else {
+        iawj = opTable->findOperator(operatorTag);
+    }
 
     INTELLI_INFO("Try use " + operatorTag + " operator");
 
-    if (iawj == nullptr) {
+    if (operatorTag != "MSMJ" && iawj == nullptr) {
         iawj = newIAWJOperator();
         INTELLI_INFO("No " + operatorTag + " operator, will use IAWJ instead");
     }
+
 
     cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
     //cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
@@ -96,9 +136,12 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     cfg->edit("earlierEmitMs", (uint64_t) 0);
 
 
-
-    //set operator as iawj
-    tbOoO.setOperator(iawj, cfg);
+    if (operatorTag == "MSMJ") {
+        //set operator as iawj
+        tbOoO.setOperator(msmj, cfg);
+    } else {
+        tbOoO.setOperator(iawj, cfg);
+    }
 
     INTELLI_INFO("/****run OoO test of  tuples***/");
 
@@ -127,8 +170,16 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     /**
      * disable all possible OoO related settings, as we will test the expected in-order results
      */
+
+
     tb.setDataLoader(loaderTag, cfg);
-    tb.setOperator(iawj, cfg);
+
+    if (operatorTag == "MSMJ") {
+        //set operator as iawj
+        tb.setOperator(msmj, cfg);
+    } else {
+        tb.setOperator(iawj, cfg);
+    }
 
     realRu = tb.inOrderTest(true);
 
@@ -332,8 +383,8 @@ int main(int argc, char **argv) {
 
     pef.setPerfList();
     pef.start();
-//    runTestBenchAdj(configName, outPrefix);
-    runTestBenchOfMSMJ(configName, outPrefix);
+    runTestBenchAdj(configName, outPrefix);
+//    runTestBenchOfMSMJ(configName, outPrefix);
     pef.end();
     pef.resultToConfigMap()->toFile("perfRu.csv");
 }
