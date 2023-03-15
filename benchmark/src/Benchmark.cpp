@@ -51,10 +51,10 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     size_t OoORu = 0, realRu = 0;
     //load global configs
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
-    string operatorTag = "MSMJ";
+    string operatorTag = "IAWJ";
     string loaderTag = "file";
 
-    cfg->edit("operator", "MSMJ");
+    cfg->edit("operator", "IAWJ");
     cfg->edit("dataLoader", "file");
 
     //uint64_t keyRange;
@@ -63,8 +63,8 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     //watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10,true);
     maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
 
-//    windowLenMs = 1000;
-//    maxArrivalSkewMs = 50000;
+    windowLenMs = 2000;
+    maxArrivalSkewMs = 50000;
     INTELLI_INFO("window len= " + to_string(windowLenMs) + "ms ");
     // eventRateKTps = tryU64(cfg, "eventRateKTps", 10);
     //keyRange = tryU64(cfg, "keyRange", 10);
@@ -122,8 +122,8 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     cfg->edit("timeStep", (uint64_t) timeStepUs);
 
     //Dataset files
-    cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/sb_1000ms_1tLowDelayData.csv");
-    cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/cj_1000ms_1tLowDelayData.csv");
+    cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/cj_1000ms_1tHighDelayData.csv");
+    cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/sb_1000ms_1tHighDelayData.csv");
 
     TestBench tb, tbOoO;
     //set data
@@ -131,7 +131,7 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
 
     cfg->edit("rLen", (uint64_t) tbOoO.sizeOfS());
     cfg->edit("sLen", (uint64_t) tbOoO.sizeOfR());
-    cfg->edit("watermarkTimeMs", (uint64_t) (windowLenMs + maxArrivalSkewMs));
+    cfg->edit("watermarkTimeMs", (uint64_t)(windowLenMs + maxArrivalSkewMs));
     cfg->edit("latenessMs", (uint64_t) 0);
     cfg->edit("earlierEmitMs", (uint64_t) 0);
 
@@ -184,7 +184,6 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     realRu = tb.inOrderTest(true);
 
     INTELLI_DEBUG("Expect " + to_string(realRu));
-
     double err = OoORu;
     err = (err - realRu) / realRu;
     generalStatistics.edit("Error", (double) err);
@@ -192,6 +191,7 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     INTELLI_DEBUG("OoO AQP joined " + to_string(tbOoO.AQPResult));
 
     err = tbOoO.AQPResult;
+    realRu = tb.AQPResult;
     err = (err - realRu) / realRu;
     generalStatistics.edit("AQPError", (double) err);
 
@@ -201,8 +201,6 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
 
     //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
-
-
 
 
 int main(int argc, char **argv) {

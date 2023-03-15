@@ -18,6 +18,18 @@ void OoOJoin::TestBench::OoOSort(std::vector<TrackTuplePtr> &arr) {
     std::sort(arr.begin(), arr.end(), [](const TrackTuplePtr &t1, const TrackTuplePtr &t2) {
         return t1->arrivalTime < t2->arrivalTime;
     });
+
+    ofstream outfile("/home/rjzhb/Project/log/data.txt");
+    if (outfile.is_open()) { // 如果文件成功打开
+        for (auto it: arr) {
+            outfile << it->key << "," << it->eventTime << "," << it->arrivalTime <<
+                    endl; // 将数组元素写入文件中
+        }
+        outfile.close(); // 关闭文件
+    } else {
+        cout << "无法创建文件 data.txt" << endl;
+    }
+
 }
 
 void OoOJoin::TestBench::forceInOrder(std::vector<TrackTuplePtr> &arr) {
@@ -33,7 +45,7 @@ void OoOJoin::TestBench::inOrderSort(std::vector<TrackTuplePtr> &arr) {
     std::sort(arr.begin(), arr.end(), [](const TrackTuplePtr &t1, const TrackTuplePtr &t2) {
         return t1->eventTime < t2->eventTime;
     });
-    for (size_t i = 0; i < len - 1; i++) {
+    for (size_t i = 0; i < len; i++) {
         arr[i]->arrivalTime = arr[i]->eventTime;
     }
 }
@@ -43,7 +55,7 @@ void OoOJoin::TestBench::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<T
     sTuple = std::move(_s);
 //    std::vector<TrackTuplePtr> r_;
 //    std::vector<TrackTuplePtr> s_;
-//    for(int i = 0;i < 30;i++){
+//    for(int i = 0;i < 1000;i++){
 //        r_.push_back(rTuple[i]);
 //        s_.push_back(sTuple[i]);
 //    }
@@ -93,6 +105,7 @@ size_t OoOJoin::TestBench::inOrderTest(bool additionalSort) {
         inOrderSort(sTuple);
     }
     inlineTest();
+    AQPResult = testOp->getAQPResult();
     return testOp->getResult();
 }
 
