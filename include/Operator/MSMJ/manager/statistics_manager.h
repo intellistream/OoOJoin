@@ -13,7 +13,9 @@
 #include "Operator/MSMJ/common/define.h"
 #include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
 #include "Utils/ConfigMap.hpp"
+#include "Common/Tuples.h"
 
+using namespace OoOJoin;
 namespace MSMJ {
 
     class StatisticsManager {
@@ -32,7 +34,7 @@ namespace MSMJ {
         //|wi^l|的估计
         auto wil(int l, int stream_id, int K) -> int;
 
-        auto add_record(int stream_id, Tuple tuple) -> void;
+        auto add_record(int stream_id, const TrackTuplePtr &tuple) -> void;
 
         auto add_record(int stream_id, int T, int K) -> void;
 
@@ -66,7 +68,7 @@ namespace MSMJ {
         std::vector<int> R_stat_map_{0};
 
         //历史流Si输入记录的映射
-        std::vector<std::vector<Tuple>> record_map_{};
+        std::vector<std::vector<TrackTuple>> record_map_{};
 
         //历史流Si的T记录
         std::vector<int> T_map_{0};

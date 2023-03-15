@@ -25,8 +25,8 @@ StatisticsManager::StatisticsManager(TupleProductivityProfiler *profiler, INTELL
 }
 
 
-auto StatisticsManager::add_record(int stream_id, Tuple tuple) -> void {
-    record_map_[stream_id].push_back(tuple);
+auto StatisticsManager::add_record(int stream_id, const TrackTuplePtr &tuple) -> void {
+    record_map_[stream_id].push_back(*tuple);
 }
 
 auto StatisticsManager::add_record(int stream_id, int T, int K) -> void {
@@ -45,14 +45,14 @@ auto StatisticsManager::get_maxD(int stream_id) -> int {
     }
 
     for (auto it: record_map_[stream_id]) {
-        max_D = std::max(max_D, it.delay);
+        max_D = std::max(max_D, (int) it.delay);
     }
     return max_D;
 }
 
 
 auto StatisticsManager::get_R_stat(int stream_id) -> int {
-    std::vector<Tuple> record = record_map_[stream_id];
+    std::vector<TrackTuple> record = record_map_[stream_id];
     if (record.empty()) {
         return 1;
     }
@@ -169,7 +169,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
         return -1;
     }
 
-    std::vector<Tuple> record = record_map_[stream_id];
+    std::vector<TrackTuple> record = record_map_[stream_id];
     if (record.empty()) {
         return 1;
     }

@@ -23,7 +23,7 @@ namespace MSMJ {
         ~Synchronizer() = default;
 
         //同步过程
-        auto synchronize_stream(Tuple *tuple) -> void;
+        auto synchronize_stream(const TrackTuplePtr &tuple) -> void;
 
         auto setConfig(INTELLI::ConfigMapPtr config) -> void;
 
@@ -36,13 +36,7 @@ namespace MSMJ {
         INTELLI::ConfigMapPtr cfg = nullptr;
 
         //SyncBuf缓冲区映射
-        std::vector<std::priority_queue<Tuple>> sync_buffer_map_{};
-
-        //同步输出区
-        std::queue<Tuple> output_{};
-
-        //观察区
-        std::queue<Tuple> watch_output_{};
+        std::vector<std::priority_queue<TrackTuplePtr>> sync_buffer_map_{};
 
         //Tsync
         int T_sync_{};
@@ -52,7 +46,6 @@ namespace MSMJ {
 
         //当前缓冲区拥有tuple的流的数量
         int own_stream_{};
-
 
     };
 

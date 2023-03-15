@@ -62,9 +62,9 @@ bool StreamOperator::stop() {
     }
     timeBreakDown_all = timeTrackingEnd(timeBreakDown_all);
     //lazyComputeOfAQP();
-    size_t rLen = myWindow.windowR.size();
-    NPJTuplePtr *tr = myWindow.windowR.data();
-    tsType timeNow = lastTimeOfR;
+    rLen = myWindow.windowR.size();
+    tr = myWindow.windowR.data();
+    timeNow = lastTimeOfR;
     for (size_t i = 0; i < rLen; i++) {
         if (tr[i]->arrivalTime < timeNow) { tr[i]->processedTime = timeNow; }
     }
@@ -159,17 +159,8 @@ bool StreamOperator::stop() {
 //}
 
 
-auto StreamOperator::mswj_execution(Tuple *join_tuple) -> bool {
-    Tuple tuple = *join_tuple;
-    int stream_id = tuple.streamId;
-
-    OoOJoin::TrackTuplePtr trackTuple = newTrackTuple(1);
-    trackTuple->eventTime = tuple.ts;
-    trackTuple->arrivalTime = tuple.arrivalTime;
-    trackTuple->key = tuple.key;
-    trackTuple->payload = tuple.payload;
-    trackTuple->processedTime = tuple.processedTime;
-    trackTuple->delay = tuple.delay;
+auto StreamOperator::mswj_execution(const TrackTuplePtr &trackTuple) -> bool {
+    int stream_id = trackTuple->streamId;
 
     bool shouldGenWM;
     if (lockedByWaterMark) {
@@ -190,8 +181,11 @@ auto StreamOperator::mswj_execution(Tuple *join_tuple) -> bool {
         //  return false;
     }
     // bool shouldGenWM;
-    if(stream_id == 1) {
+    if (stream_id == 1) {
         if (sIsInWindow) {
+            productivity_profiler_->update_cross_join(get_D(trackTuple->delay),
+                                                      myWindow.windowR.size() * myWindow.windowS.size());
+
             IMAStateOfKeyPtr sk;
             /**
              * @brief First get the index of hash table
@@ -217,6 +211,7 @@ auto StreamOperator::mswj_execution(Tuple *join_tuple) -> bool {
             //probe in R
             timeTrackingStart(tt_join);
             AbstractStateOfKeyPtr probrPtr = stateOfKeyTableR->getByKey(trackTuple->key);
+
             if (probrPtr != nullptr) {
                 IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
                 confirmedResult += py->arrivedTupleCnt;
@@ -225,13 +220,19 @@ auto StreamOperator::mswj_execution(Tuple *join_tuple) -> bool {
                         (py->lastUnarrivedTuples + py->arrivedTupleCnt);
                 intermediateResult +=
                         (futureTuplesS + sk->arrivedTupleCnt) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+                productivity_profiler_->update_join_res(get_D(trackTuple->delay),
+                                                        (futureTuplesS + sk->arrivedTupleCnt) *
+                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+                                                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt));
+
             }
             timeBreakDown_join += timeTrackingEnd(tt_join);
             //sk->lastEstimateAllTuples=futureTuplesS+sk->arrivedTupleCnt;
             sk->lastUnarrivedTuples = futureTuplesS;
             lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
         }
-    }else {
+    } else {
         if (rIsInWindow) {
 
             IMAStateOfKeyPtr sk;timeTrackingStart(tt_index);
@@ -290,7 +291,6 @@ auto StreamOperator::setConfig(INTELLI::ConfigMapPtr cfg) -> bool {
 size_t StreamOperator::getResult() {
 
     return confirmedResult;
-    // return confirmedResult;
 }
 
 size_t StreamOperator::getAQPResult() {

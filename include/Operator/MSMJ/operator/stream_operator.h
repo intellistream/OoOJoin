@@ -17,6 +17,7 @@
 #include <WaterMarker/LatenessWM.h>
 #include <Common/StateOfKey.h>
 #include <Operator/MeanAQPIAWJOperator.h>
+#include "JoinAlgos/NPJ/MultiThreadHashTable.h"
 
 using namespace OoOJoin;
 namespace MSMJ {
@@ -24,7 +25,9 @@ namespace MSMJ {
 
     class StreamOperator : public MeanAQPIAWJOperator {
     public:
-
+        size_t rLen{};
+        NPJTuplePtr *tr{};
+        tsType timeNow{};
 
         bool rIsInWindow = false;
 
@@ -34,11 +37,7 @@ namespace MSMJ {
 
         ~StreamOperator() = default;
 
-        auto mswj_execution(Tuple *tuple) -> bool;
-
-        auto inline getJoinResultCount() const -> int {
-            return intermediateResult;
-        }
+        auto mswj_execution(const TrackTuplePtr &tuple) -> bool;
 
         auto setConfig(INTELLI::ConfigMapPtr config) -> bool;
 
@@ -88,7 +87,9 @@ namespace MSMJ {
         };
 
 
+
         typedef std::shared_ptr<IMAStateOfKey> IMAStateOfKeyPtr;
+
 #define newIMAStateOfKey std::make_shared<IMAStateOfKey>
 
 
@@ -103,13 +104,6 @@ namespace MSMJ {
         //元组生产力监视器
         TupleProductivityProfiler *productivity_profiler_;
 
-
-
-        static auto inline can_join_(Tuple t1, Tuple t2) -> bool {
-            return t1.key == t2.key;
-        };
-
-        auto conductComputation() -> void;
     };
 
 }

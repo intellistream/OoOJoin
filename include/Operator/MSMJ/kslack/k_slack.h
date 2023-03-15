@@ -24,7 +24,7 @@ namespace MSMJ {
 
         ~KSlack();
 
-        auto disorder_handling(Tuple &tuple) -> void;
+        auto disorder_handling(const TrackTuplePtr& tuple) -> void;
 
         auto get_id() -> int;
 
@@ -36,11 +36,6 @@ namespace MSMJ {
 
         INTELLI::ConfigMapPtr cfg = nullptr;
 
-        //输出区
-        std::queue<Tuple> output_;
-
-        //观察区(用于最后的结果观察)
-        std::queue<Tuple> watch_output_;
 
         //缓冲区大小,相当于论文的K值,注：缓冲区大小并不是指集合的大小，而是以时间为单位来度量的
         size_t buffer_size_{1};
@@ -51,9 +46,8 @@ namespace MSMJ {
         //流id
         int stream_id_{};
 
-        //缓冲区(用随时保持有序的红黑树)
-//        std::set<Tuple, TupleComparator> buffer_;
-        std::priority_queue<Tuple> buffer_;
+        //缓冲区(用小根堆)
+        std::priority_queue<TrackTuplePtr> buffer_;
 
         //缓冲区管理器
         BufferSizeManager *buffer_size_manager_;

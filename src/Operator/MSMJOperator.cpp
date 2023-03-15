@@ -25,26 +25,25 @@ bool OoOJoin::MSMJOperator::stop() {
     /**
      */
     streamOperator->stop();
+
     return true;
 }
 
 bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
-    MSMJ::Tuple tuple(1, -1, ts->eventTime);
-    tuple.key = ts->key;
-    tuple.payload = ts->payload;
-    tuple.arrivalTime = ts->arrivalTime;
-    tuple.end = ts->isEnd;
-    kSlackS->disorder_handling(tuple);
+    struct timeval timeStart{};
+    gettimeofday(&timeStart, nullptr);
+    streamOperator->syncTimeStruct(timeStart);
+    ts->streamId = 1;
+    kSlackS->disorder_handling(ts);
     return true;
 }
 
 bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
-    MSMJ::Tuple tuple(2, -1, tr->eventTime);
-    tuple.key = tr->key;
-    tuple.payload = tr->payload;
-    tuple.arrivalTime = tr->arrivalTime;
-    tuple.end = tr->isEnd;
-    kSlackR->disorder_handling(tuple);
+    struct timeval timeStart{};
+    gettimeofday(&timeStart, nullptr);
+    streamOperator->syncTimeStruct(timeStart);
+    tr->streamId = 2;
+    kSlackR->disorder_handling(tr);
     return true;
 }
 
@@ -52,7 +51,6 @@ bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 size_t OoOJoin::MSMJOperator::getResult() {
 
     return streamOperator->getResult();
-    // return confirmedResult;
 }
 
 size_t OoOJoin::MSMJOperator::getAQPResult() {

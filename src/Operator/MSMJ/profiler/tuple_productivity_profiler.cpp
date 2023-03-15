@@ -24,7 +24,7 @@ auto TupleProductivityProfiler::update_cross_join(int Di, int res) -> void {
 }
 
 auto TupleProductivityProfiler::update_join_res(int Di, int res) -> void {
-    join_result_map_[Di] = res;
+    join_result_map_[Di] += res;
     join_result_pos_.push_back(Di);
 }
 

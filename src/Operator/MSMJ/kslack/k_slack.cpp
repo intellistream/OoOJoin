@@ -31,13 +31,13 @@ auto KSlack::get_id() -> int {
 }
 
 //K-Slack算法对无序流进行处理
-auto KSlack::disorder_handling(Tuple &tuple) -> void {
-    if (tuple.end) {
+auto KSlack::disorder_handling(const TrackTuplePtr &tuple) -> void {
+    if (tuple->isEnd) {
         //将buffer区剩下的元素加入output
         while (!buffer_.empty()) {
-            Tuple syn_tuple = buffer_.top();
+            auto syn_tuple = buffer_.top();
             //加入同步器
-            synchronizer_->synchronize_stream(&syn_tuple);
+            synchronizer_->synchronize_stream(syn_tuple);
 
             buffer_.pop();
         }
@@ -45,7 +45,7 @@ auto KSlack::disorder_handling(Tuple &tuple) -> void {
     }
 
     //update local time
-    current_time_ = std::max(current_time_, tuple.ts);
+    current_time_ = std::max(current_time_, (int) tuple->eventTime);
 
     //每L个时间单位调整K值
     if (current_time_ != 0 && current_time_ % L == 0) {
@@ -53,7 +53,7 @@ auto KSlack::disorder_handling(Tuple &tuple) -> void {
     }
 
     //计算出tuple的delay,T - ts, 方便统计管理器统计记录
-    tuple.delay = current_time_ - tuple.ts;
+    tuple->delay = current_time_ - tuple->eventTime;
 
     //将output_加入同步器
     //加入statistics_manager的历史记录统计表以及T值
@@ -63,17 +63,17 @@ auto KSlack::disorder_handling(Tuple &tuple) -> void {
     //先让缓冲区所有满足条件的tuple出队进入输出区
     while (!buffer_.empty()) {
 
-        Tuple tuple = buffer_.top();
+        auto tuple = buffer_.top();
 
         //对应论文的公式：ei. ts + Ki <= T
-        if (tuple.ts + buffer_size_ > current_time_) {
+        if (tuple->eventTime + buffer_size_ > current_time_) {
             break;
         }
 
         //满足上述公式，加入输出区
 
         //加入同步器
-        synchronizer_->synchronize_stream(&tuple);
+        synchronizer_->synchronize_stream(tuple);
 
 
         buffer_.pop();

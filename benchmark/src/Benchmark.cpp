@@ -216,7 +216,7 @@ void runTestBenchOfMSMJ(const string &configName = "config.csv", const string &o
 
     cfg->edit("g", (uint64_t) 10 * MILLION_SECONDS);
     cfg->edit("L", (uint64_t) 50 * MILLION_SECONDS);
-    cfg->edit("userRecall", 0.99);
+    cfg->edit("userRecall", 0.4);
     cfg->edit("b", (uint64_t) 10 * MILLION_SECONDS);
     cfg->edit("confidenceValue", 0.5);
     cfg->edit("P", (uint64_t) 10 * SECONDS);

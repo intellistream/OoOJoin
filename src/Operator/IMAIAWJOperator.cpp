@@ -94,7 +94,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
          */
         timeTrackingStart(tt_index);
         AbstractStateOfKeyPtr skrf = stateOfKeyTableS->getByKey(ts->key);
-        if (skrf == nullptr) // this key does'nt exist
+        if (skrf == nullptr) // this key doesn't exist
         {
             sk = newIMAStateOfKey();
             sk->key = ts->key;

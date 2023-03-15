@@ -19,11 +19,10 @@ Synchronizer::Synchronizer(int stream_count, StreamOperator *stream_operator, IN
 
 
 //从k-slack发送过来的流
-auto Synchronizer::synchronize_stream(Tuple *syn_tuple) -> void {
-    Tuple tuple = *syn_tuple;
-    int stream_id = tuple.streamId;
+auto Synchronizer::synchronize_stream(const TrackTuplePtr &tuple) -> void {
 
-    if (tuple.ts > T_sync_) {
+    int stream_id = tuple->streamId;
+    if (tuple->eventTime > T_sync_) {
         if (sync_buffer_map_[stream_id].empty()) {
             //下一步要插入tuple了
             own_stream_++;
@@ -42,7 +41,7 @@ auto Synchronizer::synchronize_stream(Tuple *syn_tuple) -> void {
                     if (it.empty()) {
                         continue;
                     }
-                    T_sync_ = std::min(T_sync_, it.top().ts);
+                    T_sync_ = std::min(T_sync_, (int) it.top()->eventTime);
                 }
             }
 
@@ -54,9 +53,9 @@ auto Synchronizer::synchronize_stream(Tuple *syn_tuple) -> void {
                         continue;
                     }
                     //将所有等于Tsync的元组输出
-                    while (!it.empty() && it.top().ts == T_sync_) {
-                        Tuple item = it.top();
-                        stream_operator_->mswj_execution(&item);
+                    while (!it.empty() && it.top()->eventTime == T_sync_) {
+                        auto item = it.top();
+                        stream_operator_->mswj_execution(item);
                         it.pop();
                     }
 
@@ -67,7 +66,7 @@ auto Synchronizer::synchronize_stream(Tuple *syn_tuple) -> void {
             }
         }
     } else {
-        stream_operator_->mswj_execution(syn_tuple);
+        stream_operator_->mswj_execution(tuple);
 
     }
 

@@ -98,6 +98,7 @@ namespace OoOJoin {
         bool rEnd{};
 
     public:
+
         MSMJOperator() = default;
 
         MSMJOperator(BufferSizeManagerPtr bufferSizeManager, TupleProductivityProfilerPtr tupleProductivityProfiler,

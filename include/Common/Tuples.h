@@ -149,6 +149,8 @@ namespace OoOJoin {
         tsType processedTime = 0;
 
         tsType delay = 0;
+
+        int streamId{};
         bool isEnd = false;
 
         /**
@@ -188,6 +190,10 @@ namespace OoOJoin {
         std::string toString();
 
         ~TrackTuple() = default;
+
+        bool operator<(const TrackTuple &other) const {
+            return eventTime > other.eventTime;
+        }
     };
 
 /**
