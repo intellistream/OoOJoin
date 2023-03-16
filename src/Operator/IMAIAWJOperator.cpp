@@ -120,7 +120,12 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
             intermediateResult += matchedFutureTuples / (py->arrivedTupleCnt + futureTuplesS);
         }
         timeBreakDown_join += timeTrackingEnd(tt_join);
-        //sk->lastEstimateAllTuples=futureTuplesS+sk->arrivedTupleCnt;
+
+        sk->pastArrivalRate =
+                ts->arrivalTime - sk->lastArrivalTuple->arrivalTime == 0
+                ? 0
+                : sk->arrivedTupleCnt / (ts->arrivalTime - sk->lastArrivalTuple->arrivalTime);
+
         sk->lastUnarrivedTuples = futureTuplesS;
         lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
     }
@@ -169,6 +174,12 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
             intermediateResult += matchedFutureTuples / (sk->arrivedTupleCnt + futureTuplesR);
         }
         timeBreakDown_join += timeTrackingEnd(tt_join);
+
+        sk->pastArrivalRate =
+                tr->arrivalTime - sk->lastArrivalTuple->arrivalTime == 0
+                ? 0
+                : sk->arrivedTupleCnt / (tr->arrivalTime - sk->lastArrivalTuple->arrivalTime);
+
         sk->lastUnarrivedTuples = futureTuplesR;
         lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
     }

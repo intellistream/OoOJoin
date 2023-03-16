@@ -168,8 +168,6 @@ size_t OoOJoin::MeanAQPIAWJOperator::getResult() {
 }
 
 double OoOJoin::MeanAQPIAWJOperator::predictUnarrivedTuples(MeanStateOfKeyPtr px) {
-    constexpr double alpha = 0.5; // You can adjust this value to control the weight of the new samples
-    constexpr double max_ratio = 1.0; // You can adjust this value to control the maximum ratio
     tsType lastTime = px->lastArrivalTuple->arrivalTime;
     double avgSkew = px->arrivalSkew;
     double goThroughTime = lastTime - avgSkew - myWindow.getStart();
@@ -177,13 +175,33 @@ double OoOJoin::MeanAQPIAWJOperator::predictUnarrivedTuples(MeanStateOfKeyPtr px
     double ratio = futureTime / (goThroughTime > 0 ? goThroughTime : 1); // prevent division by zero
     ratio = std::min(ratio, max_ratio); // Limit the ratio to the maximum allowed value
 
-    // Apply EWMA
-    double futureTuple = alpha * ratio * px->arrivedTupleCnt + (1 - alpha) * px->arrivedTupleCnt;
+    // Apply adaptive EWMA
+    double futureTuple = ratio * px->arrivedTupleCnt + (1 - alpha) * px->arrivedTupleCnt;
     if (futureTuple < 0) {
         futureTuple = 0;
     }
+
+    // Update filter parameters
+    double arrivalRate = px->arrivedTupleCnt / goThroughTime;
+    if (arrivalRate > 0) {
+        double predictedArrivalRate = futureTuple / futureTime;
+
+        double ratio = predictedArrivalRate / arrivalRate;
+        if (ratio > 1.2) {
+            alpha = std::min(alpha + 0.01, MAX_ALPHA);
+        } else if (ratio < 0.5) {
+            alpha = std::max(alpha - 0.01, MIN_ALPHA);
+        }
+
+        max_ratio = predictedArrivalRate / arrivalRate;
+        max_ratio = std::min(std::max(max_ratio, MIN_MAX_RATIO), MAX_MAX_RATIO);
+
+
+    }
+
     return futureTuple;
 }
+
 
 void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
     AbstractStateOfKeyPtr probrPtr = nullptr;

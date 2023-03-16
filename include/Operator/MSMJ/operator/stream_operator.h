@@ -29,6 +29,9 @@ namespace MSMJ {
         NPJTuplePtr *tr{};
         tsType timeNow{};
 
+        static double prevArrivedTupleCnt;
+        static double prevCheckTime;
+
         bool rIsInWindow = false;
 
         bool sIsInWindow = false;

@@ -215,11 +215,9 @@ auto StreamOperator::mswj_execution(const TrackTuplePtr &trackTuple) -> bool {
             if (probrPtr != nullptr) {
                 IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
                 confirmedResult += py->arrivedTupleCnt;
-                intermediateResult -=
-                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-                        (py->lastUnarrivedTuples + py->arrivedTupleCnt);
-                intermediateResult +=
-                        (futureTuplesS + sk->arrivedTupleCnt) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+                double matchedFutureTuples = futureTuplesS * (sk->lastUnarrivedTuples + sk->arrivedTupleCnt);
+
+                intermediateResult += matchedFutureTuples / (py->arrivedTupleCnt + futureTuplesS);
                 productivity_profiler_->update_join_res(get_D(trackTuple->delay),
                                                         (futureTuplesS + sk->arrivedTupleCnt) *
                                                         (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
@@ -229,6 +227,11 @@ auto StreamOperator::mswj_execution(const TrackTuplePtr &trackTuple) -> bool {
             }
             timeBreakDown_join += timeTrackingEnd(tt_join);
             //sk->lastEstimateAllTuples=futureTuplesS+sk->arrivedTupleCnt;
+            sk->pastArrivalRate =
+                    trackTuple->arrivalTime - sk->lastArrivalTuple->arrivalTime == 0
+                    ? 0
+                    : sk->arrivedTupleCnt / (trackTuple->arrivalTime - sk->lastArrivalTuple->arrivalTime);
+
             sk->lastUnarrivedTuples = futureTuplesS;
             lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
         }
@@ -259,11 +262,9 @@ auto StreamOperator::mswj_execution(const TrackTuplePtr &trackTuple) -> bool {
             if (probrPtr != nullptr) {
                 IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
                 confirmedResult += py->arrivedTupleCnt;
-                intermediateResult -=
-                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-                        (py->lastUnarrivedTuples + py->arrivedTupleCnt);
-                intermediateResult +=
-                        (futureTuplesR + sk->arrivedTupleCnt) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+                double matchedFutureTuples = futureTuplesR * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+
+                intermediateResult += matchedFutureTuples / (sk->arrivedTupleCnt + futureTuplesR);
 
                 productivity_profiler_->update_join_res(get_D(trackTuple->delay),
                                                         (futureTuplesR + sk->arrivedTupleCnt) *
@@ -273,6 +274,13 @@ auto StreamOperator::mswj_execution(const TrackTuplePtr &trackTuple) -> bool {
 
             }
             timeBreakDown_join += timeTrackingEnd(tt_join);
+
+            sk->pastArrivalRate =
+                    trackTuple->arrivalTime - sk->lastArrivalTuple->arrivalTime == 0
+                    ? 0
+                    : sk->arrivedTupleCnt / (trackTuple->arrivalTime - sk->lastArrivalTuple->arrivalTime);
+
+
             sk->lastUnarrivedTuples = futureTuplesR;
             lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
         }

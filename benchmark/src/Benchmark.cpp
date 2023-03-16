@@ -51,10 +51,10 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     size_t OoORu = 0, realRu = 0;
     //load global configs
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
-    string operatorTag = "IMA";
+    string operatorTag = "MSMJ";
     string loaderTag = "file";
 
-    cfg->edit("operator", "IMA");
+    cfg->edit("operator", "MSMJ");
     cfg->edit("dataLoader", "file");
 
     //uint64_t keyRange;
@@ -122,8 +122,8 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     cfg->edit("timeStep", (uint64_t) timeStepUs);
 
     //Dataset files
-    cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/1000ms_1tHighDelayData.csv");
-    cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/1000ms_1tHighDelayData.csv");
+    cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/cj_1000ms_1tHighDelayData.csv");
+    cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/sb_1000ms_1tHighDelayData.csv");
 
     TestBench tb, tbOoO;
     //set data
