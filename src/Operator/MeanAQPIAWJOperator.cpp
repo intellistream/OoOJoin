@@ -168,11 +168,17 @@ size_t OoOJoin::MeanAQPIAWJOperator::getResult() {
 }
 
 double OoOJoin::MeanAQPIAWJOperator::predictUnarrivedTuples(MeanStateOfKeyPtr px) {
+    constexpr double alpha = 0.5; // You can adjust this value to control the weight of the new samples
+    constexpr double max_ratio = 1.0; // You can adjust this value to control the maximum ratio
     tsType lastTime = px->lastArrivalTuple->arrivalTime;
     double avgSkew = px->arrivalSkew;
     double goThroughTime = lastTime - avgSkew - myWindow.getStart();
     double futureTime = myWindow.getEnd() + avgSkew - lastTime;
-    double futureTuple = px->arrivedTupleCnt * futureTime / goThroughTime;
+    double ratio = futureTime / (goThroughTime > 0 ? goThroughTime : 1); // prevent division by zero
+    ratio = std::min(ratio, max_ratio); // Limit the ratio to the maximum allowed value
+
+    // Apply EWMA
+    double futureTuple = alpha * ratio * px->arrivedTupleCnt + (1 - alpha) * px->arrivedTupleCnt;
     if (futureTuple < 0) {
         futureTuple = 0;
     }

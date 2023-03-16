@@ -44,8 +44,7 @@ bool OoOJoin::IMAIAWJOperator::start() {
     timeBreakDown_prediction = 0;
     timeBreakDown_index = 0;
     timeBreakDown_join = 0;
-    timeBreakDown_all = 0;
-    timeTrackingStartNoClaim(timeBreakDown_all);
+    timeBreakDown_all = 0;timeTrackingStartNoClaim(timeBreakDown_all);
     return true;
 }
 
@@ -116,11 +115,9 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
         if (probrPtr != nullptr) {
             IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
             confirmedResult += py->arrivedTupleCnt;
-            intermediateResult -=
-                    (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-                    (py->lastUnarrivedTuples + py->arrivedTupleCnt);
-            intermediateResult +=
-                    (futureTuplesS + sk->arrivedTupleCnt) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+            double matchedFutureTuples = futureTuplesS * (sk->lastUnarrivedTuples + sk->arrivedTupleCnt);
+
+            intermediateResult += matchedFutureTuples / (py->arrivedTupleCnt + futureTuplesS);
         }
         timeBreakDown_join += timeTrackingEnd(tt_join);
         //sk->lastEstimateAllTuples=futureTuplesS+sk->arrivedTupleCnt;
@@ -167,11 +164,9 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         if (probrPtr != nullptr) {
             IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
             confirmedResult += py->arrivedTupleCnt;
-            intermediateResult -=
-                    (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-                    (py->lastUnarrivedTuples + py->arrivedTupleCnt);
-            intermediateResult +=
-                    (futureTuplesR + sk->arrivedTupleCnt) * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+            double matchedFutureTuples = futureTuplesR * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+
+            intermediateResult += matchedFutureTuples / (sk->arrivedTupleCnt + futureTuplesR);
         }
         timeBreakDown_join += timeTrackingEnd(tt_join);
         sk->lastUnarrivedTuples = futureTuplesR;
