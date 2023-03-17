@@ -2,7 +2,6 @@
 #include <JoinAlgos/JoinAlgoTable.h>
 
 
-
 bool OoOJoin::MSMJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
         return false;
@@ -31,8 +30,12 @@ bool OoOJoin::MSMJOperator::stop() {
 
 bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     struct timeval timeStart{};
-    gettimeofday(&timeStart, nullptr);
-    streamOperator->syncTimeStruct(timeStart);
+    if (!initTime) {
+        gettimeofday(&timeStart, nullptr);
+        streamOperator->syncTimeStruct(timeStart);
+        initTime = true;
+    }
+
     ts->streamId = 1;
     kSlackS->disorder_handling(ts);
     return true;
@@ -40,8 +43,12 @@ bool OoOJoin::MSMJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
 
 bool OoOJoin::MSMJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     struct timeval timeStart{};
-    gettimeofday(&timeStart, nullptr);
-    streamOperator->syncTimeStruct(timeStart);
+    if (initTime) {
+        gettimeofday(&timeStart, nullptr);
+        streamOperator->syncTimeStruct(timeStart);
+        initTime = true;
+    }
+
     tr->streamId = 2;
     kSlackR->disorder_handling(tr);
     return true;

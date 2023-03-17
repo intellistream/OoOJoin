@@ -71,6 +71,7 @@ namespace OoOJoin {
 //        StreamPtr streamR;
 
         bool created = false;
+        bool initTime = false;
 
         std::queue<MSMJ::Tuple> sTupleList{};
         std::queue<MSMJ::Tuple> rTupleList{};

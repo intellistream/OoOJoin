@@ -51,10 +51,10 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     size_t OoORu = 0, realRu = 0;
     //load global configs
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
-    string operatorTag = "MSMJ";
+    string operatorTag = "IMA";
     string loaderTag = "file";
 
-    cfg->edit("operator", "MSMJ");
+    cfg->edit("operator", "IMA");
     cfg->edit("dataLoader", "file");
 
     //uint64_t keyRange;
