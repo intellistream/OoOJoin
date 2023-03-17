@@ -38,7 +38,7 @@ namespace OoOJoin {
         static constexpr double MIN_ALPHA = 0.01;
         static constexpr double MAX_ALPHA = 0.99;
         static constexpr double MIN_MAX_RATIO = 0.1;
-        static constexpr double MAX_MAX_RATIO = 10.0;
+        static constexpr double MAX_MAX_RATIO = 100.0;
 
         double max_ratio = 10.0;
         double alpha = 0.5;

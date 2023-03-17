@@ -215,9 +215,13 @@ auto StreamOperator::mswj_execution(const TrackTuplePtr &trackTuple) -> bool {
             if (probrPtr != nullptr) {
                 IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
                 confirmedResult += py->arrivedTupleCnt;
-                double matchedFutureTuples = futureTuplesS * (sk->lastUnarrivedTuples + sk->arrivedTupleCnt);
+//                double matchedFutureTuples = futureTuplesS * (sk->lastUnarrivedTuples + sk->arrivedTupleCnt);
 
-                intermediateResult += matchedFutureTuples / (py->arrivedTupleCnt + futureTuplesS);
+//                intermediateResult += std::round(matchedFutureTuples / (py->arrivedTupleCnt + futureTuplesS));
+                intermediateResult += (futureTuplesS + sk->arrivedTupleCnt) *
+                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+                                      (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt);
                 productivity_profiler_->update_join_res(get_D(trackTuple->delay),
                                                         (futureTuplesS + sk->arrivedTupleCnt) *
                                                         (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
@@ -262,9 +266,14 @@ auto StreamOperator::mswj_execution(const TrackTuplePtr &trackTuple) -> bool {
             if (probrPtr != nullptr) {
                 IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
                 confirmedResult += py->arrivedTupleCnt;
-                double matchedFutureTuples = futureTuplesR * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+//                double matchedFutureTuples = futureTuplesR * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
 
-                intermediateResult += matchedFutureTuples / (sk->arrivedTupleCnt + futureTuplesR);
+//                intermediateResult += std::round(matchedFutureTuples / (sk->arrivedTupleCnt + futureTuplesR));
+
+                intermediateResult += (futureTuplesR + sk->arrivedTupleCnt) *
+                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+                                      (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt);
 
                 productivity_profiler_->update_join_res(get_D(trackTuple->delay),
                                                         (futureTuplesR + sk->arrivedTupleCnt) *

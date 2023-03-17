@@ -115,9 +115,10 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
         if (probrPtr != nullptr) {
             IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
             confirmedResult += py->arrivedTupleCnt;
-            double matchedFutureTuples = futureTuplesS * (sk->lastUnarrivedTuples + sk->arrivedTupleCnt);
-
-            intermediateResult += matchedFutureTuples / (py->arrivedTupleCnt + futureTuplesS);
+            intermediateResult += (futureTuplesS + sk->arrivedTupleCnt) *
+                                  (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+                                  (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+                                  (py->lastUnarrivedTuples + py->arrivedTupleCnt);
         }
         timeBreakDown_join += timeTrackingEnd(tt_join);
 
@@ -169,9 +170,10 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         if (probrPtr != nullptr) {
             IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
             confirmedResult += py->arrivedTupleCnt;
-            double matchedFutureTuples = futureTuplesR * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
-
-            intermediateResult += matchedFutureTuples / (sk->arrivedTupleCnt + futureTuplesR);
+            intermediateResult += (futureTuplesR + sk->arrivedTupleCnt) *
+                                  (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+                                  (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+                                  (py->lastUnarrivedTuples + py->arrivedTupleCnt);
         }
         timeBreakDown_join += timeTrackingEnd(tt_join);
 
