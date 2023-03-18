@@ -7,9 +7,9 @@
 #include <complex>
 #include <iostream>
 #include <utility>
-#include "Operator/MSWJ/manager/StatisticsManager.h"
-#include "Operator/MSWJ/common/MSWJDefine.h"
-#include "Operator/MSWJ/profiler/TupleProductivityProfiler.h"
+#include "Operator/MSWJ/Manager/StatisticsManager.h"
+#include "Operator/MSWJ/Common/MSWJDefine.h"
+#include "Operator/MSWJ/Profiler/TupleProductivityProfiler.h"
 
 using namespace MSWJ;
 

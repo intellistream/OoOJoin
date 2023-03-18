@@ -29,8 +29,8 @@
 #include "tbbqueue.h"
 #include "stdqueue.h"
 #include "dlibqueue.h"
-#include "../tests/common/simplethread.h"
-#include "../tests/common/systemtime.h"
+#include "../tests/Common/simplethread.h"
+#include "../tests/Common/systemtime.h"
 #include "cpuid.h"
 
 using namespace moodycamel;

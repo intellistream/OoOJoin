@@ -30,8 +30,8 @@
 #endif
 
 #include "../../concurrentqueue.h"
-#include "../common/simplethread.h"
-#include "../common/systemtime.h"
+#include "../Common/simplethread.h"
+#include "../Common/systemtime.h"
 #include "../corealgos.h"
 
 void failHook()

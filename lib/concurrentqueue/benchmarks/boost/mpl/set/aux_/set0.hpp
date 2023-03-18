@@ -21,7 +21,7 @@
 #include <boost/mpl/set/aux_/tag.hpp>
 #include <boost/mpl/aux_/yes_no.hpp>
 #include <boost/mpl/aux_/overload_names.hpp>
-#include <boost/mpl/aux_/config/operators.hpp>
+#include <boost/mpl/aux_/config/Operators.hpp>
 
 #include <boost/preprocessor/cat.hpp>
 

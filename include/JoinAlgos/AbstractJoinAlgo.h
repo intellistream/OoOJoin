@@ -12,7 +12,7 @@
 #include <assert.h>
 #include <Utils/ConfigMap.hpp>
 #include <utility>
-#include "Operator/MSWJ/profiler/TupleProductivityProfiler.h"
+#include "Operator/MSWJ/Profiler/TupleProductivityProfiler.h"
 
 //#include <Utils/Logger.hpp>/
 using namespace INTELLI;

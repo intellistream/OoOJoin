@@ -7,7 +7,7 @@
 
 
 #include "StatisticsManager.h"
-#include "Operator/MSWJ/profiler/TupleProductivityProfiler.h"
+#include "Operator/MSWJ/Profiler/TupleProductivityProfiler.h"
 
 namespace MSWJ {
     class BufferSizeManager {

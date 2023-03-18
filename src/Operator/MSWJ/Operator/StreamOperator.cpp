@@ -6,8 +6,8 @@
 
 #include <future>
 #include <utility>
-#include "Operator/MSWJ/operator/StreamOperator.h"
-#include "Operator/MSWJ/common/MSWJDefine.h"
+#include "Operator/MSWJ/Operator/StreamOperator.h"
+#include "Operator/MSWJ/Common/MSWJDefine.h"
 #include "JoinAlgos/JoinAlgoTable.h"
 #include "JoinAlgos/AbstractJoinAlgo.h"
 #include "WaterMarker/WMTable.h"

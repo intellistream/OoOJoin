@@ -6,7 +6,7 @@
 #include <atomic>
 #include <utility>
 #include <WaterMarker/LatenessWM.h>
-#include "Operator/MSWJ/kslack/KSlack.h"
+#include "Operator/MSWJ/KSlack/KSlack.h"
 #include <Operator/MeanAQPIAWJOperator.h>
 #include <WaterMarker/LatenessWM.h>
 #include <Common/StateOfKey.h>

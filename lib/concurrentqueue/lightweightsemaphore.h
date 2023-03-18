@@ -41,7 +41,7 @@ namespace details
 
 // Code in the mpmc_sema namespace below is an adaptation of Jeff Preshing's
 // portable + lightweight semaphore implementations, originally from
-// https://github.com/preshing/cpp11-on-multicore/blob/master/common/sema.h
+// https://github.com/preshing/cpp11-on-multicore/blob/master/Common/sema.h
 // LICENSE:
 // Copyright (c) 2015 Jeff Preshing
 //

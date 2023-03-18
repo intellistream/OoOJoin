@@ -27,8 +27,8 @@ void operator delete(void* ptr, MakeSureCustomNewCanPeacefullyCoexist* x);
 #endif
 
 #include "minitest.h"
-#include "../common/simplethread.h"
-#include "../common/systemtime.h"
+#include "../Common/simplethread.h"
+#include "../Common/systemtime.h"
 #include "../../concurrentqueue.h"
 #include "../../blockingconcurrentqueue.h"
 #include "../../c_api/concurrentqueue.h"

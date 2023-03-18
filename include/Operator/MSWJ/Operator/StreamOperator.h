@@ -10,8 +10,8 @@
 #include <unordered_map>
 #include <list>
 #include <mutex>
-#include "Operator/MSWJ/profiler/TupleProductivityProfiler.h"
-#include "Operator/MSWJ/common/MSWJDefine.h"
+#include "Operator/MSWJ/Profiler/TupleProductivityProfiler.h"
+#include "Operator/MSWJ/Common/MSWJDefine.h"
 #include "Common/Window.h"
 #include "WaterMarker/AbstractWaterMarker.h"
 #include <WaterMarker/LatenessWM.h>

@@ -11,7 +11,7 @@
 #include <mutex>
 #include "parallel-hashmap/parallel_hashmap/phmap.h"
 #include "Utils/ConfigMap.hpp"
-#include "Operator/MSWJ/common/MSWJDefine.h"
+#include "Operator/MSWJ/Common/MSWJDefine.h"
 #include <parallel-hashmap/parallel_hashmap/btree.h>
 
 namespace MSWJ {
