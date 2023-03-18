@@ -71,10 +71,10 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
 //    IAWJOperatorPtr iawj = newIAWJOperator();
 
     AbstractOperatorPtr iawj;
-    MSMJOperatorPtr msmj;
+    MSWJOperatorPtr MSWJ;
     if (operatorTag == "IAWJ") {
         iawj = newIAWJOperator();
-    } else if (operatorTag == "MSMJ") {
+    } else if (operatorTag == "MSWJ") {
         cfg->edit("g", (uint64_t) 10 * MILLION_SECONDS);
         cfg->edit("L", (uint64_t) 50 * MILLION_SECONDS);
         cfg->edit("userRecall", 0.4);
@@ -86,32 +86,32 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
         cfg->edit("Stream_1", (uint64_t) 0);
         cfg->edit("Stream_2", (uint64_t) 0);
 
-        auto tupleProductivityProfiler = std::make_shared<MSMJ::TupleProductivityProfiler>(cfg);
-        auto statisticsManager = std::make_shared<MSMJ::StatisticsManager>(tupleProductivityProfiler.get(), cfg);
-        auto bufferSizeManager = std::make_shared<MSMJ::BufferSizeManager>(statisticsManager.get(),
+        auto tupleProductivityProfiler = std::make_shared<MSWJ::TupleProductivityProfiler>(cfg);
+        auto statisticsManager = std::make_shared<MSWJ::StatisticsManager>(tupleProductivityProfiler.get(), cfg);
+        auto bufferSizeManager = std::make_shared<MSWJ::BufferSizeManager>(statisticsManager.get(),
                                                                            tupleProductivityProfiler.get());
-        auto streamOperator = std::make_shared<MSMJ::StreamOperator>(tupleProductivityProfiler.get(), cfg);
-        auto synchronizer = std::make_shared<MSMJ::Synchronizer>(2, streamOperator.get(), cfg);
+        auto streamOperator = std::make_shared<MSWJ::StreamOperator>(tupleProductivityProfiler.get(), cfg);
+        auto synchronizer = std::make_shared<MSWJ::Synchronizer>(2, streamOperator.get(), cfg);
 
         bufferSizeManager->setConfig(cfg);
 
-        auto kSlackS = std::make_shared<MSMJ::KSlack>(1, bufferSizeManager.get(), statisticsManager.get(),
+        auto kSlackS = std::make_shared<MSWJ::KSlack>(1, bufferSizeManager.get(), statisticsManager.get(),
                                                       synchronizer.get());
-        auto kSlackR = std::make_shared<MSMJ::KSlack>(2, bufferSizeManager.get(), statisticsManager.get(),
+        auto kSlackR = std::make_shared<MSWJ::KSlack>(2, bufferSizeManager.get(), statisticsManager.get(),
                                                       synchronizer.get());
 
-        msmj = std::make_shared<MSMJOperator>(bufferSizeManager, tupleProductivityProfiler,
+        MSWJ = std::make_shared<MSWJOperator>(bufferSizeManager, tupleProductivityProfiler,
                                               synchronizer,
                                               streamOperator, statisticsManager, kSlackR, kSlackS);
 
-        msmj->setConfig(cfg);
+        MSWJ->setConfig(cfg);
     } else {
         iawj = opTable->findOperator(operatorTag);
     }
 
     INTELLI_INFO("Try use " + operatorTag + " operator");
 
-    if (operatorTag != "MSMJ" && iawj == nullptr) {
+    if (operatorTag != "MSWJ" && iawj == nullptr) {
         iawj = newIAWJOperator();
         INTELLI_INFO("No " + operatorTag + " operator, will use IAWJ instead");
     }
@@ -136,9 +136,9 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     cfg->edit("earlierEmitMs", (uint64_t) 0);
 
 
-    if (operatorTag == "MSMJ") {
+    if (operatorTag == "MSWJ") {
         //set operator as iawj
-        tbOoO.setOperator(msmj, cfg);
+        tbOoO.setOperator(MSWJ, cfg);
     } else {
         tbOoO.setOperator(iawj, cfg);
     }
@@ -174,9 +174,9 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
 
     tb.setDataLoader(loaderTag, cfg);
 
-    if (operatorTag == "MSMJ") {
+    if (operatorTag == "MSWJ") {
         //set operator as iawj
-        tb.setOperator(msmj, cfg);
+        tb.setOperator(MSWJ, cfg);
     } else {
         tb.setOperator(iawj, cfg);
     }

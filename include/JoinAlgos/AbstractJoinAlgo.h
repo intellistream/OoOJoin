@@ -12,7 +12,7 @@
 #include <assert.h>
 #include <Utils/ConfigMap.hpp>
 #include <utility>
-#include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
+#include "Operator/MSWJ/profiler/TupleProductivityProfiler.h"
 
 //#include <Utils/Logger.hpp>/
 using namespace INTELLI;
@@ -45,7 +45,7 @@ namespace OoOJoin {
         //tsType timeStep;
     public:
         //元组生产力监视器
-        MSMJ::TupleProductivityProfiler *productivity_profiler_;
+        MSWJ::TupleProductivityProfiler *productivity_profiler_;
 
         ConfigMapPtr config;
 

@@ -12,7 +12,7 @@
 #include <Operator/IAWJOperator.h>
 #include <Operator/MeanAQPIAWJOperator.h>
 #include <Operator/IMAIAWJOperator.h>
-#include <Operator//MSMJOperator.h>
+#include <Operator//MSWJOperator.h>
 #include <map>
 #include <utility>
 

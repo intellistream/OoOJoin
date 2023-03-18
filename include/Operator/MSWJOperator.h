@@ -1,12 +1,12 @@
-#ifndef INTELLISTREAM_INCLUDE_OPERATOR_MSMJOPERATOR_H_
-#define INTELLISTREAM_INCLUDE_OPERATOR_MSMJOPERATOR_H_
+#ifndef INTELLISTREAM_INCLUDE_OPERATOR_MSWJOPERATOR_H_
+#define INTELLISTREAM_INCLUDE_OPERATOR_MSWJOPERATOR_H_
 
 #include <Operator/AbstractOperator.h>
 #include <Common/Window.h>
 #include <atomic>
 #include <utility>
 #include <WaterMarker/LatenessWM.h>
-#include "Operator/MSMJ/kslack/k_slack.h"
+#include "Operator/MSWJ/kslack/KSlack.h"
 #include <Operator/MeanAQPIAWJOperator.h>
 #include <WaterMarker/LatenessWM.h>
 #include <Common/StateOfKey.h>
@@ -18,14 +18,13 @@ namespace OoOJoin {
  * @brief The class to describe a shared pointer to @ref MSWJOperator
  */
 
-    typedef std::shared_ptr<class MSMJ::Stream> StreamPtr;
-    typedef std::shared_ptr<class MSMJOperator> MSMJOperatorPtr;
-    typedef std::shared_ptr<class MSMJ::KSlack> KSlackPtr;
-    typedef std::shared_ptr<class MSMJ::BufferSizeManager> BufferSizeManagerPtr;
-    typedef std::shared_ptr<class MSMJ::StatisticsManager> StatisticsManagerPtr;
-    typedef std::shared_ptr<class MSMJ::TupleProductivityProfiler> TupleProductivityProfilerPtr;
-    typedef std::shared_ptr<class MSMJ::Synchronizer> SynchronizerPtr;
-    typedef std::shared_ptr<class MSMJ::StreamOperator> StreamOperatorPtr;
+    typedef std::shared_ptr<class MSWJOperator> MSWJOperatorPtr;
+    typedef std::shared_ptr<class MSWJ::KSlack> KSlackPtr;
+    typedef std::shared_ptr<class MSWJ::BufferSizeManager> BufferSizeManagerPtr;
+    typedef std::shared_ptr<class MSWJ::StatisticsManager> StatisticsManagerPtr;
+    typedef std::shared_ptr<class MSWJ::TupleProductivityProfiler> TupleProductivityProfilerPtr;
+    typedef std::shared_ptr<class MSWJ::Synchronizer> SynchronizerPtr;
+    typedef std::shared_ptr<class MSWJ::StreamOperator> StreamOperatorPtr;
 
 /**
  * @class MSWJOperator
@@ -43,7 +42,7 @@ namespace OoOJoin {
  * @note In current version, the computation will block feeding
  * @note operator tag = "MSWJ"
  */
-    class MSMJOperator : public MeanAQPIAWJOperator {
+    class MSWJOperator : public MeanAQPIAWJOperator {
     protected:
 
         class IMAStateOfKey : public MeanStateOfKey {
@@ -73,9 +72,6 @@ namespace OoOJoin {
         bool created = false;
         bool initTime = false;
 
-        std::queue<MSMJ::Tuple> sTupleList{};
-        std::queue<MSMJ::Tuple> rTupleList{};
-
         //save rTuple record
         std::vector<TrackTuplePtr> rTupleRecord{};
 
@@ -100,9 +96,9 @@ namespace OoOJoin {
 
     public:
 
-        MSMJOperator() = default;
+        MSWJOperator() = default;
 
-        MSMJOperator(BufferSizeManagerPtr bufferSizeManager, TupleProductivityProfilerPtr tupleProductivityProfiler,
+        MSWJOperator(BufferSizeManagerPtr bufferSizeManager, TupleProductivityProfilerPtr tupleProductivityProfiler,
                      SynchronizerPtr synchronizer, StreamOperatorPtr streamOperator,
                      StatisticsManagerPtr statisticsManager, KSlackPtr kSlackR, KSlackPtr kSlackS) : bufferSizeManager(
                 std::move(bufferSizeManager)),
@@ -123,7 +119,7 @@ namespace OoOJoin {
                                                                                                      kSlackS(std::move(
                                                                                                              kSlackS)) {}
 
-        ~MSMJOperator() = default;
+        ~MSWJOperator() = default;
 
         /**
          * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
@@ -180,7 +176,7 @@ namespace OoOJoin {
  * @def newMSWJOperator
  * @brief (Macro) To creat a new @ref MSWJOperator under shared pointer.
  */
-#define newMSMJOperator std::make_shared<OoOJoin::MSMJOperator>
+#define newMSWJOperator std::make_shared<OoOJoin::MSWJOperator>
 
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_

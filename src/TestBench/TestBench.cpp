@@ -8,7 +8,7 @@
 #include <utility>
 #include <Utils/IntelliLog.h>
 #include <TestBench/RandomDataLoader.h>
-#include "Operator/MSMJOperator.h"
+#include "Operator/MSWJOperator.h"
 
 using namespace INTELLI;
 using namespace OoOJoin;
@@ -80,8 +80,8 @@ bool OoOJoin::TestBench::setOperator(OoOJoin::AbstractOperatorPtr op, ConfigMapP
 }
 
 void OoOJoin::TestBench::inlineTest() {
-    if (opConfig->getString("operator") == "MSMJ") {
-        inlineTestOfMSMJ();
+    if (opConfig->getString("operator") == "MSWJ") {
+        inlineTestOfMSWJ();
     } else {
         inlineTestOfCommon();
     }
@@ -305,7 +305,7 @@ void TestBench::inlineTestOfCommon() {
     testOp->stop();
 }
 
-void TestBench::inlineTestOfMSMJ() {
+void TestBench::inlineTestOfMSWJ() {
     struct timeval timeStart{};
     size_t testSize = (rTuple.size() > sTuple.size()) ? sTuple.size() : rTuple.size();
     size_t rPos = 0, sPos = 0;

@@ -1,8 +1,8 @@
 import itertools as it
 import os
-
-import matplotlib
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import matplotlib
 import numpy as np
 import pylab
 from matplotlib.font_manager import FontProperties
@@ -11,7 +11,9 @@ from matplotlib.font_manager import FontProperties
 from matplotlib.ticker import LinearLocator, LogLocator, MaxNLocator, ScalarFormatter
 from numpy import double
 
-OPT_FONT_NAME = 'Helvetica'
+# 获取系统中可用的字体路径
+# font_paths = fm.findSystemFonts()
+# OPT_FONT_NAME = 'Helvetica'
 TICK_FONT_SIZE = 20
 LABEL_FONT_SIZE = 20
 LEGEND_FONT_SIZE = 20
@@ -33,11 +35,27 @@ LINE_WIDTH = 3.0
 MARKER_SIZE = 13.0
 MARKER_FREQUENCY = 1000
 
-matplotlib.rcParams['ps.useafm'] = True
-matplotlib.rcParams['pdf.use14corefonts'] = True
-matplotlib.rcParams['xtick.labelsize'] = TICK_FONT_SIZE
-matplotlib.rcParams['ytick.labelsize'] = TICK_FONT_SIZE
-matplotlib.rcParams['font.family'] = OPT_FONT_NAME
+# matplotlib.rcParams['ps.useafm'] = True
+# matplotlib.rcParams['pdf.use14corefonts'] = True
+# matplotlib.rcParams['xtick.labelsize'] = TICK_FONT_SIZE
+# matplotlib.rcParams['ytick.labelsize'] = TICK_FONT_SIZE
+# 创建字体列表
+# Explicitly specify the font path
+# 获取系统中可用的字体路径
+font_paths = fm.findSystemFonts()
+
+# 创建字体列表
+font_list = []
+for font_path in font_paths:
+    try:
+        font_name = fm.FontProperties(fname=font_path).get_name()
+        if font_name not in font_list:
+            font_list.append(font_name)
+    except:
+        pass
+
+# 配置 matplotlib 使用系统中可用的字体
+plt.rcParams['font.family'] = font_list[0]
 
 FIGURE_FOLDER = '/data1/xtra/results/figure'
 
@@ -132,6 +150,7 @@ def DrawFigure(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, 
     size = fig.get_size_inches()
     dpi = fig.get_dpi()
 
+    plt.show()
     plt.savefig(filename + ".pdf", bbox_inches='tight')
 
 
@@ -186,6 +205,7 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
     size = fig.get_size_inches()
     dpi = fig.get_dpi()
 
+    plt.show()
     plt.savefig(filename + ".pdf", bbox_inches='tight')
 
 

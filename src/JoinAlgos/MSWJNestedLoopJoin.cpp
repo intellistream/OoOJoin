@@ -28,7 +28,7 @@ size_t MSWJNestedLoopJoin::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
         OoOJoin::TrackTuplePtr tr = windR.data(i)[0];
         int nestResult = join(windS, tr, threads);
         //update to profiler
-        productivity_profiler_->update_join_res(MSMJ::TupleProductivityProfiler::get_D(tr->delay), nestResult);
+        productivity_profiler_->updateJoinRes(MSWJ::TupleProductivityProfiler::getD(tr->delay), nestResult);
         result += nestResult;
         tr->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct);
     }

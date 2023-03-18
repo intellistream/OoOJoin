@@ -51,7 +51,7 @@ namespace OoOJoin {
 
         void inlineTestOfCommon();
 
-        void inlineTestOfMSMJ();
+        void inlineTestOfMSWJ();
 
     public:
         std::vector<TrackTuplePtr> rTuple{};

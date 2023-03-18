@@ -5,7 +5,7 @@
 #ifndef INTELLISTREAM_MSWJNESTEDLOOPJOIN_H
 #define INTELLISTREAM_MSWJNESTEDLOOPJOIN_H
 
-#include "Operator/MSMJ/profiler/tuple_productivity_profiler.h"
+#include "Operator/MSWJ/profiler/TupleProductivityProfiler.h"
 #include <JoinAlgos/AbstractJoinAlgo.h>
 
 namespace OoOJoin {

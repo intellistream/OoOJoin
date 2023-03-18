@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import csv
 import numpy as np
-import matplotlib.pyplot as plt
 import accuBar as accuBar
 import groupBar as groupBar
 import groupBar2 as groupBar2
@@ -11,9 +10,9 @@ import itertools as it
 import os
 
 import matplotlib
-import matplotlib.pyplot as plt
 import numpy as np
 import pylab
+import matplotlib.font_manager as fm
 from matplotlib.font_manager import FontProperties
 from matplotlib.ticker import LogLocator, LinearLocator
 import os
@@ -22,7 +21,7 @@ import sys
 from OoOCommon import *
 import time
 
-OPT_FONT_NAME = 'Helvetica'
+# OPT_FONT_NAME = 'Helvetica'
 TICK_FONT_SIZE = 22
 LABEL_FONT_SIZE = 28
 LEGEND_FONT_SIZE = 30
@@ -42,11 +41,28 @@ LINE_WIDTH = 3.0
 MARKER_SIZE = 15.0
 MARKER_FREQUENCY = 1000
 
-matplotlib.rcParams['ps.useafm'] = True
-matplotlib.rcParams['pdf.use14corefonts'] = True
-matplotlib.rcParams['xtick.labelsize'] = TICK_FONT_SIZE
-matplotlib.rcParams['ytick.labelsize'] = TICK_FONT_SIZE
-matplotlib.rcParams['font.family'] = OPT_FONT_NAME
+# matplotlib.rcParams['ps.useafm'] = True
+# matplotlib.rcParams['pdf.use14corefonts'] = True
+# matplotlib.rcParams['xtick.labelsize'] = TICK_FONT_SIZE
+# matplotlib.rcParams['ytick.labelsize'] = TICK_FONT_SIZE
+
+# Explicitly specify the font path
+# 获取系统中可用的字体路径
+# font_paths = fm.findSystemFonts()
+#
+# # 创建字体列表
+# font_list = []
+# for font_path in font_paths:
+#     try:
+#         font_name = fm.FontProperties(fname=font_path).get_name()
+#         if font_name not in font_list:
+#             font_list.append(font_name)
+#     except:
+#         pass
+#
+# # 配置 matplotlib 使用系统中可用的字体
+# matplotlib.rcParams['font.family'] = font_list[0]
+
 matplotlib.rcParams['pdf.fonttype'] = 42
 
 
@@ -74,8 +90,9 @@ def runPeriod(exePath, period, resultPath, templateName="config.csv"):
     # copy result
     os.system("rm -rf " + resultPath + "/" + str(period))
     os.system("mkdir " + resultPath + "/" + str(period))
-    os.system("cd " + exePath + "&& cp *.csv " + resultPath + "/" + str(period))
-
+    password = "Rjzhb2326090"
+    sudo_command = "cd " + exePath + "&& cp *.csv " + resultPath + "/" + str(period)
+    os.system('echo {} | {}'.format(password, sudo_command))
 
 def runPeriodVector(exePath, periodVec, resultPath, templateName="config.csv"):
     for i in periodVec:
@@ -110,6 +127,10 @@ def readResultVectorPeriod(periodVec, resultPath):
     return avgLatVec, lat95Vec, thrVec, errVec, compVec, aqpErrVec
 
 
+
+
+
+
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
     resultPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/aqpPeriodTest"
@@ -138,7 +159,7 @@ def main():
                                                                                                          resultPathMeanAqp)
     avgLatVecIMA, lat95VecIMA, thrVecIMA, errVecIMA, compVec, aqpErrVecIMA = readResultVectorPeriod(periodVec,
                                                                                                     resultPathIMA)
-    os.system("mkdir " + figPath)
+    # os.system("mkdir " + figPath)
     groupLine.DrawFigureYnormal([periodVec, periodVec, periodVec], [aqpErrVecNo, aqpErrVecMean, aqpErrVecIMA],
                                 ['w/o AQP (lazy)', "w/ final AQP (lazy)", "w/ incremental AQP (eager)"],
                                 "lateness (ms)", "Error", 0, 1, figPath + "latWm_Aqps_err", True)
