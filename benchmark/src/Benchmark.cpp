@@ -23,6 +23,44 @@ constexpr static int SECONDS = 1000000;
 constexpr static int MICRO_SECONDS = 1;
 constexpr static int MILLION_SECONDS = 1000;
 
+
+MSWJOperatorPtr mswjConfiguration(ConfigMapPtr cfg) {
+    MSWJOperatorPtr mswj;
+    cfg->edit("g", (uint64_t) 10 * MILLION_SECONDS);
+    cfg->edit("L", (uint64_t) 50 * MILLION_SECONDS);
+    cfg->edit("userRecall", 0.4);
+    cfg->edit("b", (uint64_t) 10 * MILLION_SECONDS);
+    cfg->edit("confidenceValue", 0.5);
+    cfg->edit("P", (uint64_t) 10 * SECONDS);
+    cfg->edit("maxDelay", (uint64_t) INT16_MAX);
+    cfg->edit("StreamCount", (uint64_t) 2);
+    cfg->edit("Stream_1", (uint64_t) 0);
+    cfg->edit("Stream_2", (uint64_t) 0);
+
+    auto tupleProductivityProfiler = std::make_shared<MSWJ::TupleProductivityProfiler>(cfg);
+    auto statisticsManager = std::make_shared<MSWJ::StatisticsManager>(tupleProductivityProfiler.get(), cfg);
+    auto bufferSizeManager = std::make_shared<MSWJ::BufferSizeManager>(statisticsManager.get(),
+                                                                       tupleProductivityProfiler.get());
+    auto streamOperator = std::make_shared<MSWJ::StreamOperator>(tupleProductivityProfiler.get(), cfg);
+    auto synchronizer = std::make_shared<MSWJ::Synchronizer>(2, streamOperator.get(), cfg);
+
+    bufferSizeManager->setConfig(cfg);
+
+    auto kSlackS = std::make_shared<MSWJ::KSlack>(1, bufferSizeManager.get(), statisticsManager.get(),
+                                                  synchronizer.get());
+    auto kSlackR = std::make_shared<MSWJ::KSlack>(2, bufferSizeManager.get(), statisticsManager.get(),
+                                                  synchronizer.get());
+
+
+    mswj = std::make_shared<MSWJOperator>(bufferSizeManager, tupleProductivityProfiler,
+                                          synchronizer,
+                                          streamOperator, statisticsManager, kSlackR, kSlackS);
+    mswj->setConfig(cfg);
+
+    return mswj;
+}
+
+
 /**
  * @defgroup OJ_BENCHMARK The benchmark program
  * @brief run the test bench and allow adjusting
@@ -38,18 +76,13 @@ constexpr static int MILLION_SECONDS = 1000;
  * - "operator" String The operator to be used
  */
 void runTestBenchAdj(const string &configName = "config.csv", const string &outPrefix = "") {
-    //IntelliLog::log("iNFO","Load global config from " + configName + ", output prefix = " + outPrefix + "\n");
     INTELLI_INFO("Load global config from" + configName + ", output prefix = " + outPrefix);
 
     OperatorTablePtr opTable = newOperatorTable();
-    //IAWJOperatorPtr iawj = newIAWJOperator();
-    //get config
     ConfigMapPtr cfg = newConfigMap();
-    //read from csv file
     cfg->fromFile(configName);
-    //size_t testSize = 0;
+
     size_t OoORu = 0, realRu = 0;
-    //load global configs
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
     string operatorTag = "IMA";
     string loaderTag = "file";
@@ -57,68 +90,33 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     cfg->edit("operator", "IMA");
     cfg->edit("dataLoader", "file");
 
-    //uint64_t keyRange;
     windowLenMs = cfg->tryU64("windowLenMs", 10, true);
     timeStepUs = cfg->tryU64("timeStepUs", 40, true);
-    //watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10,true);
     maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
 
     windowLenMs = 2000;
     maxArrivalSkewMs = 50000;
     INTELLI_INFO("window len= " + to_string(windowLenMs) + "ms ");
-    // eventRateKTps = tryU64(cfg, "eventRateKTps", 10);
-    //keyRange = tryU64(cfg, "keyRange", 10);
-//    IAWJOperatorPtr iawj = newIAWJOperator();
+    INTELLI_INFO("Try use " + operatorTag + " operator");
 
     AbstractOperatorPtr iawj;
-    MSWJOperatorPtr MSWJ;
+    MSWJOperatorPtr mswj;
+
     if (operatorTag == "IAWJ") {
         iawj = newIAWJOperator();
     } else if (operatorTag == "MSWJ") {
-        cfg->edit("g", (uint64_t) 10 * MILLION_SECONDS);
-        cfg->edit("L", (uint64_t) 50 * MILLION_SECONDS);
-        cfg->edit("userRecall", 0.4);
-        cfg->edit("b", (uint64_t) 10 * MILLION_SECONDS);
-        cfg->edit("confidenceValue", 0.5);
-        cfg->edit("P", (uint64_t) 10 * SECONDS);
-        cfg->edit("maxDelay", (uint64_t) INT16_MAX);
-        cfg->edit("StreamCount", (uint64_t) 2);
-        cfg->edit("Stream_1", (uint64_t) 0);
-        cfg->edit("Stream_2", (uint64_t) 0);
-
-        auto tupleProductivityProfiler = std::make_shared<MSWJ::TupleProductivityProfiler>(cfg);
-        auto statisticsManager = std::make_shared<MSWJ::StatisticsManager>(tupleProductivityProfiler.get(), cfg);
-        auto bufferSizeManager = std::make_shared<MSWJ::BufferSizeManager>(statisticsManager.get(),
-                                                                           tupleProductivityProfiler.get());
-        auto streamOperator = std::make_shared<MSWJ::StreamOperator>(tupleProductivityProfiler.get(), cfg);
-        auto synchronizer = std::make_shared<MSWJ::Synchronizer>(2, streamOperator.get(), cfg);
-
-        bufferSizeManager->setConfig(cfg);
-
-        auto kSlackS = std::make_shared<MSWJ::KSlack>(1, bufferSizeManager.get(), statisticsManager.get(),
-                                                      synchronizer.get());
-        auto kSlackR = std::make_shared<MSWJ::KSlack>(2, bufferSizeManager.get(), statisticsManager.get(),
-                                                      synchronizer.get());
-
-        MSWJ = std::make_shared<MSWJOperator>(bufferSizeManager, tupleProductivityProfiler,
-                                              synchronizer,
-                                              streamOperator, statisticsManager, kSlackR, kSlackS);
-
-        MSWJ->setConfig(cfg);
+        mswj = mswjConfiguration(cfg);
     } else {
         iawj = opTable->findOperator(operatorTag);
     }
-
-    INTELLI_INFO("Try use " + operatorTag + " operator");
 
     if (operatorTag != "MSWJ" && iawj == nullptr) {
         iawj = newIAWJOperator();
         INTELLI_INFO("No " + operatorTag + " operator, will use IAWJ instead");
     }
 
-
+    //Global configs
     cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
-    //cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
     cfg->edit("timeStep", (uint64_t) timeStepUs);
 
     //Dataset files
@@ -126,25 +124,21 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/sb_1000ms_1tHighDelayData.csv");
 
     TestBench tb, tbOoO;
-    //set data
     tbOoO.setDataLoader(loaderTag, cfg);
 
     cfg->edit("rLen", (uint64_t) tbOoO.sizeOfS());
     cfg->edit("sLen", (uint64_t) tbOoO.sizeOfR());
-    cfg->edit("watermarkTimeMs", (uint64_t)(windowLenMs + maxArrivalSkewMs));
+    cfg->edit("watermarkTimeMs", (uint64_t) (windowLenMs + maxArrivalSkewMs));
     cfg->edit("latenessMs", (uint64_t) 0);
     cfg->edit("earlierEmitMs", (uint64_t) 0);
 
-
     if (operatorTag == "MSWJ") {
-        //set operator as iawj
-        tbOoO.setOperator(MSWJ, cfg);
+        tbOoO.setOperator(mswj, cfg);
     } else {
         tbOoO.setOperator(iawj, cfg);
     }
 
     INTELLI_INFO("/****run OoO test of  tuples***/");
-
     OoORu = tbOoO.OoOTest(true);
 
     INTELLI_DEBUG("OoO Confirmed joined " + to_string(OoORu));
@@ -154,8 +148,7 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     generalStatistics.edit("AvgLatency", (double) tbOoO.getAvgLatency());
     generalStatistics.edit("95%Latency", (double) tbOoO.getLatencyPercentage(0.95));
     generalStatistics.edit("Throughput", (double) tbOoO.getThroughput());
-    // tbOoO.logRTuples();
-    // INTELLI_DEBUG("Average latency (us)=" << tbOoO.getAvgLatency());
+
     INTELLI_DEBUG("95% latency (us)=" + to_string(tbOoO.getLatencyPercentage(0.95)));
     INTELLI_DEBUG("Throughput (TPs/s)=" + to_string(tbOoO.getThroughput()));
 
@@ -167,16 +160,11 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     if (resultBreakDown != nullptr) {
         resultBreakDown->toFile(outPrefix + "_breakdown.csv");
     }
-    /**
-     * disable all possible OoO related settings, as we will test the expected in-order results
-     */
-
 
     tb.setDataLoader(loaderTag, cfg);
 
     if (operatorTag == "MSWJ") {
-        //set operator as iawj
-        tb.setOperator(MSWJ, cfg);
+        tb.setOperator(mswj, cfg);
     } else {
         tb.setOperator(iawj, cfg);
     }
@@ -197,8 +185,6 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     INTELLI_DEBUG("Error = " + to_string(err));
 
     generalStatistics.toFile(outPrefix + "_general.csv");
-
-    //windowLenMs= tryU64(cfg,"windowLenMs",1000);
 }
 
 
