@@ -33,13 +33,14 @@ auto BufferSizeManager::kSearch(int stream_id) -> int {
     return k == 0 ? 1 : k;
 }
 
+//Calculate the buffer size using the y function in K-Slack algorithm
 auto BufferSizeManager::y(int K) -> double {
-    //SEL比值
+    //Calculate the select ratio
     double sel_radio = productivityProfiler->getSelectRatio(K);
 
     int m = streamCount;
 
-    //分子
+    //Numerator of y function
     int numerator = 0;
     for (int i = 1; i <= m; i++) {
         int res = 1;
@@ -59,7 +60,7 @@ auto BufferSizeManager::y(int K) -> double {
         numerator += statisticsManager->fDk(0, i, K) * res;
     }
 
-    //分母
+    //Denominator of y function
     int denominator = 0;
     for (int i = 1; i <= m; i++) {
         int res = 1;
