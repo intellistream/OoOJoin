@@ -49,28 +49,28 @@ auto StatisticsManager::getMaxD(int streamId) -> int {
     return maxD;
 }
 
-
+// Get the R_stat value for a given stream ID
 auto StatisticsManager::getRStat(int streamId) -> int {
     std::vector<TrackTuple> record = recordMap[streamId];
     if (record.empty()) {
         return 1;
     }
 
-    //当前Rstat大小
+    // Current R_stat value
     int RStat = 2;
     if (RStatMap[streamId] != 0) {
         RStat = RStatMap[streamId];
     }
 
-    //窗口
+    // Create two windows
     std::list<int> window1List;
     std::list<int> window0List;
 
-    //维护sum变量,方便取平均值
+    // Maintain sum variables for computing the average
     int sumW0 = 0;
     int sumW1 = 0;
 
-    //取出record里面当前R_stat大小范围的数据,并计算频率，用频率估计概率
+    // Extract data from the record within the current R_stat window size, compute frequency, and estimate probability using the frequency
     for (int i = record.size() - 1; i >= std::max((int) record.size() - RStat, 0); i--) {
         int xi = getD(record[i].delay);
         window1List.push_back(xi);
@@ -79,14 +79,14 @@ auto StatisticsManager::getRStat(int streamId) -> int {
 
     double eCut = 0;
     while (window1List.size() > 1) {
-        //将窗口分为w0,w1两部分
+        //Divide the window into w1 and w2 two parts
         int w1Front = window1List.front();
         window0List.push_back(w1Front);
         window1List.pop_front();
         sumW1 -= w1Front;
         sumW0 += w1Front;
 
-        //更新e_cut
+        //update e_cut
         double m = 1 / (1 / window0List.size() + 1 / window1List.size());
         double confidenceValue = confidenceValue / (window1List.size() + window0List.size());
         eCut = std::sqrt((1 / 2 * m) * std::log1p(4 / confidenceValue));
@@ -101,7 +101,7 @@ auto StatisticsManager::getRStat(int streamId) -> int {
 }
 
 
-//获取Ksync的值，Ksync = iT - ki - min{iT - ki| i∈[1,latch_]}
+// Get the K_sync value, K_sync = i_T - k_i - min{i_T - k_i| i∈[1,latch_]}
 auto StatisticsManager::getKsync(int streamId) -> int {
     if (tMap[streamId] == 0
         || kMap[streamId] == 0
@@ -119,7 +119,7 @@ auto StatisticsManager::getKsync(int streamId) -> int {
 }
 
 
-//获取平均值，目的是为了预测未来的k_sync
+// Get the average K_sync value for a given stream ID, to predict future K_sync values
 auto StatisticsManager::getAvgKsync(int streamId) -> int {
     int sumKsynci = 0;
     int R_stat = getRStat(streamId);
@@ -129,7 +129,7 @@ auto StatisticsManager::getAvgKsync(int streamId) -> int {
         return 0;
     }
 
-    //找出R_stat范围内的ksync_i的总和，再取平均值
+    // Compute the sum of K_sync values within the R_stat window size, then compute the average
     for (int i = kSyncList.size() - 1; i >= std::max((int) kSyncList.size() - R_stat, 0); i--) {
         sumKsynci += kSyncMap[streamId][i];
     }
@@ -138,7 +138,7 @@ auto StatisticsManager::getAvgKsync(int streamId) -> int {
     return avgKsynci == 0 ? 0 : avgKsynci;
 }
 
-//公式见论文page 7
+// The formula used is on page 7 of the referenced paper.
 auto StatisticsManager::getFutureKsync(int stream_id) -> int {
     if (kSyncMap.empty()) {
         return 0;
@@ -147,7 +147,7 @@ auto StatisticsManager::getFutureKsync(int stream_id) -> int {
     int avgksynci = getAvgKsync(stream_id);
     int minKsync = INT32_MAX;
 
-    //找到j != i的所有avg_ksync的最小值
+    //Find the minimum value of all avgKsync for j != 1
     for (int i = 0; i < kSyncMap.size(); i++) {
         if (kSyncMap[i].empty())continue;
         minKsync = std::min(minKsync, getAvgKsync(i));
@@ -160,7 +160,7 @@ auto StatisticsManager::getFutureKsync(int stream_id) -> int {
 }
 
 
-//概率分布函数fD
+// This function calculates the probability distribution function fD for a given delay d
 auto StatisticsManager::fD(int d, int stream_id) -> double {
     int R_stat = getRStat(stream_id);
 
@@ -174,13 +174,14 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
     }
 
     //取出record里面R_stat大小范围的数据,并计算频率，用频率估计概率
+    //Extract the Rstat-sized range of data from record, and calculate probability, and using frequency to estimate probability
     std::map<int, int> rate_map;
     for (int i = record.size() - 1; i >= std::max((int) record.size() - R_stat, 0); i--) {
         int Di = getD(record[i].delay);
         rate_map[Di] = rate_map.find(Di) == rate_map.end() ? 1 : rate_map[Di] + 1;
     }
 
-    //用直方图模拟
+    //Use a histogram to simulate the probabilities
     if (histogramMap[stream_id].empty()) {
         histogramMap[stream_id].resize(maxDelay);
     }
@@ -188,7 +189,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
     double sumP = 0;
     for (auto it: rate_map) {
         if (histogramMap[stream_id][it.first] != 0) {
-            //原先的直方图已经统计过了该Di的概率，故取平均值
+            // The probability for Di has already been calculated, so take the average
             histogramMap[stream_id][it.first] = (histogramMap[stream_id][it.first] + it.second * 1.0 / R_stat) / 2;
         } else {
             histogramMap[stream_id][it.first] = it.second * 1.0 / R_stat;
@@ -200,9 +201,9 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
         sumP += histogramMap[stream_id][histogramPos[stream_id][i]];
     }
 
-    //如果d已经有现成的概率，则直接返回即可
+    // If the probability for d already exists, return it
     if (histogramMap[stream_id][d] != 0) {
-        //前面可能更新过了直方图，返回前做一次归一化
+        // Normalize the histogram if it has been updated before returning the probability for d
         if (sumP != 0) {
             for (int i = 0; i < histogramPos[stream_id].size(); i++) {
                 if (histogramMap[stream_id][histogramPos[stream_id][i]] != 0) {
@@ -213,7 +214,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
         return histogramMap[stream_id][d];
     }
 
-    //如果d没有记录，则做折线插值估计 , 双指针中心扩散法
+    // If d is not recorded, use line interpolation estimation, double pointer center diffusion method
     int hi_size = histogramMap[stream_id].size();
 
     bool flag = false;
@@ -247,7 +248,7 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
             }
         } else if (right >= hi_size) {
             if (d - 1 < 0 || d - 2 < 0) {
-                //说明此时左边已经没有元素了,直接break
+                // Indicates that there are no more elements to the left, so the loop should be terminated using break.
                 right = left;
             } else {
                 left = d - 2, right = d - 1;
@@ -276,18 +277,18 @@ auto StatisticsManager::fD(int d, int stream_id) -> double {
     double pL = histogramMap[stream_id][left];
     double pR = histogramMap[stream_id][right];
 
-    //此时left和right分别指向了有实际数据的点，可用折线估计概率
-    //直线方程： y =  (pR - pL)/(right - left)(x - left) + pL
+    // At this point, left and right are pointing to indices with actual data, so linear interpolation can be used to estimate probability.
+    // The equation of the line is: y = (pR - pL) / (right - left) * (x - left) + pL
     double pD = (pR - pL) / (right - left) * (d - left) + pL;
 
     if (pD < 0) {
         pD = 1;
     }
-    //更新直方图
+    // Update the histogram at index 'd' with the estimated probability and append 'd' to the histogram position vector.
     histogramMap[stream_id][d] = pD;
     histogramPos[stream_id].push_back(d);
 
-    //归一化
+    // Normalize the histogram.
     sumP += pD;
     for (int i = 0; i < histogramPos[stream_id].size(); i++) {
         if (histogramMap[stream_id][histogramPos[stream_id][i]] != 0) {

@@ -23,13 +23,13 @@ auto KSlack::getId() -> int {
     return streamId;
 }
 
-//K-Slack算法对无序流进行处理
+// K-Slack algorithm for processing unordered streams
 auto KSlack::disorderHandling(const TrackTuplePtr &tuple) -> void {
     if (tuple->isEnd) {
-        //将buffer区剩下的元素加入output
+        // Add remaining elements in buffer to output
         while (!buffer.empty()) {
             auto syn_tuple = buffer.top();
-            //加入同步器
+            // Add to synchronizer
             synchronizer->synchronizeStream(syn_tuple);
             buffer.pop();
         }
@@ -39,46 +39,41 @@ auto KSlack::disorderHandling(const TrackTuplePtr &tuple) -> void {
     //update local time
     currentTime = std::max(currentTime, (int) tuple->eventTime);
 
-    //每L个时间单位调整K值
+    // Adjust K value every L time units
     if (currentTime != 0 && currentTime % L == 0) {
         bufferSize = bufferSizeManager->kSearch(streamId);
     }
 
-    //计算出tuple的delay,T - ts, 方便统计管理器统计记录
+    // Calculate tuple's delay T - ts for recording in statistics manager
     tuple->delay = currentTime - tuple->eventTime;
 
-    //将output_加入同步器
-    //加入statistics_manager的历史记录统计表以及T值
+    // Add tuple to output and statistics manager's historical records and T value
     statisticsManager->addRecord(streamId, tuple);
     statisticsManager->addRecord(streamId, currentTime, bufferSize);
 
-    //先让缓冲区所有满足条件的tuple出队进入输出区
+    // Dequeue all tuples in buffer that satisfy the condition and add them to output
     while (!buffer.empty()) {
 
         auto tuple = buffer.top();
 
-        //对应论文的公式：ei. ts + Ki <= T
+        // Condition: ei. ts + Ki <= T
         if (tuple->eventTime + bufferSize > currentTime) {
             break;
         }
 
-        //满足上述公式，加入输出区
-
-        //加入同步器
+        // Satisfies condition, add to output
+        // Add to synchronizer
         synchronizer->synchronizeStream(tuple);
-
 
         buffer.pop();
     }
 
-    //加入tuple进入buffer
+    // Add tuple to buffer
     buffer.push(tuple);
-
-
 }
 
-auto KSlack::setConfig(const INTELLI::ConfigMapPtr config) -> void {
-    cfg = std::move(config);
+auto KSlack::setConfig(const INTELLI::ConfigMapPtr& config) -> void {
+    cfg = config;
     g = cfg->getU64("g");
     L = cfg->getU64("L");
     P = cfg->getU64("P");

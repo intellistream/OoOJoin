@@ -36,7 +36,7 @@ namespace MSWJ {
         auto getId() -> int;
 
         // Sets the configuration for the KSlack instance
-        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+        auto setConfig(const INTELLI::ConfigMapPtr& config) -> void;
 
     private:
         // Configuration object

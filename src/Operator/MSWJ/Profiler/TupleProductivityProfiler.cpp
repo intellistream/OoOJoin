@@ -105,7 +105,7 @@ auto TupleProductivityProfiler::getRequirementRecall() -> double {
     if (nTrueL == 0) {
         return userRecall;
     }
-    //requirement_recall大于等于这个值
+
     double requirementRecall = (userRecall * (nTruePL + nTrueL) - nProdPL) * 1.0 / nTrueL;
     return std::max(requirementRecall, (double) 1);
 }

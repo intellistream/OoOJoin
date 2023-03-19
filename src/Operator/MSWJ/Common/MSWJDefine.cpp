@@ -5,28 +5,28 @@
 #include "Operator/MSWJ/Common/MSWJDefine.h"
 
 namespace MSWJ {
-//系统参数定义
-//搜索粒度
+    // Search granularity
     int g{10000};
 
-//自适应时间间隔
+    // Adaptive interval
     int L{500000};
 
-//最大延迟
+    // Maximum delay
     int maxDelay = INT16_MAX;
 
-//用户期待的recall率
+    // User expected recall rate
     double userRecall{0.4};
 
-//用户设定的时间P
+    // User defined time P
     int P{600000};
 
-//basic window size
+    // Basic window size
     int b{1000};
 
-//用于估计R的可信度值，范围(0,1)
+    // Confidence value for estimating the credibility of R, range (0,1)
     double confidenceValue{0.5};
 
+    // Number of streams
     int streamCount{2};
 
 }
