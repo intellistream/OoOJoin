@@ -87,8 +87,8 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     string operatorTag = "IMA";
     string loaderTag = "file";
 
-    cfg->edit("operator", "IMA");
-    cfg->edit("dataLoader", "file");
+    cfg->edit("operator", operatorTag);
+    cfg->edit("dataLoader", loaderTag);
 
     windowLenMs = cfg->tryU64("windowLenMs", 10, true);
     timeStepUs = cfg->tryU64("timeStepUs", 40, true);
