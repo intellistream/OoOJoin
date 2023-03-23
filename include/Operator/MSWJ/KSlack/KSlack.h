@@ -49,7 +49,7 @@ namespace MSWJ {
         int streamId{};
 
         // Priority queue used as the buffer (min heap)
-        std::priority_queue<TrackTuplePtr> buffer{};
+        std::priority_queue<TrackTuplePtr, std::deque<TrackTuplePtr>, TrackTuplePtrComparator> buffer{};
 
     private:
         // Buffer size manager

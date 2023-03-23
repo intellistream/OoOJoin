@@ -161,7 +161,7 @@ bool StreamOperator::stop() {
 
 auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
     //indicate system is doing unit test
-    if(wmGen == nullptr){
+    if (wmGen == nullptr) {
         return false;
     }
 
@@ -189,7 +189,7 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
     if (stream_id == 1) {
         if (sIsInWindow) {
             productivityProfiler->updateCrossJoin(get_D(trackTuple->delay),
-                                                      myWindow.windowR.size() * myWindow.windowS.size());
+                                                  myWindow.windowR.size() * myWindow.windowS.size());
 
             IMAStateOfKeyPtr sk;
             /**
@@ -220,18 +220,18 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
             if (probrPtr != nullptr) {
                 IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
                 confirmedResult += py->arrivedTupleCnt;
-//                double matchedFutureTuples = futureTuplesS * (sk->lastUnarrivedTuples + sk->arrivedTupleCnt);
-
-//                intermediateResult += std::round(matchedFutureTuples / (py->arrivedTupleCnt + futureTuplesS));
-                intermediateResult += (futureTuplesS + sk->arrivedTupleCnt) *
-                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
-                                      (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+                intermediateResult += py->arrivedTupleCnt;
+//                intermediateResult += (futureTuplesS + sk->arrivedTupleCnt) *
+//                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+//                                      (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+//                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+//                productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
+//                                                        (futureTuplesS + sk->arrivedTupleCnt) *
+//                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+//                                                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+//                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt));
                 productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
-                                                        (futureTuplesS + sk->arrivedTupleCnt) *
-                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
-                                                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt));
+                                                    py->arrivedTupleCnt);
 
             }
             timeBreakDown_join += timeTrackingEnd(tt_join);
@@ -247,7 +247,7 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
     } else {
         if (rIsInWindow) {
             productivityProfiler->updateCrossJoin(get_D(trackTuple->delay),
-                                                      myWindow.windowR.size() * myWindow.windowS.size());
+                                                  myWindow.windowR.size() * myWindow.windowS.size());
 
             IMAStateOfKeyPtr sk;timeTrackingStart(tt_index);
             AbstractStateOfKeyPtr skrf = stateOfKeyTableR->getByKey(trackTuple->key);
@@ -275,16 +275,19 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
 
 //                intermediateResult += std::round(matchedFutureTuples / (sk->arrivedTupleCnt + futureTuplesR));
 
-                intermediateResult += (futureTuplesR + sk->arrivedTupleCnt) *
-                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
-                                      (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+//                intermediateResult += (futureTuplesR + sk->arrivedTupleCnt) *
+//                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+//                                      (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+//                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt);
 
+                intermediateResult += py->arrivedTupleCnt;
+//                productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
+//                                                        (futureTuplesR + sk->arrivedTupleCnt) *
+//                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+//                                                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+//                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt));
                 productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
-                                                        (futureTuplesR + sk->arrivedTupleCnt) *
-                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
-                                                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt));
+                                                    py->arrivedTupleCnt);
 
             }
             timeBreakDown_join += timeTrackingEnd(tt_join);

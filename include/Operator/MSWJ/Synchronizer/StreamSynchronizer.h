@@ -45,7 +45,7 @@ namespace MSWJ {
         int ownStream{};
 
         // SyncBuf buffer mapping
-        std::vector<std::priority_queue<TrackTuplePtr>> synBufferMap{};
+        std::vector<std::priority_queue<TrackTuplePtr, std::deque<TrackTuplePtr>, TrackTuplePtrComparator>> synBufferMap{};
 
     private:
         // Connector
