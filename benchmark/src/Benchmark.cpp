@@ -84,7 +84,7 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
 
     size_t OoORu = 0, realRu = 0;
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
-    string operatorTag = "IMA";
+    string operatorTag = "MSWJ";
     string loaderTag = "file";
 
     cfg->edit("operator", operatorTag);

@@ -35,23 +35,24 @@ namespace MSWJ {
 
         auto setConfig(INTELLI::ConfigMapPtr config) -> void;
 
-    private:
-        // Connector
-        StreamOperator *streamOperator;
-
-        //write and read lock
-        mutable std::shared_mutex mu;
 
         INTELLI::ConfigMapPtr cfg{};
-
-        // SyncBuf buffer mapping
-        std::vector<std::priority_queue<TrackTuplePtr>> synBufferMap{};
 
         // Tsync
         int tSync{};
 
         // The number of streams that have tuples in the current buffer
         int ownStream{};
+
+        // SyncBuf buffer mapping
+        std::vector<std::priority_queue<TrackTuplePtr>> synBufferMap{};
+
+    private:
+        // Connector
+        StreamOperator *streamOperator;
+
+        //write and read lock
+        mutable std::shared_mutex mu;
     };
 }
 

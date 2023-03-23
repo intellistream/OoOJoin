@@ -27,18 +27,15 @@ namespace MSWJ {
 
         // Disable copy constructor and copy assignment operator
         KSlack(const KSlack &) = delete;
+
         KSlack &operator=(const KSlack &) = delete;
 
         // Handles the disordering of incoming tuples
         auto disorderHandling(const TrackTuplePtr &tuple) -> void;
 
-        // Returns the stream ID of the KSlack instance
-        auto getId() -> int;
-
         // Sets the configuration for the KSlack instance
-        auto setConfig(const INTELLI::ConfigMapPtr& config) -> void;
+        auto setConfig(const INTELLI::ConfigMapPtr &config) -> void;
 
-    private:
         // Configuration object
         INTELLI::ConfigMapPtr cfg{};
 
@@ -54,6 +51,7 @@ namespace MSWJ {
         // Priority queue used as the buffer (min heap)
         std::priority_queue<TrackTuplePtr> buffer{};
 
+    private:
         // Buffer size manager
         BufferSizeManager *bufferSizeManager{};
 

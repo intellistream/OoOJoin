@@ -160,6 +160,11 @@ bool StreamOperator::stop() {
 
 
 auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
+    //indicate system is doing unit test
+    if(wmGen == nullptr){
+        return false;
+    }
+
     int stream_id = trackTuple->streamId;
 
     bool shouldGenWM;

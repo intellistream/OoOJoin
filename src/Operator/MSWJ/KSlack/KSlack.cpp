@@ -16,15 +16,13 @@ KSlack::KSlack(int streamId, BufferSizeManager *bufferSizeManager, StatisticsMan
         bufferSizeManager(bufferSizeManager),
         statisticsManager(statisticsManager),
         synchronizer(synchronizer) {
-    streamId = streamId;
+    this->streamId = streamId;
 }
 
-auto KSlack::getId() -> int {
-    return streamId;
-}
 
 // K-Slack algorithm for processing unordered streams
 auto KSlack::disorderHandling(const TrackTuplePtr &tuple) -> void {
+    tuple->streamId = streamId;
     if (tuple->isEnd) {
         // Add remaining elements in buffer to output
         while (!buffer.empty()) {
@@ -72,7 +70,7 @@ auto KSlack::disorderHandling(const TrackTuplePtr &tuple) -> void {
     buffer.push(tuple);
 }
 
-auto KSlack::setConfig(const INTELLI::ConfigMapPtr& config) -> void {
+auto KSlack::setConfig(const INTELLI::ConfigMapPtr &config) -> void {
     cfg = config;
     g = cfg->getU64("g");
     L = cfg->getU64("L");
@@ -83,5 +81,7 @@ auto KSlack::setConfig(const INTELLI::ConfigMapPtr& config) -> void {
     userRecall = cfg->getDouble("userRecall");
     confidenceValue = cfg->getDouble("confidenceValue");
 }
+
+
 
 
