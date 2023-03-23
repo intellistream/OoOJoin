@@ -60,11 +60,16 @@ def runPeriod(exePath, period, resultPath, templateName="config.csv"):
     editConfig(configTemplate, exePath + configFname, "watermarkTimeMs", period)
     # editConfig(exePath+configFname,exePath+configFname,"aqpScale",aqpScale)
     # run
-    os.system("cd " + exePath + "&& ./benchmark " + configFname)
+    os.system("cd " + exePath)
+    os.system("chmod +x benchmark")
+    os.system("./benchmark " + configFname)
     # copy result
     os.system("rm -rf " + resultPath + "/" + str(period))
     os.system("mkdir " + resultPath + "/" + str(period))
-    os.system("cd " + exePath + "&& cp *.csv " + resultPath + "/" + str(period))
+    password = "Rjzhb2326090"
+    sudo_command = "cd " + exePath + "&& cp *.csv " + resultPath + "/" + str(period)
+    os.system('echo {} | {}'.format(password, sudo_command))
+
 
 
 def runPeriodVector(exePath, periodVec, resultPath, templateName="config.csv"):

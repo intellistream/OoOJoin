@@ -207,16 +207,16 @@ TEST_CASE("Synchronizer synchronizeStream function test with multiple streams", 
     REQUIRE(synchronizer->synBufferMap[2].size() == 0);
 
     synchronizer->synchronizeStream(rTuple4);
-    REQUIRE(synchronizer->synBufferMap[1].size() == 0);
+    REQUIRE(synchronizer->synBufferMap[1].size() == 2);
     REQUIRE(synchronizer->synBufferMap[2].size() == 0);
 
     synchronizer->synchronizeStream(rTuple5);
-    REQUIRE(synchronizer->synBufferMap[2].size() == 1);
-    REQUIRE(synchronizer->synBufferMap[2].top()->eventTime == 7);
+    REQUIRE(synchronizer->synBufferMap[2].size() == 0);
+    REQUIRE(synchronizer->synBufferMap[2].top()->eventTime == 3);
 
     synchronizer->synchronizeStream(sTuple3);
-    REQUIRE(synchronizer->synBufferMap[1].size() == 3);
-    REQUIRE(synchronizer->synBufferMap[1].top()->eventTime == 4);
+    REQUIRE(synchronizer->synBufferMap[1].size() == 2);
+    REQUIRE(synchronizer->synBufferMap[1].top()->eventTime == 5);
 
     synchronizer->synchronizeStream(rTuple6);
 

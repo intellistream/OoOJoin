@@ -84,18 +84,17 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
 
     size_t OoORu = 0, realRu = 0;
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
-    string operatorTag = "MSWJ";
+    string operatorTag = "IMA";
     string loaderTag = "file";
-
-    cfg->edit("operator", operatorTag);
-    cfg->edit("dataLoader", loaderTag);
 
     windowLenMs = cfg->tryU64("windowLenMs", 10, true);
     timeStepUs = cfg->tryU64("timeStepUs", 40, true);
     maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
 
-    windowLenMs = 2000;
-    maxArrivalSkewMs = 50000;
+
+
+    operatorTag = cfg->tryString("operator", "IMA");
+    loaderTag = cfg->tryString("dataLoader", "random");
     INTELLI_INFO("window len= " + to_string(windowLenMs) + "ms ");
     INTELLI_INFO("Try use " + operatorTag + " operator");
 
@@ -120,8 +119,8 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     cfg->edit("timeStep", (uint64_t) timeStepUs);
 
     //Dataset files
-    cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/cj_1000ms_1tHighDelayData.csv");
-    cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/sb_1000ms_1tHighDelayData.csv");
+    cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/sb_1000ms_1tMidDelayData.csv");
+    cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/cj_1000ms_1tLowDelayData.csv");
 
     TestBench tb, tbOoO;
     tbOoO.setDataLoader(loaderTag, cfg);
