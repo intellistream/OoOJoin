@@ -5,12 +5,28 @@ set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Werror=return-type -Werror=unused-variabl
 enable_testing()
 add_executable(cpp_test SystemTest/SimpleTest.cpp)
 add_executable(mswjTest SystemTest/MSWJTest.cpp)
+add_executable(iawjTest SystemTest/IAWJTest.cpp)
+add_executable(imaTest SystemTest/IMATest.cpp)
+add_library(TestFunction SystemTest/TestFunction.cpp)
 message(STATUS " Libraries: ${LIBRARIES}")
+target_link_libraries(TestFunction
+        IntelliStream
+        )
 target_link_libraries(cpp_test
         IntelliStream
+        TestFunction
         )
 target_link_libraries(mswjTest
         IntelliStream
+        TestFunction
+        )
+target_link_libraries(iawjTest
+        IntelliStream
+        TestFunction
+        )
+target_link_libraries(imaTest
+        IntelliStream
+        TestFunction
         )
 # avoid undefined reference to "main" in test.cpp
 
@@ -22,6 +38,16 @@ add_test(
         NAME catchmswj_test
         COMMAND $<TARGET_FILE:mswjTest> --success
 )
+add_test(
+        NAME catchiawj_test
+        COMMAND $<TARGET_FILE:iawjTest> --success
+)
+
+add_test(
+        NAME catchima_test
+        COMMAND $<TARGET_FILE:imaTest> --success
+)
+
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/config_IMA.csv
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

@@ -1,0 +1,7 @@
+key,value,type
+cacheMiss,264951,U64
+cacheRefs,847006,U64
+cpuClock,42435100,U64
+cpuCycle,174910523,U64
+instructions,260562917,U64
+taskClock,42436200,U64

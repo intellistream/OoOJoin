@@ -1,18 +1,12 @@
 #define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
-#include <OoOJoin.h>
-#include "catch.hpp"
 #include "Operator/MSWJ/KSlack/KSlack.h"
+#include "SimpleTest.cpp"
 
 using namespace std;
 using namespace OoOJoin;
 using namespace MSWJ;
-
-constexpr static int SECONDS = 1000000;
-constexpr static int MICRO_SECONDS = 1;
-constexpr static int MILLION_SECONDS = 1000;
-
 
 TEST_CASE("KSlack disorderHandling function static test with multiple tuples", "[KSlack]") {
     // Create objects needed for KSlack instance
@@ -218,19 +212,109 @@ TEST_CASE("Synchronizer synchronizeStream function test with multiple streams", 
     REQUIRE(synchronizer->synBufferMap[1].size() == 2);
     REQUIRE(synchronizer->synBufferMap[1].top()->eventTime == 5);
 
-    synchronizer->synchronizeStream(rTuple6);
-
-    synchronizer->synchronizeStream(sTuple4);
-    synchronizer->synchronizeStream(sTuple5);
-    synchronizer->synchronizeStream(sTuple6);
-
-    synchronizer->synchronizeStream(rTuple7);
-
-    synchronizer->synchronizeStream(sTuple7);
-
-    synchronizer->synchronizeStream(rTuple8);
-
-    synchronizer->synchronizeStream(sTuple8);
+}
 
 
+TEST_CASE("Test MSWJ running on random, watermarkTime = 7", "[short]")
+{
+    int a = 0;
+    string configName, outPrefix = "";
+    configName = "config_IMA.csv";
+    ConfigMapPtr cfg = newConfigMap();
+    cfg->fromFile(configName);
+    cfg->edit("operator", "MSWJ");
+    cfg->edit("watermarkTimeMs", (uint64_t) 7);
+    a = runTestBenchAdj(cfg, configName, outPrefix);
+    REQUIRE(a == 1);
+}
+
+TEST_CASE("Test MSWJ running on random, watermarkTime = 10", "[short]")
+{
+    int a = 0;
+    string configName, outPrefix = "";
+    configName = "config_IMA.csv";
+    ConfigMapPtr cfg = newConfigMap();
+    cfg->fromFile(configName);
+    cfg->edit("operator", "MSWJ");
+    cfg->edit("watermarkTimeMs", (uint64_t) 10);
+    a = runTestBenchAdj(cfg, configName, outPrefix);
+    REQUIRE(a == 1);
+}
+
+
+TEST_CASE("Test MSWJ running on random, watermarkTime = 12", "[short]")
+{
+    int a = 0;
+    string configName, outPrefix = "";
+    configName = "config_IMA.csv";
+    ConfigMapPtr cfg = newConfigMap();
+    cfg->fromFile(configName);
+    cfg->edit("operator", "MSWJ");
+    cfg->edit("watermarkTimeMs", (uint64_t) 12);
+    a = runTestBenchAdj(cfg, configName, outPrefix);
+    REQUIRE(a == 1);
+}
+
+TEST_CASE("Test MSWJ running on random, watermarkTime = 14", "[short]")
+{
+    int a = 0;
+    string configName, outPrefix = "";
+    configName = "config_IMA.csv";
+    ConfigMapPtr cfg = newConfigMap();
+    cfg->fromFile(configName);
+    cfg->edit("operator", "MSWJ");
+    cfg->edit("watermarkTimeMs", (uint64_t) 14);
+    a = runTestBenchAdj(cfg, configName, outPrefix);
+    REQUIRE(a == 1);
+}
+
+
+TEST_CASE("Test MSWJ running on random, watermarkTime = 16", "[short]")
+{
+    int a = 0;
+    string configName, outPrefix = "";
+    configName = "config_IMA.csv";
+    ConfigMapPtr cfg = newConfigMap();
+    cfg->fromFile(configName);
+    cfg->edit("operator", "MSWJ");
+    cfg->edit("watermarkTimeMs", (uint64_t) 16);
+    a = runTestBenchAdj(cfg, configName, outPrefix);
+    REQUIRE(a == 1);
+}
+
+
+TEST_CASE("Test MSWJ running on dataLoader, windowLenMs = 2000, watermarkTime = 200", "[short]")
+{
+    int a = 0;
+    string configName, outPrefix = "";
+    configName = "config_IMA.csv";
+    ConfigMapPtr cfg = newConfigMap();
+    cfg->fromFile(configName);
+    cfg->edit("windowLenMs", (uint64_t) 2000);
+    cfg->edit("operator", "MSWJ");
+    cfg->edit("watermarkTimeMs", (uint64_t) 200);
+    cfg->edit("dataLoader", "file");
+    //Dataset files
+    cfg->edit("fileDataLoader_rFile", "../datasets/sb_1000ms_1tMidDelayData.csv");
+    cfg->edit("fileDataLoader_sFile", "../datasets/cj_1000ms_1tLowDelayData.csv");
+    a = runTestBenchAdj(cfg, configName, outPrefix);
+    REQUIRE(a == 1);
+}
+
+TEST_CASE("Test MSWJ running on dataLoader, windowLenMs = 2000, watermarkTime = 500", "[short]")
+{
+    int a = 0;
+    string configName, outPrefix = "";
+    configName = "config_IMA.csv";
+    ConfigMapPtr cfg = newConfigMap();
+    cfg->fromFile(configName);
+    cfg->edit("windowLenMs", (uint64_t) 2000);
+    cfg->edit("operator", "MSWJ");
+    cfg->edit("watermarkTimeMs", (uint64_t) 500);
+    cfg->edit("dataLoader", "file");
+    //Dataset files
+    cfg->edit("fileDataLoader_rFile", "../datasets/sb_1000ms_1tMidDelayData.csv");
+    cfg->edit("fileDataLoader_sFile", "../datasets/cj_1000ms_1tLowDelayData.csv");
+    a = runTestBenchAdj(cfg, configName, outPrefix);
+    REQUIRE(a == 1);
 }
