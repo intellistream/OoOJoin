@@ -83,12 +83,13 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     cfg->fromFile(configName);
 
     size_t OoORu = 0, realRu = 0;
-    tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
+    tsType windowLenMs, timeStepUs, maxArrivalSkewMs, watermarkTimeMs;
     string operatorTag = "IMA";
     string loaderTag = "random";
 
     windowLenMs = cfg->tryU64("windowLenMs", 10, true);
     timeStepUs = cfg->tryU64("timeStepUs", 40, true);
+    watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10, true);
     maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
 
     operatorTag = cfg->tryString("operator", "IMA");
@@ -115,6 +116,7 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     //Global configs
     cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
     cfg->edit("timeStep", (uint64_t) timeStepUs);
+    cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
 
     //Dataset files
     cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/sb_1000ms_1tMidDelayData.csv");
@@ -125,7 +127,6 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
 
     cfg->edit("rLen", (uint64_t) tbOoO.sizeOfS());
     cfg->edit("sLen", (uint64_t) tbOoO.sizeOfR());
-    cfg->edit("watermarkTimeMs", (uint64_t) (windowLenMs + maxArrivalSkewMs));
     cfg->edit("latenessMs", (uint64_t) 0);
     cfg->edit("earlierEmitMs", (uint64_t) 0);
 
