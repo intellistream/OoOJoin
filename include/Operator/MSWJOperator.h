@@ -64,11 +64,6 @@ namespace OoOJoin {
 #define newIMAStateOfKey std::make_shared<IMAStateOfKey>
 
     private:
-//        phmap::parallel_flat_hash_map<int, Stream *> stream_map{};
-        //Stream
-//        StreamPtr streamS;
-//        StreamPtr streamR;
-
         bool created = false;
         bool initTime = false;
 
@@ -91,8 +86,6 @@ namespace OoOJoin {
 
         StreamOperatorPtr streamOperator{};
 
-        bool sEnd{};
-        bool rEnd{};
 
     public:
 

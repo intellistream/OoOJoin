@@ -53,8 +53,6 @@ void OoOJoin::IMAIAWJOperator::conductComputation() {
 }
 
 bool OoOJoin::IMAIAWJOperator::stop() {
-    /**
-     */
     if (lockedByWaterMark) {
         WM_INFO("early terminate by watermark, already have results");
     }
@@ -62,12 +60,14 @@ bool OoOJoin::IMAIAWJOperator::stop() {
         WM_INFO("No watermark encountered, compute now");
     }
     timeBreakDown_all = timeTrackingEnd(timeBreakDown_all);
-    //lazyComputeOfAQP();
+
     size_t rLen = myWindow.windowR.size();
     NPJTuplePtr *tr = myWindow.windowR.data();
     tsType timeNow = lastTimeOfR;
     for (size_t i = 0; i < rLen; i++) {
-        if (tr[i]->arrivalTime < timeNow) { tr[i]->processedTime = timeNow; }
+        if (tr[i]->arrivalTime < timeNow) {
+            tr[i]->processedTime = timeNow;
+        }
     }
     return true;
 }

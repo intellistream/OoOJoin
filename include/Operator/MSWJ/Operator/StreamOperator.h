@@ -24,16 +24,11 @@ using namespace OoOJoin;
 namespace MSWJ {
     class StreamOperator : public MeanAQPIAWJOperator {
     public:
-        // The length of r tuple
-        size_t rLen{};
-        // The pointer to NPJ tuple
-        NPJTuplePtr *tr{};
-        // The current time
-        tsType timeNow{};
         // Whether r tuple is in window
         bool rIsInWindow = false;
         // Whether s tuple is in window
         bool sIsInWindow = false;
+
 
         explicit StreamOperator(TupleProductivityProfiler *profiler, INTELLI::ConfigMapPtr config);
 
@@ -98,7 +93,7 @@ namespace MSWJ {
 
     private:
         // The tag of MSWJ algorithm
-        string algoTag = "MSWJNestedLoopJoin";
+        string algoTag = " NestedLoopJoin";
         // The pointer to the configuration map
         INTELLI::ConfigMapPtr config;
         // The pointer to the tuple productivity profiler

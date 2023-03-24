@@ -7,8 +7,6 @@
 #include <future>
 #include <utility>
 #include "Operator/MSWJ/Operator/StreamOperator.h"
-#include "Operator/MSWJ/Common/MSWJDefine.h"
-#include "JoinAlgos/JoinAlgoTable.h"
 #include "JoinAlgos/AbstractJoinAlgo.h"
 #include "WaterMarker/WMTable.h"
 
@@ -62,9 +60,9 @@ bool StreamOperator::stop() {
     }
     timeBreakDown_all = timeTrackingEnd(timeBreakDown_all);
     //lazyComputeOfAQP();
-    rLen = myWindow.windowR.size();
-    tr = myWindow.windowR.data();
-    timeNow = lastTimeOfR;
+    size_t rLen = myWindow.windowR.size();
+    tsType timeNow = lastTimeOfR;
+    NPJTuplePtr *tr = myWindow.windowR.data();
     for (size_t i = 0; i < rLen; i++) {
         if (tr[i]->arrivalTime < timeNow) { tr[i]->processedTime = timeNow; }
     }
