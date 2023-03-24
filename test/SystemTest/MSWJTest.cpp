@@ -8,7 +8,9 @@ using namespace std;
 using namespace OoOJoin;
 using namespace MSWJ;
 
-TEST_CASE("KSlack disorderHandling function static test with multiple tuples", "[KSlack]") {
+TEST_CASE(
+        "KSlack disorderHandling function static test,this test same as paper's Fig. 3. Example of using K-slack to handle intra-stream disorder",
+        "[KSlack]") {
     // Create objects needed for KSlack instance
     ConfigMapPtr cfg = newConfigMap();
     cfg->edit("g", (uint64_t) 10 * MILLION_SECONDS);
