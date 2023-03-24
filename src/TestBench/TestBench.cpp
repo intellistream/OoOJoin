@@ -55,7 +55,7 @@ void OoOJoin::TestBench::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<T
     sTuple = std::move(_s);
 //    std::vector<TrackTuplePtr> r_;
 //    std::vector<TrackTuplePtr> s_;
-//    for (int i = 0; i < 100; i++) {
+//    for (int i = 0; i < 5000; i++) {
 //        r_.push_back(rTuple[i]);
 //        s_.push_back(sTuple[i]);
 //    }
@@ -80,7 +80,7 @@ bool OoOJoin::TestBench::setOperator(OoOJoin::AbstractOperatorPtr op, ConfigMapP
 }
 
 void OoOJoin::TestBench::inlineTest() {
-    if (opConfig->getString("operator") == "MSWJ") {
+    if (opConfig->existString("operator") && opConfig->getString("operator") == "MSWJ") {
         inlineTestOfMSWJ();
     } else {
         inlineTestOfCommon();

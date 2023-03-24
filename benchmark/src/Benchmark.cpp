@@ -85,13 +85,11 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
     size_t OoORu = 0, realRu = 0;
     tsType windowLenMs, timeStepUs, maxArrivalSkewMs;
     string operatorTag = "IMA";
-    string loaderTag = "file";
+    string loaderTag = "random";
 
     windowLenMs = cfg->tryU64("windowLenMs", 10, true);
     timeStepUs = cfg->tryU64("timeStepUs", 40, true);
     maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
-
-
 
     operatorTag = cfg->tryString("operator", "IMA");
     loaderTag = cfg->tryString("dataLoader", "random");

@@ -212,7 +212,8 @@ namespace INTELLI {
                 dest.edit(iter.first, (uint64_t) iter.second);
             }
             for (auto &iter: i64Map) {
-                dest.edit(iter.first, (int64_t) iter.second);
+                dest.edit(iter.first, (int64_t)
+                iter.second);
             }
             for (auto &iter: doubleMap) {
                 dest.edit(iter.first, (double) iter.second);
@@ -264,19 +265,20 @@ namespace INTELLI {
                 // cout<<readStr+"\n";
                 if (cols.size() >= 3) {
                     istringstream iss(cols[1]);
-                    if (cols[2] == "U64") {
+                    if (cols[2] == "U64" || cols[2] == "U64\r") {
                         uint64_t value;
                         iss >> value;
                         edit(cols[0], (uint64_t) value);
-                    } else if (cols[2] == "I64") {
+                    } else if (cols[2] == "I64" || cols[2] == "I64\r") {
                         int64_t value;
                         iss >> value;
-                        edit(cols[0], (int64_t) value);
-                    } else if (cols[2] == "Double") {
+                        edit(cols[0], (int64_t)
+                        value);
+                    } else if (cols[2] == "Double" || cols[2] == "Double\r") {
                         double value;
                         iss >> value;
                         edit(cols[0], (double) value);
-                    } else if (cols[2] == "String") {
+                    } else if (cols[2] == "String" || cols[2] == "String\r") {
                         edit(cols[0], (std::string) cols[1]);
                     }
                 }

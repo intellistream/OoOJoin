@@ -115,6 +115,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
         if (probrPtr != nullptr) {
             IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
             confirmedResult += py->arrivedTupleCnt;
+//            intermediateResult += py->arrivedTupleCnt;
             intermediateResult += (futureTuplesS + sk->arrivedTupleCnt) *
                                   (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
                                   (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
@@ -170,6 +171,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         if (probrPtr != nullptr) {
             IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
             confirmedResult += py->arrivedTupleCnt;
+//            intermediateResult += py->arrivedTupleCnt;
             intermediateResult += (futureTuplesR + sk->arrivedTupleCnt) *
                                   (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
                                   (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *

@@ -8,4 +8,5 @@ eventRateKTps,100,U64
 keyRange,10,U64
 threads,4,U64
 Energy,12.3,Double
+operator,IAWJ,String
 algo,NPJSingle,String
