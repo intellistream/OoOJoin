@@ -88,28 +88,28 @@ namespace OoOJoin {
         /**
          * @brief generate the vector of key
          */
-        void genKey();
+        void generateKey();
 
         /**
          * @brief enerate the vector of key
          */
-        void genValue();
+        void generateValue();
 
         /**
          *
          *  @brief generate the vector of event
          */
-        void genEvent();
+        void generateEvent();
 
         /**
          * @brief  generate the vector of arrival
          */
-        void genArrival();
+        void generateArrival();
 
         /**
          * @brief generate the final result of s and r
          */
-        void genFinal();
+        void generateFinal();
 
     public:
         ConfigMapPtr cfgGlobal;

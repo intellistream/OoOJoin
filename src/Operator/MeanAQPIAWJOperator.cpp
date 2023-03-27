@@ -212,18 +212,11 @@ void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
                 MeanStateOfKeyPtr px = ImproveStateOfKeyTo(MeanStateOfKey, iter);
                 probrPtr = stateOfKeyTableS->getByKey(px->key);
                 if (probrPtr != nullptr) {
-                    //  lastTimeS = px->lastArrivalTuple->arrivalTime;
-                    //lastTimeS=px->lastEventTuple->eventTime;
-                    //timeTrackingStart(tt_prediction);
                     double unarrivedS = predictUnarrivedTuples(px);
                     MeanStateOfKeyPtr py = ImproveStateOfKeyTo(MeanStateOfKey, probrPtr);
                     double unarrivedR = predictUnarrivedTuples(py);
-                    // timeBreakDown_prediction+= timeTrackingEnd(tt_prediction);
 
                     intermediateResult += (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR);
-                    /*cout << "S: a=" + to_string(px->arrivedTupleCnt) + ", u=" + to_string(unarrivedS) + "sigma="
-                        + to_string(px->sigmaArrivalSkew) +
-                        ";R: a=" + to_string(py->arrivedTupleCnt) + ", u=" + to_string(unarrivedR) + "\n";*/
                     confirmedResult += (px->arrivedTupleCnt) * (py->arrivedTupleCnt);
 
                 }

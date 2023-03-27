@@ -12,44 +12,24 @@ bool OoOJoin::MSWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
 }
 
 bool OoOJoin::MSWJOperator::start() {
-    /**
-     * @brief set watermark generator
-     */
-    //wmGen = newPeriodicalWM();
     streamOperator->syncTimeStruct(timeBaseStruct);
     return streamOperator->start();
 }
 
 
 bool OoOJoin::MSWJOperator::stop() {
-    /**
-     */
     streamOperator->stop();
     timeBreakDown_all = timeTrackingEnd(timeBreakDown_all);
     return true;
 }
 
 bool OoOJoin::MSWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
-//    struct timeval timeStart{};
-//    if (!initTime) {
-//        gettimeofday(&timeStart, nullptr);
-//        streamOperator->timeBase = timeStart;
-//        initTime = true;
-//    }
-
     ts->streamId = 1;
     kSlackS->disorderHandling(ts);
     return true;
 }
 
 bool OoOJoin::MSWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
-//    struct timeval timeStart{};
-////    if (initTime) {
-////        gettimeofday(&timeStart, nullptr);
-//        streamOperator->timeBase = timeStart;
-//        initTime = true;
-//    }
-
     tr->streamId = 2;
     kSlackR->disorderHandling(tr);
     return true;
@@ -57,7 +37,6 @@ bool OoOJoin::MSWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 
 
 size_t OoOJoin::MSWJOperator::getResult() {
-
     return streamOperator->getResult();
 }
 

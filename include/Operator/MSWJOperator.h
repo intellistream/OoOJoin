@@ -65,7 +65,6 @@ namespace OoOJoin {
 
     private:
         bool created = false;
-        bool initTime = false;
 
         //save rTuple record
         std::vector<TrackTuplePtr> rTupleRecord{};

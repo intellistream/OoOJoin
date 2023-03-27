@@ -193,7 +193,6 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 size_t OoOJoin::IMAIAWJOperator::getResult() {
 
     return confirmedResult;
-    // return confirmedResult;
 }
 
 size_t OoOJoin::IMAIAWJOperator::getAQPResult() {

@@ -15,21 +15,6 @@ bool OoOJoin::AbstractWaterMarker::setConfig(INTELLI::ConfigMapPtr cfg) {
     if (config == nullptr) {
         return false;
     }
-    /*if (config->existDouble("errorBound")) {
-      errorBound = config->getDouble("errorBound");
-    } else {
-      WM_WARNNING("NO assigned errorBound, set to 0.01");
-      errorBound = 0.01;
-    }*/
-
-    /*if (config->existU64("timeStep")) {
-      timeStep = config->getU64("timeStep");
-    }
-    else
-    {
-      WM_WARNNING("No setting of timeStep, use 1\n");
-      timeStep=1;
-    }*/
     return true;
 }
 
