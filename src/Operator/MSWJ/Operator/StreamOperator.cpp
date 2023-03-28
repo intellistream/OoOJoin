@@ -41,10 +41,10 @@ bool StreamOperator::start() {
     intermediateResult = 0;
     confirmedResult = 0;
     lockedByWaterMark = false;
-    timeBreakDown_prediction = 0;
-    timeBreakDown_index = 0;
-    timeBreakDown_join = 0;
-    timeBreakDown_all = 0;timeTrackingStartNoClaim(timeBreakDown_all);
+    timeBreakDownPrediction = 0;
+    timeBreakDownIndex = 0;
+    timeBreakDownJoin = 0;
+    timeBreakDownAll = 0;timeTrackingStartNoClaim(timeBreakDownAll);
     return true;
 }
 
@@ -58,7 +58,7 @@ bool StreamOperator::stop() {
     if (!lockedByWaterMark) {
         WM_INFO("No watermark encountered, compute now");
     }
-    timeBreakDown_all = timeTrackingEnd(timeBreakDown_all);
+    timeBreakDownAll = timeTrackingEnd(timeBreakDownAll);
     //lazyComputeOfAQP();
     size_t rLen = myWindow.windowR.size();
     tsType timeNow = lastTimeOfR;
@@ -203,14 +203,14 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
             } else {
                 sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
             }
-            timeBreakDown_index += timeTrackingEnd(tt_index);
+            timeBreakDownIndex += timeTrackingEnd(tt_index);
             /**
              *
              */
             timeTrackingStart(tt_prediction);
             updateStateOfKey(sk, trackTuple);
             double futureTuplesS = MeanAQPIAWJOperator::predictUnarrivedTuples(sk);
-            timeBreakDown_prediction += timeTrackingEnd(tt_prediction);
+            timeBreakDownPrediction += timeTrackingEnd(tt_prediction);
             //probe in R
             timeTrackingStart(tt_join);
             AbstractStateOfKeyPtr probrPtr = stateOfKeyTableR->getByKey(trackTuple->key);
@@ -232,7 +232,7 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
                                                     py->arrivedTupleCnt);
 
             }
-            timeBreakDown_join += timeTrackingEnd(tt_join);
+            timeBreakDownJoin += timeTrackingEnd(tt_join);
             //sk->lastEstimateAllTuples=futureTuplesS+sk->arrivedTupleCnt;
             sk->pastArrivalRate =
                     trackTuple->arrivalTime - sk->lastArrivalTuple->arrivalTime == 0
@@ -259,10 +259,10 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
             } else {
                 sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
             }
-            timeBreakDown_index += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
+            timeBreakDownIndex += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
             updateStateOfKey(sk, trackTuple);
             double futureTuplesR = MeanAQPIAWJOperator::predictUnarrivedTuples(sk);
-            timeBreakDown_prediction += timeTrackingEnd(tt_prediction);
+            timeBreakDownPrediction += timeTrackingEnd(tt_prediction);
             //probe in S
             timeTrackingStart(tt_join);
             AbstractStateOfKeyPtr probrPtr = stateOfKeyTableS->getByKey(trackTuple->key);
@@ -288,7 +288,7 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
                                                     py->arrivedTupleCnt);
 
             }
-            timeBreakDown_join += timeTrackingEnd(tt_join);
+            timeBreakDownJoin += timeTrackingEnd(tt_join);
 
             sk->pastArrivalRate =
                     trackTuple->arrivalTime - sk->lastArrivalTuple->arrivalTime == 0

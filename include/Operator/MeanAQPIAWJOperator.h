@@ -62,15 +62,15 @@ namespace OoOJoin {
         /**
          * @brief for time breakdown of searching index
          */
-        tsType timeBreakDown_index{};
+        tsType timeBreakDownIndex{};
         /**
          * @brief for time breakdown of prediction
          */
-        tsType timeBreakDown_prediction{};
+        tsType timeBreakDownPrediction{};
         /**
          * @brief for time breakdown of join
          */
-        tsType timeBreakDown_join{};
+        tsType timeBreakDownJoin{};
 
         class MeanStateOfKey : public AbstractStateOfKey {
         public:

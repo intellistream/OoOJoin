@@ -76,7 +76,7 @@ namespace OoOJoin {
         size_t sLen = 0, rLen = 0;
         int threads = 0;
         tsType timeStep = 0;
-        tsType timeBreakDown_all = 0;
+        tsType timeBreakDownAll = 0;
 
         /**
          *@brief set the final processed time for all tuples

@@ -19,7 +19,7 @@ bool OoOJoin::MSWJOperator::start() {
 
 bool OoOJoin::MSWJOperator::stop() {
     streamOperator->stop();
-    timeBreakDown_all = timeTrackingEnd(timeBreakDown_all);
+    timeBreakDownAll = timeTrackingEnd(timeBreakDownAll);
     return true;
 }
 
