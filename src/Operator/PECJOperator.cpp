@@ -1,8 +1,11 @@
+//
+// Created by 86183 on 2023/4/18.
+//
 
-#include <Operator/IMAIAWJOperator.h>
+#include "Operator/PECJOperator.h"
 #include <JoinAlgos/JoinAlgoTable.h>
 
-bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
+bool OoOJoin::PECJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
         return false;
     }
@@ -17,7 +20,7 @@ bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     return true;
 }
 
-bool OoOJoin::IMAIAWJOperator::start() {
+bool OoOJoin::PECJOperator::start() {
     /**
     * @brief set watermark generator
     */
@@ -48,11 +51,11 @@ bool OoOJoin::IMAIAWJOperator::start() {
     return true;
 }
 
-void OoOJoin::IMAIAWJOperator::conductComputation() {
+void OoOJoin::PECJOperator::conductComputation() {
 
 }
 
-bool OoOJoin::IMAIAWJOperator::stop() {
+bool OoOJoin::PECJOperator::stop() {
     if (lockedByWaterMark) {
         WM_INFO("early terminate by watermark, already have results");
     }
@@ -72,7 +75,7 @@ bool OoOJoin::IMAIAWJOperator::stop() {
     return true;
 }
 
-bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
+bool OoOJoin::PECJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     bool shouldGenWM, isInWindow;
     if (lockedByWaterMark) {
         return false;
@@ -125,7 +128,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     return true;
 }
 
-bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
+bool OoOJoin::PECJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     bool shouldGenWM, isInWindow;
     if (lockedByWaterMark) {
         return false;
@@ -174,10 +177,10 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     return true;
 }
 
-size_t OoOJoin::IMAIAWJOperator::getResult() {
+size_t OoOJoin::PECJOperator::getResult() {
     return confirmedResult;
 }
 
-size_t OoOJoin::IMAIAWJOperator::getAQPResult() {
+size_t OoOJoin::PECJOperator::getAQPResult() {
     return intermediateResult;
 }

@@ -5,6 +5,8 @@ add_sources(
         IMAIAWJOperator.cpp
         OperatorTable.cpp
         MSWJOperator.cpp
+        PECJOperator.cpp
+        PEC/VariationalInference.cpp
         MSWJ/KSlack/KSlack.cpp
         MSWJ/Manager/BufferSizeManager.cpp
         MSWJ/Manager/StatisticsManager.cpp

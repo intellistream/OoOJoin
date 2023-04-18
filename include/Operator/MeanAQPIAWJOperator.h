@@ -78,8 +78,6 @@ namespace OoOJoin {
             double arrivalSkew = 0, sigmaArrivalSkew = 0;
             TrackTuplePtr lastEventTuple = nullptr, lastArrivalTuple = nullptr;
 
-            double pastArrivalRate{};
-
             // tsType  lastSeenTime=0;
             MeanStateOfKey() = default;
 

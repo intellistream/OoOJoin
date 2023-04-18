@@ -234,11 +234,6 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
             }
             timeBreakDownJoin += timeTrackingEnd(tt_join);
             //sk->lastEstimateAllTuples=futureTuplesS+sk->arrivedTupleCnt;
-            sk->pastArrivalRate =
-                    trackTuple->arrivalTime - sk->lastArrivalTuple->arrivalTime == 0
-                    ? 0
-                    : sk->arrivedTupleCnt / (trackTuple->arrivalTime - sk->lastArrivalTuple->arrivalTime);
-
             sk->lastUnarrivedTuples = futureTuplesS;
             lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
         }
@@ -289,12 +284,6 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
 
             }
             timeBreakDownJoin += timeTrackingEnd(tt_join);
-
-            sk->pastArrivalRate =
-                    trackTuple->arrivalTime - sk->lastArrivalTuple->arrivalTime == 0
-                    ? 0
-                    : sk->arrivedTupleCnt / (trackTuple->arrivalTime - sk->lastArrivalTuple->arrivalTime);
-
 
             sk->lastUnarrivedTuples = futureTuplesR;
             lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
