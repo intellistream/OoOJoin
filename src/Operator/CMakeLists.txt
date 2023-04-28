@@ -6,7 +6,9 @@ add_sources(
         OperatorTable.cpp
         MSWJOperator.cpp
         PECJOperator.cpp
-        PEC/VariationalInference.cpp
+        PECJ/VariationalInference.cpp
+        PECJ/VariationalAutoEncoder.cpp
+        PECJ/LinearVAE.cpp
         MSWJ/KSlack/KSlack.cpp
         MSWJ/Manager/BufferSizeManager.cpp
         MSWJ/Manager/StatisticsManager.cpp

@@ -68,18 +68,33 @@ add_subdirectory(src)
 # Add Library
 get_sources(IntelliStream_SOURCE_FILES)
 get_headers(IntelliStream_HEADER_FILES)
+
+set(Torch_DIR /usr/local/libtorch/share/cmake/Torch)
+find_package(Torch REQUIRED)
+
+message(STATUS "TORCH_INCLUDE_DIRS: ${TORCH_INCLUDE_DIRS}")
+message(STATUS "TORCH_LIBRARIES: ${TORCH_LIBRARIES}")
+
 add_library(IntelliStream SHARED ${IntelliStream_SOURCE_FILES} ${IntelliStream_HEADER_FILES} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR})
-target_include_directories(IntelliStream PUBLIC "include")
-target_include_directories(IntelliStream PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
-target_link_libraries(IntelliStream PUBLIC ${LIBRARIES} pthread)
+
+target_include_directories(IntelliStream PUBLIC "include" ${TORCH_INCLUDE_DIRS})
+target_link_libraries(IntelliStream PUBLIC ${LIBRARIES} ${TORCH_LIBRARIES})
+
 include_directories(${OOO_JOIN_INCLUDE_DIR})
 
+if (MSVC)
+    file(GLOB TORCH_DLLS "${TORCH_INSTALL_PREFIX}/lib/*.dll")
+    add_custom_command(TARGET example-app
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${TORCH_DLLS}
+            $<TARGET_FILE_DIR:example-app>)
+endif (MSVC)
 #Add benchmarks with command
 add_subdirectory(benchmark)
 
 #Add tests (based on GTest suits)
 add_subdirectory(test)
-
 
 
 install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStream)
