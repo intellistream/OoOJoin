@@ -1,4 +1,4 @@
-#include <Operator/PECJ/LinearVAE.hpp>
+#include <Operator/PECJ/LinearVAE.h>
 #include <torch/optim/adam.h>
 
 using namespace TROCHPACK_VAE;
