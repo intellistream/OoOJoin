@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
-#include "Operator/MSWJ/KSlack/KSlack.h"
+#include <Operator/MSWJ/KSlack/KSlack.h>
 #include "SimpleTest.cpp"
 
 using namespace std;

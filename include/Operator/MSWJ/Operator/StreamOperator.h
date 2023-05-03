@@ -10,14 +10,14 @@
 #include <unordered_map>
 #include <list>
 #include <mutex>
-#include "Operator/MSWJ/Profiler/TupleProductivityProfiler.h"
-#include "Operator/MSWJ/Common/MSWJDefine.h"
-#include "Common/Window.h"
-#include "WaterMarker/AbstractWaterMarker.h"
+#include <Operator/MSWJ/Profiler/TupleProductivityProfiler.h>
+#include <Operator/MSWJ/Common/MSWJDefine.h>
+#include <Common/Window.h>
+#include <WaterMarker/AbstractWaterMarker.h>
 #include <WaterMarker/LatenessWM.h>
 #include <Common/StateOfKey.h>
 #include <Operator/MeanAQPIAWJOperator.h>
-#include "JoinAlgos/NPJ/MultiThreadHashTable.h"
+#include <JoinAlgos/NPJ/MultiThreadHashTable.h>
 
 using namespace OoOJoin;
 

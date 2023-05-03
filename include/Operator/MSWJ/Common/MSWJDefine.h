@@ -9,7 +9,6 @@
 #include <unordered_map>
 #include <queue>
 #include <mutex>
-#include "parallel-hashmap/parallel_hashmap/phmap.h"
 
 //SystemParam of yuanzhen's paper
 namespace MSWJ {

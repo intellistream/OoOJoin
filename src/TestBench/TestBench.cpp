@@ -8,7 +8,7 @@
 #include <utility>
 #include <Utils/IntelliLog.h>
 #include <TestBench/RandomDataLoader.h>
-#include "Operator/MSWJOperator.h"
+#include <Operator/MSWJOperator.h>
 
 using namespace INTELLI;
 using namespace OoOJoin;

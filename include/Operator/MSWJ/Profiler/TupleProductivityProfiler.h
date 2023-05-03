@@ -9,9 +9,8 @@
 #include <unordered_map>
 #include <map>
 #include <mutex>
-#include "parallel-hashmap/parallel_hashmap/phmap.h"
-#include "Utils/ConfigMap.hpp"
-#include "Operator/MSWJ/Common/MSWJDefine.h"
+#include <Utils/ConfigMap.hpp>
+#include <Operator/MSWJ/Common/MSWJDefine.h>
 #include <parallel-hashmap/parallel_hashmap/btree.h>
 
 namespace MSWJ {

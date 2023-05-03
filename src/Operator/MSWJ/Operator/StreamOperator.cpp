@@ -6,9 +6,9 @@
 
 #include <future>
 #include <utility>
-#include "Operator/MSWJ/Operator/StreamOperator.h"
-#include "JoinAlgos/AbstractJoinAlgo.h"
-#include "WaterMarker/WMTable.h"
+#include <Operator/MSWJ/Operator/StreamOperator.h>
+#include <JoinAlgos/AbstractJoinAlgo.h>
+#include <WaterMarker/WMTable.h>
 
 using namespace MSWJ;
 

@@ -4,10 +4,10 @@
 
 #include <iostream>
 #include <future>
-#include "Operator/MSWJ/KSlack/KSlack.h"
-#include "Operator/MSWJ/Common/MSWJDefine.h"
-#include "Operator/MSWJ/Synchronizer/StreamSynchronizer.h"
-#include "Operator/MSWJ/Manager/BufferSizeManager.h"
+#include <Operator/MSWJ/KSlack/KSlack.h>
+#include <Operator/MSWJ/Common/MSWJDefine.h>
+#include <Operator/MSWJ/Synchronizer/StreamSynchronizer.h>
+#include <Operator/MSWJ/Manager/BufferSizeManager.h>
 
 using namespace MSWJ;
 

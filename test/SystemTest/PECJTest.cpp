@@ -2,7 +2,7 @@
 
 #include "catch.hpp"
 #include "SimpleTest.cpp"
-#include "Operator/PECJ/LinearVAE.h"
+#include <Operator/PECJ/LinearVAE.h>
 #include <vector>
 
 

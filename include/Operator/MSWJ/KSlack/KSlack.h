@@ -9,10 +9,10 @@
 #include <cstddef>
 #include <queue>
 #include <set>
-#include "Operator/MSWJ/Common/MSWJDefine.h"
-#include "Operator/MSWJ/Synchronizer/StreamSynchronizer.h"
-#include "Operator/MSWJ/Manager/StatisticsManager.h"
-#include "Operator/MSWJ/Manager/BufferSizeManager.h"
+#include <Operator/MSWJ/Common/MSWJDefine.h>
+#include <Operator/MSWJ/Synchronizer/StreamSynchronizer.h>
+#include <Operator/MSWJ/Manager/StatisticsManager.h>
+#include <Operator/MSWJ/Manager/BufferSizeManager.h>
 
 namespace MSWJ {
 

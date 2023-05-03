@@ -2,9 +2,9 @@
 // Created by 86183 on 2023/1/5.
 //
 
-#include "Operator/MSWJ/Manager/BufferSizeManager.h"
-#include "Operator/MSWJ/Profiler/TupleProductivityProfiler.h"
-#include "Operator/MSWJ/Common/MSWJDefine.h"
+#include <Operator/MSWJ/Manager/BufferSizeManager.h>
+#include <Operator/MSWJ/Profiler/TupleProductivityProfiler.h>
+#include <Operator/MSWJ/Common/MSWJDefine.h>
 
 using namespace MSWJ;
 

@@ -5,8 +5,8 @@
 #include <iostream>
 #include <future>
 #include <utility>
-#include "Operator/MSWJ/Synchronizer/StreamSynchronizer.h"
-#include "Operator/MSWJ/Operator/StreamOperator.h"
+#include <Operator/MSWJ/Synchronizer/StreamSynchronizer.h>
+#include <Operator/MSWJ/Operator/StreamOperator.h>
 
 using namespace MSWJ;
 

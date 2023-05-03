@@ -1,6 +1,7 @@
 
 #include <Operator/MeanAQPIAWJOperator.h>
 #include <JoinAlgos/JoinAlgoTable.h>
+#include <complex>
 
 bool OoOJoin::MeanAQPIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     if (!OoOJoin::AbstractOperator::setConfig(cfg)) {

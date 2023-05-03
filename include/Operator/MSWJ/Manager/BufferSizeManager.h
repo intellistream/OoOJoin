@@ -6,8 +6,8 @@
 #define DISORDERHANDLINGSYSTEM_BUFFER_SIZE_MANAGER_H
 
 
-#include "StatisticsManager.h"
-#include "Operator/MSWJ/Profiler/TupleProductivityProfiler.h"
+#include <Operator/MSWJ/Manager/StatisticsManager.h>
+#include <Operator/MSWJ/Profiler/TupleProductivityProfiler.h>
 
 namespace MSWJ {
     class BufferSizeManager {

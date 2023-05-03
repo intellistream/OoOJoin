@@ -11,9 +11,9 @@
 #include <set>
 #include <list>
 #include <mutex>
-#include "Operator/MSWJ/Operator/StreamOperator.h"
-#include "Operator/MSWJ/Common/MSWJDefine.h"
-#include "Utils/ConfigMap.hpp"
+#include <Operator/MSWJ/Operator/StreamOperator.h>
+#include <Operator/MSWJ/Common/MSWJDefine.h>
+#include <Utils/ConfigMap.hpp>
 
 namespace MSWJ {
     class Synchronizer {
