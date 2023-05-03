@@ -69,7 +69,8 @@ add_subdirectory(src)
 get_sources(IntelliStream_SOURCE_FILES)
 get_headers(IntelliStream_HEADER_FILES)
 
-set(Torch_DIR /usr/local/libtorch/share/cmake/Torch)
+# 这行是针对我的机子，其他人运行的时候删了
+#set(Torch_DIR /usr/local/libtorch/share/cmake/Torch)
 find_package(Torch REQUIRED)
 
 message(STATUS "TORCH_INCLUDE_DIRS: ${TORCH_INCLUDE_DIRS}")

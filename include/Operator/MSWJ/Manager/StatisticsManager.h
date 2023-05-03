@@ -9,7 +9,6 @@
 #include <vector>
 #include <unordered_map>
 #include <mutex>
-#include <parallel-hashmap/parallel_hashmap/phmap.h>
 #include <Operator/MSWJ/Common/MSWJDefine.h>
 #include <Operator/MSWJ/Profiler/TupleProductivityProfiler.h>
 #include <Utils/ConfigMap.hpp>

@@ -7,6 +7,7 @@
 #include <utility>
 #include <Operator/MSWJ/Synchronizer/StreamSynchronizer.h>
 #include <Operator/MSWJ/Operator/StreamOperator.h>
+#include <shared_mutex>
 
 using namespace MSWJ;
 

@@ -5,7 +5,6 @@
 #include <iostream>
 #include <utility>
 #include <Operator/MSWJ/Profiler/TupleProductivityProfiler.h>
-#include <parallel-hashmap/parallel_hashmap/phmap.h>
 #include <Operator/MSWJ/Common/MSWJDefine.h>
 
 using namespace MSWJ;
