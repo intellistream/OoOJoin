@@ -24,7 +24,7 @@ jobs:
       - name: Install toolchains
         run: |
           sudo apt-get update
-          sudo apt install gcc g++ cmake libopenblas-dev liblapack-dev libatlas-base-dev libprotobuf-dev protobuf-compiler libgoogle-glog-dev libgflags-dev
+          sudo apt install gcc g++ cmake libopenblas-dev liblapack-dev libatlas-base-dev libprotobuf-dev protobuf-compiler
       - name: Install Libtorch
         run: |
           wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-1.7.1%2Bcpu.zip
