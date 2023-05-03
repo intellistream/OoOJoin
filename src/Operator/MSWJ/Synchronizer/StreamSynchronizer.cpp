@@ -2,7 +2,6 @@
 // Created by 86183 on 2023/1/7.
 //
 
-#include <iostream>
 #include <future>
 #include <utility>
 #include <Operator/MSWJ/Synchronizer/StreamSynchronizer.h>
