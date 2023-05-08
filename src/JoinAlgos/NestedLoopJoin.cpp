@@ -14,11 +14,9 @@ size_t NestedLoopJoin::join(C20Buffer<OoOJoin::TrackTuplePtr> windS, OoOJoin::Tr
     size_t tsLen = windS.size();
     for (size_t i = 0; i < tsLen; i++) {
         if (windS.data(i)[0]->key == tr->key) {
-            //cout<<to_string(ts[i]->subKey)+","+ to_string(tr->subKey)<<endl;
             result++;
         }
     }
-    // cout<<result<<endl;
     return result;
 }
 

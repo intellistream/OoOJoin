@@ -4,4 +4,17 @@ add_sources(
         MeanAQPIAWJOperator.cpp
         IMAIAWJOperator.cpp
         OperatorTable.cpp
+        MSWJOperator.cpp
+        PECJOperator.cpp
+        PECJ/VariationalInference.cpp
+        PECJ/VariationalAutoEncoder.cpp
+        PECJ/LinearVAE.cpp
+        MSWJ/KSlack/KSlack.cpp
+        MSWJ/Manager/BufferSizeManager.cpp
+        MSWJ/Manager/StatisticsManager.cpp
+        MSWJ/Operator/StreamOperator.cpp
+        MSWJ/Profiler/TupleProductivityProfiler.cpp
+        MSWJ/Synchronizer/StreamSynchronizer.cpp
+        MSWJ/Common/MSWJDefine.cpp
 )
+

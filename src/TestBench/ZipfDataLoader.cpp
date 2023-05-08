@@ -7,7 +7,7 @@
 using namespace INTELLI;
 using namespace OoOJoin;
 
-void ZipfDataLoader::genKey() {
+void ZipfDataLoader::generateKey() {
     zipfDataLoader_zipfKey = cfgGlobal->tryU64("zipfDataLoader_zipfKey", 1, true);
 
     if (zipfDataLoader_zipfKey) {
@@ -29,7 +29,7 @@ void ZipfDataLoader::genKey() {
     INTELLI_INFO("Finish the generation of keys");
 }
 
-void ZipfDataLoader::genValue() {
+void ZipfDataLoader::generateValue() {
     zipfDataLoader_zipfValue = cfgGlobal->tryU64("zipfDataLoader_zipfValue", 1, true);
 
     if (zipfDataLoader_zipfValue) {
@@ -52,7 +52,7 @@ void ZipfDataLoader::genValue() {
 
 }
 
-void ZipfDataLoader::genEvent() {
+void ZipfDataLoader::generateEvent() {
     zipfDataLoader_zipfEvent = cfgGlobal->tryU64("zipfDataLoader_zipfEvent", 1, true);
 
     if (zipfDataLoader_zipfEvent) {
@@ -79,7 +79,7 @@ void ZipfDataLoader::genEvent() {
     INTELLI_INFO("Finish the generation of event time");
 }
 
-void ZipfDataLoader::genArrival() {
+void ZipfDataLoader::generateArrival() {
     vector<tsType> skewS, skewR;
     zipfDataLoader_zipfSkew = cfgGlobal->tryU64("zipfDataLoader_zipfSkew", 1, true);
 
@@ -105,7 +105,7 @@ void ZipfDataLoader::genArrival() {
     INTELLI_INFO("Finish the generation of arrival time");
 }
 
-void ZipfDataLoader::genFinal() {
+void ZipfDataLoader::generateFinal() {
     sTuple = genTuples(keyS, valueS, eventS, arrivalS);
     rTuple = genTuples(keyR, valueR, eventR, arrivalR);
 }
@@ -125,11 +125,11 @@ bool ZipfDataLoader::setConfig(ConfigMapPtr cfg) {
     keyRange = cfg->tryU64("keyRange", 10, true);
     valueRange = cfg->tryU64("valueRange", 1000, true);
     testSize = (windowLenMs + maxArrivalSkewMs) * eventRateKTps;
-    genKey();
-    genValue();
-    genEvent();
-    genArrival();
-    genFinal();
+    generateKey();
+    generateValue();
+    generateEvent();
+    generateArrival();
+    generateFinal();
     return true;
 }
 

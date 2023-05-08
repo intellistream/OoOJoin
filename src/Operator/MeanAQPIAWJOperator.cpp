@@ -1,6 +1,7 @@
 
 #include <Operator/MeanAQPIAWJOperator.h>
 #include <JoinAlgos/JoinAlgoTable.h>
+#include <complex>
 
 bool OoOJoin::MeanAQPIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
@@ -41,10 +42,10 @@ bool OoOJoin::MeanAQPIAWJOperator::start() {
     intermediateResult = 0;
     confirmedResult = 0;
     lockedByWaterMark = false;
-    timeBreakDown_prediction = 0;
-    timeBreakDown_index = 0;
-    timeBreakDown_join = 0;
-    timeBreakDown_all = 0;timeTrackingStartNoClaim(timeBreakDown_all);
+    timeBreakDownPrediction = 0;
+    timeBreakDownIndex = 0;
+    timeBreakDownJoin = 0;
+    timeBreakDownAll = 0;timeTrackingStartNoClaim(timeBreakDownAll);
     return true;
 }
 
@@ -89,7 +90,7 @@ bool OoOJoin::MeanAQPIAWJOperator::stop() {
         WM_INFO("No watermark encountered, compute now");
     }
     lazyComputeOfAQP();
-    timeBreakDown_all = timeTrackingEnd(timeBreakDown_all);
+    timeBreakDownAll = timeTrackingEnd(timeBreakDownAll);
     size_t rLen = myWindow.windowR.size();
     NPJTuplePtr *tr = myWindow.windowR.data();
     tsType timeNow = lastTimeOfR;
@@ -122,9 +123,9 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
         } else {
             sk = ImproveStateOfKeyTo(MeanStateOfKey, skrf);
         }
-        timeBreakDown_index += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
+        timeBreakDownIndex += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
         updateStateOfKey(sk, ts);
-        timeBreakDown_prediction += timeTrackingEnd(tt_prediction);
+        timeBreakDownPrediction += timeTrackingEnd(tt_prediction);
         // lazyComputeOfAQP();
     }
     return true;
@@ -154,9 +155,9 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         } else {
             sk = ImproveStateOfKeyTo(MeanStateOfKey, skrf);
         }
-        timeBreakDown_index += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
+        timeBreakDownIndex += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
         updateStateOfKey(sk, tr);
-        timeBreakDown_prediction += timeTrackingEnd(tt_prediction);
+        timeBreakDownPrediction += timeTrackingEnd(tt_prediction);
         //lazyComputeOfAQP();
     }
     return true;
@@ -172,12 +173,36 @@ double OoOJoin::MeanAQPIAWJOperator::predictUnarrivedTuples(MeanStateOfKeyPtr px
     double avgSkew = px->arrivalSkew;
     double goThroughTime = lastTime - avgSkew - myWindow.getStart();
     double futureTime = myWindow.getEnd() + avgSkew - lastTime;
-    double futureTuple = px->arrivedTupleCnt * futureTime / goThroughTime;
+    double ratio = futureTime / (goThroughTime > 0 ? goThroughTime : 1); // prevent division by zero
+    ratio = std::min(ratio, max_ratio); // Limit the ratio to the maximum allowed value
+
+    // Apply adaptive EWMA
+    double futureTuple = ratio * px->arrivedTupleCnt;
     if (futureTuple < 0) {
         futureTuple = 0;
     }
+
+    // Update filter parameters
+    if (goThroughTime == 0)return futureTuple;
+    double arrivalRate = px->arrivedTupleCnt / goThroughTime;
+    if (arrivalRate > 0) {
+        double predictedArrivalRate = futureTuple / futureTime;
+
+        double ratio = predictedArrivalRate / arrivalRate;
+        if (ratio > 1.2) {
+            alpha = std::min(alpha + 0.5, MAX_ALPHA);
+        } else if (ratio < 0.3) {
+            alpha = std::max(alpha - 0.5, MIN_ALPHA);
+        }
+
+        max_ratio = std::sqrt(predictedArrivalRate / arrivalRate);
+        max_ratio = std::min(std::max(max_ratio, MIN_MAX_RATIO), MAX_MAX_RATIO);
+
+    }
+
     return futureTuple;
 }
+
 
 void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
     AbstractStateOfKeyPtr probrPtr = nullptr;
@@ -188,25 +213,18 @@ void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
                 MeanStateOfKeyPtr px = ImproveStateOfKeyTo(MeanStateOfKey, iter);
                 probrPtr = stateOfKeyTableS->getByKey(px->key);
                 if (probrPtr != nullptr) {
-                    //  lastTimeS = px->lastArrivalTuple->arrivalTime;
-                    //lastTimeS=px->lastEventTuple->eventTime;
-                    //timeTrackingStart(tt_prediction);
                     double unarrivedS = predictUnarrivedTuples(px);
                     MeanStateOfKeyPtr py = ImproveStateOfKeyTo(MeanStateOfKey, probrPtr);
                     double unarrivedR = predictUnarrivedTuples(py);
-                    // timeBreakDown_prediction+= timeTrackingEnd(tt_prediction);
 
                     intermediateResult += (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR);
-                    /*cout << "S: a=" + to_string(px->arrivedTupleCnt) + ", u=" + to_string(unarrivedS) + "sigma="
-                        + to_string(px->sigmaArrivalSkew) +
-                        ";R: a=" + to_string(py->arrivedTupleCnt) + ", u=" + to_string(unarrivedR) + "\n";*/
                     confirmedResult += (px->arrivedTupleCnt) * (py->arrivedTupleCnt);
 
                 }
             }
         }
     }
-    timeBreakDown_join += timeTrackingEnd(tt_join);
+    timeBreakDownJoin += timeTrackingEnd(tt_join);
     lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
 }
 
@@ -216,8 +234,8 @@ size_t OoOJoin::MeanAQPIAWJOperator::getAQPResult() {
 
 ConfigMapPtr OoOJoin::MeanAQPIAWJOperator::getTimeBreakDown() {
     ConfigMapPtr ru = newConfigMap();
-    ru->edit("index", (uint64_t) timeBreakDown_index);
-    ru->edit("prediction", (uint64_t) timeBreakDown_prediction);
-    ru->edit("join", (uint64_t) timeBreakDown_join);
+    ru->edit("index", (uint64_t) timeBreakDownIndex);
+    ru->edit("prediction", (uint64_t) timeBreakDownPrediction);
+    ru->edit("join", (uint64_t) timeBreakDownJoin);
     return ru;
 }

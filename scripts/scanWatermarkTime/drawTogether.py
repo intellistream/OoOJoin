@@ -58,11 +58,15 @@ def runPeriod(exePath, period, resultPath):
     # prepare new file
     editConfig(configTemplate, exePath + configFname, "watermarkTimeMs", period)
     # run
-    os.system("cd " + exePath + "&& ./benchmark " + configFname)
+    os.system("cd " + exePath)
+    os.system("chmod +x benchmark")
+    os.system("./benchmark " + configFname)
     # copy result
     os.system("rm -rf " + resultPath + "/" + str(period))
     os.system("mkdir " + resultPath + "/" + str(period))
-    os.system("cd " + exePath + "&& cp *.csv " + resultPath + "/" + str(period))
+    password = "Rjzhb2326090"
+    sudo_command = "cd " + exePath + "&& cp *.csv " + resultPath + "/" + str(period)
+    os.system('echo {} | {}'.format(password, sudo_command))
 
 
 def runPeriodVector(exePath, periodVec, resultPath):
@@ -97,7 +101,7 @@ def readResultVectorPeriod(periodVec, resultPath):
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
-    resultPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/periodTest/"
+    resultPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/periodTest"
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
     periodVec = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15]

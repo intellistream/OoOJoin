@@ -34,6 +34,15 @@ namespace OoOJoin {
  */
     class MeanAQPIAWJOperator : public AbstractOperator {
     protected:
+        //predicted param
+        static constexpr double MIN_ALPHA = 0.01;
+        static constexpr double MAX_ALPHA = 0.99;
+        static constexpr double MIN_MAX_RATIO = 0.1;
+        static constexpr double MAX_MAX_RATIO = 100.0;
+
+        double max_ratio = 10.0;
+        double alpha = 0.5;
+
         Window myWindow;
         size_t intermediateResult = 0;
         size_t confirmedResult = 0;
@@ -53,15 +62,15 @@ namespace OoOJoin {
         /**
          * @brief for time breakdown of searching index
          */
-        tsType timeBreakDown_index{};
+        tsType timeBreakDownIndex{};
         /**
          * @brief for time breakdown of prediction
          */
-        tsType timeBreakDown_prediction{};
+        tsType timeBreakDownPrediction{};
         /**
          * @brief for time breakdown of join
          */
-        tsType timeBreakDown_join{};
+        tsType timeBreakDownJoin{};
 
         class MeanStateOfKey : public AbstractStateOfKey {
         public:
@@ -86,6 +95,7 @@ namespace OoOJoin {
         double predictUnarrivedTuples(MeanStateOfKeyPtr px);
 
     public:
+
         MeanAQPIAWJOperator() = default;
 
         ~MeanAQPIAWJOperator() = default;

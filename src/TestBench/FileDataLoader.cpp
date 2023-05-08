@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <filesystem>
 
 using namespace INTELLI;
 using namespace OoOJoin;
@@ -10,8 +11,8 @@ using namespace OoOJoin;
 bool FileDataLoader::setConfig(ConfigMapPtr cfg) {
     cfgGlobal = cfg;
     string fnameR, fnameS;
-    fnameR = cfg->tryString("fileDataLoader_rFile", "rTuple.csv", true);
-    fnameS = cfg->tryString("fileDataLoader_sFile", "sTuple.csv", true);
+    fnameR = cfg->tryString("fileDataLoader_rFile", "../../benchmark/datasets/rTuple.csv", true);
+    fnameS = cfg->tryString("fileDataLoader_sFile", "../../benchmark/datasets/sTuple.csv", true);
     sTuple = loadDataFromCsv(fnameS);
     rTuple = loadDataFromCsv(fnameR);
     return true;
@@ -67,7 +68,8 @@ std::vector<TrackTuplePtr> OoOJoin::FileDataLoader::loadDataFromCsv(std::string 
         if (cols[i] == "eventTime") {
             idxEventTime = i;
         }
-        if (cols[i] == "arrivalTime" || cols[i] == "arriveTime") {
+        if (cols[i] == "arrivalTime" || cols[i] == "arriveTime" || cols[i] == "arrivalTime\r" ||
+            cols[i] == "arriveTime\r") {
             idxArrivalTime = i;
         }
     }

@@ -148,6 +148,11 @@ namespace OoOJoin {
     public:
         tsType processedTime = 0;
 
+        tsType delay = 0;
+
+        int streamId{};
+        bool isEnd = false;
+
         /**
         * @brief construct with key
         * @param k the key
@@ -185,13 +190,25 @@ namespace OoOJoin {
         std::string toString();
 
         ~TrackTuple() = default;
+
+        bool operator<(const TrackTuple &other) const {
+            return eventTime > other.eventTime;
+        }
+
     };
+
 
 /**
  * @typedef TrackTuplePtr
  * @brief The class to describe a shared pointer to @ref TrackTuple
  */
     typedef std::shared_ptr<class TrackTuple> TrackTuplePtr;
+
+    struct TrackTuplePtrComparator {
+        bool operator()(const OoOJoin::TrackTuplePtr lhs, const OoOJoin::TrackTuplePtr rhs) const {
+            return lhs->eventTime > rhs->eventTime;
+        }
+    };
 /**
  * @def newTrackTuple
  * @brief (Macro) To creat a new @ref TrackTuple under shared pointer.
@@ -203,5 +220,6 @@ namespace OoOJoin {
 // AlianceDB
 
 }
+
 
 #endif //INTELLISTREAM_OOOTUPLE_H
