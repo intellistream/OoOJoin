@@ -66,7 +66,7 @@ The docker has minmal gcc/g++/cmake and libtorch, which is good enough.
 ### Build in shell
 
 ```shell
-
+(export CUDACXX=/usr/local/cuda/bin/nvcc)
 mkdir build && cd build
 cmake -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'` ..
 make 
