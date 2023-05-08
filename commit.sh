@@ -1,4 +1,4 @@
-BRANCH=yuanzhen_system_test
+BRANCH=stable_torch_and_yuanzhen
 git init
 git checkout -b $BRANCH
 git add .
