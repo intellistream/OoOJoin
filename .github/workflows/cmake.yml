@@ -34,7 +34,7 @@ jobs:
 
       - name: Build
         # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target IntelliStream -DCMAKE_PREFIX_PATH="/home/test/.local/lib/python3.10/site-packages/torch/share/cmake"
+        run: cmake -DCMAKE_PREFIX_PATH='/home/test/.local/lib/python3.10/site-packages/torch/share/cmake' --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target IntelliStream 
           CC: gcc
           CXX: g++
 
