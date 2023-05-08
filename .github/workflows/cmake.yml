@@ -31,8 +31,7 @@ jobs:
 
       - name: Build
         # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target IntelliStream -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'
-        env:
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target IntelliStream -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'`
           CC: gcc
           CXX: g++
 
