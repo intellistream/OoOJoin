@@ -1,4 +1,4 @@
-BRANCH=zipf_dataLoader
+BRANCH=yuanzhen_system_test
 git init
 git checkout -b $BRANCH
 git add .

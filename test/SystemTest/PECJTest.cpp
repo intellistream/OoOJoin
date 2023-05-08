@@ -1,18 +1,16 @@
 #define CATCH_CONFIG_MAIN
-
 #include "catch.hpp"
-#include "SimpleTest.cpp"
 #include <Operator/PECJ/LinearVAE.h>
 #include <vector>
 
 
 TEST_CASE("Test LinearVAE on C++")
 {
-    TROCHPACK_VAE::LinearVAE lv;
-    lv.loadModule("../../src/Operator/PECJ/python/linearVAE.pt");
+   /**/ TROCHPACK_VAE::LinearVAE lv;
+    lv.loadModule("torchscripts/linearVAE.pt");
     std::vector<float> vc = {6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.4, 6.2};
     lv.runForward(vc);
-    std::cout << "mu=" << lv.resultMu << ",sigma=" << lv.resultSigma << endl;
+    std::cout << "mu=" << lv.resultMu << ",sigma=" << lv.resultSigma << std::endl;
     int num_samples = 1000;
     int input_dim = 10;
     auto noiseX = torch::randn({num_samples, input_dim});
@@ -30,7 +28,7 @@ TEST_CASE("Test LinearVAE on C++")
             lv.learnStep(x);
         }
 
-        cout << "epoch=" << i << "loss=" << lv.resultLoss / xSize << endl;
+        std::cout << "epoch=" << i << "loss=" << lv.resultLoss / xSize << std::endl;
     }
 }
 
