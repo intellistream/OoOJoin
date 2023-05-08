@@ -8,7 +8,7 @@ bool OoOJoin::ArrivalWM::setConfig(INTELLI::ConfigMapPtr cfg) {
     if (!AbstractWaterMarker::setConfig(cfg)) {
         return false;
     }
-    watermarkTime = cfg->tryU64("watermarkTimeMs", 10, true) * 1000;
+     watermarkTime = cfg->tryU64("watermarkTimeMs", 10, true) * 1000;
     return true;
 }
 
@@ -24,7 +24,6 @@ size_t OoOJoin::ArrivalWM::creatWindow(OoOJoin::tsType tBegin, OoOJoin::tsType t
 }
 
 bool OoOJoin::ArrivalWM::isReachWMPoint(OoOJoin::TrackTuplePtr tp) {
-    //tsType tNow=UtilityFunctions::UtilityFunctions::timeLastUs(timeBaseStruct)/timeStep;
     if (tp->arrivalTime >= nextWMPoint) {
         WM_INFO("Watermark reached at" + tp->toString());
         nextWMPoint += nextWMDelta;

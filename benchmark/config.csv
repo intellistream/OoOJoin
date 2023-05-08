@@ -10,5 +10,5 @@ keyRange,10,U64
 threads,4,U64
 Energy,12.3,Double
 algo,NPJSingle,String
-operator,IMA,String
+operator,IAWJ,String
 aqpScale,0.035,Double

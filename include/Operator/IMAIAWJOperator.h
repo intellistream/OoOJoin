@@ -35,41 +35,21 @@ namespace OoOJoin {
  */
     class IMAIAWJOperator : public MeanAQPIAWJOperator {
     protected:
-        //Window myWindow;
-        //size_t intermediateResult = 0;
-        //size_t confirmedResult = 0;
-        //uint64_t windowBound = 0;
-        // double alphaArrivalRate=0.125;
-        // double alphaArrivalSkew = 0.125;
-        // double betaArrivalSkew = 0.25;
-        //tsType lastTimeS = 0, lastTimeR = 0;
-        // double aqpScale = 0.1;
         void conductComputation();
 
-        // atomic_bool lockedByWaterMark = false;
-        //AbstractWaterMarkerPtr wmGen = nullptr;
-        //StateOfKeyHashTablePtr stateOfKeyTableR, stateOfKeyTableS;
         class IMAStateOfKey : public MeanStateOfKey {
         public:
-            // size_t arrivedTupleCnt = 0;
-            //  double arrivalSkew = 0, sigmaArrivalSkew = 0;
-            // TrackTuplePtr lastEventTuple = nullptr, lastArrivalTuple = nullptr;
-            // tsType  lastSeenTime=0;
-            //size_t lastEstimateAllTuples=0;
             double lastUnarrivedTuples = 0;
 
-            // size_t lastAdded=0;
             IMAStateOfKey() = default;
 
             ~IMAStateOfKey() = default;
         };
 
-        typedef std::shared_ptr<IMAStateOfKey> IMAStateOfKeyPtr;
 #define newIMAStateOfKey std::make_shared<IMAStateOfKey>
-        // void updateStateOfKey(IMAStateOfKeyPtr sk, TrackTuplePtr tp);
-        // void updateStateOfKeyR(MeanStateOfKeyPtr sk,TrackTuplePtr tp);
-        // void lazyComputeOfAQP();
-        // double predictUnarrivedTuples(IMAStateOfKeyPtr px,TrackTuplePtr tp);
+        using IMAStateOfKeyPtr = std::shared_ptr<IMAStateOfKey>;
+
+
     public:
         IMAIAWJOperator() = default;
 
@@ -140,5 +120,6 @@ namespace OoOJoin {
  under shared pointer.
  */
 #define newIMAIAWJOperator std::make_shared<OoOJoin::IMAIAWJOperator>
+
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPIMAIAWJOperator_H_

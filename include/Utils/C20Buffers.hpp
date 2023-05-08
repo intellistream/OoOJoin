@@ -110,8 +110,13 @@ namespace INTELLI {
               area.push_back(da);
               pos=area.size();
             }*/
-            area[pos] = da;
-            pos++;
+            if (pos < area.size()) {
+                area[pos] = da;
+                pos++;
+            } else {
+                area.push_back(da);
+                pos++;
+            }
             return pos;
         }
 

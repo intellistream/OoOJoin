@@ -39,16 +39,16 @@ namespace OoOJoin {
         bool isReachWMPoint(TrackTuplePtr tp);
 
     public:
-        ArrivalWM() {}
+        ArrivalWM() = default;
 
-        ~ArrivalWM() {}
+        ~ArrivalWM() = default;
 
         /**
        * @brief Set the config map related to this operator
        * @param cfg The config map
         * @return bool whether the config is successfully set
        */
-        virtual bool setConfig(ConfigMapPtr cfg);
+        bool setConfig(ConfigMapPtr cfg) override;
 
         /**
         * @brief creat a window
@@ -56,7 +56,7 @@ namespace OoOJoin {
          * @param tEnd The end event time of the window
          * @return the id of created window
         */
-        virtual size_t creatWindow(tsType tBegin, tsType tEnd);
+        size_t creatWindow(tsType tBegin, tsType tEnd) override;
 
         /**
        * @brief report a tuple s into the watermark generator
@@ -64,7 +64,7 @@ namespace OoOJoin {
         * @param wid The id of window
         * @return bool, whether generate watermark after receiving this Tuple
        */
-        virtual bool reportTupleS(TrackTuplePtr ts, size_t wid = 1);
+        bool reportTupleS(TrackTuplePtr ts, size_t wid = 1) override;
 
         /**
           * @brief Report a tuple R into the watermark generator
@@ -72,7 +72,7 @@ namespace OoOJoin {
           * @param wid The id of window
           *  @return bool, bool, whether generate watermark after receiving this Tuple
           */
-        virtual bool reportTupleR(TrackTuplePtr tr, size_t wid = 1);
+        bool reportTupleR(TrackTuplePtr tr, size_t wid = 1) override;
     };
 
 /**

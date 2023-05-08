@@ -9,5 +9,6 @@ namespace OoOJoin {
         operatorMap["IAWJ"] = newIAWJOperator();
         operatorMap["MeanAQP"] = newMeanAQPIAWJOperator();
         operatorMap["IMA"] = newIMAIAWJOperator();
+        operatorMap["MSWJ"] = newMSWJOperator();
     }
 } // OoOJoin

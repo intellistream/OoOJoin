@@ -20,7 +20,8 @@ if (BUILD_BENCHMARKS)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
     add_executable(benchmark "src/Benchmark.cpp")
     target_link_libraries(benchmark IntelliStream)
-
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/torchscripts
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/datasets
             DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

@@ -19,6 +19,41 @@
 
 using namespace INTELLI;
 namespace OoOJoin {
+    /**
+ * @ingroup ADB_OPERATORS
+ * @typedef AbstractOperatorPtr
+ * @brief The class to describe a shared pointer to @ref AbstractOperator
+ */
+    typedef std::shared_ptr<class AbstractOperator> AbstractOperatorPtr;
+/**
+ * @ingroup ADB_OPERATORS
+ * @def newAbstractOperator
+ * @brief (Macro) To creat a new @ref AbstractOperator under shared pointer.
+ */
+#define newAbstractOperator std::make_shared<OoOJoin::AbstractOperator>
+/**
+ * @ingroup ADB_OPERATORS
+ * @def timeTrackingStart
+ * @brief (Macro) start a time tracking and record it at variable v, v is not defined yet
+ * @param v the variable name, must start with tt_
+ */
+#define timeTrackingStart(v); tsType v;v=UtilityFunctions::timeLastUs(timeBaseStruct);
+/**
+ * @ingroup ADB_OPERATORS
+ * @def timeTrackingStartNoClaim
+ * @brief (Macro) start a time tracking and record it at variable v, v is previously defined
+ * @param v the variable name, must start with tt_
+ */
+#define timeTrackingStartNoClaim(v); v=UtilityFunctions::timeLastUs(timeBaseStruct);
+/**
+ * @ingroup ADB_OPERATORS
+ * @def timeTrackingEnd
+ * @brief (Macro) end a time tracking of variable v and return
+ * @param v the variable name, must start with tt_
+ * @return the time last
+ */
+#define timeTrackingEnd(v) (UtilityFunctions::timeLastUs(timeBaseStruct)-v)
+
 /**
  * @ingroup ADB_OPERATORS
  * @class AbstractOperator Operator/AbstractOperator.h
@@ -41,7 +76,7 @@ namespace OoOJoin {
         size_t sLen = 0, rLen = 0;
         int threads = 0;
         tsType timeStep = 0;
-        tsType timeBreakDown_all = 0;
+        tsType timeBreakDownAll = 0;
 
         /**
          *@brief set the final processed time for all tuples
@@ -138,40 +173,6 @@ namespace OoOJoin {
         virtual ConfigMapPtr getTimeBreakDown();
     };
 
-/**
- * @ingroup ADB_OPERATORS
- * @typedef AbstractOperatorPtr
- * @brief The class to describe a shared pointer to @ref AbstractOperator
- */
-    typedef std::shared_ptr<class AbstractOperator> AbstractOperatorPtr;
-/**
- * @ingroup ADB_OPERATORS
- * @def newAbstractOperator
- * @brief (Macro) To creat a new @ref AbstractOperator under shared pointer.
- */
-#define newAbstractOperator std::make_shared<OoOJoin::AbstractOperator>
-/**
- * @ingroup ADB_OPERATORS
- * @def timeTrackingStart
- * @brief (Macro) start a time tracking and record it at variable v, v is not defined yet
- * @param v the variable name, must start with tt_
- */
-#define timeTrackingStart(v); tsType v;v=UtilityFunctions::timeLastUs(timeBaseStruct);
-/**
- * @ingroup ADB_OPERATORS
- * @def timeTrackingStartNoClaim
- * @brief (Macro) start a time tracking and record it at variable v, v is previously defined
- * @param v the variable name, must start with tt_
- */
-#define timeTrackingStartNoClaim(v); v=UtilityFunctions::timeLastUs(timeBaseStruct);
-/**
- * @ingroup ADB_OPERATORS
- * @def timeTrackingEnd
- * @brief (Macro) end a time tracking of variable v and return
- * @param v the variable name, must start with tt_
- * @return the time last
- */
-#define timeTrackingEnd(v) (UtilityFunctions::timeLastUs(timeBaseStruct)-v)
 
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_ABSTRACTOPERATOR_H_

@@ -9,6 +9,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  LIBTORCH_PATH: /usr/local/libtorch
 
 jobs:
   build:
@@ -23,16 +24,17 @@ jobs:
       - name: Install toolchains
         run: |
           sudo apt-get update
-          sudo apt install gcc g++ cmake
-      - name: Configure CMake
-        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          sudo apt install gcc g++ cmake libopenblas-dev liblapack-dev libatlas-base-dev libprotobuf-dev protobuf-compiler python3 pip
+      - name: Install Libtorch
+        run: |
+          sudo adduser --disabled-password --gecos "" test
+          sudo usermod -G sudo test
+          su test
+          pip3 install torch==1.13.0 torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 
       - name: Build
         # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-        env:
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target IntelliStream -DCMAKE_PREFIX_PATH="/home/test/.local/lib/python3.10/site-packages/torch/share/cmake"
           CC: gcc
           CXX: g++
 
@@ -40,4 +42,6 @@ jobs:
         working-directory: ${{github.workspace}}/build/test
         # Execute tests defined by the CMake configuration.
         # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-        run: ./cpp_test "--success"
+        run: |
+          ./simpletest "--success";
+          ./pecjtest "--success"

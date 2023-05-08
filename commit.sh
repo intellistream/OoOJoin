@@ -1,4 +1,4 @@
-BRANCH=zipf_dataLoader
+BRANCH=stable_torch_and_yuanzhen
 git init
 git checkout -b $BRANCH
 git add .
