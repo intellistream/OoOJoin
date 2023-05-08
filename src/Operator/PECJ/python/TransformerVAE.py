@@ -24,7 +24,7 @@ class VAE(nn.Module):
         self.encoder = nn.Sequential(
             TransformerEncoder(input_dim, hidden_dim, num_layers, num_heads),
             nn.Linear(input_dim, hidden_dim),
-            #nn.ReLU(),
+            nn.ReLU(),
             nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),
             #nn.Linear(hidden_dim, latent_dim*2 + 2),
@@ -33,7 +33,8 @@ class VAE(nn.Module):
             nn.Linear(hidden_dim, latent_dim*2 ), #muZ and logVarZ
         )
         self.muZAmptitude=nn.Sequential(
-            nn.Sigmoid()
+           nn.Sigmoid()
+           #nn.ReLU()
         )
         self.muLayer=nn.Sequential (
             nn.Linear(hidden_dim, 1 ),
@@ -62,7 +63,6 @@ class VAE(nn.Module):
         self.priorB0=torch.tensor([1.0])
         self.lastA0=self.priorA0
         self.lastB0=self.priorB0
-    
     @torch.jit.export 
     def loadPriorDist(self,pmu,psigma,pa0,pb0):
         self.lastMu=self.priorMu
@@ -83,27 +83,27 @@ class VAE(nn.Module):
     @torch.jit.export 
     def getLastDist(self):
         return self.lastMu,(0.5*self.lastSigma).exp(),self.lastA0,self.lastB0
+
+    #get the estmation value of mu
     @torch.jit.export 
     def getMuEstimation(self):
-        return self.lastMu,(0.5*self.lastSigma).exp()
+        return (self.lastMu),((0.5*self.lastSigma).exp())
     def forward(self, x):
         xWarp=self.encoder(x)
         #z
         zEvaluate=self.zLayer(xWarp)
         muZ=zEvaluate[:, :self.latent_dim]
         muZ=self.muZAmptitude(muZ)
+        muZ=self.latent_dim/torch.sum(muZ)*muZ
         logvarZ=zEvaluate[:, self.latent_dim:(self.latent_dim*2)]
         #global
         mu= self.muLayer(xWarp)
         logvar=self.logVarLayer(xWarp)
         #update mu
-        self.lastMu=mu[0]
-        self.lastSigma=logvar[0]
-        #update \tau
-    
-        #logvar=xWarp[:, self.latent_dim*2+1]
-        
-        
+        self.lastMu=mu
+        self.lastSigma=logvar
+        #update \ta
+        #logvar=xWarp[:, self.latent_dim*2+1
         #z = torch.cat((z, mu.unsqueeze(1), logvar.unsqueeze(1)), dim=1)
         kMu=torch.ones_like(muZ)*torch.mean(mu)
         self.lastA0=(self.priorA0+self.inputDim/2)
@@ -115,10 +115,31 @@ class VAE(nn.Module):
         z = self.reparameterize(kMu, kLogVar)
         z=z*muZ
         #z=z*muZ
-        x_recon = z
+        x_recon =z
         
         return x_recon, muZ, logvarZ, mu, logvar
-    # a normal, vae-like loss function
+    @torch.jit.export
+    def getDimension(self):
+        return self.inputDim,self.latent_dim
+    # this one has problems, fix later
+    @torch.jit.export 
+    def lossUnderNormal(self, x_recon, x, mu, logvar):
+        recon_loss = F.mse_loss(x_recon, x, reduction='mean')
+        mu_prior=self.priorMu
+        sigma_prior=self.priorSigma
+        a=self.priorA0
+        b=self.priorB0
+        #print(a)
+        #print(b)
+        kl_div = -0.5 * torch.sum(1 + logvar - torch.log(sigma_prior.pow(2)) - ((mu - mu_prior).pow(2) + logvar.exp()) / sigma_prior.pow(2))
+        kl_div+= -0.5 * torch.sum(1 + logvar - torch.log(b) - torch.lgamma(a) + (a - 1) * (torch.digamma(a) - torch.log(mu)) - (mu / b) - a * torch.exp(torch.log(mu) - torch.log(b)))
+        return recon_loss+kl_div
+    @torch.jit.export 
+    def lossUnderPretrain(self, x_recon, x, pmu, mu):
+        #recon_loss = F.mse_loss(x_recon, x, reduction='mean')
+        recon_loss=0
+        mu_loss=F.mse_loss(mu, pmu, reduction='mean')
+        return mu_loss+recon_loss
     def loss_function(self, x_recon, x, muZ, logvarZ, mu, logvar):
         recon_loss = F.mse_loss(x_recon, x, reduction='mean')
         mu_prior=self.priorMu
@@ -132,12 +153,9 @@ class VAE(nn.Module):
         #kl_divergence = -0.5 * torch.sum(1 + logvarZ - muZ.pow(2) - logvarZ.exp())
         #kl_divergence = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
         return recon_loss+kl_div
-    #a loss function to force mu aligned with pmu
-    def loss_function_priorKnowledge(self, x_recon, x, pmu, mu, logvar):
-        recon_loss = F.mse_loss(x_recon, x, reduction='mean')
-        mu_loss=F.mse_loss(mu, pmu, reduction='mean')
-        return mu_loss+recon_loss
-
+     #a loss function to force mu aligned with pmu
+  
+   
 def save_model(model, path,X):
     device = torch.device("cpu")
     tx=X.to(device)
@@ -156,29 +174,101 @@ def draw_model(model,X,fname):
     x2=X.to('cpu')
     dot = make_dot(m2(x2), params=None,show_attrs=False,show_saved=False)
     dot.render(fname, format='pdf')
-
+def genX(num_samples,input_dim,maxBase,noiseAmp):
+     amptitude=torch.tensor([maxBase])
+     noiseX= torch.randn(1, input_dim)*(noiseAmp*maxBase)
+     baseX=torch.ones_like(noiseX)*maxBase
+     sx=baseX+noiseX
+     sy=amptitude
+     scalingFac=torch.rand(1)*0.5+0.5
+     sx=sx*scalingFac
+     sy=sy*scalingFac
+     for i in range(num_samples-1):
+        amptitude=torch.tensor([maxBase])
+        noiseX= torch.randn(1, input_dim)*(noiseAmp*maxBase)
+        baseX=torch.ones_like(noiseX)*maxBase
+        tx=baseX+noiseX
+        ty=amptitude
+        scalingFac=torch.rand(1)*0.5+0.5
+        tx=tx*scalingFac
+        ty=ty*scalingFac
+        sx=torch.cat((sx, tx), dim=0)
+        sy=torch.cat((sy, ty), dim=0)
+        #sx=torch.cat((sx,tx.unsqueeze(0)), dim=0)
+     return sx,sy
+def supervisedTrain(model,X,Y,batch_size,learningRate,epochs,device):
+    optimizer = optim.Adam(model.parameters(), lr=learningRate)
+    num_samples,input_dim=X.shape
+    for epoch in range(1, epochs + 1):
+            train_loss = 0
+            for batch_idx in range(0, num_samples, batch_size):
+                model.train()
+                
+                #x = X[batch_idx:batch_idx+batch_size].to('cuda')
+                x = X[batch_idx:batch_idx+batch_size].to(device)
+                y= Y[batch_idx:batch_idx+batch_size].to(device)
+                model.loadPriorDist(torch.mean(x[0]),torch.std(x[0]),torch.tensor(1.0),torch.tensor(1.0))
+                optimizer.zero_grad()
+                x_recon, muZ, logvarZ, mu, logvar = model(x)
+                #loss = model.loss_function(x_recon, x, muZ, logvarZ, mu, logvar)
+                loss=model.lossUnderPretrain(x_recon,x,y,mu)
+                loss.backward()
+                optimizer.step()
+                train_loss += loss.item()
+                #optimizer.step()
+                if batch_idx % 100== 0:
+                    print('Epoch {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+                        epoch, batch_idx, num_samples,
+                        100. * batch_idx / num_samples,
+                        loss.item() / len(x)))
+def unSupervisedTrain(model,X,batch_size,learningRate,epochs,device):
+    optimizer = optim.Adam(model.parameters(), lr=learningRate)
+    num_samples,input_dim=X.shape
+    for epoch in range(1, epochs + 1):
+            train_loss = 0
+            for batch_idx in range(0, num_samples, batch_size):
+                model.train()
+                
+                #x = X[batch_idx:batch_idx+batch_size].to('cuda')
+                x = X[batch_idx:batch_idx+batch_size].to(device)
+                model.loadPriorDist(torch.mean(x[0]),torch.std(x[0]),torch.tensor(1.0),torch.tensor(1.0))
+                optimizer.zero_grad()
+                x_recon, muZ, logvarZ, mu, logvar = model(x)
+                #loss = model.loss_function(x_recon, x, muZ, logvarZ, mu, logvar)
+                loss=model.lossUnderNormal(x_recon, x, mu, logvar)
+                loss.backward()
+                optimizer.step()
+                train_loss += loss.item()
+                #optimizer.step()
+                if batch_idx % 100== 0:
+                    print('Epoch {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+                        epoch, batch_idx, num_samples,
+                        100. * batch_idx / num_samples,
+                        loss.item() / len(x)))
 def main():
     # Set the device
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # Define the main function
+    #X,Y= genX(1,10,10,0.2)
+    #print(X,Y)
+    #return X,Y
+    device='cuda'
     input_dim = 10
     hidden_dim = 64
     latent_dim = 10
     num_layers = 4
     num_heads = 1
-    batch_size = 10
     # Define the hyperparameters
-    epochs = 10
-    batch_size = 128
+    epochs = 100
+    batch_size = 100
     learning_rate = 1e-3
 
     # Generate the input data X
     
     num_samples = 1000
    
-    noiseX= torch.randn(num_samples, input_dim)
-    baseX=torch.ones_like(noiseX)*5
-    X=baseX+noiseX
+    #noiseX= torch.randn(num_samples, input_dim)
+    #baseX=torch.ones_like(noiseX)*5
+    X,Y= genX(num_samples,input_dim,10,0.2)
     #X = torch.tensor([1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0])
     #X = torch.randn(num_samples, input_size)
     #print(X)
@@ -188,48 +278,32 @@ def main():
     #model = VAE(input_size, hidden_size, latent_size).to(device)
     model = VAE(input_dim, hidden_dim, latent_dim, num_layers, num_heads)
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-    save_model(model,"trVAE_raw.pt",X)
+    save_model(model,"linearVAE_raw.pt",X)
     num_epochs=100
     model.train()
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model=model.to('cuda')
-    model.loadPriorDist(torch.mean(X),torch.std(X),torch.tensor(1.0),torch.tensor(741603.1875))
+    model=model.to(device)
+    
     # Train the model
     batch_idx=0
-    for epoch in range(1, epochs + 1):
-            train_loss = 0
-            for batch_idx in range(0, num_samples, batch_size):
-                x = X[batch_idx:batch_idx+batch_size].to('cuda')
-                optimizer.zero_grad()
-                x_recon, muZ, logvarZ, mu, logvar = model(x)
-                loss = model.loss_function(x_recon, x, muZ, logvarZ, mu, logvar)
-                optimizer.zero_grad()
-                loss.backward()
-                optimizer.step()
-                train_loss += loss.item()
-                optimizer.step()
-                if batch_idx % 100== 0:
-                    print('Epoch {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                        epoch, batch_idx, num_samples,
-                        100. * batch_idx / num_samples,
-                        loss.item() / len(x)))
-   
+    
+    supervisedTrain(model,X,Y,batch_size,1e-3,100,device)
+    unSupervisedTrain(model,X,batch_size,1e-3,10,device)
     #model.eval()
     #model=model.to('cpu')
-    Y= torch.tensor([5.1,5.2,5.3,5.4,5.5,5.6,5.7,5.8,5.4,5.2]).to('cuda')
-    Y = Y.reshape(1, -1)
-    Y=Y+10
+    X,Y= genX(1,input_dim,10,0.2)
+   
     
     #print(tmu,tSigma,ta/tb)
-    x=X.to('cuda')
-    x_recon,muZ, logvarZ, mu, logvar=model(X.to('cuda'))
-    tmu,tSigma,ta,tb=model.getLastDist()
-    print(ta,tb)
-    x_recon,muZ, logvarZ, mu, logvar=model(Y)
-    print(mu,logvar.exp())
+    x=X.to(device)
+    model.eval()
+    x_recon,muZ, logvarZ, mu, logvar=model(x)
+    #print(mu,logvar.exp(),muZ)
+    tmu,tsigma=model.getMuEstimation()
+    print(tmu,tsigma,Y)
+
     #[ru,mu,logvar]=model.forward(t)
-    draw_model(model,Y,"trVAE")
-    #save_model(model,"trVAE.pt",X)
+    #draw_model(model,Y,"linearVAE")
+    save_model(model,"linearVAE.pt",X)
     #print(t.size())
     #print(logvar)
     

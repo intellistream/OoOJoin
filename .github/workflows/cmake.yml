@@ -27,8 +27,7 @@ jobs:
           sudo apt install gcc g++ cmake libopenblas-dev liblapack-dev libatlas-base-dev libprotobuf-dev protobuf-compiler
       - name: Install Libtorch
         run: |
-          wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-1.7.1%2Bcpu.zip
-          unzip libtorch-cxx11-abi-shared-with-deps-1.7.1+cpu.zip -d /usr/local/
+          pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
       - name: Set LD_LIBRARY_PATH
         run: |
           echo "export LD_LIBRARY_PATH=/usr/local/libtorch:$LD_LIBRARY_PATH" >> $GITHUB_ENV

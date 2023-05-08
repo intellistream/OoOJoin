@@ -174,59 +174,31 @@ def draw_model(model,X,fname):
     x2=X.to('cpu')
     dot = make_dot(m2(x2), params=None,show_attrs=False,show_saved=False)
     dot.render(fname, format='pdf')
-def genX(num_samples,input_dim,maxBase):
-     amptitude=torch.rand(1)*maxBase
-     noiseX= torch.randn(1, input_dim)*amptitude*0.1
-     baseX=torch.ones_like(noiseX)*amptitude
+def genX(num_samples,input_dim,maxBase,noiseAmp):
+     amptitude=torch.tensor([maxBase])
+     noiseX= torch.randn(1, input_dim)*(noiseAmp*maxBase)
+     baseX=torch.ones_like(noiseX)*maxBase
      sx=baseX+noiseX
      sy=amptitude
-     for i in range(num_samples):
-        amptitude=torch.rand(1)*maxBase
-        noiseX= torch.randn(1, input_dim)*amptitude*0.1
-        baseX=torch.ones_like(noiseX)*amptitude
+     scalingFac=torch.rand(1)*0.5+0.5
+     sx=sx*scalingFac
+     sy=sy*scalingFac
+     for i in range(num_samples-1):
+        amptitude=torch.tensor([maxBase])
+        noiseX= torch.randn(1, input_dim)*(noiseAmp*maxBase)
+        baseX=torch.ones_like(noiseX)*maxBase
         tx=baseX+noiseX
         ty=amptitude
+        scalingFac=torch.rand(1)*0.5+0.5
+        tx=tx*scalingFac
+        ty=ty*scalingFac
         sx=torch.cat((sx, tx), dim=0)
         sy=torch.cat((sy, ty), dim=0)
         #sx=torch.cat((sx,tx.unsqueeze(0)), dim=0)
      return sx,sy
-def main():
-    # Set the device
-    # Define the main function
-    device='cuda'
-    input_dim = 10
-    hidden_dim = 64
-    latent_dim = 10
-    num_layers = 4
-    num_heads = 1
-    # Define the hyperparameters
-    epochs = 10
-    batch_size = 100
-    learning_rate = 1e-3
-
-    # Generate the input data X
-    
-    num_samples = 1000
-   
-    #noiseX= torch.randn(num_samples, input_dim)
-    #baseX=torch.ones_like(noiseX)*5
-    X,Y= genX(num_samples,input_dim,10)
-    #X = torch.tensor([1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0])
-    #X = torch.randn(num_samples, input_size)
-    #print(X)
-    # Initialize the model and optimizer
-    hidden_size = 50
-    latent_size = 10
-    #model = VAE(input_size, hidden_size, latent_size).to(device)
-    model = VAE(input_dim, hidden_dim, latent_dim, num_layers, num_heads)
-    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-    save_model(model,"linearVAE_raw.pt",X)
-    num_epochs=100
-    model.train()
-    model=model.to(device)
-    
-    # Train the model
-    batch_idx=0
+def supervisedTrain(model,X,Y,batch_size,learningRate,epochs,device):
+    optimizer = optim.Adam(model.parameters(), lr=learningRate)
+    num_samples,input_dim=X.shape
     for epoch in range(1, epochs + 1):
             train_loss = 0
             for batch_idx in range(0, num_samples, batch_size):
@@ -249,22 +221,88 @@ def main():
                         epoch, batch_idx, num_samples,
                         100. * batch_idx / num_samples,
                         loss.item() / len(x)))
+def unSupervisedTrain(model,X,batch_size,learningRate,epochs,device):
+    optimizer = optim.Adam(model.parameters(), lr=learningRate)
+    num_samples,input_dim=X.shape
+    for epoch in range(1, epochs + 1):
+            train_loss = 0
+            for batch_idx in range(0, num_samples, batch_size):
+                model.train()
+                
+                #x = X[batch_idx:batch_idx+batch_size].to('cuda')
+                x = X[batch_idx:batch_idx+batch_size].to(device)
+                model.loadPriorDist(torch.mean(x[0]),torch.std(x[0]),torch.tensor(1.0),torch.tensor(1.0))
+                optimizer.zero_grad()
+                x_recon, muZ, logvarZ, mu, logvar = model(x)
+                #loss = model.loss_function(x_recon, x, muZ, logvarZ, mu, logvar)
+                loss=model.lossUnderNormal(x_recon, x, mu, logvar)
+                loss.backward()
+                optimizer.step()
+                train_loss += loss.item()
+                #optimizer.step()
+                if batch_idx % 100== 0:
+                    print('Epoch {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+                        epoch, batch_idx, num_samples,
+                        100. * batch_idx / num_samples,
+                        loss.item() / len(x)))
+def main():
+    # Set the device
+    # Define the main function
+    #X,Y= genX(1,10,10,0.2)
+    #print(X,Y)
+    #return X,Y
+    device='cuda'
+    input_dim = 10
+    hidden_dim = 64
+    latent_dim = 10
+    num_layers = 4
+    num_heads = 1
+    # Define the hyperparameters
+    epochs = 100
+    batch_size = 100
+    learning_rate = 1e-3
+
+    # Generate the input data X
+    
+    num_samples = 1000
    
+    #noiseX= torch.randn(num_samples, input_dim)
+    #baseX=torch.ones_like(noiseX)*5
+    X,Y= genX(num_samples,input_dim,10,0.2)
+    #X = torch.tensor([1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0])
+    #X = torch.randn(num_samples, input_size)
+    #print(X)
+    # Initialize the model and optimizer
+    hidden_size = 50
+    latent_size = 10
+    #model = VAE(input_size, hidden_size, latent_size).to(device)
+    model = VAE(input_dim, hidden_dim, latent_dim, num_layers, num_heads)
+    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+    save_model(model,"linearVAE_raw.pt",X)
+    num_epochs=100
+    model.train()
+    model=model.to(device)
+    
+    # Train the model
+    batch_idx=0
+    #Note: first learn the certainties, then get the uncertainties
+    supervisedTrain(model,X,Y,batch_size,1e-3,100,device)
+    unSupervisedTrain(model,X,batch_size,1e-3,10,device)
     #model.eval()
     #model=model.to('cpu')
-    Y= torch.tensor([5.1,5.2,5.3,5.4,5.5,5.6,5.7,5.8,5.4,5.2]).to(device)
-    Y = Y.reshape(1, -1)
-    Y=Y
+    X,Y= genX(1,input_dim,10,0.2)
+   
     
     #print(tmu,tSigma,ta/tb)
     x=X.to(device)
     model.eval()
-    x_recon,muZ, logvarZ, mu, logvar=model(Y)
-    print(mu,logvar.exp(),muZ)
+    x_recon,muZ, logvarZ, mu, logvar=model(x)
+    #print(mu,logvar.exp(),muZ)
     tmu,tsigma=model.getMuEstimation()
-    print(tmu,tsigma)
+    print(tmu,tsigma,Y)
+
     #[ru,mu,logvar]=model.forward(t)
-    draw_model(model,Y,"linearVAE")
+    #draw_model(model,Y,"linearVAE")
     save_model(model,"linearVAE.pt",X)
     #print(t.size())
     #print(logvar)
