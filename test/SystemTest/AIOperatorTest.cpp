@@ -3,7 +3,7 @@
 #include <Common/LinearVAE.h>
 #include <vector>
 #include <OoOJoin.h>
-#include "SimpleTest.cpp"
+#include "TestFunction.cpp"
 TEST_CASE("Test AIOperator on Pretrain mode")
 {
   int a = 0;

@@ -124,6 +124,10 @@ size_t OoOJoin::TestBench::OoOTest(bool additionalSort) {
 }
 
 size_t OoOJoin::TestBench::inOrderTest(bool additionalSort) {
+  /**
+   * @brief prevent ai operator from training or learning
+   */
+  opConfig->edit("aiMode","not-applicable");
   forceInOrder(rTuple);
   forceInOrder(sTuple);
   if (additionalSort) {

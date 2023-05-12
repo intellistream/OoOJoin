@@ -12,8 +12,13 @@ bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     aiModeEnum = 0;
   } else if (aiMode == "continual_learning") {
     aiModeEnum = 1;
-  } else {
+  } else if (aiMode == "inference") {
     aiModeEnum = 2;
+  }
+  else
+  {
+    aiModeEnum=255;
+    INTELLI_WARNING("This mode is N.A.");
   }
 
   WMTablePtr wmTable = newWMTable();
