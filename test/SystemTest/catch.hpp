@@ -977,7 +977,7 @@ auto makeTestInvoker(void(*testAsFunction)()) noexcept -> ITestInvoker *;
 template<typename C>
 auto makeTestInvoker(void (C::*testAsMethod)()) noexcept -> ITestInvoker * {
   return new(std::nothrow)
-      TestInvokerAsMethod<C>(testAsMethod);
+  TestInvokerAsMethod<C>(testAsMethod);
 }
 
 struct NameAndTags {
@@ -11522,13 +11522,13 @@ bool almostEqualUlps(FP lhs, FP rhs, uint64_t maxUlpDiff) {
 
 #if defined(CATCH_CONFIG_GLOBAL_NEXTAFTER)
 
-                                                                                                                        float nextafter(float x, float y) {
-        return ::nextafterf(x, y);
-    }
+float nextafter(float x, float y) {
+  return ::nextafterf(x, y);
+}
 
-    double nextafter(double x, double y) {
-        return ::nextafter(x, y);
-    }
+double nextafter(double x, double y) {
+  return ::nextafter(x, y);
+}
 
 #endif // ^^^ CATCH_CONFIG_GLOBAL_NEXTAFTER ^^^
 

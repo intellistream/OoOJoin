@@ -7,13 +7,13 @@ using namespace OoOJoin;
 
 JoinAlgoTable::JoinAlgoTable() {
 //  NPJ npj;
-    algos = {newAbstractJoinAlgo(), \
+  algos = {newAbstractJoinAlgo(), \
           newNestedLoopJoin(), \
           newNPJ(), \
          newNPJSingle(), \
 };
-    algoMap["Null"] = newAbstractJoinAlgo();
-    algoMap["NestedLoopJoin"] = newNestedLoopJoin();
-    algoMap["NPJ"] = newNPJ();
-    algoMap["NPJSingle"] = newNPJSingle();
+  algoMap["Null"] = newAbstractJoinAlgo();
+  algoMap["NestedLoopJoin"] = newNestedLoopJoin();
+  algoMap["NPJ"] = newNPJ();
+  algoMap["NPJSingle"] = newNPJSingle();
 }

@@ -8,7 +8,9 @@ add_executable(mswjTest SystemTest/MSWJTest.cpp)
 add_executable(iawjTest SystemTest/IAWJTest.cpp)
 add_executable(imaTest SystemTest/IMATest.cpp)
 add_executable(pecjTest SystemTest/PECJTest.cpp)
+add_executable(aiOperatorTest SystemTest/AIOperatorTest.cpp)
 add_library(TestFunction SystemTest/TestFunction.cpp)
+
 message(STATUS " Libraries: ${LIBRARIES}")
 target_link_libraries(TestFunction
         IntelliStream
@@ -33,6 +35,10 @@ target_link_libraries(pecjTest
         IntelliStream
         TestFunction
         )
+target_link_libraries(aiOperatorTest
+        IntelliStream
+        TestFunction
+        )
 # avoid undefined reference to "main" in test.cpp
 
 add_test(
@@ -53,8 +59,13 @@ add_test(
         NAME catchpecj_test
         COMMAND $<TARGET_FILE:pecjTest> --success
 )
-
+add_test(
+        NAME catchaioperator_test
+        COMMAND $<TARGET_FILE:aiOperatorTest> --success
+)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/config_IMA.csv
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/config_AI_TRAIN.csv
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/config_Normal.csv
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

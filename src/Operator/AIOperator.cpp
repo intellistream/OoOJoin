@@ -1,12 +1,20 @@
 
-#include <Operator/IMAIAWJOperator.h>
+#include <Operator/AIOperator.h>
 #include <JoinAlgos/JoinAlgoTable.h>
 
-bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
+bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
     return false;
   }
   std::string wmTag = config->tryString("wmTag", "arrival", true);
+  aiMode = config->tryString("aiMode", "pretrain", true);
+  if (aiMode == "pretrain") {
+    aiModeEnum = 0;
+  } else if (aiMode == "continual_learning") {
+    aiModeEnum = 1;
+  } else {
+    aiModeEnum = 2;
+  }
 
   WMTablePtr wmTable = newWMTable();
   wmGen = wmTable->findWM(wmTag);
@@ -15,10 +23,11 @@ bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     return false;
   }
   INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
+
   return true;
 }
 
-bool OoOJoin::IMAIAWJOperator::start() {
+bool OoOJoin::AIOperator::start() {
   /**
   * @brief set watermark generator
   */
@@ -46,14 +55,15 @@ bool OoOJoin::IMAIAWJOperator::start() {
   timeBreakDownIndex = 0;
   timeBreakDownJoin = 0;
   timeBreakDownAll = 0;timeTrackingStartNoClaim(timeBreakDownAll);
+  streamStatisics.reset();
   return true;
 }
 
-void OoOJoin::IMAIAWJOperator::conductComputation() {
+void OoOJoin::AIOperator::conductComputation() {
 
 }
 
-bool OoOJoin::IMAIAWJOperator::stop() {
+bool OoOJoin::AIOperator::stop() {
   if (lockedByWaterMark) {
     WM_INFO("early terminate by watermark, already have results");
   }
@@ -73,7 +83,7 @@ bool OoOJoin::IMAIAWJOperator::stop() {
   return true;
 }
 
-bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
+bool OoOJoin::AIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   bool shouldGenWM, isInWindow;
   if (lockedByWaterMark) {
     return false;
@@ -83,9 +93,15 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   if (shouldGenWM) {
     lockedByWaterMark = true;
     WM_INFO("water mark in S");
+    endOfWindow();
   }
   if (isInWindow) {
-    IMAStateOfKeyPtr stateOfKey;
+    AIStateOfKeyPtr stateOfKey;
+    /**
+     * @brief update the stream statistics
+     *
+     */
+    streamStatisics.encounterSTuple(ts);
     /**
      * @brief First get the index of hash table
      */
@@ -93,11 +109,11 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     AbstractStateOfKeyPtr stateOfSKey = stateOfKeyTableS->getByKey(ts->key);
     if (stateOfSKey == nullptr) // this key doesn't exist
     {
-      stateOfKey = newIMAStateOfKey();
+      stateOfKey = newAIStateOfKey();
       stateOfKey->key = ts->key;
       stateOfKeyTableS->insert(stateOfKey);
     } else {
-      stateOfKey = ImproveStateOfKeyTo(IMAStateOfKey, stateOfSKey);
+      stateOfKey = ImproveStateOfKeyTo(AIStateOfKey, stateOfSKey);
     }
     timeBreakDownIndex += timeTrackingEnd(tt_index);
     /**
@@ -111,8 +127,12 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     timeTrackingStart(tt_join);
     AbstractStateOfKeyPtr probrPtr = stateOfKeyTableR->getByKey(ts->key);
     if (probrPtr != nullptr) {
-      IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
+      AIStateOfKeyPtr py = ImproveStateOfKeyTo(AIStateOfKey, probrPtr);
       confirmedResult += py->arrivedTupleCnt;
+      /**
+       * @brief update selectivity here
+       */
+      streamStatisics.updateSelectivity(confirmedResult);
 //            intermediateResult += py->arrivedTupleCnt;
       intermediateResult += (futureTuplesS + stateOfKey->arrivedTupleCnt) *
           (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
@@ -125,8 +145,12 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   }
   return true;
 }
-
-bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
+void OoOJoin::AIOperator::endOfWindow() {
+  if (aiModeEnum == 0) {
+    std::cout << streamStatisics.reportStr() << endl;
+  }
+}
+bool OoOJoin::AIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   bool shouldGenWM, isInWindow;
   if (lockedByWaterMark) {
     return false;
@@ -136,20 +160,26 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   if (shouldGenWM) {
     lockedByWaterMark = true;
     WM_INFO("water mark in R");
+    endOfWindow();
   }
   if (isInWindow) {
+    /**
+   * @brief update the stream statistics
+   *
+   */
+    streamStatisics.encounterRTuple(tr);
 
-    IMAStateOfKeyPtr stateOfKey;timeTrackingStart(tt_index);
+    AIStateOfKeyPtr stateOfKey;timeTrackingStart(tt_index);
     AbstractStateOfKeyPtr stateOfRKey = stateOfKeyTableR->getByKey(tr->key);
 
     // lastTimeR=tr->arrivalTime;
     if (stateOfRKey == nullptr) // this key does'nt exist
     {
-      stateOfKey = newIMAStateOfKey();
+      stateOfKey = newAIStateOfKey();
       stateOfKey->key = tr->key;
       stateOfKeyTableR->insert(stateOfKey);
     } else {
-      stateOfKey = ImproveStateOfKeyTo(IMAStateOfKey, stateOfRKey);
+      stateOfKey = ImproveStateOfKeyTo(AIStateOfKey, stateOfRKey);
     }
     timeBreakDownIndex += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
     updateStateOfKey(stateOfKey, tr);
@@ -159,8 +189,12 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     timeTrackingStart(tt_join);
     AbstractStateOfKeyPtr probrPtr = stateOfKeyTableS->getByKey(tr->key);
     if (probrPtr != nullptr) {
-      IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
+      AIStateOfKeyPtr py = ImproveStateOfKeyTo(AIStateOfKey, probrPtr);
       confirmedResult += py->arrivedTupleCnt;
+      /**
+     * @brief update selectivity here
+     */
+      streamStatisics.updateSelectivity(confirmedResult);
 //            intermediateResult += py->arrivedTupleCnt;
       intermediateResult += (futureTuplesR + stateOfKey->arrivedTupleCnt) *
           (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
@@ -174,10 +208,11 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   return true;
 }
 
-size_t OoOJoin::IMAIAWJOperator::getResult() {
+size_t OoOJoin::AIOperator::getResult() {
+
   return confirmedResult;
 }
 
-size_t OoOJoin::IMAIAWJOperator::getAQPResult() {
+size_t OoOJoin::AIOperator::getAQPResult() {
   return intermediateResult;
 }

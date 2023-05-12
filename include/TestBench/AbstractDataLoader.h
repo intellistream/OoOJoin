@@ -38,53 +38,53 @@ namespace OoOJoin {
 * - setConfig and setModConfig (optional), generate R and S internally
 * - call getTupleVectorS/R
  */
-    class AbstractDataLoader {
-    public:
-        AbstractDataLoader() = default;
+class AbstractDataLoader {
+ public:
+  AbstractDataLoader() = default;
 
-        ~AbstractDataLoader() = default;
+  ~AbstractDataLoader() = default;
 
-        /**
-       * @brief Set the GLOBAL config map related to this loader
-       * @param cfg The config map
-        * @return bool whether the config is successfully set
-       */
-        virtual bool setConfig(ConfigMapPtr cfg) {
-            assert(cfg);
-            return true;
-        }
+  /**
+ * @brief Set the GLOBAL config map related to this loader
+ * @param cfg The config map
+  * @return bool whether the config is successfully set
+ */
+  virtual bool setConfig(ConfigMapPtr cfg) {
+    assert(cfg);
+    return true;
+  }
 
-        /**
-      * @brief Set the modification config map related to this loader
-      * @param cfg The config map
-      * @return bool whether the config is successfully set
-      */
-        virtual bool setModConfig(ConfigMapPtr cfg) {
-            assert(cfg);
-            return true;
-        }
+  /**
+* @brief Set the modification config map related to this loader
+* @param cfg The config map
+* @return bool whether the config is successfully set
+*/
+  virtual bool setModConfig(ConfigMapPtr cfg) {
+    assert(cfg);
+    return true;
+  }
 
-        /**
-         * @brief get the vector of s tuple
-         * @return the vector
-         */
-        virtual vector<TrackTuplePtr> getTupleVectorS() {
+  /**
+   * @brief get the vector of s tuple
+   * @return the vector
+   */
+  virtual vector<TrackTuplePtr> getTupleVectorS() {
 
-            vector<TrackTuplePtr> ru;
-            return ru;
+    vector<TrackTuplePtr> ru;
+    return ru;
 
-        }
+  }
 
-        /**
-        * @brief get the vector of R tuple
-        * @return the vector
-        */
-        virtual vector<TrackTuplePtr> getTupleVectorR() {
-            vector<TrackTuplePtr> ru;
-            return ru;
+  /**
+  * @brief get the vector of R tuple
+  * @return the vector
+  */
+  virtual vector<TrackTuplePtr> getTupleVectorR() {
+    vector<TrackTuplePtr> ru;
+    return ru;
 
-        }
-    };
+  }
+};
 
 /**
  * @ingroup ADB_TESTBENCH_DATALOADERS
@@ -92,7 +92,7 @@ namespace OoOJoin {
  * @brief The class to describe a shared pointer to @ref AbstractDataLoader
 
  */
-    typedef std::shared_ptr<class AbstractDataLoader> AbstractDataLoaderPtr;
+typedef std::shared_ptr<class AbstractDataLoader> AbstractDataLoaderPtr;
 /**
  * @ingroup ADB_TESTBENCH_DATALOADERS
  * @def newAbstractDataLoader

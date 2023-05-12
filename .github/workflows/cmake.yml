@@ -48,3 +48,4 @@ jobs:
          ./imaTest "--success"
          ./mswjTest "--success"
          ./pecjTest "--success"
+         ./aiOperatorTest "--success"

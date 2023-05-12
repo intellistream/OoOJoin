@@ -33,77 +33,76 @@ namespace OoOJoin {
  * @note follows the assumption of linear independent arrival and skewness
  * @note operator tag = "IMA"
  */
-    class IMAIAWJOperator : public MeanAQPIAWJOperator {
-    protected:
-        void conductComputation();
+class IMAIAWJOperator : public MeanAQPIAWJOperator {
+ protected:
+  void conductComputation();
 
-        class IMAStateOfKey : public MeanStateOfKey {
-        public:
-            double lastUnarrivedTuples = 0;
+  class IMAStateOfKey : public MeanStateOfKey {
+   public:
+    double lastUnarrivedTuples = 0;
 
-            IMAStateOfKey() = default;
+    IMAStateOfKey() = default;
 
-            ~IMAStateOfKey() = default;
-        };
+    ~IMAStateOfKey() = default;
+  };
 
 #define newIMAStateOfKey std::make_shared<IMAStateOfKey>
-        using IMAStateOfKeyPtr = std::shared_ptr<IMAStateOfKey>;
+  using IMAStateOfKeyPtr = std::shared_ptr<IMAStateOfKey>;
 
+ public:
+  IMAIAWJOperator() = default;
 
-    public:
-        IMAIAWJOperator() = default;
+  ~IMAIAWJOperator() = default;
 
-        ~IMAIAWJOperator() = default;
+  /**
+   * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
+  * @brief Set the config map related to this operator
+  * @param cfg The config map
+   * @return bool whether the config is successfully set
+  */
+  bool setConfig(ConfigMapPtr cfg) override;
 
-        /**
-         * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
-        * @brief Set the config map related to this operator
-        * @param cfg The config map
-         * @return bool whether the config is successfully set
-        */
-        bool setConfig(ConfigMapPtr cfg) override;
+  /**
+ * @brief feed a tuple s into the Operator
+ * @param ts The tuple
+  * @warning The current version is simplified and assuming only used in SINGLE THREAD!
+  * @return bool, whether tuple is fed.
+ */
+  bool feedTupleS(TrackTuplePtr ts) override;
 
-        /**
-       * @brief feed a tuple s into the Operator
-       * @param ts The tuple
-        * @warning The current version is simplified and assuming only used in SINGLE THREAD!
-        * @return bool, whether tuple is fed.
-       */
-        bool feedTupleS(TrackTuplePtr ts) override;
+  /**
+    * @brief feed a tuple R into the Operator
+    * @param tr The tuple
+    * @warning The current version is simplified and assuming only used in SINGLE THREAD!
+    *  @return bool, whether tuple is fed.
+    */
+  bool feedTupleR(TrackTuplePtr tr) override;
 
-        /**
-          * @brief feed a tuple R into the Operator
-          * @param tr The tuple
-          * @warning The current version is simplified and assuming only used in SINGLE THREAD!
-          *  @return bool, whether tuple is fed.
-          */
-        bool feedTupleR(TrackTuplePtr tr) override;
+  /**
+   * @brief start this operator
+   * @return bool, whether start successfully
+   */
+  bool start() override;
 
-        /**
-         * @brief start this operator
-         * @return bool, whether start successfully
-         */
-        bool start() override;
+  /**
+   * @brief stop this operator
+   * @return bool, whether start successfully
+   */
+  bool stop() override;
 
-        /**
-         * @brief stop this operator
-         * @return bool, whether start successfully
-         */
-        bool stop() override;
+  /**
+   * @brief get the joined sum result
+   * @return The result
+   */
+  size_t getResult() override;
 
-        /**
-         * @brief get the joined sum result
-         * @return The result
-         */
-        size_t getResult() override;
+  /**
+   * @brief get the joined sum result under AQP
+   * @return The result
+   */
+  size_t getAQPResult() override;
 
-        /**
-         * @brief get the joined sum result under AQP
-         * @return The result
-         */
-        size_t getAQPResult() override;
-
-    };
+};
 
 /**
  * @ingroup ADB_OPERATORS
@@ -111,7 +110,7 @@ namespace OoOJoin {
  * @brief The class to describe a shared pointer to @ref IMAIAWJOperator
 
  */
-    typedef std::shared_ptr<class IMAIAWJOperator> IMAIAWJOperatorPtr;
+typedef std::shared_ptr<class IMAIAWJOperator> IMAIAWJOperatorPtr;
 /**
  * @ingroup ADB_OPERATORS
  * @def newIMAIAWJOperator

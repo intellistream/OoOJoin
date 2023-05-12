@@ -37,69 +37,69 @@ namespace OoOJoin {
  * @class AbstractJoinAlgo JoinAlgos/AbstractJoinAlgo.h
  * @brief The abstraction to describe a join algorithm, providing virtual function of join
  */
-    class AbstractJoinAlgo {
-    protected:
-        std::string nameTag;
-        struct timeval timeBaseStruct{};
+class AbstractJoinAlgo {
+ protected:
+  std::string nameTag;
+  struct timeval timeBaseStruct{};
 
-        //tsType timeStep;
-    public:
-        //元组生产力监视器
-        MSWJ::TupleProductivityProfiler *productivity_profiler_;
+  //tsType timeStep;
+ public:
+  //元组生产力监视器
+  MSWJ::TupleProductivityProfiler *productivity_profiler_;
 
-        ConfigMapPtr config;
+  ConfigMapPtr config;
 
-        AbstractJoinAlgo() {
-            setAlgoName("NULL");
-        }
+  AbstractJoinAlgo() {
+    setAlgoName("NULL");
+  }
 
-        ~AbstractJoinAlgo() = default;
+  ~AbstractJoinAlgo() = default;
 
-        /**
-        * @brief Set the config map related to this Algorithm
-        * @param cfg The config map
-         * @return bool whether the config is successfully set
-        */
-        virtual bool setConfig(ConfigMapPtr cfg);
+  /**
+  * @brief Set the config map related to this Algorithm
+  * @param cfg The config map
+   * @return bool whether the config is successfully set
+  */
+  virtual bool setConfig(ConfigMapPtr cfg);
 
-        /**
-        * @brief The function to execute join,
-        * @param windS The window of S tuples
-         * @param windR The window of R tuples
-         * @param threads The threads for executing this join
-        * @return The joined tuples
-         * @note Please at least mark the final processed time at rTuples
-        */
-        virtual size_t join(C20Buffer <OoOJoin::TrackTuplePtr> windS,
-                            C20Buffer <OoOJoin::TrackTuplePtr> windR,
-                            int threads = 1);
+  /**
+  * @brief The function to execute join,
+  * @param windS The window of S tuples
+   * @param windR The window of R tuples
+   * @param threads The threads for executing this join
+  * @return The joined tuples
+   * @note Please at least mark the final processed time at rTuples
+  */
+  virtual size_t join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
+                      C20Buffer<OoOJoin::TrackTuplePtr> windR,
+                      int threads = 1);
 
-        /**
-         * @brief set the name of algorithm
-         * @param name Algorithm name
-         */
-        void setAlgoName(std::string name) {
-            nameTag = std::move(name);
-        }
+  /**
+   * @brief set the name of algorithm
+   * @param name Algorithm name
+   */
+  void setAlgoName(std::string name) {
+    nameTag = std::move(name);
+  }
 
-        /**
-        * @brief get the name of algorithm
-        * @return The name
-        */
-        std::string getAlgoName() {
-            return nameTag;
-        }
+  /**
+  * @brief get the name of algorithm
+  * @return The name
+  */
+  std::string getAlgoName() {
+    return nameTag;
+  }
 
-        /**
-         * @brief Synchronize the time structure with outside setting
-         * @param tv The outside time structure
-         */
-        void syncTimeStruct(struct timeval tv) {
-            timeBaseStruct = tv;
-        }
-    };
+  /**
+   * @brief Synchronize the time structure with outside setting
+   * @param tv The outside time structure
+   */
+  void syncTimeStruct(struct timeval tv) {
+    timeBaseStruct = tv;
+  }
+};
 
-    typedef std::shared_ptr<AbstractJoinAlgo> AbstractJoinAlgoPtr;
+typedef std::shared_ptr<AbstractJoinAlgo> AbstractJoinAlgoPtr;
 #define  newAbstractJoinAlgo() std::make_shared<AbstractJoinAlgo>()
 /**
  * @}
