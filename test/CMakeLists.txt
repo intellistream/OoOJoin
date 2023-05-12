@@ -32,7 +32,7 @@ target_link_libraries(imaTest
         TestFunction
         )
 target_link_libraries(pecjTest
-        IntelliStream90
+        IntelliStream
         TestFunction
         )
 target_link_libraries(aiOperatorTest

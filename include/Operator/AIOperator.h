@@ -7,12 +7,12 @@
 #ifndef INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPAIOperator_H_
 #define INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPAIOperator_H_
 
-#include "MeanAQPIAWJOperator.h"
-#include "Common/Window.h"
+#include <Operator/MeanAQPIAWJOperator.h>
+#include <Common/Window.h>
 #include <atomic>
-#include "WaterMarker/LatenessWM.h"
-#include "Common/StateOfKey.h"
-
+#include <WaterMarker/LatenessWM.h>
+#include <Common/StateOfKey.h>
+//#include <Common/LinearVAE.h>
 namespace OoOJoin {
 
 /**
@@ -26,6 +26,7 @@ namespace OoOJoin {
  * - "rLen" U64: The length of R buffer
  * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
  * - "aiMode" String: The tag to indicate working mode of ai, can be pretrain (0), continual_learning (1) or inference (2)
+ * = "ptPrefix" String: The prefix of vae *.pt, such as linearVAE
  * @warning This implementation is putting rotten, just to explore a basic idea of AQP by using historical mean to predict future
  * @warning The predictor and watermarker are currently NOT seperated in this operator, split them in the future!
  * @note In current version, the computation will block feeding
@@ -37,6 +38,7 @@ class AIOperator : public MeanAQPIAWJOperator {
   void conductComputation();
   std::string aiMode;
   uint8_t aiModeEnum = 0;
+  std::string ptPrefix;
   class AIStateOfKey : public MeanStateOfKey {
    public:
     double lastUnarrivedTuples = 0;
@@ -96,7 +98,7 @@ class AIOperator : public MeanAQPIAWJOperator {
       ru += "rCnt," + to_string(rCnt) + "\r\n";
       return ru;
     }
-
+    //TROCHPACK_VAE::LinearVAE vaeSelectivity;
     AIStateOfStreams() = default;
     ~AIStateOfStreams() = default;
   };

@@ -8,6 +8,8 @@ bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   }
   std::string wmTag = config->tryString("wmTag", "arrival", true);
   aiMode = config->tryString("aiMode", "pretrain", true);
+  ptPrefix=config->tryString("ptPrefix","linearVAE",true);
+ // streamStatisics.vaeSelectivity.loadModule("torchscripts/"+ptPrefix+"/"+ptPrefix+"_selectivity.pt");
   if (aiMode == "pretrain") {
     aiModeEnum = 0;
   } else if (aiMode == "continual_learning") {

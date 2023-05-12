@@ -2,7 +2,7 @@
 
 #include "catch.hpp"
 #include <Operator/MSWJ/KSlack/KSlack.h>
-#include "SimpleTest.cpp"
+#include "TestFunction.cpp"
 
 using namespace std;
 using namespace OoOJoin;

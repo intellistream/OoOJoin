@@ -2,9 +2,9 @@
 //Copyright (C) 2022 by the IntelliStream team (https://github.com/intellistream)
 // Created by tony on 03/03/23.
 //
-#ifndef _VAE_LINEARVAE_HPP_
-#define _VAE_LINEARVAE_HPP_
-#pragma once
+#ifndef _VAE_LINEARVAE_H_
+#define _VAE_LINEARVAE_H_
+
 
 #include <torch/torch.h>
 #include <iostream>
