@@ -19,7 +19,7 @@ void OoOJoin::TestBench::OoOSort(std::vector<TrackTuplePtr> &arr) {
         return t1->arrivalTime < t2->arrivalTime;
     });
 
-    ofstream outfile("/home/rjzhb/Project/log/data.txt");
+    ofstream outfile("data.txt");
     if (outfile.is_open()) { // 如果文件成功打开
         for (auto it: arr) {
             outfile << it->key << "," << it->eventTime << "," << it->arrivalTime <<
@@ -27,7 +27,7 @@ void OoOJoin::TestBench::OoOSort(std::vector<TrackTuplePtr> &arr) {
         }
         outfile.close(); // 关闭文件
     } else {
-        cout << "无法创建文件 data.txt" << endl;
+        cout << "Fail to create data.txt" << endl;
     }
 
 }
@@ -78,8 +78,36 @@ bool OoOJoin::TestBench::setOperator(OoOJoin::AbstractOperatorPtr op, ConfigMapP
     }
     return true;
 }
-
+void OoOJoin::TestBench::aiPretrain() {
+  /**
+   * @brief 1. get the max time stamp of s and r
+   */
+  uint64_t sMax=sTuple[sTuple.size()-1]->arrivalTime;
+  uint64_t rMax=sTuple[sTuple.size()-1]->arrivalTime;
+  uint64_t wmTime=sMax;
+  if(rMax>sMax)
+  {
+    wmTime=rMax;
+  }
+  wmTime++;
+  opConfig->edit("watermarkTimeMs", (uint64_t)wmTime/1000);
+  INTELLI_WARNING("In pre-training, force watermarkTime to be "+ to_string(wmTime));
+  if (opConfig->existString("operator") && opConfig->getString("operator") == "MSWJ") {
+    inlineTestOfMSWJ();
+  } else {
+    inlineTestOfCommon();
+  }
+  //exit(0);
+}
 void OoOJoin::TestBench::inlineTest() {
+    if(opConfig->existString("aiMode") && opConfig->getString("aiMode") == "pretrain")
+    {
+      INTELLI_WARNING("Note, this is training, will terminate after done");
+      aiPretrain();
+      //exit(0);
+      return;
+    }
+
     if (opConfig->existString("operator") && opConfig->getString("operator") == "MSWJ") {
         inlineTestOfMSWJ();
     } else {

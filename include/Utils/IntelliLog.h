@@ -12,6 +12,7 @@
 #include <ctime>
 #include <mutex>
 #include <fstream>
+#include <c10/util/Logging.h>
 /**
  *  @ingroup INTELLI_UTIL
  *  @{
@@ -110,19 +111,19 @@ namespace INTELLI {
  * @def INTELLI_INFO
  * @brief (Macro) To log something as information
  */
-#define INTELLI_INFO(n) IntelliLog::log("INFO",n)
+#define INTELLI_INFO(n)  IntelliLog::log("INFO",n)
 /**
  * @ingroup INTELLI_UTIL_INTELLILOG
  * @def INTELLI_ERROR
  * @brief (Macro) To log something as error
  */
-#define INTELLI_ERROR(n) IntelliLog::log("ERROR",n)
+#define INTELLI_ERROR(n) LOG(ERROR) <<n
 /**
  * @ingroup INTELLI_UTIL_INTELLILOG
  * @def INTELLI_Warning
  * @brief (Macro) To log something as warnning
  */
-#define INTELLI_WARNING(n) IntelliLog::log("WARNING",n)
+#define INTELLI_WARNING(n) LOG(WARNING) <<n
 /**
  * @ingroup INTELLI_UTIL_INTELLILOG
  * @def INTELLI_DEBUG

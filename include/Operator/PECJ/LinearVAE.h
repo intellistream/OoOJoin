@@ -94,6 +94,14 @@ namespace TROCHPACK_VAE {
          * @param data the data stored as tensor, should check size outside
         */
         void learnStep(torch::Tensor data);
+        /**
+         * @brief get the dimension of input X
+         * @return the class member inputDimension;
+         */
+        uint64_t getXDimension()
+        {
+          return inputDimension;
+        }
 
         float resultLoss;
     };

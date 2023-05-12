@@ -44,7 +44,10 @@ namespace OoOJoin {
         void inlineTest();
 
         void forceInOrder(std::vector<TrackTuplePtr> &arr);
-
+        /**
+         * @breif gather the data to prepare for an ai pretrain
+         */
+        void aiPretrain();
         tsType timeStep = 1;
 
     private:

@@ -1,4 +1,4 @@
-BRANCH=stable_torch_and_yuanzhen
+BRANCH=ai_ooo
 git init
 git checkout -b $BRANCH
 git add .
