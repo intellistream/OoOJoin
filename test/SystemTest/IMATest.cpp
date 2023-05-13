@@ -1,13 +1,12 @@
 #define CATCH_CONFIG_MAIN
-
 #include "catch.hpp"
-#include <Operator/MSWJ/KSlack/KSlack.h>
-#include "TestFunction.cpp"
-
-using namespace std;
+#include <Common/LinearVAE.h>
+#include <vector>
+#include <OoOJoin.h>
+//using namespace std;
 using namespace OoOJoin;
-using namespace MSWJ;
-
+//using namespace MSWJ;
+#include "TestFunction.cpp"
 TEST_CASE("Test IMA running on random, watermarkTime = 7", "[short]")
 {
   int a = 0;

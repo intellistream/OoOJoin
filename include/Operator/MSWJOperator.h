@@ -67,23 +67,23 @@ class MSWJOperator : public MeanAQPIAWJOperator {
   bool created = false;
 
   //save rTuple record
-  std::vector<TrackTuplePtr> rTupleRecord{};
+  std::vector<TrackTuplePtr> rTupleRecord;
 
-  KSlackPtr kSlackS{};
-  KSlackPtr kSlackR{};
+  KSlackPtr kSlackS = nullptr;
+  KSlackPtr kSlackR = nullptr;
 
   //bufferSizeManager,  is used to update K(bufferSize)
-  BufferSizeManagerPtr bufferSizeManager{};
+  BufferSizeManagerPtr bufferSizeManager;
 
   //statisticsManager, is used to statistic
-  StatisticsManagerPtr statisticsManager{};
+  StatisticsManagerPtr statisticsManager;
 
   //TupleProductivityProfiler,is used to get productivity of tuple at join stage.
-  TupleProductivityProfilerPtr tupleProductivityProfiler{};
+  TupleProductivityProfilerPtr tupleProductivityProfiler;
 
-  SynchronizerPtr synchronizer{};
+  SynchronizerPtr synchronizer;
 
-  StreamOperatorPtr streamOperator{};
+  StreamOperatorPtr streamOperator = nullptr;
 
  public:
 

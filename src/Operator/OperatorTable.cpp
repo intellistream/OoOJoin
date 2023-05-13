@@ -3,6 +3,11 @@
 //
 
 #include <Operator/OperatorTable.h>
+#include <Operator/MeanAQPIAWJOperator.h>
+#include <Operator/IMAIAWJOperator.h>
+#include <Operator/MSWJOperator.h>
+#include <Operator/IAWJOperator.h>
+#include <Operator/AIOperator.h>
 
 namespace OoOJoin {
 OperatorTable::OperatorTable() {

@@ -1,25 +1,120 @@
 
 #include <Operator/AIOperator.h>
 #include <JoinAlgos/JoinAlgoTable.h>
+#include <filesystem>
+void OoOJoin::AIOperator::readTensors() {
+  streamStatisics.selectivityTensorX = torch::zeros({1, (long) selLen});
+  streamStatisics.selectivityTensorX = streamStatisics.selectivityTensorX.reshape({1, -1});
+  streamStatisics.selectivityTensorY = tryTensor("torchscripts/" + ptPrefix + "/" + "tensor_selectivity_y.pt");
+  streamStatisics.selectivityTensorY = streamStatisics.selectivityTensorY.reshape({-1, 1});
+}
+torch::Tensor OoOJoin::AIOperator::tryTensor(std::string fileName) {
+  if (std::filesystem::exists(fileName)) {
+    try {
+      torch::Tensor load_tensor;
+      // Load the tensor from the file
+      torch::load(load_tensor, fileName);
+      // If we get here, the file was loaded successfully
+      return load_tensor;
 
+    } catch (const std::runtime_error &error) {
+      // Handle the error
+      //  std::cerr << "Error loading tensor: " << error.what() << std::endl;
+      INTELLI_ERROR("the tensor can not be loaded");
+      // Return an error code
+      return torch::empty({1, 0});;
+    }
+  }
+  INTELLI_WARNING("the tensor DOES NOT exist");
+  return torch::empty({1, 0});;
+}
+torch::Tensor OoOJoin::AIOperator::appendFloat2Tensor(torch::Tensor a, float b) {
+  //float b = 7.0;
+  if (streamStatisics.selectivityObservations < selLen) {
+    a[0][streamStatisics.selectivityObservations] = b;
+    streamStatisics.selectivityObservations++;
+  }
+
+  return a;
+}
+torch::Tensor OoOJoin::AIOperator::reshapeColedTensor(torch::Tensor a, uint64_t elementsInACol) {
+  uint64_t rows = a.size(0);
+  uint64_t cols = a.size(1);
+  //auto b=a.reshape({1,(long)(rows*cols)});
+  uint64_t elementsSelected = rows * cols / elementsInACol;
+  elementsSelected = elementsSelected * elementsInACol;
+  auto b = a.narrow(1, 0, elementsSelected);
+  b = b.reshape({(long) (elementsSelected / elementsInACol), (long) elementsInACol});
+  return b;
+}
+void OoOJoin::AIOperator::appendSelectivityTensorX() {
+  if (aiModeEnum == 0 && appendTensor) {
+    appendFloat2Tensor(streamStatisics.selectivityTensorX, streamStatisics.selectivity);
+
+  }
+}
+void OoOJoin::AIOperator::saveAllTensors() {
+  if (aiModeEnum == 0 && appendTensor) {
+    /**
+     * @brief 1. save the selectivity-x tensor
+     */
+    //std::cout<<streamStatisics.selectivityTensorX<<std::endl;
+    auto oldSelectivityTensorX = tryTensor("torchscripts/" + ptPrefix + "/" + "tensor_selectivity_x.pt");
+    auto validSelTensorX = streamStatisics.selectivityTensorX.narrow(1, 0, streamStatisics.selectivityObservations);
+    streamStatisics.selectivityTensorX =
+        reshapeColedTensor(validSelTensorX, streamStatisics.vaeSelectivity.getXDimension());
+    if (oldSelectivityTensorX.size(1) != 0) {
+      streamStatisics.selectivityTensorX =
+          torch::cat({oldSelectivityTensorX, streamStatisics.selectivityTensorX}, /*dim=*/0);
+    }
+    //oldSelectivityTensorX= reshapeColedTensor(oldSelectivityTensorX,streamStatisics.vaeSelectivity.getXDimension());
+
+
+    uint64_t selectivityRows = streamStatisics.selectivityTensorX.size(0);
+    uint64_t selectivityCols = streamStatisics.selectivityTensorX.size(1);
+    INTELLI_INFO(
+        "Now we have [" + to_string(selectivityRows) + "x" + to_string(selectivityCols) + "] selectivity tensor");
+    torch::save({streamStatisics.selectivityTensorX}, "torchscripts/" + ptPrefix + "/" + "tensor_selectivity_x.pt");
+    /**
+    * @brief 2. save the selectivity-y tensor
+    */
+    auto newSelectivityY = torch::ones({(long) (streamStatisics.selectivityObservations / selectivityCols), 1})
+        * streamStatisics.selectivity;
+    streamStatisics.selectivityTensorY = torch::cat({streamStatisics.selectivityTensorY, newSelectivityY}, /*dim=*/0);
+    uint64_t yRows = streamStatisics.selectivityTensorY.size(0);
+    uint64_t yCols = streamStatisics.selectivityTensorY.size(1);
+    INTELLI_INFO("Now we have [" + to_string(yRows) + "x" + to_string(yCols) + "] selectivity-label tensor");
+    torch::save({streamStatisics.selectivityTensorY}, "torchscripts/" + ptPrefix + "/" + "tensor_selectivity_y.pt");
+    // std::cout<<streamStatisics.selectivityTensorY<<std::endl;
+  }
+}
 bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
     return false;
   }
   std::string wmTag = config->tryString("wmTag", "arrival", true);
   aiMode = config->tryString("aiMode", "pretrain", true);
-  ptPrefix=config->tryString("ptPrefix","linearVAE",true);
- // streamStatisics.vaeSelectivity.loadModule("torchscripts/"+ptPrefix+"/"+ptPrefix+"_selectivity.pt");
+  ptPrefix = config->tryString("ptPrefix", "linearVAE", true);
+  appendTensor = config->tryU64("appendTensor", 0, true);
+  if (appendTensor) {
+    INTELLI_WARNING("The tensors in file system will be overwrite by me because you asked me to do so.");
+    selLen = config->tryU64("selLen", 0, true);
+    if (selLen == 0) {
+      INTELLI_ERROR("Invalid pretrain settings, abort");
+      exit(0);
+    }
+  }
+  streamStatisics.vaeSelectivity.loadModule("torchscripts/" + ptPrefix + "/" + ptPrefix + "_selectivity.pt");
+  readTensors();
+  // INTELLI_WARNING("The dimension of DAN is "+to_string(streamStatisics.vaeSelectivity.getXDimension()));
   if (aiMode == "pretrain") {
     aiModeEnum = 0;
   } else if (aiMode == "continual_learning") {
     aiModeEnum = 1;
   } else if (aiMode == "inference") {
     aiModeEnum = 2;
-  }
-  else
-  {
-    aiModeEnum=255;
+  } else {
+    aiModeEnum = 255;
     INTELLI_WARNING("This mode is N.A.");
   }
 
@@ -140,6 +235,7 @@ bool OoOJoin::AIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
        * @brief update selectivity here
        */
       streamStatisics.updateSelectivity(confirmedResult);
+      appendSelectivityTensorX();
 //            intermediateResult += py->arrivedTupleCnt;
       intermediateResult += (futureTuplesS + stateOfKey->arrivedTupleCnt) *
           (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
@@ -155,7 +251,9 @@ bool OoOJoin::AIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
 void OoOJoin::AIOperator::endOfWindow() {
   if (aiModeEnum == 0) {
     std::cout << streamStatisics.reportStr() << endl;
+    std::cout << "joined " + to_string(confirmedResult) << endl;
   }
+  saveAllTensors();
 }
 bool OoOJoin::AIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   bool shouldGenWM, isInWindow;
@@ -201,7 +299,8 @@ bool OoOJoin::AIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
       /**
      * @brief update selectivity here
      */
-      streamStatisics.updateSelectivity(confirmedResult);
+      //streamStatisics.updateSelectivity(confirmedResult);
+      // appendSelectivityTensorX();
 //            intermediateResult += py->arrivedTupleCnt;
       intermediateResult += (futureTuplesR + stateOfKey->arrivedTupleCnt) *
           (py->lastUnarrivedTuples + py->arrivedTupleCnt) -

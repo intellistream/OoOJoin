@@ -133,14 +133,14 @@ int runTestBenchAdj(const ConfigMapPtr &cfg, const string &configName = "config.
   OperatorTablePtr opTable = newOperatorTable();
 
   size_t OoORu = 0, realRu = 0;
-  tsType windowLenMs, timeStepUs, maxArrivalSkewMs, watermarkTimeMs;
+  tsType windowLenMs, timeStepUs, watermarkTimeMs;
   string operatorTag = "IMA";
   string loaderTag = "random";
 
   windowLenMs = cfg->tryU64("windowLenMs", 10, true);
   timeStepUs = cfg->tryU64("timeStepUs", 40, true);
   watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10, true);
-  maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
+  //maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
 
   operatorTag = cfg->tryString("operator", "IMA");
   loaderTag = cfg->tryString("dataLoader", "random");

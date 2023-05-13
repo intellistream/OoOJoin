@@ -12,7 +12,9 @@
 #include <atomic>
 #include <WaterMarker/LatenessWM.h>
 #include <Common/StateOfKey.h>
-//#include <Common/LinearVAE.h>
+#include <Common/LinearVAE.h>
+#include <optional>
+using std::nullopt;
 namespace OoOJoin {
 
 /**
@@ -27,6 +29,7 @@ namespace OoOJoin {
  * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
  * - "aiMode" String: The tag to indicate working mode of ai, can be pretrain (0), continual_learning (1) or inference (2)
  * = "ptPrefix" String: The prefix of vae *.pt, such as linearVAE
+ * - "appendTensor", U64, whether append pretrain data to stored tensor, 0
  * @warning This implementation is putting rotten, just to explore a basic idea of AQP by using historical mean to predict future
  * @warning The predictor and watermarker are currently NOT seperated in this operator, split them in the future!
  * @note In current version, the computation will block feeding
@@ -38,7 +41,12 @@ class AIOperator : public MeanAQPIAWJOperator {
   void conductComputation();
   std::string aiMode;
   uint8_t aiModeEnum = 0;
+  uint64_t appendTensor = 0;
   std::string ptPrefix;
+  /**
+   * @brief The pre-allocated length of seletivity observations, only valid for pretrain
+   */
+  uint64_t selLen = 0;
   class AIStateOfKey : public MeanStateOfKey {
    public:
     double lastUnarrivedTuples = 0;
@@ -51,13 +59,14 @@ class AIOperator : public MeanAQPIAWJOperator {
    public:
     uint64_t sCnt = 0, rCnt = 0;
     double selectivity = 0.0;
+    torch::Tensor selectivityTensorX, selectivityTensorY;
+    uint64_t selectivityObservations = 0;
     uint64_t sEventTime = 0, rEventTime = 0;
     double sRate = 0, rRate = 0;
     double sSkew = 0, rSkew = 0;
     void updateSelectivity(uint64_t joinResults) {
       double crossCnt = rCnt * sCnt;
       selectivity = joinResults / crossCnt;
-
     }
     void encounterSTuple(TrackTuplePtr ts) {
       sCnt++;
@@ -81,6 +90,7 @@ class AIOperator : public MeanAQPIAWJOperator {
       sCnt = 0;
       rCnt = 0;
       selectivity = 0.0;
+      selectivityObservations = 0;
       sEventTime = 0;
       rEventTime = 0;
       sRate = 0;
@@ -98,7 +108,7 @@ class AIOperator : public MeanAQPIAWJOperator {
       ru += "rCnt," + to_string(rCnt) + "\r\n";
       return ru;
     }
-    //TROCHPACK_VAE::LinearVAE vaeSelectivity;
+    TROCHPACK_VAE::LinearVAE vaeSelectivity;
     AIStateOfStreams() = default;
     ~AIStateOfStreams() = default;
   };
@@ -106,7 +116,38 @@ class AIOperator : public MeanAQPIAWJOperator {
 #define newAIStateOfKey std::make_shared<AIStateOfKey>
   using AIStateOfKeyPtr = std::shared_ptr<AIStateOfKey>;
   void endOfWindow();
-
+  /**
+   * @brief save all tensors to file
+   */
+  void saveAllTensors();
+  /**
+   * @brief try to read a tensor from file
+   * @param fileName the file name to store a tensor
+   * @return the tensor, empty if not exist
+   */
+  torch::Tensor tryTensor(std::string fileName);
+  /**
+ * @brief try to append a float to tensor
+ * @param a The Tensor to be appended
+ * @param b TH float
+ * @return the tensor [a,b]
+ */
+  torch::Tensor appendFloat2Tensor(torch::Tensor a, float b);
+  /**
+* @brief reshape a tensor to specific column pattern, and discard the reset
+* @param a The Tensor
+* @param elementsInARow The number of elements in a row
+* @return the reshape tensor
+*/
+  torch::Tensor reshapeColedTensor(torch::Tensor a, uint64_t elementsInACol);
+  /**
+ * @brief try to read all required tensors
+ */
+  void readTensors();
+  /**
+   * @brief append the recent selectivity observation to tensor
+   */
+  void appendSelectivityTensorX();
  public:
   AIOperator() = default;
 

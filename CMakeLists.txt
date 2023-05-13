@@ -94,8 +94,9 @@ endif (MSVC)
 add_subdirectory(benchmark)
 
 #Add tests (based on GTest suits)
+if (ENABLE_UNIT_TESTS)
 add_subdirectory(test)
-
+endif (ENABLE_UNIT_TESTS)
 
 install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStream)
 # copy scripts

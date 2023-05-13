@@ -22,11 +22,11 @@ void INTELLI::IntelliLog::log(std::string level, std::string_view message, const
   //str+= static_cast<char>(level);
   str += ":";
   str += source.file_name();
-  str += +"|";
-  str += +source.function_name();
-  str += +"|";
+  str += +":";
   str += to_string(source.line());
-  str += "|:";
+  str += +":";
+  str += +source.function_name();
+  str += "|";
   str += message;
   cout << str + "\n";
 

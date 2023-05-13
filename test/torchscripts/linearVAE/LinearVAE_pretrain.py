@@ -26,9 +26,9 @@ class VAE(nn.Module):
         super(VAE, self).__init__()
 
         self.encoder = nn.Sequential(
-            TransformerEncoder(input_dim, hidden_dim, num_layers, num_heads),
+            # TransformerEncoder(input_dim, hidden_dim, num_layers, num_heads),
             nn.Linear(input_dim, hidden_dim),
-            nn.ReLU(),
+            # nn.ReLU(),
             nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),
             # nn.Linear(hidden_dim, latent_dim*2 + 2),
@@ -144,7 +144,7 @@ class VAE(nn.Module):
             1 + logvar - torch.log(sigma_prior.pow(2)) - ((mu - mu_prior).pow(2) + logvar.exp()) / sigma_prior.pow(2))
         kl_div += -0.5 * torch.sum(
             1 + logvar - torch.log(b) - torch.lgamma(a) + (a - 1) * (torch.digamma(a) - torch.log(mu)) - (
-                    mu / b) - a * torch.exp(torch.log(mu) - torch.log(b)))
+                        mu / b) - a * torch.exp(torch.log(mu) - torch.log(b)))
         return recon_loss + kl_div
 
     @torch.jit.export
@@ -166,7 +166,7 @@ class VAE(nn.Module):
             1 + logvar - torch.log(sigma_prior.pow(2)) - ((mu - mu_prior).pow(2) + logvar.exp()) / sigma_prior.pow(2))
         kl_div += -0.5 * torch.sum(
             1 + logvar - torch.log(b) - torch.lgamma(a) + (a - 1) * (torch.digamma(a) - torch.log(mu)) - (
-                    mu / b) - a * torch.exp(torch.log(mu) - torch.log(b)))
+                        mu / b) - a * torch.exp(torch.log(mu) - torch.log(b)))
         # kl_divergence = -0.5 * torch.sum(1 + logvarZ - muZ.pow(2) - logvarZ.exp())
         # kl_divergence = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
         return recon_loss + kl_div
@@ -174,10 +174,9 @@ class VAE(nn.Module):
 
 
 def save_model(model, path, X):
-    device = torch.device("cpu")
-    tx = X.to(device)
+    tx = X.to('cpu')
     # tx=X
-    model2 = model.to(device)
+    model2 = model.to('cpu')
     # model2=model
     model2.eval()
     X = torch.tensor([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
@@ -272,6 +271,12 @@ def unSupervisedTrain(model, X, batch_size, learningRate, epochs, device):
                     loss.item() / len(x)))
 
 
+# This function assumes that a single tensor is stored in *.pt bt c++
+def loadCppTensorFile(fname):
+    cppModule = torch.jit.load(fname)
+    return getattr(cppModule, "0")
+
+
 def main():
     # Set the device
     # Define the main function
@@ -279,6 +284,7 @@ def main():
     # print(X,Y)
     # return X,Y
     device = 'cuda'
+    prefixTag = 'tensor_selectivity'
     input_dim = 10
     hidden_dim = 64
     latent_dim = 10
@@ -292,10 +298,14 @@ def main():
     # Generate the input data X
 
     num_samples = 1000
-
+    X = loadCppTensorFile(prefixTag + '_x.pt').to(device)
+    Y = loadCppTensorFile(prefixTag + '_y.pt').to(device)
+    print(Y)
+    # X=X*100.0
+    # Y=Y*100.0
     # noiseX= torch.randn(num_samples, input_dim)
     # baseX=torch.ones_like(noiseX)*5
-    X, Y = genX(num_samples, input_dim, 10, 0.2)
+    # X,Y= genX(num_samples,input_dim,10,0.2)
     # X = torch.tensor([1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0])
     # X = torch.randn(num_samples, input_size)
     # print(X)
@@ -312,9 +322,9 @@ def main():
 
     # Train the model
     batch_idx = 0
-
+    # Note: first learn the certainties, then get the uncertainties
     supervisedTrain(model, X, Y, batch_size, 1e-3, 100, device)
-    unSupervisedTrain(model, X, batch_size, 1e-3, 10, device)
+    # unSupervisedTrain(model,X,batch_size,1e-3,10,device)
     # model.eval()
     # model=model.to('cpu')
     X, Y = genX(1, input_dim, 10, 0.2)
@@ -329,7 +339,7 @@ def main():
 
     # [ru,mu,logvar]=model.forward(t)
     # draw_model(model,Y,"linearVAE")
-    save_model(model, "linearVAE.pt", X)
+    save_model(model.to('cpu'), "linearVAE_pretrained.pt", X.to('cpu'))
     # print(t.size())
     # print(logvar)
 

@@ -90,6 +90,10 @@ void OoOJoin::TestBench::aiPretrain() {
   }
   wmTime++;
   opConfig->edit("watermarkTimeMs", (uint64_t) wmTime / 1000);
+  /***
+   * @brief only valid for pre-train!!!
+   */
+  opConfig->edit("selLen", (uint64_t) (sTuple.size() + rTuple.size()));
   INTELLI_WARNING("In pre-training, force watermarkTime to be " + to_string(wmTime));
   if (opConfig->existString("operator") && opConfig->getString("operator") == "MSWJ") {
     inlineTestOfMSWJ();
@@ -127,7 +131,11 @@ size_t OoOJoin::TestBench::inOrderTest(bool additionalSort) {
   /**
    * @brief prevent ai operator from training or learning
    */
-  opConfig->edit("aiMode","not-applicable");
+  opConfig->edit("aiMode", "not-applicable");
+  /**
+   * @brief prevent ai operator from appending tensors
+   */
+  opConfig->edit("appendTensor", (uint64_t) 0);
   forceInOrder(rTuple);
   forceInOrder(sTuple);
   if (additionalSort) {
@@ -300,6 +308,7 @@ void TestBench::inlineTestOfCommon() {
     tNow = UtilityFunctions::timeLastUs(timeStart);
     //INTELLI_INFO("T=" << tNow);
     while (tNow >= tNextS) {
+      //tNow = UtilityFunctions::timeLastUs(timeStart);
       if (sPos <= testSize - 1) {
         testOp->feedTupleS(sTuple[sPos]);
         sPos++;
@@ -314,8 +323,10 @@ void TestBench::inlineTestOfCommon() {
       }
 
     }
+    tNow = UtilityFunctions::timeLastUs(timeStart);
     //INTELLI_INFO("detect R");
     while (tNow >= tNextR) {
+      // tNow = UtilityFunctions::timeLastUs(timeStart);
       if (rPos <= testSize - 1) {
         testOp->feedTupleR(rTuple[rPos]);
         //INTELLI_INFO("feed"+rTuple[rPos]->toString()+"at "+ to_string(tNow));
@@ -374,6 +385,7 @@ void TestBench::inlineTestOfMSWJ() {
       }
 
     }
+    tNow = UtilityFunctions::timeLastUs(timeStart);
     //INTELLI_INFO("detect R");
     while (tNow >= tNextR) {
       if (rPos <= testSize - 1) {

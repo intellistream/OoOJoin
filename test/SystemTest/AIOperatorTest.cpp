@@ -13,6 +13,7 @@ TEST_CASE("Test AIOperator on Pretrain mode")
   cfg->fromFile(configName);
   cfg->edit("operator", "AI");
   cfg->edit("aiMode", "pretrain");
+  cfg->edit("appendTensor", (uint64_t) 1);
   a = runTestBenchAdj(cfg, configName, outPrefix);
   REQUIRE(a == 1);
 }

@@ -9,11 +9,7 @@
 #ifndef INTELLISTREAM_INCLUDE_OPERATOR_OPERATORTABLE_H_
 #define INTELLISTREAM_INCLUDE_OPERATOR_OPERATORTABLE_H_
 
-#include <Operator/IAWJOperator.h>
-#include <Operator/MeanAQPIAWJOperator.h>
-#include <Operator/IMAIAWJOperator.h>
-#include <Operator//MSWJOperator.h>
-#include <Operator/AIOperator.h>
+#include <Operator/AbstractOperator.h>
 #include <map>
 #include <utility>
 

@@ -3,65 +3,64 @@
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Werror=return-type -Werror=unused-variable -Werror=unused-parameter")
 enable_testing()
-add_executable(simpleTest SystemTest/SimpleTest.cpp)
+#add_executable(simpleTest SystemTest/SimpleTest.cpp)
 add_executable(mswjTest SystemTest/MSWJTest.cpp)
 add_executable(iawjTest SystemTest/IAWJTest.cpp)
 add_executable(imaTest SystemTest/IMATest.cpp)
 add_executable(pecjTest SystemTest/PECJTest.cpp)
 add_executable(aiOperatorTest SystemTest/AIOperatorTest.cpp)
-add_library(TestFunction SystemTest/TestFunction.cpp)
+#add_library(TestFunction SystemTest/TestFunction.cpp)
 
 message(STATUS " Libraries: ${LIBRARIES}")
-target_link_libraries(TestFunction
+#target_link_libraries(TestFunction
+#IntelliStream
+#)
+#target_link_libraries(mswjTest IntelliStream)
+target_link_libraries(pecjTest
         IntelliStream
-        )
-target_link_libraries(simpleTest
-        IntelliStream
-        TestFunction
-        )
-target_link_libraries(mswjTest
-        IntelliStream
-        TestFunction
+        #TestFunction
         )
 target_link_libraries(iawjTest
         IntelliStream
-        TestFunction
-        )
-target_link_libraries(imaTest
-        IntelliStream
-        TestFunction
-        )
-target_link_libraries(pecjTest
-        IntelliStream
-        TestFunction
+        #TestFunction
         )
 target_link_libraries(aiOperatorTest
         IntelliStream
-        TestFunction
+        #TestFunction
+        )
+target_link_libraries(imaTest
+        IntelliStream
+        #TestFunction
+        )
+target_link_libraries(mswjTest
+        IntelliStream
+        #TestFunction
         )
 # avoid undefined reference to "main" in test.cpp
+#add_test(
+#NAME catchmswj_test
+#COMMAND $<TARGET_FILE:mswjTest> --success)
 
-add_test(
-        NAME catch_test
-        COMMAND $<TARGET_FILE:simpleTest> --success
-)
-add_test(
-        NAME catchmswj_test
-        COMMAND $<TARGET_FILE:mswjTest> --success
-)
-
-add_test(
-        NAME catchima_test
-        COMMAND $<TARGET_FILE:imaTest> --success
-)
 
 add_test(
         NAME catchpecj_test
         COMMAND $<TARGET_FILE:pecjTest> --success
 )
 add_test(
-        NAME catchaioperator_test
+        NAME catch_aioperator_test
         COMMAND $<TARGET_FILE:aiOperatorTest> --success
+)
+add_test(
+        NAME catch_iawjoperator_test
+        COMMAND $<TARGET_FILE:iawjTest> --success
+)
+add_test(
+        NAME catch_imaoperator_test
+        COMMAND $<TARGET_FILE:imaTest> --success
+)
+add_test(
+        NAME catch_mswjoperator_test
+        COMMAND $<TARGET_FILE:mswjTest> --success
 )
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/config_IMA.csv
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
