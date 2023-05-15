@@ -48,8 +48,8 @@ namespace OoOJoin {
         using IMAStateOfKeyPtr = std::shared_ptr<IMAStateOfKey>;
 
     private:
-        size_t selectivityR{};
-        size_t selectivityS{};
+        size_t selectivityR{1};
+        size_t selectivityS{1};
 
     public:
         IAWJSelOperator() = default;
