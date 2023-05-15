@@ -112,8 +112,9 @@ bool OoOJoin::IAWJSelOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
         if (probrPtr != nullptr) {
             IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
             confirmedResult += py->arrivedTupleCnt;
-            intermediateResult += selectivityS * (myWindow.windowS.size() * myWindow.windowR.size());
-            selectivityS = confirmedResult / (myWindow.windowS.size() * myWindow.windowR.size());
+            noS = myWindow.windowS.size() + futureTuplesS;
+            noR = noR == 0 ? myWindow.windowR.size() : noR;
+            selectivityS = confirmedResult * 1.0 / (noR * noS);
         }
         timeBreakDownJoin += timeTrackingEnd(tt_join);
         stateOfKey->lastUnarrivedTuples = futureTuplesS;
@@ -157,8 +158,9 @@ bool OoOJoin::IAWJSelOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         if (probrPtr != nullptr) {
             IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
             confirmedResult += py->arrivedTupleCnt;
-            intermediateResult += selectivityR * (myWindow.windowS.size() * myWindow.windowR.size());
-            selectivityR = confirmedResult / (myWindow.windowS.size() * myWindow.windowR.size());
+            noS = noS == 0 ? myWindow.windowS.size() : noS;
+            noR = myWindow.windowR.size() + futureTuplesR;
+            selectivityR = confirmedResult * 1.0 / (noR * noS);
         }
         timeBreakDownJoin += timeTrackingEnd(tt_join);
         stateOfKey->lastUnarrivedTuples = futureTuplesR;
@@ -172,5 +174,6 @@ size_t OoOJoin::IAWJSelOperator::getResult() {
 }
 
 size_t OoOJoin::IAWJSelOperator::getAQPResult() {
+    size_t intermediateResult = (selectivityR + selectivityS) * (noR * noS);
     return intermediateResult;
 }

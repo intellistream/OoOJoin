@@ -51,6 +51,9 @@ namespace OoOJoin {
         double selectivityR{1};
         double selectivityS{1};
 
+        double noR{0};
+        double noS{0};
+
     public:
         IAWJSelOperator() = default;
 
