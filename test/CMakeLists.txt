@@ -6,6 +6,7 @@ enable_testing()
 add_executable(simpleTest SystemTest/SimpleTest.cpp)
 add_executable(mswjTest SystemTest/MSWJTest.cpp)
 add_executable(iawjTest SystemTest/IAWJTest.cpp)
+add_executable(iawjselTest SystemTest/IAWJSelTest.cpp)
 add_executable(imaTest SystemTest/IMATest.cpp)
 add_executable(pecjTest SystemTest/PECJTest.cpp)
 add_library(TestFunction SystemTest/TestFunction.cpp)
@@ -22,6 +23,10 @@ target_link_libraries(mswjTest
         TestFunction
         )
 target_link_libraries(iawjTest
+        IntelliStream
+        TestFunction
+        )
+target_link_libraries(iawjselTest
         IntelliStream
         TestFunction
         )
@@ -44,6 +49,14 @@ add_test(
         COMMAND $<TARGET_FILE:mswjTest> --success
 )
 
+add_test(
+        NAME catchiawj_test
+        COMMAND $<TARGET_FILE:iawjTest> --success
+)
+add_test(
+        NAME catchiawjsel_test
+        COMMAND $<TARGET_FILE:iawjselTest> --success
+)
 add_test(
         NAME catchima_test
         COMMAND $<TARGET_FILE:imaTest> --success

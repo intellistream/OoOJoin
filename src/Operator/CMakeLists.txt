@@ -1,6 +1,7 @@
 add_sources(
         AbstractOperator.cpp
         IAWJOperator.cpp
+        IAWJSelOperator.cpp
         MeanAQPIAWJOperator.cpp
         IMAIAWJOperator.cpp
         OperatorTable.cpp
