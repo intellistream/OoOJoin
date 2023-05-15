@@ -1,3 +1,1 @@
-1. add basic pretrain labeling support at AIOperator
-2. add corresponding scripts example (scripts/labelZipfKey) to generate labels
-3. add corresponding pretrain scripts at torchscript/linearVAE
+1. make the observations easier to maintain

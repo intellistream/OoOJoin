@@ -55,9 +55,10 @@ pip3 install torch torchvision torchaudio
 pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 ```
 
-
 ## How to build
+
 (CUDA-related is only necessary if your pytorch has cuda, but it's harmless if you don't have cuda.)
+
 ### Create a docker for clion
 
 Please refer to the .md in docker folder
@@ -71,7 +72,9 @@ mkdir build && cd build
 cmake -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'` ..
 make 
 ```
+
 ### Tips for build in Clion
+
 There are bugs in the built-in cmake of Clion, so you can not run
 -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'`.
 Following may help:
@@ -79,7 +82,8 @@ Following may help:
 - Please run 'import torch;print(torch.utils.cmake_prefix_path)' manually first, and copy the path
 - Paste the path to -DCMAKE_PREFIX_PATH=
 - Manually set the environment variable CUDACXX as "/usr/local/cuda/bin/nvcc" in Clion's cmake settings
-- 
+-
+
 ## Code Structure
 
 - benchmark -- application code to use the generated shared library

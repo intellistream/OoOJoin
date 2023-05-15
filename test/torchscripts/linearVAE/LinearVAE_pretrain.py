@@ -144,7 +144,7 @@ class VAE(nn.Module):
             1 + logvar - torch.log(sigma_prior.pow(2)) - ((mu - mu_prior).pow(2) + logvar.exp()) / sigma_prior.pow(2))
         kl_div += -0.5 * torch.sum(
             1 + logvar - torch.log(b) - torch.lgamma(a) + (a - 1) * (torch.digamma(a) - torch.log(mu)) - (
-                        mu / b) - a * torch.exp(torch.log(mu) - torch.log(b)))
+                    mu / b) - a * torch.exp(torch.log(mu) - torch.log(b)))
         return recon_loss + kl_div
 
     @torch.jit.export
@@ -166,7 +166,7 @@ class VAE(nn.Module):
             1 + logvar - torch.log(sigma_prior.pow(2)) - ((mu - mu_prior).pow(2) + logvar.exp()) / sigma_prior.pow(2))
         kl_div += -0.5 * torch.sum(
             1 + logvar - torch.log(b) - torch.lgamma(a) + (a - 1) * (torch.digamma(a) - torch.log(mu)) - (
-                        mu / b) - a * torch.exp(torch.log(mu) - torch.log(b)))
+                    mu / b) - a * torch.exp(torch.log(mu) - torch.log(b)))
         # kl_divergence = -0.5 * torch.sum(1 + logvarZ - muZ.pow(2) - logvarZ.exp())
         # kl_divergence = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
         return recon_loss + kl_div

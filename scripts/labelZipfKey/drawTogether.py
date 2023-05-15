@@ -99,24 +99,24 @@ def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
     resultPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/zipfKeyLearn"
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
-    ptPath=os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/torchscripts/linearVAE"
+    ptPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/torchscripts/linearVAE"
     configTemplate = exeSpace + "config.csv"
-    krVec = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8]
+    krVec = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
 
     print(configTemplate)
     # run
     if (len(sys.argv) < 2):
-        os.system("mkdir "+exeSpace+"results")
+        os.system("mkdir " + exeSpace + "results")
         os.system("rm -rf " + resultPath)
         os.system("mkdir " + resultPath)
         runKeyRangeVector(exeSpace, krVec, resultPath)
     avgLatVec, lat95Vec, thrVec, errVec, compVec = readResultVectorKeyRange(krVec, resultPath)
     os.system("mkdir " + figPath)
-    os.system("cd "+ptPath)
-    #os.system("python3 "+ptPath+"/LinearVAE_pretrain.py")
-    #draw2yLine("#keys", krVec, avgLatVec, errVec, "Average Latency (ms)", "Error", "ms", "", figPath + "zipf_key_lat")
-    #draw2yLine("#keys", krVec, thrVec, errVec, "Throughput (KTp/s)", "Error", "KTp/s", "", figPath + "key_thr")
-    #draw2yLine("#keys", krVec, lat95Vec, compVec, "95% Latency (ms)", "Completeness", "ms", "", figPath + "key_comp")
+    os.system("cd " + ptPath)
+    # os.system("python3 "+ptPath+"/LinearVAE_pretrain.py")
+    # draw2yLine("#keys", krVec, avgLatVec, errVec, "Average Latency (ms)", "Error", "ms", "", figPath + "zipf_key_lat")
+    # draw2yLine("#keys", krVec, thrVec, errVec, "Throughput (KTp/s)", "Error", "KTp/s", "", figPath + "key_thr")
+    # draw2yLine("#keys", krVec, lat95Vec, compVec, "95% Latency (ms)", "Completeness", "ms", "", figPath + "key_comp")
     print(errVec)
     # readResultPeriod(50,resultPath)
 

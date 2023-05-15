@@ -14,6 +14,7 @@
 #include <Common/StateOfKey.h>
 #include <Common/LinearVAE.h>
 #include <optional>
+#include <filesystem>
 using std::nullopt;
 namespace OoOJoin {
 
@@ -47,6 +48,116 @@ class AIOperator : public MeanAQPIAWJOperator {
    * @brief The pre-allocated length of seletivity observations, only valid for pretrain
    */
   uint64_t selLen = 0;
+  /**
+   * @class ObservationGroup Operator/AIOperator.h
+   * @brief THe class of tensors, buffere management to keep observations
+   */
+  class ObservationGroup {
+   public:
+    ObservationGroup() = default;
+    ~ObservationGroup() = default;
+    float finalObservation = 0.0;
+    uint64_t xCols = 0;
+    /**
+     * @brief xTensor is the observation, yTensor is the label.
+     */
+    torch::Tensor xTensor, yTensor;
+    uint64_t bufferLen = 0, observationCnt = 0;
+    void initObservationBuffer(uint64_t _bufferLen) {
+      bufferLen = _bufferLen;
+      xTensor = torch::zeros({1, (long) bufferLen});
+    }
+    /**
+     * @brief to append a new observation to tensor X
+     * @param newX
+     */
+    void appendX(float newX) {
+      if (observationCnt >= bufferLen) {
+        observationCnt = 0;
+      }
+      xTensor[0][observationCnt] = newX;
+      observationCnt++;
+    }
+    /**
+     * @brief narrow down the xTensor and ignore all unused elements, and then reshape x to specific number of cols
+     */
+    void narrowAndReshapeX(uint64_t _xCols) {
+      xCols = _xCols;
+      //auto b=a.reshape({1,(long)(rows*cols)});
+      uint64_t elementsSelected = observationCnt / xCols;
+      elementsSelected = elementsSelected * xCols;
+      auto b = xTensor.narrow(1, 0, elementsSelected);
+      b = b.reshape({(long) (elementsSelected / xCols), (long) xCols});
+      xTensor = b;
+    }
+    /**
+     * @brief Generate the Y tensor as labels
+     * @param yLabel the label
+     */
+    void generateY(float yLabel) {
+      yTensor = torch::ones({(long) (observationCnt / xCols), 1})
+          * yLabel;
+    }
+    void setFinalObservation(float obs) {
+      finalObservation = obs;
+
+    }
+    torch::Tensor tryTensor(std::string fileName) {
+      if (std::filesystem::exists(fileName)) {
+        try {
+          torch::Tensor load_tensor;
+          // Load the tensor from the file
+          torch::load(load_tensor, fileName);
+          // If we get here, the file was loaded successfully
+          return load_tensor;
+
+        } catch (const std::runtime_error &error) {
+          // Handle the error
+          //  std::cerr << "Error loading tensor: " << error.what() << std::endl;
+          INTELLI_ERROR("the tensor can not be loaded");
+          // Return an error code
+          return torch::empty({1, 0});;
+        }
+      }
+      INTELLI_WARNING("the tensor DOES NOT exist");
+      return torch::empty({1, 0});;
+    }
+    torch::Tensor saveTensor2File(torch::Tensor ts, std::string ptName) {
+      auto oldSelectivityTensorX = tryTensor(ptName);
+      torch::Tensor ru;
+      if (oldSelectivityTensorX.size(1) != 0) {
+        ru = torch::cat({oldSelectivityTensorX, ts}, /*dim=*/0);
+      } else {
+        ru = ts;
+      }
+      torch::save({ru}, ptName);
+      return ru;
+    }
+
+    void saveXYTensors2Files(std::string ptPrefix, uint64_t _xCols) {
+      /**
+       * @brief 1. generate x and save
+       */
+      narrowAndReshapeX(_xCols);
+      auto tx = saveTensor2File(xTensor, ptPrefix + "_x.pt");
+      uint64_t xRows = tx.size(0);
+      uint64_t xCols = tx.size(1);
+      INTELLI_INFO(
+          "Now we have [" + to_string(xRows) + "x" + to_string(xCols) + "] at " + ptPrefix + "_x.pt");
+      /**
+       * @brief 2. generate y and save
+       *
+       */
+      generateY(finalObservation);
+      auto ty = saveTensor2File(yTensor, ptPrefix + "_y.pt");
+      uint64_t yRows = ty.size(0);
+      uint64_t yCols = ty.size(1);
+      INTELLI_INFO(
+          "Now we have [" + to_string(yRows) + "x" + to_string(yCols) + "] at " + ptPrefix + "_y.pt");
+    }
+
+  };
+
   class AIStateOfKey : public MeanStateOfKey {
    public:
     double lastUnarrivedTuples = 0;
@@ -58,15 +169,27 @@ class AIOperator : public MeanAQPIAWJOperator {
   class AIStateOfStreams {
    public:
     uint64_t sCnt = 0, rCnt = 0;
+    /**
+     * @brief estimate and track the selectivity
+     */
+    ObservationGroup selObservations;
     double selectivity = 0.0;
-    torch::Tensor selectivityTensorX, selectivityTensorY;
-    uint64_t selectivityObservations = 0;
+
+    /**
+     * @brief esitmate and track the skewness of r and s,
+     * skew=r.t_a-r.t_e
+     */
+    torch::Tensor sSkewTensorX, sSkewTensorY;
+    uint64_t sSkewObservations = 0, rSkewObservations;
+    torch::Tensor rSkewTensorX, rSkewTensorY;
+
     uint64_t sEventTime = 0, rEventTime = 0;
     double sRate = 0, rRate = 0;
     double sSkew = 0, rSkew = 0;
     void updateSelectivity(uint64_t joinResults) {
       double crossCnt = rCnt * sCnt;
       selectivity = joinResults / crossCnt;
+
     }
     void encounterSTuple(TrackTuplePtr ts) {
       sCnt++;
@@ -90,7 +213,6 @@ class AIOperator : public MeanAQPIAWJOperator {
       sCnt = 0;
       rCnt = 0;
       selectivity = 0.0;
-      selectivityObservations = 0;
       sEventTime = 0;
       rEventTime = 0;
       sRate = 0;
@@ -120,41 +242,14 @@ class AIOperator : public MeanAQPIAWJOperator {
    * @brief save all tensors to file
    */
   void saveAllTensors();
-  /**
-   * @brief try to read a tensor from file
-   * @param fileName the file name to store a tensor
-   * @return the tensor, empty if not exist
-   */
-  torch::Tensor tryTensor(std::string fileName);
-  /**
- * @brief try to append a float to tensor
- * @param a The Tensor to be appended
- * @param b TH float
- * @return the tensor [a,b]
- */
-  torch::Tensor appendFloat2Tensor(torch::Tensor a, float b);
-  /**
-* @brief reshape a tensor to specific column pattern, and discard the reset
-* @param a The Tensor
-* @param elementsInARow The number of elements in a row
-* @return the reshape tensor
-*/
-  torch::Tensor reshapeColedTensor(torch::Tensor a, uint64_t elementsInACol);
-  /**
- * @brief try to read all required tensors
- */
-  void readTensors();
-  /**
-   * @brief append the recent selectivity observation to tensor
-   */
-  void appendSelectivityTensorX();
+
  public:
   AIOperator() = default;
 
   ~AIOperator() = default;
 
   /**
-   * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
+   *
   * @brief Set the config map related to this operator
   * @param cfg The config map
    * @return bool whether the config is successfully set

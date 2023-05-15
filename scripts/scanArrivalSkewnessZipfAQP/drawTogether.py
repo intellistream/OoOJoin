@@ -107,7 +107,7 @@ def main():
     resultPathIMA = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/aqparrivalSkewTest/IMA"
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    arrivalSkewVec = [0,0.2,0.4,0.6,0.8,1.0]
+    arrivalSkewVec = [0, 0.2, 0.4, 0.6, 0.8, 1.0]
     arrivalSkewVecDisp = np.array(arrivalSkewVec)
     arrivalSkewVecDisp = arrivalSkewVecDisp
     print(configTemplate)
@@ -116,23 +116,23 @@ def main():
         os.system("rm -rf " + resultPath)
         os.system("mkdir " + resultPath)
         os.system("mkdir " + resultPathNoAqp)
-        #os.system("mkdir " + resultPathMeanAqp)
+        # os.system("mkdir " + resultPathMeanAqp)
         os.system("mkdir " + resultPathIMA)
         runArrivalSkewVector(exeSpace, arrivalSkewVec, resultPathNoAqp, "config_noAQP.csv")
-        #runArrivalSkewVector(exeSpace, arrivalSkewVec, resultPathMeanAqp, "config_meanAQP.csv")
+        # runArrivalSkewVector(exeSpace, arrivalSkewVec, resultPathMeanAqp, "config_meanAQP.csv")
         runArrivalSkewVector(exeSpace, arrivalSkewVec, resultPathIMA, "config_IMA.csv")
     avgLatVecNo, lat95VecNo, thrVecNo, errVecNo, compVec, aqpErrVecNo = readResultVectorarrivalSkew(arrivalSkewVec,
-                                                                                               resultPathNoAqp)
+                                                                                                    resultPathNoAqp)
     avgLatVecIMA, lat95VecIMA, thrVecIMA, errVecIMA, compVec, aqpErrVecIMA = readResultVectorarrivalSkew(arrivalSkewVec,
-                                                                                                    resultPathIMA)
+                                                                                                         resultPathIMA)
     os.system("mkdir " + figPath)
     groupLine.DrawFigureYnormal([arrivalSkewVec, arrivalSkewVec, arrivalSkewVec], [aqpErrVecNo, aqpErrVecIMA],
                                 ['w/o AQP (lazy)', "w/ incremental AQP (eager)"],
                                 "watermark time (ms)", "Error", 0, 1, figPath + "zipfSkew_Aqps_err", True)
     groupLine.DrawFigureYnormal([arrivalSkewVec, arrivalSkewVec, arrivalSkewVec], [avgLatVecNo, avgLatVecIMA],
-                                ['w/o AQP (lazy)',"w/ incremental AQP (eager)"],
+                                ['w/o AQP (lazy)', "w/ incremental AQP (eager)"],
                                 "watermark time (ms)", "95% latency (ms)", 0, 1, figPath + "zipfSkew_Aqps_lat", True)
-   
+
     # draw2yLine("watermark time (ms)",arrivalSkewVecDisp,lat95Vec,errVec,"95% Latency (ms)","Error","ms","",figPath+"wm_lat")
     # draw2yLine("watermark time (ms)",arrivalSkewVecDisp,thrVec,errVec,"Throughput (KTp/s)","Error","KTp/s","",figPath+"wm_thr")
     # draw2yLine("watermark time (ms)",arrivalSkewVecDisp,lat95Vec,compVec,"95% Latency (ms)","Completeness","ms","",figPath+"wm_omp")
