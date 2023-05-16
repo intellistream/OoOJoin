@@ -30,7 +30,9 @@ namespace OoOJoin {
  * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
  * - "aiMode" String: The tag to indicate working mode of ai, can be pretrain (0), continual_learning (1) or inference (2)
  * = "ptPrefix" String: The prefix of vae *.pt, such as linearVAE
- * - "appendTensor", U64, whether append pretrain data to stored tensor, 0
+ * - "appendSel", U64, whether append sel observations to stored tensor, 0
+ * - "appendSkew", U64, whether append skew (of r and s) observations to stored tensor, 0
+ * - "appendRate", U64, whether append rate (of r and s) observations to stored tensor, 0
  * @warning This implementation is putting rotten, just to explore a basic idea of AQP by using historical mean to predict future
  * @warning The predictor and watermarker are currently NOT seperated in this operator, split them in the future!
  * @note In current version, the computation will block feeding
@@ -42,7 +44,7 @@ class AIOperator : public MeanAQPIAWJOperator {
   void conductComputation();
   std::string aiMode;
   uint8_t aiModeEnum = 0;
-  uint64_t appendTensor = 0;
+  uint64_t appendSel = 0, appendSkew = 0, appendRate;
   std::string ptPrefix;
   /**
    * @brief The pre-allocated length of seletivity observations, only valid for pretrain
@@ -173,15 +175,15 @@ class AIOperator : public MeanAQPIAWJOperator {
      * @brief estimate and track the selectivity
      */
     ObservationGroup selObservations;
-    double selectivity = 0.0;
-
     /**
-     * @brief esitmate and track the skewness of r and s,
-     * skew=r.t_a-r.t_e
+     * @brief estimate and track the skew of s and r
      */
-    torch::Tensor sSkewTensorX, sSkewTensorY;
-    uint64_t sSkewObservations = 0, rSkewObservations;
-    torch::Tensor rSkewTensorX, rSkewTensorY;
+    ObservationGroup sSkewObservations, rSkewObservations;
+    /**
+     * @brief estimate and track the rate of s and r
+     */
+    ObservationGroup sRateObservations, rRateObservations;
+    double selectivity = 0.0;
 
     uint64_t sEventTime = 0, rEventTime = 0;
     double sRate = 0, rRate = 0;
@@ -199,6 +201,8 @@ class AIOperator : public MeanAQPIAWJOperator {
       sRate = sCnt;
       sRate = sRate * 1e6 / sEventTime;
       sSkew = (sSkew * (sCnt - 1) + ts->arrivalTime - ts->eventTime) / sCnt;
+      //sSkewObservations.appendX(sSkew);
+      // sRateObservations.appendX(sRate);
     }
     void encounterRTuple(TrackTuplePtr tr) {
       rCnt++;
@@ -208,6 +212,8 @@ class AIOperator : public MeanAQPIAWJOperator {
       rRate = rCnt;
       rRate = rRate * 1e6 / rEventTime;
       rSkew = (rSkew * (rCnt - 1) + tr->arrivalTime - tr->eventTime) / rCnt;
+      // rSkewObservations.appendX(rSkew);
+      // rRateObservations.appendX(rRate);
     }
     void reset() {
       sCnt = 0;
@@ -237,7 +243,14 @@ class AIOperator : public MeanAQPIAWJOperator {
   AIStateOfStreams streamStatisics;
 #define newAIStateOfKey std::make_shared<AIStateOfKey>
   using AIStateOfKeyPtr = std::shared_ptr<AIStateOfKey>;
+  /**
+   * @brief inline function to be called at the end of window
+   */
   void endOfWindow();
+  /**
+   * @brief to prepare data structures for a pretrain
+   */
+  void preparePretrain();
   /**
    * @brief save all tensors to file
    */

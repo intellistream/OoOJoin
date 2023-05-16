@@ -4,15 +4,47 @@
 #include <filesystem>
 
 void OoOJoin::AIOperator::saveAllTensors() {
-  if (aiModeEnum == 0 && appendTensor) {
+  if (aiModeEnum == 0) {
     /**
      * @brief 1. save the selectivity tensor
      */
     uint64_t xCols = streamStatisics.vaeSelectivity.getXDimension();
+    /**
+     * @brief 2. set all final observations
+     */
     streamStatisics.selObservations.setFinalObservation(streamStatisics.selectivity);
-    streamStatisics.selObservations.saveXYTensors2Files("torchscripts/" + ptPrefix + "/" + "tensor_selectivity", xCols);
+    streamStatisics.sSkewObservations.setFinalObservation(streamStatisics.sSkew);
+    streamStatisics.sRateObservations.setFinalObservation(streamStatisics.sRate);
+    streamStatisics.rSkewObservations.setFinalObservation(streamStatisics.rSkew);
+    streamStatisics.rRateObservations.setFinalObservation(streamStatisics.rRate);
+    /**
+     * @brief 3. save all tensors
+     */
+    if (appendSel) {
+      streamStatisics.selObservations.saveXYTensors2Files("torchscripts/" + ptPrefix + "/" + "tensor_selectivity",
+                                                          xCols);
+    }
+    if (appendSkew) {
+      streamStatisics.sSkewObservations.saveXYTensors2Files("torchscripts/" + ptPrefix + "/" + "tensor_sSkew", xCols);
+      streamStatisics.rSkewObservations.saveXYTensors2Files("torchscripts/" + ptPrefix + "/" + "tensor_rSkew", xCols);
+    }
+    if (appendRate) {
+      streamStatisics.sRateObservations.saveXYTensors2Files("torchscripts/" + ptPrefix + "/" + "tensor_sRate", xCols);
+      streamStatisics.rRateObservations.saveXYTensors2Files("torchscripts/" + ptPrefix + "/" + "tensor_rRate", xCols);
+    }
+
     // std::cout<<streamStatisics.selectivityTensorY<<std::endl;
   }
+}
+void OoOJoin::AIOperator::preparePretrain() {
+  /**
+   * @brief 1. init all observation tensors
+   */
+  streamStatisics.selObservations.initObservationBuffer(selLen);
+  streamStatisics.sSkewObservations.initObservationBuffer(selLen);
+  streamStatisics.rSkewObservations.initObservationBuffer(selLen);
+  streamStatisics.sRateObservations.initObservationBuffer(selLen);
+  streamStatisics.rRateObservations.initObservationBuffer(selLen);
 }
 bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
@@ -21,8 +53,10 @@ bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   std::string wmTag = config->tryString("wmTag", "arrival", true);
   aiMode = config->tryString("aiMode", "pretrain", true);
   ptPrefix = config->tryString("ptPrefix", "linearVAE", true);
-  appendTensor = config->tryU64("appendTensor", 0, true);
-  if (appendTensor) {
+  appendSel = config->tryU64("appendSel", 0, true);
+  appendSkew = config->tryU64("appendSkew", 0, true);
+  appendRate = config->tryU64("appendRate", 0, true);
+  if (appendSel || appendSkew || appendRate) {
     INTELLI_WARNING("The tensors in file system will be overwrite by me because you asked me to do so.");
     selLen = config->tryU64("selLen", 0, true);
     if (selLen == 0) {
@@ -34,7 +68,7 @@ bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   // INTELLI_WARNING("The dimension of DAN is "+to_string(streamStatisics.vaeSelectivity.getXDimension()));
   if (aiMode == "pretrain") {
     aiModeEnum = 0;
-    streamStatisics.selObservations.initObservationBuffer(selLen);
+    preparePretrain();
   } else if (aiMode == "continual_learning") {
     aiModeEnum = 1;
   } else if (aiMode == "inference") {
@@ -166,6 +200,8 @@ bool OoOJoin::AIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
       if (aiModeEnum == 0) {
         streamStatisics.selObservations.setFinalObservation(streamStatisics.selectivity);
         streamStatisics.selObservations.appendX(streamStatisics.selectivity);
+        streamStatisics.sSkewObservations.appendX(streamStatisics.sSkew);
+        streamStatisics.sRateObservations.appendX(streamStatisics.sRate);
       }
 
 //            intermediateResult += py->arrivedTupleCnt;
@@ -231,6 +267,17 @@ bool OoOJoin::AIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
       /**
      * @brief update selectivity here
      */
+      /**
+        * @brief update selectivity here
+        */
+      streamStatisics.updateSelectivity(confirmedResult);
+      //streamStatisics.selObservations.appendX(streamStatisics.selectivity);
+      if (aiModeEnum == 0) {
+        streamStatisics.selObservations.setFinalObservation(streamStatisics.selectivity);
+        streamStatisics.selObservations.appendX(streamStatisics.selectivity);
+        streamStatisics.rSkewObservations.appendX(streamStatisics.rSkew);
+        streamStatisics.rRateObservations.appendX(streamStatisics.rRate);
+      }
       //streamStatisics.updateSelectivity(confirmedResult);
       // appendSelectivityTensorX();
 //            intermediateResult += py->arrivedTupleCnt;

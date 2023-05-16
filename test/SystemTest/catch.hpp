@@ -9562,9 +9562,9 @@ struct Parser : ParserBase {
     size_t consoleWidth = CATCH_CLARA_CONFIG_CONSOLE_WIDTH;
     size_t optWidth = 0;
     for (auto const &cols : rows)
-      optWidth = (std::max)(optWidth, cols.left.size() + 2);
+      optWidth = (std::max) (optWidth, cols.left.size() + 2);
 
-    optWidth = (std::min)(optWidth, consoleWidth / 2);
+    optWidth = (std::min) (optWidth, consoleWidth / 2);
 
     for (auto const &cols : rows) {
       auto row =
@@ -11366,7 +11366,7 @@ std::size_t listReporters() {
   IReporterRegistry::FactoryMap const &factories = getRegistryHub().getReporterRegistry().getFactories();
   std::size_t maxNameLen = 0;
   for (auto const &factoryKvp : factories)
-    maxNameLen = (std::max)(maxNameLen, factoryKvp.first.size());
+    maxNameLen = (std::max) (maxNameLen, factoryKvp.first.size());
 
   for (auto const &factoryKvp : factories) {
     Catch::cout()
@@ -11586,7 +11586,7 @@ std::string WithinAbsMatcher::describe() const {
 WithinUlpsMatcher::WithinUlpsMatcher(double target, uint64_t ulps, FloatingPointKind baseType)
     : m_target{target}, m_ulps{ulps}, m_type{baseType} {
   CATCH_ENFORCE(m_type == FloatingPointKind::Double
-                    || m_ulps < (std::numeric_limits<uint32_t>::max)(),
+                    || m_ulps < (std::numeric_limits<uint32_t>::max) (),
                 "Provided ULP is impossibly large for a float comparison.");
 }
 
@@ -11647,7 +11647,7 @@ WithinRelMatcher::WithinRelMatcher(double target, double epsilon) :
 }
 
 bool WithinRelMatcher::match(double const &matchee) const {
-  const auto relMargin = m_epsilon * (std::max)(std::fabs(matchee), std::fabs(m_target));
+  const auto relMargin = m_epsilon * (std::max) (std::fabs(matchee), std::fabs(m_target));
   return marginComparison(matchee, m_target,
                           std::isinf(relMargin) ? 0 : relMargin);
 }
@@ -13552,7 +13552,7 @@ int Session::runInternal() {
 
     // Handle list request
     if (Option<std::size_t> listed = list(m_config))
-      return (std::min)(MaxExitCode, static_cast<int>(*listed));
+      return (std::min) (MaxExitCode, static_cast<int>(*listed));
 
     TestGroup tests{m_config};
     auto const totals = tests.execute();
@@ -13563,7 +13563,7 @@ int Session::runInternal() {
     // Note that on unices only the lower 8 bits are usually used, clamping
     // the return value to 255 prevents false negative when some multiple
     // of 256 tests has failed
-    return (std::min)(MaxExitCode, (std::max)(totals.error, static_cast<int>(totals.assertions.failed)));
+    return (std::min) (MaxExitCode, (std::max) (totals.error, static_cast<int>(totals.assertions.failed)));
   }
 #if !defined(CATCH_CONFIG_DISABLE_EXCEPTIONS)
   catch (std::exception &ex) {
@@ -14495,7 +14495,7 @@ SectionTracker::SectionTracker(NameAndLocation const &nameAndLocation, TrackerCo
     while (!parent->isSectionTracker())
       parent = &parent->parent();
 
-    SectionTracker &parentSection = static_cast<SectionTracker &>( *parent );
+    SectionTracker & parentSection = static_cast<SectionTracker &>( *parent );
     addNextFilters(parentSection.m_filters);
   }
 }
@@ -14574,7 +14574,7 @@ namespace Catch {
 
 auto makeTestInvoker(void(*testAsFunction)()) noexcept -> ITestInvoker * {
   return new(std::nothrow)
-      TestInvokerAsFunction(testAsFunction);
+  TestInvokerAsFunction(testAsFunction);
 }
 
 NameAndTags::NameAndTags(StringRef const &name_, StringRef const &tags_) noexcept: name(name_), tags(tags_) {}
