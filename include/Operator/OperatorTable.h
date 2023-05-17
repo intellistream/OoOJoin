@@ -13,6 +13,7 @@
 #include <Operator/MeanAQPIAWJOperator.h>
 #include <Operator/IMAIAWJOperator.h>
 #include <Operator//MSWJOperator.h>
+#include <Operator/IAWJSelOperator.h>
 #include <map>
 #include <utility>
 
@@ -43,7 +44,7 @@ namespace OoOJoin {
        * @param onew The new operator
        * @param tag THe name tag
        */
-        void registerNewOperator(AbstractOperatorPtr onew, const std::string& tag) {
+        void registerNewOperator(AbstractOperatorPtr onew, const std::string &tag) {
             operatorMap[tag] = std::move(onew);
         }
 
@@ -52,7 +53,7 @@ namespace OoOJoin {
          * @param name The name of operator
          * @return The operator, nullptr if not found
          */
-        AbstractOperatorPtr findOperator(const std::string& name) {
+        AbstractOperatorPtr findOperator(const std::string &name) {
             if (operatorMap.count(name)) {
                 return operatorMap[name];
             }
