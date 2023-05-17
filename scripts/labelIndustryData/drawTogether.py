@@ -49,29 +49,29 @@ matplotlib.rcParams['font.family'] = OPT_FONT_NAME
 matplotlib.rcParams['pdf.fonttype'] = 42
 
 
-def runSkew(exePath, skew, resultPath):
-    # resultFolder="skewTests"
-    configFname = "config_skew_" + str(skew) + ".csv"
-    configTemplate = "config.csv"
+def runEvent(exePath, event, resultPath,configTemplate = "config.csv"):
+    # resultFolder="eventTests"
+    configFname = "config_event_" + str(event) + ".csv"
+    
     # clear old files
     os.system("cd " + exePath + "&& rm *.csv")
     # prepare new file
-    editConfig(configTemplate, exePath + configFname, "maxArrivalSkewMs", skew)
+    editConfig(configTemplate, exePath + configFname, "eventRateKTps", event)
     # run
     os.system("cd " + exePath + "&& ./benchmark " + configFname)
     # copy result
-    os.system("rm -rf " + resultPath + "/" + str(skew))
-    os.system("mkdir " + resultPath + "/" + str(skew))
-    os.system("cd " + exePath + "&& cp *.csv " + resultPath + "/" + str(skew))
+    os.system("rm -rf " + resultPath + "/" + str(event))
+    os.system("mkdir " + resultPath + "/" + str(event))
+    os.system("cd " + exePath + "&& cp *.csv " + resultPath + "/" + str(event))
 
 
-def runskewVector(exePath, skewVec, resultPath):
-    for i in skewVec:
-        runSkew(exePath, i, resultPath)
+def runeventVector(exePath, eventVec, resultPath,configTemplate = "config.csv"):
+    for i in eventVec:
+        runEvent(exePath, i, resultPath,configTemplate)
 
 
-def readResultSkew(skew, resultPath):
-    resultFname = resultPath + "/" + str(skew) + "/default_general.csv"
+def readResultEvent(event, resultPath):
+    resultFname = resultPath + "/" + str(event) + "/default_general.csv"
     avgLat = readConfig(resultFname, "AvgLatency")
     lat95 = readConfig(resultFname, "95%Latency")
     thr = readConfig(resultFname, "Throughput")
@@ -79,14 +79,14 @@ def readResultSkew(skew, resultPath):
     return avgLat, lat95, thr, err
 
 
-def readResultVectorSkew(skewVec, resultPath):
+def readResultVectorEvent(eventVec, resultPath):
     avgLatVec = []
     lat95Vec = []
     thrVec = []
     errVec = []
     compVec = []
-    for i in skewVec:
-        avgLat, lat95, thr, err = readResultSkew(i, resultPath)
+    for i in eventVec:
+        avgLat, lat95, thr, err = readResultEvent(i, resultPath)
         avgLatVec.append(float(avgLat) / 1000.0)
         lat95Vec.append(float(lat95) / 1000.0)
         thrVec.append(float(thr) / 1000.0)
@@ -97,21 +97,23 @@ def readResultVectorSkew(skewVec, resultPath):
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
-    resultPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/skewTestLearn/"
+    resultPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/industryLabel/"
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
-    configTemplate = exeSpace + "config.csv"
-    skewVec = [1, 2, 5, 10, 15, 20]
-    skewVecDisp = np.array(skewVec)
-    skewVecDisp = skewVecDisp
-    print(configTemplate)
+    #configTemplate = exeSpace + "config.csv"
+    eventVec = [10]
+    eventVecDisp = np.array(eventVec)
+    eventVecDisp = eventVecDisp
+    #print(configTemplate)
     # run
     if (len(sys.argv) < 2):
         os.system("rm -rf " + resultPath)
         os.system("mkdir " + resultPath)
-        runskewVector(exeSpace, skewVec, resultPath)
+        runeventVector(exeSpace, eventVec, resultPath+"low",'config_low.csv')
+        #runeventVector(exeSpace, eventVec, resultPath+"mid",'config_mid.csv')
+        #runeventVector(exeSpace, eventVec, resultPath+"high",'config_high.csv')
+    #avgLatVec, lat95Vec, thrVec, errVec, compVec = readResultVectorEvent(eventVec, resultPath)
     
-
-    # readResultSkew(50,resultPath)
+    # readResultEvent(50,resultPath)
 
 
 if __name__ == "__main__":

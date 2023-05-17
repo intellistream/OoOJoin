@@ -110,14 +110,7 @@ def main():
         os.system("rm -rf " + resultPath)
         os.system("mkdir " + resultPath)
         runKeyRangeVector(exeSpace, krVec, resultPath)
-    avgLatVec, lat95Vec, thrVec, errVec, compVec = readResultVectorKeyRange(krVec, resultPath)
-    os.system("mkdir " + figPath)
-    # os.system("cd " + ptPath)
-    # os.system("python3 "+ptPath+"/LinearVAE_pretrain.py")
-    # draw2yLine("#keys", krVec, avgLatVec, errVec, "Average Latency (ms)", "Error", "ms", "", figPath + "zipf_key_lat")
-    # draw2yLine("#keys", krVec, thrVec, errVec, "Throughput (KTp/s)", "Error", "KTp/s", "", figPath + "key_thr")
-    # draw2yLine("#keys", krVec, lat95Vec, compVec, "95% Latency (ms)", "Completeness", "ms", "", figPath + "key_comp")
-    print(errVec)
+   
     # readResultPeriod(50,resultPath)
 
 

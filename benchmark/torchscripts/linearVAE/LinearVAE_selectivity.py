@@ -283,7 +283,7 @@ def main():
     # X,Y= genX(1,10,10,0.2)
     # print(X,Y)
     # return X,Y
-    device = 'cuda'
+    device = 'cpu'
     prefixTag = 'tensor_selectivity'
     input_dim = 10
     hidden_dim = 64
@@ -324,18 +324,18 @@ def main():
     batch_idx = 0
     # Note: first learn the certainties, then get the uncertainties
     supervisedTrain(model, X, Y, batch_size, 1e-3, 100, device)
-    # unSupervisedTrain(model,X,batch_size,1e-3,10,device)
+    unSupervisedTrain(model,X,batch_size,1e-3,10,device)
     # model.eval()
     # model=model.to('cpu')
-    X, Y = genX(1, input_dim, 10, 0.2)
+    #X, Y = genX(1, input_dim, 10, 0.2)
 
     # print(tmu,tSigma,ta/tb)
-    x = X.to(device)
+    x = X[0:100,:].to(device)
     model.eval()
     x_recon, muZ, logvarZ, mu, logvar = model(x)
     # print(mu,logvar.exp(),muZ)
     tmu, tsigma = model.getMuEstimation()
-    print(tmu, tsigma, Y)
+    print(tmu)
 
     # [ru,mu,logvar]=model.forward(t)
     # draw_model(model,Y,"linearVAE")

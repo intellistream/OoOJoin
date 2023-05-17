@@ -309,7 +309,7 @@ def pretrainModel(device, prefixTag, saveTag):
     X, Y = genX(1, input_dim, 10, 0.2)
 
     # print(tmu,tSigma,ta/tb)
-    x = X.to(device)
+    x = X[0:99,:].to(device)
     model.eval()
     x_recon, muZ, logvarZ, mu, logvar = model(x)
     # print(mu,logvar.exp(),muZ)
@@ -327,7 +327,7 @@ def main():
     # X,Y= genX(1,10,10,0.2)
     # print(X,Y)
     # return X,Y
-    device = 'cuda'
+    device = 'cpu'
     prefixTag = 'tensor_sSkew'
     pretrainModel(device, prefixTag, "linearVAE_sSkew.pt")
     prefixTag = 'tensor_rSkew'

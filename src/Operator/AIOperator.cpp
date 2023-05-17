@@ -32,7 +32,8 @@ void OoOJoin::AIOperator::saveAllTensors() {
       streamStatisics.sRateObservations.saveXYTensors2Files("torchscripts/" + ptPrefix + "/" + "tensor_sRate", xCols);
       streamStatisics.rRateObservations.saveXYTensors2Files("torchscripts/" + ptPrefix + "/" + "tensor_rRate", xCols);
     }
-
+    INTELLI_INFO("The tensors are saved, exit 0");
+    exit(0);
     // std::cout<<streamStatisics.selectivityTensorY<<std::endl;
   }
 }

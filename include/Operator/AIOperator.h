@@ -59,7 +59,8 @@ class AIOperator : public MeanAQPIAWJOperator {
     ObservationGroup() = default;
     ~ObservationGroup() = default;
     float finalObservation = 0.0;
-    uint64_t xCols = 0;
+    float scalingFactor=0.0;
+    uint64_t xCols,xRows = 0;
     /**
      * @brief xTensor is the observation, yTensor is the label.
      */
@@ -89,8 +90,25 @@ class AIOperator : public MeanAQPIAWJOperator {
       uint64_t elementsSelected = observationCnt / xCols;
       elementsSelected = elementsSelected * xCols;
       auto b = xTensor.narrow(1, 0, elementsSelected);
+      xRows=elementsSelected / xCols;
       b = b.reshape({(long) (elementsSelected / xCols), (long) xCols});
       xTensor = b;
+    }
+    /**
+     * @brief To normalize the x and y tensor
+     */
+    void normalizeXY()
+    {
+      //uint64_t  i;
+      scalingFactor=xTensor[0][xCols-1].item<float>();
+      /*for(i=0;i<xRows;i++)
+      {
+        scalingFactor=xTensor[i][0].item<float>();
+        xTensor[i]=xTensor[i]/scalingFactor;
+        yTensor[i]=yTensor[i]/scalingFactor;
+      }*/
+      xTensor=xTensor/scalingFactor;
+      yTensor=yTensor/scalingFactor;
     }
     /**
      * @brief Generate the Y tensor as labels
@@ -138,19 +156,28 @@ class AIOperator : public MeanAQPIAWJOperator {
 
     void saveXYTensors2Files(std::string ptPrefix, uint64_t _xCols) {
       /**
-       * @brief 1. generate x and save
+       * @brief 1. generate x
        */
       narrowAndReshapeX(_xCols);
+
+      /**
+       * @brief 2. generate y
+       *
+       */
+      generateY(finalObservation);
+      /**
+       * @brief 3. normalize x and y
+       */
+       normalizeXY();
+       /***
+        * @brief 4. sava x and y
+        */
       auto tx = saveTensor2File(xTensor, ptPrefix + "_x.pt");
+
       uint64_t xRows = tx.size(0);
       uint64_t xCols = tx.size(1);
       INTELLI_INFO(
           "Now we have [" + to_string(xRows) + "x" + to_string(xCols) + "] at " + ptPrefix + "_x.pt");
-      /**
-       * @brief 2. generate y and save
-       *
-       */
-      generateY(finalObservation);
       auto ty = saveTensor2File(yTensor, ptPrefix + "_y.pt");
       uint64_t yRows = ty.size(0);
       uint64_t yCols = ty.size(1);
