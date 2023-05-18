@@ -1,4 +1,4 @@
-BRANCH=ai_ooo
+BRANCH=ai_ooo_model
 git init
 git checkout -b $BRANCH
 git add .
