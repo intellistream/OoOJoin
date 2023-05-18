@@ -5,7 +5,6 @@
 #ifndef DISORDERHANDLINGSYSTEM_TUPLE_PRODUCTIVITY_PROFILER_H
 #define DISORDERHANDLINGSYSTEM_TUPLE_PRODUCTIVITY_PROFILER_H
 
-
 #include <unordered_map>
 #include <map>
 #include <mutex>
@@ -14,58 +13,58 @@
 
 namespace MSWJ {
 
-    class TupleProductivityProfiler {
-    public:
+class TupleProductivityProfiler {
+ public:
 
-        // Constructor
-        explicit TupleProductivityProfiler(INTELLI::ConfigMapPtr config);
+  // Constructor
+  explicit TupleProductivityProfiler(INTELLI::ConfigMapPtr config);
 
-        // Destructor
-        ~TupleProductivityProfiler() = default;
+  // Destructor
+  ~TupleProductivityProfiler() = default;
 
-        // Get join_record_map
-        auto getJoinRecordMap() -> std::vector<int>;
+  // Get join_record_map
+  auto getJoinRecordMap() -> std::vector<int>;
 
-        // Add join record
-        auto addJoinRecord(int stream_id, int count) -> void;
+  // Add join record
+  auto addJoinRecord(int stream_id, int count) -> void;
 
-        // Update cross-join result size
-        auto updateCrossJoin(int Di, size_t res) -> void;
+  // Update cross-join result size
+  auto updateCrossJoin(int Di, size_t res) -> void;
 
-        // Update join result size
-        auto updateJoinRes(int Di, size_t res) -> void;
+  // Update join result size
+  auto updateJoinRes(int Di, size_t res) -> void;
 
-        // Get select ratio
-        auto getSelectRatio(int K) -> double;
+  // Get select ratio
+  auto getSelectRatio(int K) -> double;
 
-        // Get requirement recall
-        auto getRequirementRecall() -> double;
+  // Get requirement recall
+  auto getRequirementRecall() -> double;
 
-        // Set configuration
-        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+  // Set configuration
+  auto setConfig(INTELLI::ConfigMapPtr config) -> void;
 
-        // Get the value of the discrete random variable D
-        // If delay(ei) ∈(kg,(k+1)g], then Di=k+1
-        static auto inline getD(int delay) -> int {
-            return delay % g == 0 ? delay / g : delay / g + 1;
-        }
+  // Get the value of the discrete random variable D
+  // If delay(ei) ∈(kg,(k+1)g], then Di=k+1
+  static auto inline getD(int delay) -> int {
+    return delay % g == 0 ? delay / g : delay / g + 1;
+  }
 
-    private:
+ private:
 
-        INTELLI::ConfigMapPtr cfg{};
+  INTELLI::ConfigMapPtr cfg{};
 
-        // Records the number of tuples that arrive at the join operator
-        std::vector<int> joinRecordMap{};
+  // Records the number of tuples that arrive at the join operator
+  std::vector<int> joinRecordMap{};
 
-        // Records the size of the cross-join result
-        std::vector<size_t> crossJoinMap{0};
-        std::vector<int> crossJoinPos{};
+  // Records the size of the cross-join result
+  std::vector<size_t> crossJoinMap{0};
+  std::vector<int> crossJoinPos{};
 
-        // Records the size of the join result
-        std::vector<size_t> joinResultMap{0};
-        std::vector<int> joinResultPos{};
+  // Records the size of the join result
+  std::vector<size_t> joinResultMap{0};
+  std::vector<int> joinResultPos{};
 
-    };
+};
 
 }
 

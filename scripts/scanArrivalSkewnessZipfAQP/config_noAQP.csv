@@ -12,6 +12,7 @@ algo,NPJSingle,String
 operator,IAWJ,String
 aqpScale,0.035,Double
 dataLoader,zipf,String
+zipfDataLoader_zipfSkew,1,U64
 zipfDataLoader_zipfKey,0,U64
 zipfDataLoader_zipfValue,0,U64
 zipfDataLoader_zipfEvent,0,U64

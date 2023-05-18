@@ -6,10 +6,6 @@ project(IntelliStream CXX)
 
 # Judge the os system
 
-if (UNIX AND NOT APPLE)
-    add_definitions(-DUSELOG4CXX)
-    MESSAGE(STATUS "Enable Log4CXX")
-endif (UNIX AND NOT APPLE)
 
 # Custom CMake find instructions and macros
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
@@ -82,7 +78,6 @@ target_include_directories(IntelliStream PUBLIC "include" ${TORCH_INCLUDE_DIRS})
 target_link_libraries(IntelliStream PUBLIC ${LIBRARIES} ${TORCH_LIBRARIES})
 
 
-
 include_directories(${OOO_JOIN_INCLUDE_DIR})
 
 if (MSVC)
@@ -97,8 +92,9 @@ endif (MSVC)
 add_subdirectory(benchmark)
 
 #Add tests (based on GTest suits)
-add_subdirectory(test)
-
+if (ENABLE_UNIT_TESTS)
+    add_subdirectory(test)
+endif (ENABLE_UNIT_TESTS)
 
 install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStream)
 # copy scripts

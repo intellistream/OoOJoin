@@ -55,12 +55,12 @@ def runPeriod(exePath, period, resultPath):
     configTemplate = "config.csv"
     # clear old files
     os.system("cd " + exePath + "&& rm *.csv")
-    if(int(period)<0):
+    if (int(period) < 0):
         editConfig(configTemplate, exePath + configFname, "earlierEmitMs", -int(period))
-        #editConfig(configTemplate, exePath + configFname, "latenessMs", 0)
+        # editConfig(configTemplate, exePath + configFname, "latenessMs", 0)
         print('use earlierEmit instead')
     else:
-        #editConfig(configTemplate, exePath + configFname, "earlierEmitMs", 0)
+        # editConfig(configTemplate, exePath + configFname, "earlierEmitMs", 0)
         editConfig(configTemplate, exePath + configFname, "latenessMs", period)
     # prepare new file
     # run
@@ -106,7 +106,7 @@ def main():
     resultPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/latenessTest/"
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [-4,-3,-2,-1,0,1,2,3,4]
+    periodVec = [-4, -3, -2, -1, 0, 1, 2, 3, 4]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)

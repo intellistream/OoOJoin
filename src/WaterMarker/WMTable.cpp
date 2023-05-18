@@ -9,6 +9,6 @@
 using namespace OoOJoin;
 
 OoOJoin::WMTable::WMTable() {
-    wmMap["arrival"] = newArrivalWM();
-    wmMap["lateness"] = newLatenessWM();
+  wmMap["arrival"] = newArrivalWM();
+  wmMap["lateness"] = newLatenessWM();
 }

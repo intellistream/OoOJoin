@@ -5,35 +5,33 @@
 #ifndef DISORDERHANDLINGSYSTEM_BUFFER_SIZE_MANAGER_H
 #define DISORDERHANDLINGSYSTEM_BUFFER_SIZE_MANAGER_H
 
-
 #include <Operator/MSWJ/Manager/StatisticsManager.h>
 #include <Operator/MSWJ/Profiler/TupleProductivityProfiler.h>
 
 namespace MSWJ {
-    class BufferSizeManager {
-    public:
-        explicit BufferSizeManager(StatisticsManager *statisticsManager, TupleProductivityProfiler *profiler);
+class BufferSizeManager {
+ public:
+  explicit BufferSizeManager(StatisticsManager *statisticsManager, TupleProductivityProfiler *profiler);
 
-        ~BufferSizeManager() = default;
+  ~BufferSizeManager() = default;
 
-        // Adaptive K algorithm
-        auto kSearch(int stream_id) -> int;
+  // Adaptive K algorithm
+  auto kSearch(int stream_id) -> int;
 
-        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+  auto setConfig(INTELLI::ConfigMapPtr config) -> void;
 
-    private:
-        // Function γ(L,T) in the paper
-        auto y(int K) -> double;
+ private:
+  // Function γ(L,T) in the paper
+  auto y(int K) -> double;
 
-        INTELLI::ConfigMapPtr cfg = nullptr;
+  INTELLI::ConfigMapPtr cfg = nullptr;
 
-        // Data statistics manager
-        StatisticsManager *statisticsManager;
+  // Data statistics manager
+  StatisticsManager *statisticsManager;
 
-        // Tuple productivity profiler
-        TupleProductivityProfiler *productivityProfiler;
-    };
+  // Tuple productivity profiler
+  TupleProductivityProfiler *productivityProfiler;
+};
 }
-
 
 #endif //DISORDERHANDLINGSYSTEM_BUFFER_SIZE_MANAGER_H

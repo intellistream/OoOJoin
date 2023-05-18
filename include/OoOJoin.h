@@ -65,6 +65,7 @@
 #include <Common/Tuples.h>
 #include <Common/Window.h>
 #include <Common/StateOfKey.h>
+#include <Common/LinearVAE.h>
 /**
  * @}
  */
@@ -114,6 +115,8 @@
 #include <Operator/IAWJOperator.h>
 #include <Operator/MeanAQPIAWJOperator.h>
 #include <Operator/OperatorTable.h>
+#include <Operator/MSWJOperator.h>
+#include <Operator/AIOperator.h>
 /**
  * @}
  */

@@ -39,72 +39,72 @@ namespace OoOJoin {
  * - "fileDataLoader_rFile" String The file name of r tuple
  * - "fileDataLoader_sFile" String The file name of s tuple
  */
-    class FileDataLoader : public AbstractDataLoader {
-    protected:
+class FileDataLoader : public AbstractDataLoader {
+ protected:
 
-        void spilt(const std::string s, const std::string &c, vector<std::string> &v) {
-            std::string::size_type pos1, pos2;
-            pos2 = s.find(c);
-            pos1 = 0;
-            while (std::string::npos != pos2) {
-                v.push_back(s.substr(pos1, pos2 - pos1));
+  void spilt(const std::string s, const std::string &c, vector<std::string> &v) {
+    std::string::size_type pos1, pos2;
+    pos2 = s.find(c);
+    pos1 = 0;
+    while (std::string::npos != pos2) {
+      v.push_back(s.substr(pos1, pos2 - pos1));
 
-                pos1 = pos2 + c.size();
-                pos2 = s.find(c, pos1);
-            }
-            if (pos1 != s.length())
-                v.push_back(s.substr(pos1));
-        }
+      pos1 = pos2 + c.size();
+      pos2 = s.find(c, pos1);
+    }
+    if (pos1 != s.length())
+      v.push_back(s.substr(pos1));
+  }
 
-        /**
-        * @brief load a dataset from csv file
-        * @param fname The name of file
-        * @param separator The separator in .csv, default is ","
-        * @param newLine THe indicator of a new line. default is "\n"
-        * @return The vector of TrackTuplePtr
-        */
-        std::vector<TrackTuplePtr> loadDataFromCsv(std::string fname,
-                                                   std::string separator = ",",
-                                                   std::string newLine = "\n");
+  /**
+  * @brief load a dataset from csv file
+  * @param fname The name of file
+  * @param separator The separator in .csv, default is ","
+  * @param newLine THe indicator of a new line. default is "\n"
+  * @return The vector of TrackTuplePtr
+  */
+  std::vector<TrackTuplePtr> loadDataFromCsv(std::string fname,
+                                             std::string separator = ",",
+                                             std::string newLine = "\n");
 
-    public:
-        ConfigMapPtr cfgGlobal;
-        vector<TrackTuplePtr> sTuple, rTuple;
+ public:
+  ConfigMapPtr cfgGlobal;
+  vector<TrackTuplePtr> sTuple, rTuple;
 
-        FileDataLoader() = default;
+  FileDataLoader() = default;
 
-        ~FileDataLoader() = default;
+  ~FileDataLoader() = default;
 
-        /**
-       * @brief Set the GLOBAL config map related to this loader
-       * @param cfg The config map
-        * @return bool whether the config is successfully set
-       */
-        bool setConfig(ConfigMapPtr cfg) override;
+  /**
+ * @brief Set the GLOBAL config map related to this loader
+ * @param cfg The config map
+  * @return bool whether the config is successfully set
+ */
+  bool setConfig(ConfigMapPtr cfg) override;
 
-        /**
-      * @brief Set the modification config map related to this loader
-      * @param cfg The config map
-      * @return bool whether the config is successfully set
-      */
-        bool setModConfig(ConfigMapPtr cfg) override {
-            assert(cfg);
-            return true;
-        }
+  /**
+* @brief Set the modification config map related to this loader
+* @param cfg The config map
+* @return bool whether the config is successfully set
+*/
+  bool setModConfig(ConfigMapPtr cfg) override {
+    assert(cfg);
+    return true;
+  }
 
-        /**
-         * @brief get the vector of s tuple
-         * @return the vector
-         */
-        vector<TrackTuplePtr> getTupleVectorS() override;
+  /**
+   * @brief get the vector of s tuple
+   * @return the vector
+   */
+  vector<TrackTuplePtr> getTupleVectorS() override;
 
-        /**
-        * @brief get the vector of R tuple
-        * @return the vector
-        */
-        vector<TrackTuplePtr> getTupleVectorR() override;
+  /**
+  * @brief get the vector of R tuple
+  * @return the vector
+  */
+  vector<TrackTuplePtr> getTupleVectorR() override;
 
-    };
+};
 
 /**
  * @ingroup ADB_TESTBENCH_DATALOADERS
@@ -112,7 +112,7 @@ namespace OoOJoin {
  * @brief The class to describe a shared pointer to @ref FileDataLoader
 
  */
-    typedef std::shared_ptr<class FileDataLoader> FileDataLoaderPtr;
+typedef std::shared_ptr<class FileDataLoader> FileDataLoaderPtr;
 /**
  * @ingroup ADB_TESTBENCH_DATALOADERS
  * @def newFileDataLoader
