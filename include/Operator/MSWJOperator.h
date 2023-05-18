@@ -30,7 +30,7 @@ typedef std::shared_ptr<class MSWJ::StreamOperator> StreamOperatorPtr;
  * @class MSWJOperator
  * @ingroup ADB_OPERATORS
  * @class MSWJOperator Operator/MSWJOperator.h
- * @brief The intra window join (MSWJ) operator, only considers a single window
+ * @brief The intra window join (MSWJ) operator, only considers a single window, following yuanzhen's work ICDE2016
  * @note require configurations:
  * - "windowLen" U64: The length of window
  * - "slideLen" U64: The length of slide

@@ -49,3 +49,4 @@ jobs:
           ./mswjTest "--success"
           ./pecjTest "--success"
           ./aiOperatorTest "--success"
+          ./iawjSelTest "--success"

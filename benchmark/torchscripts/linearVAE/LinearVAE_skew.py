@@ -309,7 +309,7 @@ def pretrainModel(device, prefixTag, saveTag):
     X, Y = genX(1, input_dim, 10, 0.2)
 
     # print(tmu,tSigma,ta/tb)
-    x = X[0:99,:].to(device)
+    x = X[0:99, :].to(device)
     model.eval()
     x_recon, muZ, logvarZ, mu, logvar = model(x)
     # print(mu,logvar.exp(),muZ)

@@ -49,10 +49,10 @@ matplotlib.rcParams['font.family'] = OPT_FONT_NAME
 matplotlib.rcParams['pdf.fonttype'] = 42
 
 
-def runEvent(exePath, event, resultPath,configTemplate = "config.csv"):
+def runEvent(exePath, event, resultPath, configTemplate="config.csv"):
     # resultFolder="eventTests"
     configFname = "config_event_" + str(event) + ".csv"
-    
+
     # clear old files
     os.system("cd " + exePath + "&& rm *.csv")
     # prepare new file
@@ -65,9 +65,9 @@ def runEvent(exePath, event, resultPath,configTemplate = "config.csv"):
     os.system("cd " + exePath + "&& cp *.csv " + resultPath + "/" + str(event))
 
 
-def runeventVector(exePath, eventVec, resultPath,configTemplate = "config.csv"):
+def runeventVector(exePath, eventVec, resultPath, configTemplate="config.csv"):
     for i in eventVec:
-        runEvent(exePath, i, resultPath,configTemplate)
+        runEvent(exePath, i, resultPath, configTemplate)
 
 
 def readResultEvent(event, resultPath):
@@ -99,20 +99,20 @@ def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
     resultPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/industryLabel/"
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
-    #configTemplate = exeSpace + "config.csv"
+    # configTemplate = exeSpace + "config.csv"
     eventVec = [10]
     eventVecDisp = np.array(eventVec)
     eventVecDisp = eventVecDisp
-    #print(configTemplate)
+    # print(configTemplate)
     # run
     if (len(sys.argv) < 2):
         os.system("rm -rf " + resultPath)
         os.system("mkdir " + resultPath)
-        runeventVector(exeSpace, eventVec, resultPath+"low",'config_low.csv')
-        #runeventVector(exeSpace, eventVec, resultPath+"mid",'config_mid.csv')
-        #runeventVector(exeSpace, eventVec, resultPath+"high",'config_high.csv')
-    #avgLatVec, lat95Vec, thrVec, errVec, compVec = readResultVectorEvent(eventVec, resultPath)
-    
+        runeventVector(exeSpace, eventVec, resultPath + "low", 'config_low.csv')
+        # runeventVector(exeSpace, eventVec, resultPath+"mid",'config_mid.csv')
+        # runeventVector(exeSpace, eventVec, resultPath+"high",'config_high.csv')
+    # avgLatVec, lat95Vec, thrVec, errVec, compVec = readResultVectorEvent(eventVec, resultPath)
+
     # readResultEvent(50,resultPath)
 
 

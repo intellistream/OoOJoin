@@ -8,7 +8,7 @@
 #include <Operator/MSWJOperator.h>
 #include <Operator/IAWJOperator.h>
 #include <Operator/AIOperator.h>
-
+#include <Operator/IAWJSelOperator.h>
 namespace OoOJoin {
 OperatorTable::OperatorTable() {
   operatorMap["IAWJ"] = newIAWJOperator();
@@ -16,5 +16,6 @@ OperatorTable::OperatorTable() {
   operatorMap["IMA"] = newIMAIAWJOperator();
   operatorMap["MSWJ"] = newMSWJOperator();
   operatorMap["AI"] = newAIOperator();
+  operatorMap["IAWJSel"] = newIAWJSelOperator();
 }
 } // OoOJoin

@@ -109,7 +109,6 @@ def main():
         os.system("rm -rf " + resultPath)
         os.system("mkdir " + resultPath)
         runeventVector(exeSpace, eventVec, resultPath)
- 
 
     # readResultEvent(50,resultPath)
 

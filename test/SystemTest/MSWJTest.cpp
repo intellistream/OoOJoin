@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include <Common/LinearVAE.h>
+//#include <Common/LinearVAE.h>
 #include <vector>
 #include <OoOJoin.h>
 //using namespace std;

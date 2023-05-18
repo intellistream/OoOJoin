@@ -59,8 +59,8 @@ class AIOperator : public MeanAQPIAWJOperator {
     ObservationGroup() = default;
     ~ObservationGroup() = default;
     float finalObservation = 0.0;
-    float scalingFactor=0.0;
-    uint64_t xCols,xRows = 0;
+    float scalingFactor = 0.0;
+    uint64_t xCols, xRows = 0;
     /**
      * @brief xTensor is the observation, yTensor is the label.
      */
@@ -90,25 +90,24 @@ class AIOperator : public MeanAQPIAWJOperator {
       uint64_t elementsSelected = observationCnt / xCols;
       elementsSelected = elementsSelected * xCols;
       auto b = xTensor.narrow(1, 0, elementsSelected);
-      xRows=elementsSelected / xCols;
+      xRows = elementsSelected / xCols;
       b = b.reshape({(long) (elementsSelected / xCols), (long) xCols});
       xTensor = b;
     }
     /**
      * @brief To normalize the x and y tensor
      */
-    void normalizeXY()
-    {
+    void normalizeXY() {
       //uint64_t  i;
-      scalingFactor=xTensor[0][xCols-1].item<float>();
+      scalingFactor = xTensor[0][xCols - 1].item<float>();
       /*for(i=0;i<xRows;i++)
       {
         scalingFactor=xTensor[i][0].item<float>();
         xTensor[i]=xTensor[i]/scalingFactor;
         yTensor[i]=yTensor[i]/scalingFactor;
       }*/
-      xTensor=xTensor/scalingFactor;
-      yTensor=yTensor/scalingFactor;
+      xTensor = xTensor / scalingFactor;
+      yTensor = yTensor / scalingFactor;
     }
     /**
      * @brief Generate the Y tensor as labels
@@ -168,10 +167,10 @@ class AIOperator : public MeanAQPIAWJOperator {
       /**
        * @brief 3. normalize x and y
        */
-       normalizeXY();
-       /***
-        * @brief 4. sava x and y
-        */
+      normalizeXY();
+      /***
+       * @brief 4. sava x and y
+       */
       auto tx = saveTensor2File(xTensor, ptPrefix + "_x.pt");
 
       uint64_t xRows = tx.size(0);

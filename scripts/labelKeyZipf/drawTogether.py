@@ -110,7 +110,7 @@ def main():
         os.system("rm -rf " + resultPath)
         os.system("mkdir " + resultPath)
         runKeyRangeVector(exeSpace, krVec, resultPath)
-   
+
     # readResultPeriod(50,resultPath)
 
 

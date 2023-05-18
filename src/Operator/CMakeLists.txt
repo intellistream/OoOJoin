@@ -8,8 +8,8 @@ add_sources(
         PECJOperator.cpp
         PECJ/VariationalInference.cpp
         PECJ/VariationalAutoEncoder.cpp
-        ../Common/LinearVAE.cpp
         AIOperator.cpp
+        IAWJSelOperator.cpp
         MSWJ/KSlack/KSlack.cpp
         MSWJ/Manager/BufferSizeManager.cpp
         MSWJ/Manager/StatisticsManager.cpp

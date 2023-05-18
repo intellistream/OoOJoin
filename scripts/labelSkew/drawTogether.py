@@ -109,7 +109,6 @@ def main():
         os.system("rm -rf " + resultPath)
         os.system("mkdir " + resultPath)
         runskewVector(exeSpace, skewVec, resultPath)
-    
 
     # readResultSkew(50,resultPath)
 
