@@ -236,3 +236,84 @@ int runTestBenchAdj(const ConfigMapPtr &cfg, const string &configName = "config.
 
   return 1;
 }
+
+int runTestBenchPretrain(const ConfigMapPtr &cfg,
+                         const string &configName = "config.csv",
+                         const string &outPrefix = "") {
+  INTELLI_INFO("Load global config from" + configName + ", output prefix = " + outPrefix);
+  OperatorTablePtr opTable = newOperatorTable();
+
+  size_t OoORu = 0;
+  tsType windowLenMs, timeStepUs, watermarkTimeMs;
+  string operatorTag = "IMA";
+  string loaderTag = "random";
+
+  windowLenMs = cfg->tryU64("windowLenMs", 10, true);
+  timeStepUs = cfg->tryU64("timeStepUs", 40, true);
+  watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10, true);
+  //maxArrivalSkewMs = cfg->tryU64("maxArrivalSkewMs", 10 / 2);
+
+  operatorTag = cfg->tryString("operator", "IMA");
+  loaderTag = cfg->tryString("dataLoader", "random");
+  INTELLI_INFO("window len= " + to_string(windowLenMs) + "ms ");
+  INTELLI_INFO("Try use " + operatorTag + " operator");
+
+  AbstractOperatorPtr iawj;
+  MSWJOperatorPtr mswj;
+
+  if (operatorTag == "IAWJ") {
+    iawj = newIAWJOperator();
+  } else if (operatorTag == "MSWJ") {
+    mswj = mswjConfiguration(cfg);
+  } else {
+    iawj = opTable->findOperator(operatorTag);
+  }
+
+  if (operatorTag != "MSWJ" && iawj == nullptr) {
+    iawj = newIAWJOperator();
+    INTELLI_INFO("No " + operatorTag + " operator, will use IAWJ instead");
+  }
+
+  //Global configs
+  cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
+  cfg->edit("timeStep", (uint64_t) timeStepUs);
+  cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
+
+  //Dataset files
+  cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/sb_1000ms_1tMidDelayData.csv");
+  cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/cj_1000ms_1tLowDelayData.csv");
+
+  TestBench tbOoO;
+  tbOoO.setDataLoader(loaderTag, cfg);
+
+  cfg->edit("rLen", (uint64_t) tbOoO.sizeOfS());
+  cfg->edit("sLen", (uint64_t) tbOoO.sizeOfR());
+  cfg->edit("latenessMs", (uint64_t) 0);
+  cfg->edit("earlierEmitMs", (uint64_t) 0);
+
+  if (operatorTag == "MSWJ") {
+    tbOoO.setOperator(mswj, cfg);
+  } else {
+    tbOoO.setOperator(iawj, cfg);
+  }
+
+  INTELLI_INFO("/****run OoO test of  tuples***/");
+  OoORu = tbOoO.OoOTest(true);
+
+  INTELLI_DEBUG("OoO Confirmed joined " + to_string(OoORu));
+  INTELLI_DEBUG("OoO AQP joined " + to_string(tbOoO.AQPResult));
+
+  ConfigMap generalStatistics;
+  generalStatistics.edit("AvgLatency", (double) tbOoO.getAvgLatency());
+  generalStatistics.edit("95%Latency", (double) tbOoO.getLatencyPercentage(0.95));
+  generalStatistics.edit("Throughput", (double) tbOoO.getThroughput());
+
+  INTELLI_DEBUG("95% latency (us)=" + to_string(tbOoO.getLatencyPercentage(0.95)));
+  INTELLI_DEBUG("Throughput (TPs/s)=" + to_string(tbOoO.getThroughput()));
+
+  tbOoO.saveRTuplesToFile(outPrefix + "_tuples.csv", true);
+  tbOoO.saveRTuplesToFile(outPrefix + "_arrived_tuplesR.csv", false);
+  tbOoO.saveSTuplesToFile(outPrefix + "_arrived_tuplesS.csv", false);
+
+  return 1;
+}

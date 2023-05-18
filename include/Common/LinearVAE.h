@@ -60,6 +60,12 @@ class LinearVAE {
    * @note please read the @ref resultMu and @ref resultSigma after this
   */
   void runForward(std::vector<float> data);
+  /**
+  * @brief run an NN forward on data
+  * @param data the data stored in tensor
+  * @note please read the @ref resultMu and @ref resultSigma after this
+ */
+  void runForward(torch::Tensor data);
   float resultMu, resultSigma;
   /**
  * @brief load the prior distribution

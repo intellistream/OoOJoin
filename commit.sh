@@ -1,4 +1,4 @@
-BRANCH=ai_ooo_model
+BRANCH=ai_inference
 git init
 git checkout -b $BRANCH
 git add .

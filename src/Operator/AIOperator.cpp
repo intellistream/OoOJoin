@@ -32,8 +32,12 @@ void OoOJoin::AIOperator::saveAllTensors() {
       streamStatisics.sRateObservations.saveXYTensors2Files("torchscripts/" + ptPrefix + "/" + "tensor_sRate", xCols);
       streamStatisics.rRateObservations.saveXYTensors2Files("torchscripts/" + ptPrefix + "/" + "tensor_rRate", xCols);
     }
-    INTELLI_INFO("The tensors are saved, exit 0");
-    exit(0);
+    if (exitAfterPretrain) {
+      INTELLI_INFO("The tensors are saved, exit 0");
+    }
+
+
+    //exit(0);
     // std::cout<<streamStatisics.selectivityTensorY<<std::endl;
   }
 }
@@ -41,12 +45,25 @@ void OoOJoin::AIOperator::preparePretrain() {
   /**
    * @brief 1. init all observation tensors
    */
+
   streamStatisics.selObservations.initObservationBuffer(selLen);
   streamStatisics.sSkewObservations.initObservationBuffer(selLen);
   streamStatisics.rSkewObservations.initObservationBuffer(selLen);
   streamStatisics.sRateObservations.initObservationBuffer(selLen);
   streamStatisics.rRateObservations.initObservationBuffer(selLen);
 }
+void OoOJoin::AIOperator::prepareInference() {
+  /**
+   * @brief 1. init all observation tensors
+   */
+  uint64_t xCols = streamStatisics.vaeSelectivity.getXDimension();
+  streamStatisics.selObservations.initObservationBuffer(xCols);
+  streamStatisics.sSkewObservations.initObservationBuffer(xCols);
+  streamStatisics.rSkewObservations.initObservationBuffer(xCols);
+  streamStatisics.sRateObservations.initObservationBuffer(xCols);
+  streamStatisics.rRateObservations.initObservationBuffer(xCols);
+}
+
 bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
     return false;
@@ -57,26 +74,35 @@ bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   appendSel = config->tryU64("appendSel", 0, true);
   appendSkew = config->tryU64("appendSkew", 0, true);
   appendRate = config->tryU64("appendRate", 0, true);
-  if (appendSel || appendSkew || appendRate) {
-    INTELLI_WARNING("The tensors in file system will be overwrite by me because you asked me to do so.");
-    selLen = config->tryU64("selLen", 0, true);
-    if (selLen == 0) {
-      INTELLI_ERROR("Invalid pretrain settings, abort");
-      exit(0);
-    }
-  }
+  exitAfterPretrain = config->tryU64("exitAfterPretrain", 1, true);
+
   streamStatisics.vaeSelectivity.loadModule("torchscripts/" + ptPrefix + "/" + ptPrefix + "_selectivity.pt");
+  streamStatisics.vaeSRate.loadModule("torchscripts/" + ptPrefix + "/" + ptPrefix + "_sRate.pt");
+  streamStatisics.vaeRRate.loadModule("torchscripts/" + ptPrefix + "/" + ptPrefix + "_rRate.pt");
   // INTELLI_WARNING("The dimension of DAN is "+to_string(streamStatisics.vaeSelectivity.getXDimension()));
   if (aiMode == "pretrain") {
     aiModeEnum = 0;
+    /**
+     * @brief chack which tensors to be appended
+     */
+    if (appendSel || appendSkew || appendRate) {
+      INTELLI_WARNING("The tensors in file system will be overwrite by me because you asked me to do so.");
+      selLen = config->tryU64("selLen", 0, true);
+      if (selLen == 0 && aiModeEnum == 0) {
+        INTELLI_ERROR("Invalid pretrain settings, abort");
+        exit(0);
+      }
+    }
     preparePretrain();
   } else if (aiMode == "continual_learning") {
     aiModeEnum = 1;
   } else if (aiMode == "inference") {
     aiModeEnum = 2;
+    prepareInference();
   } else {
     aiModeEnum = 255;
     INTELLI_WARNING("This mode is N.A.");
+    prepareInference();
   }
 
   WMTablePtr wmTable = newWMTable();
@@ -166,6 +192,10 @@ bool OoOJoin::AIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
      *
      */
     streamStatisics.encounterSTuple(ts);
+    if (aiModeEnum == 0 || aiModeEnum == 2) {
+      streamStatisics.sSkewObservations.appendX(streamStatisics.sSkew);
+      streamStatisics.sRateObservations.appendX(streamStatisics.sRate);
+    }
     /**
      * @brief First get the index of hash table
      */
@@ -198,11 +228,9 @@ bool OoOJoin::AIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
        */
       streamStatisics.updateSelectivity(confirmedResult);
       //streamStatisics.selObservations.appendX(streamStatisics.selectivity);
-      if (aiModeEnum == 0) {
+      if (aiModeEnum == 0 || aiModeEnum == 2) {
         streamStatisics.selObservations.setFinalObservation(streamStatisics.selectivity);
         streamStatisics.selObservations.appendX(streamStatisics.selectivity);
-        streamStatisics.sSkewObservations.appendX(streamStatisics.sSkew);
-        streamStatisics.sRateObservations.appendX(streamStatisics.sRate);
       }
 
 //            intermediateResult += py->arrivedTupleCnt;
@@ -221,8 +249,38 @@ void OoOJoin::AIOperator::endOfWindow() {
   if (aiModeEnum == 0) {
     std::cout << streamStatisics.reportStr() << endl;
     std::cout << "joined " + to_string(confirmedResult) << endl;
+    saveAllTensors();
+    return;
   }
-  saveAllTensors();
+  if (aiModeEnum == 2) { /**
+    * @brief estimate sel
+    */
+    streamStatisics.vaeSelectivity.runForward(
+        streamStatisics.selObservations.xTensor / (streamStatisics.selObservations.scalingFactor));
+    float selMu = streamStatisics.vaeSelectivity.resultMu;
+    selMu = selMu * streamStatisics.selObservations.scalingFactor;
+    INTELLI_INFO("The estimated selectivity is " + to_string(selMu));
+    /**
+     * @brief estimate srate and rrate
+     */
+    streamStatisics.vaeSRate.runForward(
+        streamStatisics.sRateObservations.xTensor / (streamStatisics.sRateObservations.scalingFactor));
+    float sRateMu = streamStatisics.vaeSRate.resultMu;
+    sRateMu = sRateMu * streamStatisics.sRateObservations.scalingFactor;
+    INTELLI_INFO("The estimated sRate is " + to_string(sRateMu));
+
+    streamStatisics.vaeRRate.runForward(
+        streamStatisics.rRateObservations.xTensor / (streamStatisics.rRateObservations.scalingFactor));
+    float rRateMu = streamStatisics.vaeRRate.resultMu;
+    rRateMu = rRateMu * streamStatisics.rRateObservations.scalingFactor;
+    INTELLI_INFO("The estimated rRate is " + to_string(rRateMu));
+    float sCnt = windowLen * rRateMu / 1000.0;
+    float rCnt = windowLen * sRateMu / 1000.0;
+    intermediateResult = sCnt * rCnt * selMu;
+    //INTELLI_INFO("airu is "+ to_string(aiResult));
+    // exit(0);
+  }
+
 }
 bool OoOJoin::AIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   bool shouldGenWM, isInWindow;
@@ -242,7 +300,10 @@ bool OoOJoin::AIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
    *
    */
     streamStatisics.encounterRTuple(tr);
-
+    if (aiModeEnum == 0 || aiModeEnum == 2) {
+      streamStatisics.rSkewObservations.appendX(streamStatisics.rSkew);
+      streamStatisics.rRateObservations.appendX(streamStatisics.rRate);
+    }
     AIStateOfKeyPtr stateOfKey;timeTrackingStart(tt_index);
     AbstractStateOfKeyPtr stateOfRKey = stateOfKeyTableR->getByKey(tr->key);
 
@@ -273,11 +334,9 @@ bool OoOJoin::AIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         */
       streamStatisics.updateSelectivity(confirmedResult);
       //streamStatisics.selObservations.appendX(streamStatisics.selectivity);
-      if (aiModeEnum == 0) {
+      if (aiModeEnum == 0 || aiModeEnum == 2) {
         streamStatisics.selObservations.setFinalObservation(streamStatisics.selectivity);
         streamStatisics.selObservations.appendX(streamStatisics.selectivity);
-        streamStatisics.rSkewObservations.appendX(streamStatisics.rSkew);
-        streamStatisics.rRateObservations.appendX(streamStatisics.rRate);
       }
       //streamStatisics.updateSelectivity(confirmedResult);
       // appendSelectivityTensorX();
