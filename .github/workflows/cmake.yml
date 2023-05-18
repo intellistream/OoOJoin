@@ -48,5 +48,6 @@ jobs:
           ./imaTest "--success"
           ./mswjTest "--success"
           ./pecjTest "--success"
-          ./aiOperatorTest "--success"
+          ./aiPretrainTest "--success"
+          ./aiInferenceTest "--success"
           ./iawjSelTest "--success"

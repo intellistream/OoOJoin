@@ -128,20 +128,26 @@ size_t OoOJoin::TestBench::OoOTest(bool additionalSort) {
 }
 
 size_t OoOJoin::TestBench::inOrderTest(bool additionalSort) {
-  /**
-   * @brief prevent ai operator from training or learning
-   */
-  opConfig->edit("aiMode", "not-applicable");
+
   /**
    * @brief prevent ai operator from appending tensors
    */
   opConfig->edit("appendTensor", (uint64_t) 0);
+  opConfig->edit("operator", "IAWJ");
   forceInOrder(rTuple);
   forceInOrder(sTuple);
   if (additionalSort) {
     inOrderSort(rTuple);
     inOrderSort(sTuple);
   }
+  uint64_t sMax = sTuple[sTuple.size() - 1]->arrivalTime;
+  uint64_t rMax = sTuple[sTuple.size() - 1]->arrivalTime;
+  uint64_t wmTime = sMax;
+  if (rMax > sMax) {
+    wmTime = rMax;
+  }
+  wmTime++;
+  opConfig->edit("watermarkTimeMs", (uint64_t) wmTime / 1000);
   inlineTest();
   AQPResult = testOp->getAQPResult();
   return testOp->getResult();

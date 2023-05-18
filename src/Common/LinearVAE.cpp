@@ -63,6 +63,14 @@ void LinearVAE::runForward(std::vector<float> data) {
 }*/
   getMuEstimation();
 }
+void LinearVAE::runForward(torch::Tensor data) {
+  auto outElements =module.forward({data}).toTuple()->elements();
+/*for(int i=0;i<5;i++)
+{
+    cout<<outElements[i].toTensor()<<endl;
+}*/
+  getMuEstimation();
+}
 void LinearVAE::learnStep(std::vector<float> data) {   //torch::jit::Stack stack;
   uint64_t rows = data.size() / inputDimension;
   torch::Tensor in1 = torch::from_blob(data.data(), {(long) rows, (long) inputDimension}, torch::kFloat32);

@@ -33,6 +33,7 @@ namespace OoOJoin {
  * - "appendSel", U64, whether append sel observations to stored tensor, 0
  * - "appendSkew", U64, whether append skew (of r and s) observations to stored tensor, 0
  * - "appendRate", U64, whether append rate (of r and s) observations to stored tensor, 0
+ * - "exitAfterPretrain", U64, whether exit after a pretrain, U64,1
  * @warning This implementation is putting rotten, just to explore a basic idea of AQP by using historical mean to predict future
  * @warning The predictor and watermarker are currently NOT seperated in this operator, split them in the future!
  * @note In current version, the computation will block feeding
@@ -44,7 +45,7 @@ class AIOperator : public MeanAQPIAWJOperator {
   void conductComputation();
   std::string aiMode;
   uint8_t aiModeEnum = 0;
-  uint64_t appendSel = 0, appendSkew = 0, appendRate;
+  uint64_t appendSel = 0, appendSkew = 0, appendRate, exitAfterPretrain;
   std::string ptPrefix;
   /**
    * @brief The pre-allocated length of seletivity observations, only valid for pretrain
@@ -77,6 +78,12 @@ class AIOperator : public MeanAQPIAWJOperator {
     void appendX(float newX) {
       if (observationCnt >= bufferLen) {
         observationCnt = 0;
+        xRows++;
+        if (xRows == 1) {
+          scalingFactor = xTensor[0][observationCnt - 1].item<float>();
+          //scalingFactor=1.0;
+          INTELLI_INFO("Automatically find the scaling factor" + to_string(scalingFactor));
+        }
       }
       xTensor[0][observationCnt] = newX;
       observationCnt++;
@@ -100,6 +107,7 @@ class AIOperator : public MeanAQPIAWJOperator {
     void normalizeXY() {
       //uint64_t  i;
       scalingFactor = xTensor[0][xCols - 1].item<float>();
+      //scalingFactor=1.0;
       /*for(i=0;i<xRows;i++)
       {
         scalingFactor=xTensor[i][0].item<float>();
@@ -225,7 +233,7 @@ class AIOperator : public MeanAQPIAWJOperator {
         sEventTime = ts->eventTime;
       }
       sRate = sCnt;
-      sRate = sRate * 1e6 / sEventTime;
+      sRate = sRate * 1e3 / sEventTime;
       sSkew = (sSkew * (sCnt - 1) + ts->arrivalTime - ts->eventTime) / sCnt;
       //sSkewObservations.appendX(sSkew);
       // sRateObservations.appendX(sRate);
@@ -236,7 +244,7 @@ class AIOperator : public MeanAQPIAWJOperator {
         rEventTime = tr->eventTime;
       }
       rRate = rCnt;
-      rRate = rRate * 1e6 / rEventTime;
+      rRate = rRate * 1e3 / rEventTime;
       rSkew = (rSkew * (rCnt - 1) + tr->arrivalTime - tr->eventTime) / rCnt;
       // rSkewObservations.appendX(rSkew);
       // rRateObservations.appendX(rRate);
@@ -262,7 +270,7 @@ class AIOperator : public MeanAQPIAWJOperator {
       ru += "rCnt," + to_string(rCnt) + "\r\n";
       return ru;
     }
-    TROCHPACK_VAE::LinearVAE vaeSelectivity;
+    TROCHPACK_VAE::LinearVAE vaeSelectivity, vaeSRate, vaeRRate;
     AIStateOfStreams() = default;
     ~AIStateOfStreams() = default;
   };
@@ -277,6 +285,10 @@ class AIOperator : public MeanAQPIAWJOperator {
    * @brief to prepare data structures for a pretrain
    */
   void preparePretrain();
+  /**
+ * @brief to prepare data structures for a inference
+ */
+  void prepareInference();
   /**
    * @brief save all tensors to file
    */
