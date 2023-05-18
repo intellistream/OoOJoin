@@ -3,71 +3,19 @@
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Werror=return-type -Werror=unused-variable -Werror=unused-parameter")
 enable_testing()
-add_executable(simpleTest SystemTest/SimpleTest.cpp)
-add_executable(mswjTest SystemTest/MSWJTest.cpp)
-add_executable(iawjTest SystemTest/IAWJTest.cpp)
-add_executable(iawjselTest SystemTest/IAWJSelTest.cpp)
-add_executable(imaTest SystemTest/IMATest.cpp)
-add_executable(pecjTest SystemTest/PECJTest.cpp)
-add_library(TestFunction SystemTest/TestFunction.cpp)
-message(STATUS " Libraries: ${LIBRARIES}")
-target_link_libraries(TestFunction
-        IntelliStream
-        )
-target_link_libraries(simpleTest
-        IntelliStream
-        TestFunction
-        )
-target_link_libraries(mswjTest
-        IntelliStream
-        TestFunction
-        )
-target_link_libraries(iawjTest
-        IntelliStream
-        TestFunction
-        )
-target_link_libraries(iawjselTest
-        IntelliStream
-        TestFunction
-        )
-target_link_libraries(imaTest
-        IntelliStream
-        TestFunction
-        )
-target_link_libraries(pecjTest
-        IntelliStream
-        TestFunction
-        )
-# avoid undefined reference to "main" in test.cpp
-
-add_test(
-        NAME catch_test
-        COMMAND $<TARGET_FILE:simpleTest> --success
-)
-add_test(
-        NAME catchmswj_test
-        COMMAND $<TARGET_FILE:mswjTest> --success
-)
-
-add_test(
-        NAME catchiawj_test
-        COMMAND $<TARGET_FILE:iawjTest> --success
-)
-add_test(
-        NAME catchiawjsel_test
-        COMMAND $<TARGET_FILE:iawjselTest> --success
-)
-add_test(
-        NAME catchima_test
-        COMMAND $<TARGET_FILE:imaTest> --success
-)
-
-add_test(
-        NAME catchpecj_test
-        COMMAND $<TARGET_FILE:pecjTest> --success
-)
-
+macro(add_catch_test appName SOURCE_FILES SOURCE_LIBS)
+    get_property(SOURCE_FILES_LOCAL GLOBAL PROPERTY "${PROP_NAME}_SOURCE_PROP")
+    set(${SOURCE_FILES} ${SOURCE_FILES_LOCAL})
+    add_executable(${appName} ${SOURCE_FILES})
+    target_link_libraries(${appName} ${SOURCE_LIBS})
+    add_test(
+            NAME catch_${appName}
+            COMMAND $<TARGET_FILE:${appName}> --success
+    )
+endmacro()
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/config_IMA.csv
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/config_AI_TRAIN.csv
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/config_Normal.csv
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -79,3 +27,19 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/datasets/sTuple.csv
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/torchscripts
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+#add_executable(simpleTest SystemTest/SimpleTest.cpp)
+add_catch_test(mswjTest SystemTest/MSWJTest.cpp IntelliStream)
+add_catch_test(iawjTest SystemTest/IAWJTest.cpp IntelliStream)
+add_catch_test(imaTest SystemTest/IMATest.cpp IntelliStream)
+add_catch_test(pecjTest SystemTest/PECJTest.cpp IntelliStream)
+add_catch_test(aiOperatorTest SystemTest/AIOperatorTest.cpp IntelliStream)
+add_catch_test(iawjSelTest SystemTest/IAWJSelTest.cpp IntelliStream)
+#add_executable(iawjSelTest SystemTest/IAWJSelTest.cpp)
+#add_library(TestFunction SystemTest/TestFunction.cpp)
+
+message(STATUS " Libraries: ${LIBRARIES}")
+#target_link_libraries(TestFunction
+#IntelliStream
+#)
+
+

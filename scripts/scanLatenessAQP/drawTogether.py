@@ -94,6 +94,7 @@ def runPeriod(exePath, period, resultPath, templateName="config.csv"):
     sudo_command = "cd " + exePath + "&& cp *.csv " + resultPath + "/" + str(period)
     os.system('echo {} | {}'.format(password, sudo_command))
 
+
 def runPeriodVector(exePath, periodVec, resultPath, templateName="config.csv"):
     for i in periodVec:
         runPeriod(exePath, i, resultPath, templateName)
@@ -125,10 +126,6 @@ def readResultVectorPeriod(periodVec, resultPath):
         aqpErrVec.append(abs(float(aqpErr)))
         compVec.append(1 - abs(float(err)))
     return avgLatVec, lat95Vec, thrVec, errVec, compVec, aqpErrVec
-
-
-
-
 
 
 def main():

@@ -19,67 +19,67 @@ namespace OoOJoin {
  * - "timeStep" U64 The simulation time step in us
  * - "watermarkTimeMs" U64 The time to generate a finial watermark in ms, indicating all data is ready
  */
-    class ArrivalWM : public AbstractWaterMarker {
-    protected:
-        /**
-        * @brief The period to generate watermark, internal, in us
-        */
-        tsType watermarkTime = 0;
-        /**
-        * @brief The Delta value for next watermark
-        */
-        tsType nextWMDelta = 0;
-        /**
-         * @note currently only support single window
-         */
-        tsType windowLen = 0;
-        tsType nextWMPoint = 0;
+class ArrivalWM : public AbstractWaterMarker {
+ protected:
+  /**
+  * @brief The period to generate watermark, internal, in us
+  */
+  tsType watermarkTime = 0;
+  /**
+  * @brief The Delta value for next watermark
+  */
+  tsType nextWMDelta = 0;
+  /**
+   * @note currently only support single window
+   */
+  tsType windowLen = 0;
+  tsType nextWMPoint = 0;
 
 //  tsType maxEventTime=0;
-        bool isReachWMPoint(TrackTuplePtr tp);
+  bool isReachWMPoint(TrackTuplePtr tp);
 
-    public:
-        ArrivalWM() = default;
+ public:
+  ArrivalWM() = default;
 
-        ~ArrivalWM() = default;
+  ~ArrivalWM() = default;
 
-        /**
-       * @brief Set the config map related to this operator
-       * @param cfg The config map
-        * @return bool whether the config is successfully set
-       */
-        bool setConfig(ConfigMapPtr cfg) override;
+  /**
+ * @brief Set the config map related to this operator
+ * @param cfg The config map
+  * @return bool whether the config is successfully set
+ */
+  bool setConfig(ConfigMapPtr cfg) override;
 
-        /**
-        * @brief creat a window
-         * @param tBegin The begin event time of the window
-         * @param tEnd The end event time of the window
-         * @return the id of created window
-        */
-        size_t creatWindow(tsType tBegin, tsType tEnd) override;
+  /**
+  * @brief creat a window
+   * @param tBegin The begin event time of the window
+   * @param tEnd The end event time of the window
+   * @return the id of created window
+  */
+  size_t creatWindow(tsType tBegin, tsType tEnd) override;
 
-        /**
-       * @brief report a tuple s into the watermark generator
-       * @param ts The tuple
-        * @param wid The id of window
-        * @return bool, whether generate watermark after receiving this Tuple
-       */
-        bool reportTupleS(TrackTuplePtr ts, size_t wid = 1) override;
+  /**
+ * @brief report a tuple s into the watermark generator
+ * @param ts The tuple
+  * @param wid The id of window
+  * @return bool, whether generate watermark after receiving this Tuple
+ */
+  bool reportTupleS(TrackTuplePtr ts, size_t wid = 1) override;
 
-        /**
-          * @brief Report a tuple R into the watermark generator
-          * @param tr The tuple
-          * @param wid The id of window
-          *  @return bool, bool, whether generate watermark after receiving this Tuple
-          */
-        bool reportTupleR(TrackTuplePtr tr, size_t wid = 1) override;
-    };
+  /**
+    * @brief Report a tuple R into the watermark generator
+    * @param tr The tuple
+    * @param wid The id of window
+    *  @return bool, bool, whether generate watermark after receiving this Tuple
+    */
+  bool reportTupleR(TrackTuplePtr tr, size_t wid = 1) override;
+};
 
 /**
  * @cite ArrivalWMPtr
  * @brief The class to describe a shared pointer to @ref  ArrivalWM
  */
-    typedef std::shared_ptr<class ArrivalWM> ArrivalWMPtr;
+typedef std::shared_ptr<class ArrivalWM> ArrivalWMPtr;
 /**
  * @cite newArrivalWM
  * @brief (Macro) To creat a new @ref ArrivalWM under shared pointer.

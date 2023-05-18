@@ -107,7 +107,7 @@ def main():
     resultPathIMA = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/aqpEventTimeTest/IMA"
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    EventTimeVec = [0,0.2,0.4,0.6,0.8,1.0]
+    EventTimeVec = [0, 0.2, 0.4, 0.6, 0.8, 1.0]
     EventTimeVecDisp = np.array(EventTimeVec)
     EventTimeVecDisp = EventTimeVecDisp
     print(configTemplate)
@@ -116,23 +116,24 @@ def main():
         os.system("rm -rf " + resultPath)
         os.system("mkdir " + resultPath)
         os.system("mkdir " + resultPathNoAqp)
-        #os.system("mkdir " + resultPathMeanAqp)
+        # os.system("mkdir " + resultPathMeanAqp)
         os.system("mkdir " + resultPathIMA)
         runEventTimeVector(exeSpace, EventTimeVec, resultPathNoAqp, "config_noAQP.csv")
-        #runEventTimeVector(exeSpace, EventTimeVec, resultPathMeanAqp, "config_meanAQP.csv")
+        # runEventTimeVector(exeSpace, EventTimeVec, resultPathMeanAqp, "config_meanAQP.csv")
         runEventTimeVector(exeSpace, EventTimeVec, resultPathIMA, "config_IMA.csv")
     avgLatVecNo, lat95VecNo, thrVecNo, errVecNo, compVec, aqpErrVecNo = readResultVectorEventTime(EventTimeVec,
-                                                                                               resultPathNoAqp)
+                                                                                                  resultPathNoAqp)
     avgLatVecIMA, lat95VecIMA, thrVecIMA, errVecIMA, compVec, aqpErrVecIMA = readResultVectorEventTime(EventTimeVec,
-                                                                                                    resultPathIMA)
+                                                                                                       resultPathIMA)
     os.system("mkdir " + figPath)
     groupLine.DrawFigureYnormal([EventTimeVec, EventTimeVec, EventTimeVec], [aqpErrVecNo, aqpErrVecIMA],
                                 ['w/o AQP (lazy)', "w/ incremental AQP (eager)"],
                                 "watermark time (ms)", "Error", 0, 1, figPath + "zipfEventTime_Aqps_err", True)
     groupLine.DrawFigureYnormal([EventTimeVec, EventTimeVec, EventTimeVec], [avgLatVecNo, avgLatVecIMA],
-                                ['w/o AQP (lazy)',"w/ incremental AQP (eager)"],
-                                "watermark time (ms)", "95% latency (ms)", 0, 1, figPath + "zipfEventTime_Aqps_lat", True)
-   
+                                ['w/o AQP (lazy)', "w/ incremental AQP (eager)"],
+                                "watermark time (ms)", "95% latency (ms)", 0, 1, figPath + "zipfEventTime_Aqps_lat",
+                                True)
+
     # draw2yLine("watermark time (ms)",EventTimeVecDisp,lat95Vec,errVec,"95% Latency (ms)","Error","ms","",figPath+"wm_lat")
     # draw2yLine("watermark time (ms)",EventTimeVecDisp,thrVec,errVec,"Throughput (KTp/s)","Error","KTp/s","",figPath+"wm_thr")
     # draw2yLine("watermark time (ms)",EventTimeVecDisp,lat95Vec,compVec,"95% Latency (ms)","Completeness","ms","",figPath+"wm_omp")

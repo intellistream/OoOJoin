@@ -71,7 +71,6 @@ def runPeriod(exePath, period, resultPath, templateName="config.csv"):
     os.system('echo {} | {}'.format(password, sudo_command))
 
 
-
 def runPeriodVector(exePath, periodVec, resultPath, templateName="config.csv"):
     for i in periodVec:
         runPeriod(exePath, i, resultPath, templateName)

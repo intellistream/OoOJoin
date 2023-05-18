@@ -5,7 +5,6 @@
 #ifndef DISORDERHANDLINGSYSTEM_SYNCHRONIZER_H
 #define DISORDERHANDLINGSYSTEM_SYNCHRONIZER_H
 
-
 #include <vector>
 #include <queue>
 #include <set>
@@ -17,44 +16,43 @@
 #include <shared_mutex>
 
 namespace MSWJ {
-    class Synchronizer {
-    public:
-        explicit Synchronizer(int streamCount, StreamOperator *streamOperator, INTELLI::ConfigMapPtr config);
+class Synchronizer {
+ public:
+  explicit Synchronizer(int streamCount, StreamOperator *streamOperator, INTELLI::ConfigMapPtr config);
 
-        ~Synchronizer() = default;
+  ~Synchronizer() = default;
 
-        Synchronizer(const Synchronizer &) = delete;
+  Synchronizer(const Synchronizer &) = delete;
 
-        Synchronizer &operator=(const Synchronizer &) = delete;
+  Synchronizer &operator=(const Synchronizer &) = delete;
 
-        Synchronizer(Synchronizer &&) = delete;
+  Synchronizer(Synchronizer &&) = delete;
 
-        Synchronizer &operator=(Synchronizer &&) = delete;
+  Synchronizer &operator=(Synchronizer &&) = delete;
 
-        // Synchronize process
-        auto synchronizeStream(const TrackTuplePtr &tuple) -> void;
+  // Synchronize process
+  auto synchronizeStream(const TrackTuplePtr &tuple) -> void;
 
-        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+  auto setConfig(INTELLI::ConfigMapPtr config) -> void;
 
+  INTELLI::ConfigMapPtr cfg{};
 
-        INTELLI::ConfigMapPtr cfg{};
+  // Tsync
+  int tSync{};
 
-        // Tsync
-        int tSync{};
+  // The number of streams that have tuples in the current buffer
+  int ownStream{};
 
-        // The number of streams that have tuples in the current buffer
-        int ownStream{};
+  // SyncBuf buffer mapping
+  std::vector<std::priority_queue<TrackTuplePtr, std::deque<TrackTuplePtr>, TrackTuplePtrComparator>> synBufferMap{};
 
-        // SyncBuf buffer mapping
-        std::vector<std::priority_queue<TrackTuplePtr, std::deque<TrackTuplePtr>, TrackTuplePtrComparator>> synBufferMap{};
+ private:
+  // Connector
+  StreamOperator *streamOperator;
 
-    private:
-        // Connector
-        StreamOperator *streamOperator;
-
-        //write and read lock
-        mutable std::shared_mutex mu;
-    };
+  //write and read lock
+  mutable std::shared_mutex mu;
+};
 }
 
 #endif //DISORDERHANDLINGSYSTEM_SYNCHRONIZER_H
