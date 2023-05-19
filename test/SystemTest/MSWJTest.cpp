@@ -1,10 +1,12 @@
 #define CATCH_CONFIG_MAIN
+
 #include "catch.hpp"
 //#include <Common/LinearVAE.h>
 #include <vector>
 #include <OoOJoin.h>
 //using namespace std;
 using namespace OoOJoin;
+
 #include "catch.hpp"
 #include <Operator/MSWJ/KSlack/KSlack.h>
 #include "TestFunction.cpp"
@@ -220,7 +222,7 @@ TEST_CASE("Synchronizer synchronizeStream function test with multiple streams", 
 
 }
 
-TEST_CASE("Test MSWJ running on random, watermarkTime = 7", "[short]")
+TEST_CASE("Test MSWJ running on random, watermarkTime = 10", "[short]")
 {
   int a = 0;
   string configName, outPrefix = "";
@@ -233,7 +235,7 @@ TEST_CASE("Test MSWJ running on random, watermarkTime = 7", "[short]")
   REQUIRE(a == 1);
 }
 
-TEST_CASE("Test MSWJ running on random, watermarkTime = 10", "[short]")
+TEST_CASE("Test MSWJ running on random, watermarkTime = 10, with compensation", "[short]")
 {
   int a = 0;
   string configName, outPrefix = "";
@@ -241,6 +243,7 @@ TEST_CASE("Test MSWJ running on random, watermarkTime = 10", "[short]")
   ConfigMapPtr cfg = newConfigMap();
   cfg->fromFile(configName);
   cfg->edit("operator", "MSWJ");
+  cfg->edit("mswjCompensation", (uint64_t) 1);
   cfg->edit("watermarkTimeMs", (uint64_t) 10);
   a = runTestBenchAdj(cfg, configName, outPrefix);
   REQUIRE(a == 1);
@@ -272,6 +275,20 @@ TEST_CASE("Test MSWJ running on random, watermarkTime = 14", "[short]")
   REQUIRE(a == 1);
 }
 
+TEST_CASE("Test MSWJ running on random with compensation, watermarkTime = 14", "[short]")
+{
+  int a = 0;
+  string configName, outPrefix = "";
+  configName = "config_IMA.csv";
+  ConfigMapPtr cfg = newConfigMap();
+  cfg->fromFile(configName);
+  cfg->edit("operator", "MSWJ");
+  cfg->edit("mswjCompensation", (uint64_t) 1);
+  cfg->edit("watermarkTimeMs", (uint64_t) 14);
+  a = runTestBenchAdj(cfg, configName, outPrefix);
+  REQUIRE(a == 1);
+}
+
 TEST_CASE("Test MSWJ running on random, watermarkTime = 16", "[short]")
 {
   int a = 0;
@@ -280,6 +297,20 @@ TEST_CASE("Test MSWJ running on random, watermarkTime = 16", "[short]")
   ConfigMapPtr cfg = newConfigMap();
   cfg->fromFile(configName);
   cfg->edit("operator", "MSWJ");
+  cfg->edit("watermarkTimeMs", (uint64_t) 16);
+  a = runTestBenchAdj(cfg, configName, outPrefix);
+  REQUIRE(a == 1);
+}
+
+TEST_CASE("Test MSWJ running on random with compensation, watermarkTime = 16", "[short]")
+{
+  int a = 0;
+  string configName, outPrefix = "";
+  configName = "config_IMA.csv";
+  ConfigMapPtr cfg = newConfigMap();
+  cfg->fromFile(configName);
+  cfg->edit("operator", "MSWJ");
+  cfg->edit("mswjCompensation", (uint64_t) 1);
   cfg->edit("watermarkTimeMs", (uint64_t) 16);
   a = runTestBenchAdj(cfg, configName, outPrefix);
   REQUIRE(a == 1);
