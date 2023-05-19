@@ -79,11 +79,6 @@ class AIOperator : public MeanAQPIAWJOperator {
       if (observationCnt >= bufferLen) {
         observationCnt = 0;
         xRows++;
-        if (xRows == 1) {
-          scalingFactor = xTensor[0][observationCnt - 1].item<float>();
-          //scalingFactor=1.0;
-          INTELLI_INFO("Automatically find the scaling factor" + to_string(scalingFactor));
-        }
       }
       xTensor[0][observationCnt] = newX;
       observationCnt++;
@@ -105,15 +100,6 @@ class AIOperator : public MeanAQPIAWJOperator {
      * @brief To normalize the x and y tensor
      */
     void normalizeXY() {
-      //uint64_t  i;
-      scalingFactor = xTensor[0][xCols - 1].item<float>();
-      //scalingFactor=1.0;
-      /*for(i=0;i<xRows;i++)
-      {
-        scalingFactor=xTensor[i][0].item<float>();
-        xTensor[i]=xTensor[i]/scalingFactor;
-        yTensor[i]=yTensor[i]/scalingFactor;
-      }*/
       xTensor = xTensor / scalingFactor;
       yTensor = yTensor / scalingFactor;
     }
@@ -160,6 +146,40 @@ class AIOperator : public MeanAQPIAWJOperator {
       torch::save({ru}, ptName);
       return ru;
     }
+    float tryScalingFactor(std::string ptPrefix)
+    {
+      scalingFactor =1.0;
+      auto ts=tryTensor(ptPrefix+"_s.pt");
+      if(ts.size(1) != 0)
+      {
+        scalingFactor=ts[0][0].item<float>();
+      }
+      INTELLI_INFO("scaling factor is read as "+ to_string(scalingFactor));
+      return scalingFactor;
+    }
+    void tryAndSaveScalingFactor(std::string ptPrefix)
+    {
+      auto ts=tryTensor(ptPrefix+"_s.pt");
+      if(ts.size(1) != 0)
+      {
+        scalingFactor=ts[0][0].item<float>();
+        INTELLI_INFO("READ scaling factor as "+ to_string(scalingFactor));
+      }
+      else
+      {
+        // Get the size of tensor A
+        torch::IntArrayRef size = xTensor.sizes();
+        int numElements = torch::numel(xTensor);
+        float sum = torch::sum(xTensor).item<float>(); // Calculate the sum of all elements in the tensor
+        scalingFactor = sum / numElements;
+        auto saveScaling=torch::ones({1, 1})*scalingFactor;
+        torch::save({saveScaling},ptPrefix+"_s.pt" );
+        INTELLI_WARNING("create scaling factor "+ to_string(scalingFactor));
+      }
+
+
+    }
+
 
     void saveXYTensors2Files(std::string ptPrefix, uint64_t _xCols) {
       /**
@@ -175,6 +195,7 @@ class AIOperator : public MeanAQPIAWJOperator {
       /**
        * @brief 3. normalize x and y
        */
+      tryAndSaveScalingFactor(ptPrefix);
       normalizeXY();
       /***
        * @brief 4. sava x and y

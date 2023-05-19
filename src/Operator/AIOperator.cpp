@@ -62,6 +62,12 @@ void OoOJoin::AIOperator::prepareInference() {
   streamStatisics.rSkewObservations.initObservationBuffer(xCols);
   streamStatisics.sRateObservations.initObservationBuffer(xCols);
   streamStatisics.rRateObservations.initObservationBuffer(xCols);
+  /**
+   * @brief 2. try to get the scaling factor
+   */
+  streamStatisics.selObservations.tryScalingFactor("torchscripts/" + ptPrefix + "/" + "tensor_selectivity");
+  streamStatisics.sRateObservations.tryScalingFactor("torchscripts/" + ptPrefix + "/" + "tensor_sRate");
+  streamStatisics.rRateObservations.tryScalingFactor("torchscripts/" + ptPrefix + "/" + "tensor_rRate");
 }
 
 bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
