@@ -92,6 +92,10 @@ class StreamOperator : public MeanAQPIAWJOperator {
  private:
   // The tag of MSWJ algorithm
   string algoTag = " NestedLoopJoin";
+  /**
+   *
+   */
+  uint64_t mswjCompensation = 0;
   // The pointer to the configuration map
   INTELLI::ConfigMapPtr config;
   // The pointer to the tuple productivity profiler
