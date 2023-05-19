@@ -30,117 +30,121 @@ namespace OoOJoin {
  * @note follows the assumption of linear independent arrival and skewness
  * @note operator tag = "IAWJSel"
  */
-class IAWJSelOperator : public MeanAQPIAWJOperator {
- protected:
-  void conductComputation();
+    class IAWJSelOperator : public MeanAQPIAWJOperator {
+    protected:
+        void conductComputation();
 
-  class IMAStateOfKey : public MeanStateOfKey {
-   public:
-    double lastUnarrivedTuples = 0;
+        class IMAStateOfKey : public MeanStateOfKey {
+        public:
+            double lastUnarrivedTuples = 0;
 
-    IMAStateOfKey() = default;
+            IMAStateOfKey() = default;
 
-    ~IMAStateOfKey() = default;
-  };
-  class AEWMAPredictor {
-   protected:
-    double alpha = 0.2;
-    double minAlpha = 0.01;        // Minimum allowed alpha
-    double maxAlpha = 0.99;        // Maximum allowed alpha
-    double previousValue;   // Previous observed value
-   public:
-    AEWMAPredictor() = default;
-    ~AEWMAPredictor() = default;
-    void reset(void) {
-      alpha = 0.2;
-      previousValue = 0.0;
-    }
-    double update(double observedValue) {
-      double smoothedValue = alpha * observedValue + (1 - alpha) * previousValue;
-      previousValue = observedValue;
+            ~IMAStateOfKey() = default;
+        };
 
-      // Adjust alpha based on the deviation between observed and smoothed values
-      double deviation = std::abs(observedValue - smoothedValue);
-      if (deviation > 0) {
-        double adjustment = 1.0 / deviation;
-        alpha = std::max(minAlpha, std::min(maxAlpha, alpha * adjustment));
-      }
+        class AEWMAPredictor {
+        protected:
+            double alpha = 0.2;
+            double minAlpha = 0.01;        // Minimum allowed alpha
+            double maxAlpha = 0.99;        // Maximum allowed alpha
+            double previousValue;   // Previous observed value
+        public:
+            AEWMAPredictor() = default;
 
-      return smoothedValue;
-    }
+            ~AEWMAPredictor() = default;
 
-  };
+            void reset(void) {
+                alpha = 0.2;
+                previousValue = 0.0;
+            }
+
+            double update(double observedValue) {
+                double smoothedValue = alpha * observedValue + (1 - alpha) * previousValue;
+                previousValue = observedValue;
+
+                // Adjust alpha based on the deviation between observed and smoothed values
+                double deviation = std::abs(observedValue - smoothedValue);
+                if (deviation > 0) {
+                    double adjustment = 1.0 / deviation;
+                    alpha = std::max(minAlpha, std::min(maxAlpha, alpha * adjustment));
+                }
+
+                return smoothedValue;
+            }
+
+        };
 
 #define newIMAStateOfKey std::make_shared<IMAStateOfKey>
-  using IMAStateOfKeyPtr = std::shared_ptr<IMAStateOfKey>;
-  /**
-   * @brief trace then number of total s and r
-   */
-  IMAStateOfKeyPtr noSTrace, noRTrace;
-  double selObservation = 0.0, selPrediction = 0.0, selPrev = 0.0;
-  double noSObservation, noRObservation;
-  AEWMAPredictor selPredictor;
- private:
-  double selectivityR{1};
-  double selectivityS{1};
+        using IMAStateOfKeyPtr = std::shared_ptr<IMAStateOfKey>;
+        /**
+         * @brief trace then number of total s and r
+         */
+        IMAStateOfKeyPtr noSTrace, noRTrace;
+        double selObservation = 0.0, selPrediction = 0.0, selPrev = 0.0;
+        double noSObservation, noRObservation;
+        AEWMAPredictor selPredictor;
+    private:
+        double selectivityR{1};
+        double selectivityS{1};
 
-  double noR{0};
-  double noS{0};
+        double noR{0};
+        double noS{0};
 
- public:
-  IAWJSelOperator() = default;
+    public:
+        IAWJSelOperator() = default;
 
-  ~IAWJSelOperator() = default;
+        ~IAWJSelOperator() = default;
 
-  /**
-   * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
-  * @brief Set the config map related to this operator
-  * @param cfg The config map
-   * @return bool whether the config is successfully set
-  */
-  bool setConfig(ConfigMapPtr cfg) override;
+        /**
+         * @todo Where this operator is conducting join is still putting rotten, try to place it at feedTupleS/R
+        * @brief Set the config map related to this operator
+        * @param cfg The config map
+         * @return bool whether the config is successfully set
+        */
+        bool setConfig(ConfigMapPtr cfg) override;
 
-  /**
- * @brief feed a tuple s into the Operator
- * @param ts The tuple
-  * @warning The current version is simplified and assuming only used in SINGLE THREAD!
-  * @return bool, whether tuple is fed.
- */
-  bool feedTupleS(TrackTuplePtr ts) override;
+        /**
+       * @brief feed a tuple s into the Operator
+       * @param ts The tuple
+        * @warning The current version is simplified and assuming only used in SINGLE THREAD!
+        * @return bool, whether tuple is fed.
+       */
+        bool feedTupleS(TrackTuplePtr ts) override;
 
-  /**
-    * @brief feed a tuple R into the Operator
-    * @param tr The tuple
-    * @warning The current version is simplified and assuming only used in SINGLE THREAD!
-    *  @return bool, whether tuple is fed.
-    */
-  bool feedTupleR(TrackTuplePtr tr) override;
+        /**
+          * @brief feed a tuple R into the Operator
+          * @param tr The tuple
+          * @warning The current version is simplified and assuming only used in SINGLE THREAD!
+          *  @return bool, whether tuple is fed.
+          */
+        bool feedTupleR(TrackTuplePtr tr) override;
 
-  /**
-   * @brief start this operator
-   * @return bool, whether start successfully
-   */
-  bool start() override;
+        /**
+         * @brief start this operator
+         * @return bool, whether start successfully
+         */
+        bool start() override;
 
-  /**
-   * @brief stop this operator
-   * @return bool, whether start successfully
-   */
-  bool stop() override;
+        /**
+         * @brief stop this operator
+         * @return bool, whether start successfully
+         */
+        bool stop() override;
 
-  /**
-   * @brief get the joined sum result
-   * @return The result
-   */
-  size_t getResult() override;
+        /**
+         * @brief get the joined sum result
+         * @return The result
+         */
+        size_t getResult() override;
 
-  /**
-   * @brief get the joined sum result under AQP
-   * @return The result
-   */
-  size_t getAQPResult() override;
+        /**
+         * @brief get the joined sum result under AQP
+         * @return The result
+         */
+        size_t getAQPResult() override;
 
-};
+    };
 
 /**
  * @ingroup ADB_OPERATORS
@@ -148,7 +152,7 @@ class IAWJSelOperator : public MeanAQPIAWJOperator {
  * @brief The class to describe a shared pointer to @ref IAWJSelOperator
 
  */
-typedef std::shared_ptr<class IAWJSelOperator> IAWJSelOperatorPtr;
+    typedef std::shared_ptr<class IAWJSelOperator> IAWJSelOperatorPtr;
 /**
  * @ingroup ADB_OPERATORS
  * @def newIAWJSelOperator

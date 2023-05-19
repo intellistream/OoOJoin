@@ -13,58 +13,58 @@
 using namespace MSWJ;
 
 StreamOperator::StreamOperator(TupleProductivityProfiler *profiler, INTELLI::ConfigMapPtr config) :
-    config(std::move(config)), productivityProfiler(profiler) {
+        config(std::move(config)), productivityProfiler(profiler) {
 }
 
 bool StreamOperator::start() {
-  /**
-  * @brief set watermark generator
-  */
-  //wmGen = newPeriodicalWM();
-  wmGen->setConfig(config);
-  wmGen->syncTimeStruct(timeBaseStruct);
-  /**
-   * @note:
-  */
-  wmGen->creatWindow(0, windowLen);
-  // wmGen->creatWindow(0, windowLen);
-  /**
-   * @brief set window
-   */
-  stateOfKeyTableR = newStateOfKeyHashTable(4096, 4);
-  stateOfKeyTableS = newStateOfKeyHashTable(4096, 4);
-  myWindow.setRange(0, windowLen);
-  windowBound = windowLen;
-  myWindow.init(sLen, rLen, 1);
+    /**
+    * @brief set watermark generator
+    */
+    //wmGen = newPeriodicalWM();
+    wmGen->setConfig(config);
+    wmGen->syncTimeStruct(timeBaseStruct);
+    /**
+     * @note:
+    */
+    wmGen->creatWindow(0, windowLen);
+    // wmGen->creatWindow(0, windowLen);
+    /**
+     * @brief set window
+     */
+    stateOfKeyTableR = newStateOfKeyHashTable(4096, 4);
+    stateOfKeyTableS = newStateOfKeyHashTable(4096, 4);
+    myWindow.setRange(0, windowLen);
+    windowBound = windowLen;
+    myWindow.init(sLen, rLen, 1);
 
-  intermediateResult = 0;
-  confirmedResult = 0;
-  lockedByWaterMark = false;
-  timeBreakDownPrediction = 0;
-  timeBreakDownIndex = 0;
-  timeBreakDownJoin = 0;
-  timeBreakDownAll = 0;timeTrackingStartNoClaim(timeBreakDownAll);
-  return true;
+    intermediateResult = 0;
+    confirmedResult = 0;
+    lockedByWaterMark = false;
+    timeBreakDownPrediction = 0;
+    timeBreakDownIndex = 0;
+    timeBreakDownJoin = 0;
+    timeBreakDownAll = 0;timeTrackingStartNoClaim(timeBreakDownAll);
+    return true;
 }
 
 bool StreamOperator::stop() {
-  /**
-   */
-  if (lockedByWaterMark) {
-    WM_INFO("early terminate by watermark, already have results");
-  }
-  if (!lockedByWaterMark) {
-    WM_INFO("No watermark encountered, compute now");
-  }
-  timeBreakDownAll = timeTrackingEnd(timeBreakDownAll);
-  //lazyComputeOfAQP();
-  size_t rLen = myWindow.windowR.size();
-  tsType timeNow = lastTimeOfR;
-  NPJTuplePtr *tr = myWindow.windowR.data();
-  for (size_t i = 0; i < rLen; i++) {
-    if (tr[i]->arrivalTime < timeNow) { tr[i]->processedTime = timeNow; }
-  }
-  return true;
+    /**
+     */
+    if (lockedByWaterMark) {
+        WM_INFO("early terminate by watermark, already have results");
+    }
+    if (!lockedByWaterMark) {
+        WM_INFO("No watermark encountered, compute now");
+    }
+    timeBreakDownAll = timeTrackingEnd(timeBreakDownAll);
+    //lazyComputeOfAQP();
+    size_t rLen = myWindow.windowR.size();
+    tsType timeNow = lastTimeOfR;
+    NPJTuplePtr *tr = myWindow.windowR.data();
+    for (size_t i = 0; i < rLen; i++) {
+        if (tr[i]->arrivalTime < timeNow) { tr[i]->processedTime = timeNow; }
+    }
+    return true;
 }
 
 //auto StreamOperator::mswjExecution(Tuple *join_tuple) -> void {
@@ -156,162 +156,173 @@ bool StreamOperator::stop() {
 
 
 auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
-  //indicate system is doing unit test
-  if (wmGen == nullptr) {
-    return false;
-  }
-
-  int stream_id = trackTuple->streamId;
-
-  bool shouldGenWM;
-  if (lockedByWaterMark) {
-    return false;
-  }
-
-  if (stream_id == 1) {
-    sIsInWindow = myWindow.feedTupleS(trackTuple);
-    shouldGenWM = wmGen->reportTupleS(trackTuple, 1);
-  } else {
-    rIsInWindow = myWindow.feedTupleR(trackTuple);
-    shouldGenWM = wmGen->reportTupleR(trackTuple, 1);
-  }
-
-  if (shouldGenWM) {
-    lockedByWaterMark = true;
-    WM_INFO("water mark in S");
-    //  return false;
-  }
-  // bool shouldGenWM;
-  if (stream_id == 1) {
-    if (sIsInWindow) {
-      productivityProfiler->updateCrossJoin(get_D(trackTuple->delay),
-                                            myWindow.windowR.size() * myWindow.windowS.size());
-
-      IMAStateOfKeyPtr sk;
-      /**
-       * @brief First get the index of hash table
-       */
-      timeTrackingStart(tt_index);
-      AbstractStateOfKeyPtr skrf = stateOfKeyTableS->getByKey(trackTuple->key);
-      if (skrf == nullptr) // this key does'nt exist
-      {
-        sk = newIMAStateOfKey();
-        sk->key = trackTuple->key;
-        stateOfKeyTableS->insert(sk);
-      } else {
-        sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
-      }
-      timeBreakDownIndex += timeTrackingEnd(tt_index);
-      /**
-       *
-       */
-      timeTrackingStart(tt_prediction);
-      updateStateOfKey(sk, trackTuple);
-      double futureTuplesS = MeanAQPIAWJOperator::predictUnarrivedTuples(sk);
-      timeBreakDownPrediction += timeTrackingEnd(tt_prediction);
-      //probe in R
-      timeTrackingStart(tt_join);
-      AbstractStateOfKeyPtr probrPtr = stateOfKeyTableR->getByKey(trackTuple->key);
-
-      if (probrPtr != nullptr) {
-        IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
-        confirmedResult += py->arrivedTupleCnt;
-        intermediateResult += py->arrivedTupleCnt;
-//                intermediateResult += (futureTuplesS + sk->arrivedTupleCnt) *
-//                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
-//                                      (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-//                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt);
-//                productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
-//                                                        (futureTuplesS + sk->arrivedTupleCnt) *
-//                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
-//                                                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-//                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt));
-        productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
-                                            py->arrivedTupleCnt);
-
-      }
-      timeBreakDownJoin += timeTrackingEnd(tt_join);
-      //sk->lastEstimateAllTuples=futureTuplesS+sk->arrivedTupleCnt;
-      sk->lastUnarrivedTuples = futureTuplesS;
-      lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
+    //indicate system is doing unit test
+    if (wmGen == nullptr) {
+        return false;
     }
-  } else {
-    if (rIsInWindow) {
-      productivityProfiler->updateCrossJoin(get_D(trackTuple->delay),
-                                            myWindow.windowR.size() * myWindow.windowS.size());
 
-      IMAStateOfKeyPtr sk;timeTrackingStart(tt_index);
-      AbstractStateOfKeyPtr skrf = stateOfKeyTableR->getByKey(trackTuple->key);
+    int stream_id = trackTuple->streamId;
 
-      // lastTimeR=tr->arrivalTime;
-      if (skrf == nullptr) // this key does'nt exist
-      {
-        sk = newIMAStateOfKey();
-        sk->key = trackTuple->key;
-        stateOfKeyTableR->insert(sk);
-      } else {
-        sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
-      }
-      timeBreakDownIndex += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
-      updateStateOfKey(sk, trackTuple);
-      double futureTuplesR = MeanAQPIAWJOperator::predictUnarrivedTuples(sk);
-      timeBreakDownPrediction += timeTrackingEnd(tt_prediction);
-      //probe in S
-      timeTrackingStart(tt_join);
-      AbstractStateOfKeyPtr probrPtr = stateOfKeyTableS->getByKey(trackTuple->key);
-      if (probrPtr != nullptr) {
-        IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
-        confirmedResult += py->arrivedTupleCnt;
-//                double matchedFutureTuples = futureTuplesR * (py->lastUnarrivedTuples + py->arrivedTupleCnt);
-
-//                intermediateResult += std::round(matchedFutureTuples / (sk->arrivedTupleCnt + futureTuplesR));
-
-//                intermediateResult += (futureTuplesR + sk->arrivedTupleCnt) *
-//                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
-//                                      (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-//                                      (py->lastUnarrivedTuples + py->arrivedTupleCnt);
-
-        intermediateResult += py->arrivedTupleCnt;
-//                productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
-//                                                        (futureTuplesR + sk->arrivedTupleCnt) *
-//                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
-//                                                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
-//                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt));
-        productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
-                                            py->arrivedTupleCnt);
-
-      }
-      timeBreakDownJoin += timeTrackingEnd(tt_join);
-
-      sk->lastUnarrivedTuples = futureTuplesR;
-      lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
+    bool shouldGenWM;
+    if (lockedByWaterMark) {
+        return false;
     }
-  }
 
-  return true;
+    if (stream_id == 1) {
+        sIsInWindow = myWindow.feedTupleS(trackTuple);
+        shouldGenWM = wmGen->reportTupleS(trackTuple, 1);
+    } else {
+        rIsInWindow = myWindow.feedTupleR(trackTuple);
+        shouldGenWM = wmGen->reportTupleR(trackTuple, 1);
+    }
+
+    if (shouldGenWM) {
+        lockedByWaterMark = true;
+        WM_INFO("water mark in S");
+        //  return false;
+    }
+    // bool shouldGenWM;
+    if (stream_id == 1) {
+        if (sIsInWindow) {
+            productivityProfiler->updateCrossJoin(get_D(trackTuple->delay),
+                                                  myWindow.windowR.size() * myWindow.windowS.size());
+
+            IMAStateOfKeyPtr sk;
+            /**
+             * @brief First get the index of hash table
+             */
+            timeTrackingStart(tt_index);
+            AbstractStateOfKeyPtr skrf = stateOfKeyTableS->getByKey(trackTuple->key);
+            if (skrf == nullptr) // this key does'nt exist
+            {
+                sk = newIMAStateOfKey();
+                sk->key = trackTuple->key;
+                stateOfKeyTableS->insert(sk);
+            } else {
+                sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
+            }
+            timeBreakDownIndex += timeTrackingEnd(tt_index);
+            /**
+             *
+             */
+            timeTrackingStart(tt_prediction);
+            updateStateOfKey(sk, trackTuple);
+            double futureTuplesS = MeanAQPIAWJOperator::predictUnarrivedTuples(sk);
+            timeBreakDownPrediction += timeTrackingEnd(tt_prediction);
+            //probe in R
+            timeTrackingStart(tt_join);
+            AbstractStateOfKeyPtr probrPtr = stateOfKeyTableR->getByKey(trackTuple->key);
+
+            if (probrPtr != nullptr) {
+                std::string compensation = config->tryString("compensation", "false");
+                if (compensation.empty()) {
+                    //default non-compensation
+                    compensation = "false";
+                }
+                IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
+                confirmedResult += py->arrivedTupleCnt;
+
+                if (compensation == "false") {
+                    intermediateResult += py->arrivedTupleCnt;
+                    productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
+                                                        py->arrivedTupleCnt);
+                } else {
+                    intermediateResult += (futureTuplesS + sk->arrivedTupleCnt) *
+                                          (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+                                          (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+                                          (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+                    productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
+                                                        (futureTuplesS + sk->arrivedTupleCnt) *
+                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+                                                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt));
+
+                }
+            }
+            timeBreakDownJoin += timeTrackingEnd(tt_join);
+            //sk->lastEstimateAllTuples=futureTuplesS+sk->arrivedTupleCnt;
+            sk->lastUnarrivedTuples = futureTuplesS;
+            lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
+        }
+    } else {
+        if (rIsInWindow) {
+            productivityProfiler->updateCrossJoin(get_D(trackTuple->delay),
+                                                  myWindow.windowR.size() * myWindow.windowS.size());
+
+            IMAStateOfKeyPtr sk;timeTrackingStart(tt_index);
+            AbstractStateOfKeyPtr skrf = stateOfKeyTableR->getByKey(trackTuple->key);
+
+            // lastTimeR=tr->arrivalTime;
+            if (skrf == nullptr) // this key does'nt exist
+            {
+                sk = newIMAStateOfKey();
+                sk->key = trackTuple->key;
+                stateOfKeyTableR->insert(sk);
+            } else {
+                sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
+            }
+            timeBreakDownIndex += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
+            updateStateOfKey(sk, trackTuple);
+            double futureTuplesR = MeanAQPIAWJOperator::predictUnarrivedTuples(sk);
+            timeBreakDownPrediction += timeTrackingEnd(tt_prediction);
+            //probe in S
+            timeTrackingStart(tt_join);
+            AbstractStateOfKeyPtr probrPtr = stateOfKeyTableS->getByKey(trackTuple->key);
+            if (probrPtr != nullptr) {
+                std::string compensation = config->tryString("compensation", "false");
+                if (compensation.empty()) {
+                    //default non-compensation
+                    compensation = "false";
+                }
+                IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
+                confirmedResult += py->arrivedTupleCnt;
+                if (compensation == "false") {
+                    intermediateResult += py->arrivedTupleCnt;
+                    productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
+                                                        py->arrivedTupleCnt);
+                } else {
+                    intermediateResult += (futureTuplesR + sk->arrivedTupleCnt) *
+                                          (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+                                          (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+                                          (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+                    productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
+                                                        (futureTuplesR + sk->arrivedTupleCnt) *
+                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+                                                        (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
+                                                        (py->lastUnarrivedTuples + py->arrivedTupleCnt));
+                }
+            }
+            timeBreakDownJoin += timeTrackingEnd(tt_join);
+
+            sk->lastUnarrivedTuples = futureTuplesR;
+            lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
+        }
+    }
+
+    return true;
 }
 
 auto StreamOperator::setConfig(INTELLI::ConfigMapPtr cfg) -> bool {
-  if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
-    return false;
-  }
-  std::string wmTag = config->tryString("wmTag", "arrival", true);
-  WMTablePtr wmTable = newWMTable();
-  wmGen = wmTable->findWM(wmTag);
-  if (wmGen == nullptr) {
-    INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
-    return false;
-  }
-  INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
-  return true;
+    if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
+        return false;
+    }
+    std::string wmTag = config->tryString("wmTag", "arrival", true);
+    WMTablePtr wmTable = newWMTable();
+    wmGen = wmTable->findWM(wmTag);
+    if (wmGen == nullptr) {
+        INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
+        return false;
+    }
+    INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
+    return true;
 }
 
 size_t StreamOperator::getResult() {
-  return confirmedResult;
+    return confirmedResult;
 }
 
 size_t StreamOperator::getAQPResult() {
-  return intermediateResult;
+    return intermediateResult;
 }
 
 

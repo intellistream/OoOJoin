@@ -28,13 +28,13 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/datasets/sTuple.csv
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/torchscripts
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 #add_executable(simpleTest SystemTest/SimpleTest.cpp)
+add_catch_test(iawjSelTest SystemTest/IAWJSelTest.cpp IntelliStream)
 add_catch_test(mswjTest SystemTest/MSWJTest.cpp IntelliStream)
 add_catch_test(iawjTest SystemTest/IAWJTest.cpp IntelliStream)
 add_catch_test(imaTest SystemTest/IMATest.cpp IntelliStream)
 add_catch_test(pecjTest SystemTest/PECJTest.cpp IntelliStream)
 add_catch_test(aiPretrainTest SystemTest/AIPretrainTest.cpp IntelliStream)
 add_catch_test(aiInferenceTest SystemTest/AIInferenceTest.cpp IntelliStream)
-add_catch_test(iawjSelTest SystemTest/IAWJSelTest.cpp IntelliStream)
 #add_executable(iawjSelTest SystemTest/IAWJSelTest.cpp)
 #add_library(TestFunction SystemTest/TestFunction.cpp)
 
