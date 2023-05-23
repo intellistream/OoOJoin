@@ -220,7 +220,7 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
         IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
         confirmedResult += py->arrivedTupleCnt;
 
-        if (mswjCompensation) {
+        if (!mswjCompensation) {
           intermediateResult += py->arrivedTupleCnt;
           productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
                                               py->arrivedTupleCnt);
@@ -271,7 +271,7 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
 
         IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
         confirmedResult += py->arrivedTupleCnt;
-        if (mswjCompensation) {
+        if (!mswjCompensation) {
           intermediateResult += py->arrivedTupleCnt;
           productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
                                               py->arrivedTupleCnt);
