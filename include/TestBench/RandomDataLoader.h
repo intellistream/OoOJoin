@@ -47,17 +47,10 @@ class RandomDataLoader : public AbstractDataLoader {
     return ru;
   }
 
-  static void bubble_sort(vector<OoOJoin::TrackTuplePtr> &arr) {
-    size_t i, j;
-    TrackTuplePtr temp;
-    size_t len = arr.size();
-    for (i = 0; i < len - 1; i++)
-      for (j = 0; j < len - 1 - i; j++)
-        if (arr[j]->arrivalTime > arr[j + 1]->arrivalTime) {
-          temp = arr[j];
-          arr[j] = arr[j + 1];
-          arr[j + 1] = temp;
-        }
+  static void std_sort(vector<OoOJoin::TrackTuplePtr> &arr) {
+    std::sort(arr.begin(), arr.end(), [](const TrackTuplePtr &t1, const TrackTuplePtr &t2) {
+      return t1->arrivalTime < t2->arrivalTime;
+    });
   }
 
   static vector<OoOJoin::TrackTuplePtr> genTuples(vector<keyType> keyS,
@@ -68,7 +61,7 @@ class RandomDataLoader : public AbstractDataLoader {
     for (size_t i = 0; i < len; i++) {
       ru[i] = newTrackTuple(keyS[i], 0, eventS[i], arrivalS[i]);
     }
-    bubble_sort(ru);
+    std_sort(ru);
     return ru;
   }
 
