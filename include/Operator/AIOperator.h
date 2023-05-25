@@ -162,7 +162,7 @@ class AIOperator : public MeanAQPIAWJOperator {
         INTELLI_INFO("READ scaling factor as " + to_string(scalingFactor));
       } else {
         // Get the size of tensor A
-        torch::IntArrayRef size = xTensor.sizes();
+        //torch::IntArrayRef size = xTensor.sizes();
         int numElements = torch::numel(xTensor);
         float sum = torch::sum(xTensor).item<float>(); // Calculate the sum of all elements in the tensor
         scalingFactor = sum / numElements;

@@ -166,16 +166,7 @@ bool OoOJoin::AIOperator::stop() {
   if (!lockedByWaterMark) {
     WM_INFO("No watermark encountered, compute now");
   }
-  timeBreakDownAll = timeTrackingEnd(timeBreakDownAll);
 
-  size_t rLen = myWindow.windowR.size();
-  NPJTuplePtr *tr = myWindow.windowR.data();
-  tsType timeNow = lastTimeOfR;
-  for (size_t i = 0; i < rLen; i++) {
-    if (tr[i]->arrivalTime < timeNow) {
-      tr[i]->processedTime = timeNow;
-    }
-  }
   return true;
 }
 
@@ -261,11 +252,12 @@ void OoOJoin::AIOperator::endOfWindow() {
   if (aiModeEnum == 2) { /**
     * @brief estimate sel
     */
+    tsType nnBegin = UtilityFunctions::timeLastUs(timeBaseStruct);
     streamStatisics.vaeSelectivity.runForward(
         streamStatisics.selObservations.xTensor / (streamStatisics.selObservations.scalingFactor));
     float selMu = streamStatisics.vaeSelectivity.resultMu;
     selMu = selMu * streamStatisics.selObservations.scalingFactor;
-    INTELLI_INFO("The estimated selectivity is " + to_string(selMu));
+    //INTELLI_INFO("The estimated selectivity is " + to_string(selMu));
     /**
      * @brief estimate srate and rrate
      */
@@ -273,17 +265,27 @@ void OoOJoin::AIOperator::endOfWindow() {
         streamStatisics.sRateObservations.xTensor / (streamStatisics.sRateObservations.scalingFactor));
     float sRateMu = streamStatisics.vaeSRate.resultMu;
     sRateMu = sRateMu * streamStatisics.sRateObservations.scalingFactor;
-    INTELLI_INFO("The estimated sRate is " + to_string(sRateMu));
+    //INTELLI_INFO("The estimated sRate is " + to_string(sRateMu));
 
     streamStatisics.vaeRRate.runForward(
         streamStatisics.rRateObservations.xTensor / (streamStatisics.rRateObservations.scalingFactor));
     float rRateMu = streamStatisics.vaeRRate.resultMu;
     rRateMu = rRateMu * streamStatisics.rRateObservations.scalingFactor;
-    INTELLI_INFO("The estimated rRate is " + to_string(rRateMu));
+    //INTELLI_INFO("The estimated rRate is " + to_string(rRateMu));
     float sCnt = windowLen * rRateMu / 1000.0;
     float rCnt = windowLen * sRateMu / 1000.0;
     intermediateResult = sCnt * rCnt * selMu;
-    //INTELLI_INFO("airu is "+ to_string(aiResult));
+    timeBreakDownAll = timeTrackingEnd(timeBreakDownAll);
+
+    size_t rLen = myWindow.windowR.size();
+    NPJTuplePtr *tr = myWindow.windowR.data();
+    tsType timeNow = UtilityFunctions::timeLastUs(timeBaseStruct);
+    for (size_t i = 0; i < rLen; i++) {
+      if (tr[i]->arrivalTime < timeNow) {
+        tr[i]->processedTime = timeNow;
+      }
+    }
+    INTELLI_WARNING("NN takes " + to_string((timeNow - nnBegin) / 1000));
     // exit(0);
   }
 

@@ -54,6 +54,7 @@ class VAE(nn.Module):
             nn.Linear(latent_dim, hidden_dim),
             nn.ReLU(),
             nn.Linear(hidden_dim, input_dim),
+            nn.Linear(input_dim, input_dim),
         )
         self.latent_dim = latent_dim
         self.inputDim = input_dim
@@ -122,7 +123,7 @@ class VAE(nn.Module):
         z = self.reparameterize(kMu, kLogVar)
         z = z * muZ
         # z=z*muZ
-        x_recon = z
+        x_recon = self.decoder(z)
 
         return x_recon, muZ, logvarZ, mu, logvar
 
@@ -291,7 +292,7 @@ def pretrainModel(device, prefixTag, saveTag):
     # Generate the input data X
     X = loadCppTensorFile(prefixTag + '_x.pt').to(device)
     Y = loadCppTensorFile(prefixTag + '_y.pt').to(device)
-    print(Y)
+    print(X)
 
     # model = VAE(input_size, hidden_size, latent_size).to(device)
     model = VAE(input_dim, hidden_dim, latent_dim, num_layers, num_heads)
@@ -302,19 +303,19 @@ def pretrainModel(device, prefixTag, saveTag):
     # Train the model
 
     # Note: first learn the certainties, then get the uncertainties
-    supervisedTrain(model, X, Y, batch_size, 1e-3, 100, device)
-    unSupervisedTrain(model, X, batch_size, 1e-3, 10, device)
+    supervisedTrain(model, X, Y, batch_size, 1e-3, 200, device)
+    # unSupervisedTrain(model, X, batch_size, 1e-3, 50, device)
     # model.eval()
     # model=model.to('cpu')
-    X, Y = genX(1, input_dim, 10, 0.2)
+    # X, Y = genX(1, input_dim, 10, 0.2)
 
     # print(tmu,tSigma,ta/tb)
-    x = X[0:99, :].to(device)
+    x = X[0:100, :].to(device)
     model.eval()
     x_recon, muZ, logvarZ, mu, logvar = model(x)
     # print(mu,logvar.exp(),muZ)
     tmu, tsigma = model.getMuEstimation()
-    print(tmu, tsigma, Y)
+    # print(tmu, tsigma, Y)
 
     # [ru,mu,logvar]=model.forward(t)
     # draw_model(model,Y,"linearVAE")
@@ -328,10 +329,8 @@ def main():
     # print(X,Y)
     # return X,Y
     device = 'cpu'
-    prefixTag = 'tensor_sSkew'
-    pretrainModel(device, prefixTag, "linearVAE_sSkew.pt")
-    prefixTag = 'tensor_rSkew'
-    pretrainModel(device, prefixTag, "linearVAE_rSkew.pt")
+    prefixTag = 'tensor_rRate'
+    pretrainModel(device, prefixTag, "linearVAE_rRate.pt")
     # print(t.size())
     # print(logvar)
 
