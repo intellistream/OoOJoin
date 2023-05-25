@@ -100,7 +100,7 @@ def main():
     resultPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/eventTestLabel/"
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    eventVec = [20, 50, 100, 200, 500, 1000]
+    eventVec = [500, 200, 100, 50, 20, 10]
     eventVecDisp = np.array(eventVec)
     eventVecDisp = eventVecDisp
     print(configTemplate)
