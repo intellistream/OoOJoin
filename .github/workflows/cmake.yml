@@ -51,3 +51,4 @@ jobs:
           ./aiPretrainTest "--success"
           ./aiInferenceTest "--success"
           ./iawjSelTest "--success"
+          ./sviTest "--success"

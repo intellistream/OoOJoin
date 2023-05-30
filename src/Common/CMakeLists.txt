@@ -3,4 +3,5 @@ add_sources(
         Window.cpp
         StateOfKey.cpp
         LinearVAE.cpp
+        LinearSVI.cpp
 )
