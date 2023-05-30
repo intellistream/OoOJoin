@@ -1,29 +1,29 @@
-/*! \file   AIOperator.h
+/*! \file   LinearSVIOperator.h
 .h*/
 //
 // Created by tony on 03/12/22.
 //
 
-#ifndef INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPAIOperator_H_
-#define INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPAIOperator_H_
+#ifndef INTELLISTREAM_INCLUDE_OPERATOR_LinearSVIOperator_H_
+#define INTELLISTREAM_INCLUDE_OPERATOR_LinearSVIOperator_H_
 
 #include <Operator/MeanAQPIAWJOperator.h>
 #include <Common/Window.h>
 #include <atomic>
 #include <WaterMarker/LatenessWM.h>
 #include <Common/StateOfKey.h>
-#include <Common/LinearVAE.h>
+#include <Common/LinearSVI.h>
 #include <optional>
 #include <filesystem>
 #include <Common/ObservationGroup.hpp>
-using std::nullopt;
 using namespace OBSERVAYION_GROUP;
+using std::nullopt;
 namespace OoOJoin {
 
 /**
  * @ingroup ADB_OPERATORS
- * @class AIOperator Operator/AIOperator.h
- * @brief The IAWJ operator working under AI and use variational inference to proactively capture the unobserved
+ * @class LinearSVIOperator Operator/LinearSVIOperator.h
+ * @brief The IAWJ operator working under LinearSVI and use variational inference to proactively capture the unobserved
  * @note require configurations:
  * - "windowLen" U64: The length of window
  * - "slideLen" U64: The length of slide
@@ -31,7 +31,7 @@ namespace OoOJoin {
  * - "rLen" U64: The length of R buffer
  * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
  * - "aiMode" String: The tag to indicate working mode of ai, can be pretrain (0), continual_learning (1) or inference (2)
- * = "ptPrefix" String: The prefix of vae *.pt, such as linearVAE
+ * = "ptPrefix" String: The prefix of svi *.pt, such as linearVAE
  * - "appendSel", U64, whether append sel observations to stored tensor, 0
  * - "appendSkew", U64, whether append skew (of r and s) observations to stored tensor, 0
  * - "appendRate", U64, whether append rate (of r and s) observations to stored tensor, 0
@@ -40,9 +40,9 @@ namespace OoOJoin {
  * @warning The predictor and watermarker are currently NOT seperated in this operator, split them in the future!
  * @note In current version, the computation will block feeding
  * @note follows the assumption of linear independent arrival and skewness
- * @note operator tag = "AI"
+ * @note operator tag = "LinearSVI"
  */
-class AIOperator : public MeanAQPIAWJOperator {
+class LinearSVIOperator : public MeanAQPIAWJOperator {
  protected:
   void conductComputation();
   std::string aiMode;
@@ -54,15 +54,16 @@ class AIOperator : public MeanAQPIAWJOperator {
    */
   uint64_t selLen = 0;
 
-  class AIStateOfKey : public MeanStateOfKey {
+
+  class LinearSVIStateOfKey : public MeanStateOfKey {
    public:
     double lastUnarrivedTuples = 0;
 
-    AIStateOfKey() = default;
+    LinearSVIStateOfKey() = default;
 
-    ~AIStateOfKey() = default;
+    ~LinearSVIStateOfKey() = default;
   };
-  class AIStateOfStreams {
+  class LinearSVIStateOfStreams {
    public:
     uint64_t sCnt = 0, rCnt = 0;
     /**
@@ -130,13 +131,13 @@ class AIOperator : public MeanAQPIAWJOperator {
       ru += "rCnt," + to_string(rCnt) + "\r\n";
       return ru;
     }
-    TROCHPACK_VAE::LinearVAE vaeSelectivity, vaeSRate, vaeRRate;
-    AIStateOfStreams() = default;
-    ~AIStateOfStreams() = default;
+    TROCHPACK_SVI::LinearSVI sviSelectivity, sviSRate, sviRRate;
+    LinearSVIStateOfStreams() = default;
+    ~LinearSVIStateOfStreams() = default;
   };
-  AIStateOfStreams streamStatisics;
-#define newAIStateOfKey std::make_shared<AIStateOfKey>
-  using AIStateOfKeyPtr = std::shared_ptr<AIStateOfKey>;
+  LinearSVIStateOfStreams streamStatisics;
+#define newLinearSVIStateOfKey std::make_shared<LinearSVIStateOfKey>
+  using LinearSVIStateOfKeyPtr = std::shared_ptr<LinearSVIStateOfKey>;
   /**
    * @brief inline function to be called at the end of window
    */
@@ -155,9 +156,9 @@ class AIOperator : public MeanAQPIAWJOperator {
   void saveAllTensors();
 
  public:
-  AIOperator() = default;
+  LinearSVIOperator() = default;
 
-  ~AIOperator() = default;
+  ~LinearSVIOperator() = default;
 
   /**
    *
@@ -211,19 +212,19 @@ class AIOperator : public MeanAQPIAWJOperator {
 
 /**
  * @ingroup ADB_OPERATORS
- * @typedef AIOperatorPtr
- * @brief The class to describe a shared pointer to @ref AIOperator
+ * @typedef LinearSVIOperatorPtr
+ * @brief The class to describe a shared pointer to @ref LinearSVIOperator
 
  */
-typedef std::shared_ptr<class AIOperator> AIOperatorPtr;
+typedef std::shared_ptr<class LinearSVIOperator> LinearSVIOperatorPtr;
 /**
  * @ingroup ADB_OPERATORS
- * @def newAIOperator
+ * @def newLinearSVIOperator
 
- * @brief (Macro) To creat a new @ref AIOperator
+ * @brief (Macro) To creat a new @ref LinearSVIOperator
  under shared pointer.
  */
-#define newAIOperator std::make_shared<OoOJoin::AIOperator>
+#define newLinearSVIOperator std::make_shared<OoOJoin::LinearSVIOperator>
 
 }
-#endif //INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPAIOperator_H_
+#endif //INTELLISTREAM_INCLUDE_OPERATOR_MEANAQPLinearSVIOperator_H_
