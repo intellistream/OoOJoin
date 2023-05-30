@@ -1,4 +1,4 @@
-BRANCH=ai_inference
+BRANCH=svi
 git init
 git checkout -b $BRANCH
 git add .

@@ -35,6 +35,7 @@ add_catch_test(pecjTest SystemTest/PECJTest.cpp IntelliStream)
 add_catch_test(aiPretrainTest SystemTest/AIPretrainTest.cpp IntelliStream)
 add_catch_test(aiInferenceTest SystemTest/AIInferenceTest.cpp IntelliStream)
 add_catch_test(iawjSelTest SystemTest/IAWJSelTest.cpp IntelliStream)
+add_catch_test(sviTest SystemTest/SVITest.cpp IntelliStream)
 #add_executable(iawjSelTest SystemTest/IAWJSelTest.cpp)
 #add_library(TestFunction SystemTest/TestFunction.cpp)
 

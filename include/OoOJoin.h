@@ -66,6 +66,7 @@
 #include <Common/Window.h>
 #include <Common/StateOfKey.h>
 #include <Common/LinearVAE.h>
+#include <Common/LinearSVI.h>
 /**
  * @}
  */
