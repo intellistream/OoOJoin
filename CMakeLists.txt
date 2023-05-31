@@ -67,6 +67,8 @@ get_headers(IntelliStream_HEADER_FILES)
 
 # 这行是针对我的机子，其他人运行的时候删了
 #set(Torch_DIR /usr/local/libtorch/share/cmake/Torch)
+set(Torch_DIR /usr/local/lib/python3.8/dist-packages/torch/share/cmake/Torch)
+set(CMAKE_CXX_COMPILER "/usr/bin/g++-11")
 find_package(Torch REQUIRED)
 
 message(STATUS "TORCH_INCLUDE_DIRS: ${TORCH_INCLUDE_DIRS}")

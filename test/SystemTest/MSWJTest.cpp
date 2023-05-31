@@ -351,3 +351,18 @@ TEST_CASE("Test MSWJ running on dataLoader, windowLenMs = 2000, watermarkTime = 
   a = runTestBenchAdj(cfg, configName, outPrefix);
   REQUIRE(a == 1);
 }
+
+TEST_CASE("Test MSWJ running on crazy random dataset, windowLenMs = 10, watermarkTime = 200", "[short]")
+{
+    int a = 0;
+    string configName, outPrefix = "";
+    configName = "config_IMA.csv";
+    ConfigMapPtr cfg = newConfigMap();
+    cfg->fromFile(configName);
+    cfg->edit("windowLenMs", (uint64_t) 10);
+    cfg->edit("operator", "MSWJ");
+    cfg->edit("watermarkTimeMs", (uint64_t) 200);
+    cfg->edit("maxArrivalSkewMs",(uint64_t) 1000);
+    a = runTestBenchAdj(cfg, configName, outPrefix);
+    REQUIRE(a == 1);
+}
