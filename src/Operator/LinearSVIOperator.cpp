@@ -108,6 +108,7 @@ bool OoOJoin::LinearSVIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     preparePretrain();
   } else if (aiMode == "continual_learning") {
     aiModeEnum = 1;
+    prepareInference();
   } else if (aiMode == "inference") {
     aiModeEnum = 2;
     prepareInference();
@@ -195,11 +196,12 @@ bool OoOJoin::LinearSVIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
      *
      */
     streamStatisics.encounterSTuple(ts);
-    if (aiModeEnum == 0 || aiModeEnum == 2) {
+    if (aiModeEnum !=255) {
       streamStatisics.sSkewObservations.appendX(streamStatisics.sSkew);
       streamStatisics.sRateObservations.appendX(streamStatisics.sRate);
-      if(streamStatisics.sRateObservations.buffFull)
+      if(streamStatisics.sRateObservations.buffFull&&(streamStatisics.sRateObservations.fullCnt%20==5))
       {
+        updateEstimation(streamStatisics.sRateObservations,streamStatisics.sviSRate);
 
       }
     }
@@ -235,7 +237,7 @@ bool OoOJoin::LinearSVIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
        */
       streamStatisics.updateSelectivity(confirmedResult);
       //streamStatisics.selObservations.appendX(streamStatisics.selectivity);
-      if (aiModeEnum == 0 || aiModeEnum == 2) {
+      if (aiModeEnum !=255) {
         streamStatisics.selObservations.setFinalObservation(streamStatisics.selectivity);
         streamStatisics.selObservations.appendX(streamStatisics.selectivity);
       }
@@ -252,6 +254,31 @@ bool OoOJoin::LinearSVIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   }
   return true;
 }
+void OoOJoin::LinearSVIOperator::updateEstimation(ObservationGroup &observation, TROCHPACK_SVI::LinearSVI &estimator) {
+  if(aiModeEnum!=1)
+  {
+    return;
+  }
+  auto tx=(observation.xTensor/observation.scalingFactor).clone();
+  float oldMu=estimator.resultMu;
+  estimator.runForward(tx);
+  float newMu=estimator.resultMu;
+  float loss=1.0;
+  uint16_t iterations=0;
+  if(std::abs(oldMu-newMu)>0.1*std::abs(oldMu))
+  {
+    while (loss<-0.8&&iterations<10)
+    {
+      estimator.learnStep(tx);
+      loss=estimator.resultLoss;
+      iterations++;
+    }
+
+
+    estimator.runForward(tx);
+  }
+  //INTELLI_INFO("Run continue learning");
+}
 void OoOJoin::LinearSVIOperator::endOfWindow() {
   if (aiModeEnum == 0) {
     std::cout << streamStatisics.reportStr() << endl;
@@ -259,7 +286,7 @@ void OoOJoin::LinearSVIOperator::endOfWindow() {
     saveAllTensors();
     return;
   }
-  if (aiModeEnum == 2) { /**
+  if (aiModeEnum == 2||aiModeEnum==1) { /**
     * @brief estimate sel
     */
     tsType nnBegin = UtilityFunctions::timeLastUs(timeBaseStruct);
@@ -275,11 +302,11 @@ void OoOJoin::LinearSVIOperator::endOfWindow() {
     /**
      * @brief do some continual learning
      */
-     /*
+
     auto tx=(streamStatisics.sRateObservations.xTensor/streamStatisics.sRateObservations.scalingFactor).clone();
     streamStatisics.sviSRate.learnStep(tx);
     tx=(streamStatisics.rRateObservations.xTensor/streamStatisics.rRateObservations.scalingFactor).clone();
-    streamStatisics.sviRRate.learnStep(tx);*/
+    streamStatisics.sviRRate.learnStep(tx);
     /**
      * @brief forward
      */
@@ -331,10 +358,14 @@ bool OoOJoin::LinearSVIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
    *
    */
     streamStatisics.encounterRTuple(tr);
-    if (aiModeEnum == 0 || aiModeEnum == 2) {
+    if (aiModeEnum !=255) {
       streamStatisics.rSkewObservations.appendX(streamStatisics.rSkew);
       streamStatisics.rRateObservations.appendX(streamStatisics.rRate);
+      if(streamStatisics.rRateObservations.buffFull&&(streamStatisics.rRateObservations.fullCnt%10==5))
+      {
+       updateEstimation(streamStatisics.rRateObservations,streamStatisics.sviRRate);
 
+      }
 
     }
     LinearSVIStateOfKeyPtr stateOfKey;timeTrackingStart(tt_index);
@@ -367,7 +398,7 @@ bool OoOJoin::LinearSVIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
         */
       streamStatisics.updateSelectivity(confirmedResult);
       //streamStatisics.selObservations.appendX(streamStatisics.selectivity);
-      if (aiModeEnum == 0 || aiModeEnum == 2) {
+      if (aiModeEnum !=255) {
         streamStatisics.selObservations.setFinalObservation(streamStatisics.selectivity);
         streamStatisics.selObservations.appendX(streamStatisics.selectivity);
       }

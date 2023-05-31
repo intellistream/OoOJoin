@@ -32,9 +32,9 @@ class LinearSVI(nn.Module):
         self.mu = torch.nn.Parameter(torch.zeros(1))
         self.tau = torch.nn.Parameter(torch.zeros(1))
         # Register the custom parameter tensor
-        self.register_parameter("latentZ", self.latentZ)
-        self.register_parameter("mu", self.mu)
-        self.register_parameter("tau", self.tau)
+        #self.register_parameter("latentZ", self.latentZ)
+        #self.register_parameter("mu", self.mu)
+        #self.register_parameter("tau", self.tau)
    def forward(self, data):
         n = data.size(1)
         rows = data.size(0)

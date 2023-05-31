@@ -136,6 +136,7 @@ class LinearSVIOperator : public MeanAQPIAWJOperator {
     ~LinearSVIStateOfStreams() = default;
   };
   LinearSVIStateOfStreams streamStatisics;
+  void updateEstimation(ObservationGroup &observation, TROCHPACK_SVI::LinearSVI &estimator);
 #define newLinearSVIStateOfKey std::make_shared<LinearSVIStateOfKey>
   using LinearSVIStateOfKeyPtr = std::shared_ptr<LinearSVIStateOfKey>;
   /**

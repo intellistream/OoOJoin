@@ -32,9 +32,9 @@ class LinearSVI(nn.Module):
         self.mu = torch.nn.Parameter(torch.zeros(1))
         self.tau = torch.nn.Parameter(torch.zeros(1))
         # Register the custom parameter tensor
-        self.register_parameter("latentZ", self.latentZ)
-        self.register_parameter("mu", self.mu)
-        self.register_parameter("tau", self.tau)
+        #self.register_parameter("latentZ", self.latentZ)
+        #self.register_parameter("mu", self.mu)
+        #self.register_parameter("tau", self.tau)
    def forward(self, data):
         n = data.size(1)
         rows = data.size(0)
@@ -129,7 +129,7 @@ def main():
     X = loadCppTensorFile(prefixTag + '_x.pt').to(device)
     Y = loadCppTensorFile(prefixTag + '_y.pt').to(device)
     model=LinearSVI(latent_dim)
-    supervisedTrain(model,X, Y, batch_size, 1e-1, 1000, device)
+    supervisedTrain(model,X, Y, batch_size, 1e-2, 100, device)
     print(model.latentZ)
     #save_model("linearSVI_sRate.pt")
     save_model(model.to('cpu'), "linearSVI_sRate.pt", X.to('cpu'))

@@ -37,6 +37,7 @@ add_catch_test(aiInferenceTest SystemTest/AIInferenceTest.cpp IntelliStream)
 add_catch_test(iawjSelTest SystemTest/IAWJSelTest.cpp IntelliStream)
 add_catch_test(sviTest SystemTest/SVITest.cpp IntelliStream)
 add_catch_test(sviInferenceTest SystemTest/LinearSVIInferenceTest.cpp IntelliStream)
+add_catch_test(sviCLTest SystemTest/LinearSVIContinualLearningTest.cpp IntelliStream)
 #add_executable(iawjSelTest SystemTest/IAWJSelTest.cpp)
 #add_library(TestFunction SystemTest/TestFunction.cpp)
 
