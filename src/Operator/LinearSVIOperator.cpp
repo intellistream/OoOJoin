@@ -68,6 +68,12 @@ void OoOJoin::LinearSVIOperator::prepareInference() {
   streamStatisics.selObservations.tryScalingFactor("torchscripts/" + ptPrefix + "/" + "tensor_selectivity");
   streamStatisics.sRateObservations.tryScalingFactor("torchscripts/" + ptPrefix + "/" + "tensor_sRate");
   streamStatisics.rRateObservations.tryScalingFactor("torchscripts/" + ptPrefix + "/" + "tensor_rRate");
+  /**
+   * @brief 3. set the small learning rate
+   */
+  streamStatisics.sviSelectivity.resetLearningRate(0.001);
+  streamStatisics.sviSRate.resetLearningRate(0.001);
+  streamStatisics.sviRRate.resetLearningRate(0.001);
 }
 
 bool OoOJoin::LinearSVIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
@@ -192,6 +198,10 @@ bool OoOJoin::LinearSVIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     if (aiModeEnum == 0 || aiModeEnum == 2) {
       streamStatisics.sSkewObservations.appendX(streamStatisics.sSkew);
       streamStatisics.sRateObservations.appendX(streamStatisics.sRate);
+      if(streamStatisics.sRateObservations.buffFull)
+      {
+
+      }
     }
     /**
      * @brief First get the index of hash table
@@ -257,21 +267,34 @@ void OoOJoin::LinearSVIOperator::endOfWindow() {
         streamStatisics.selObservations.xTensor / (streamStatisics.selObservations.scalingFactor));
     float selMu = streamStatisics.sviSelectivity.resultMu;
     selMu = selMu * streamStatisics.selObservations.scalingFactor;
-    //INTELLI_INFO("The estimated selectivity is " + to_string(selMu));
+    INTELLI_INFO("The estimated selectivity is " + to_string(selMu));
     /**
      * @brief estimate srate and rrate
      */
+
+    /**
+     * @brief do some continual learning
+     */
+     /*
+    auto tx=(streamStatisics.sRateObservations.xTensor/streamStatisics.sRateObservations.scalingFactor).clone();
+    streamStatisics.sviSRate.learnStep(tx);
+    tx=(streamStatisics.rRateObservations.xTensor/streamStatisics.rRateObservations.scalingFactor).clone();
+    streamStatisics.sviRRate.learnStep(tx);*/
+    /**
+     * @brief forward
+     */
     streamStatisics.sviSRate.runForward(
         streamStatisics.sRateObservations.xTensor / (streamStatisics.sRateObservations.scalingFactor));
-    float sRateMu = streamStatisics.sviSRate.resultMu;
+    float sRateMu = streamStatisics.sviSRate.resultMu-streamStatisics.sviSRate.resultSigma;
     sRateMu = sRateMu * streamStatisics.sRateObservations.scalingFactor;
-    //INTELLI_INFO("The estimated sRate is " + to_string(sRateMu));
-
+    INTELLI_INFO("The estimated sRate is " + to_string(sRateMu));
+    //streamStatisics.rRateObservations.scalingFactor=1.0;
+   // streamStatisics.sviSRate.learnStep(streamStatisics.sRateObservations.xTensor);
     streamStatisics.sviRRate.runForward(
         streamStatisics.rRateObservations.xTensor / (streamStatisics.rRateObservations.scalingFactor));
-    float rRateMu = streamStatisics.sviRRate.resultMu;
+    float rRateMu = streamStatisics.sviRRate.resultMu-streamStatisics.sviRRate.resultSigma;
     rRateMu = rRateMu * streamStatisics.rRateObservations.scalingFactor;
-    //INTELLI_INFO("The estimated rRate is " + to_string(rRateMu));
+    INTELLI_INFO("The estimated rRate is " + to_string(rRateMu));
     float sCnt = windowLen * rRateMu / 1000.0;
     float rCnt = windowLen * sRateMu / 1000.0;
     intermediateResult = sCnt * rCnt * selMu;
@@ -285,7 +308,7 @@ void OoOJoin::LinearSVIOperator::endOfWindow() {
         tr[i]->processedTime = timeNow;
       }
     }
-    INTELLI_WARNING("NN takes " + to_string((timeNow - nnBegin) / 1000));
+    INTELLI_WARNING("SVI takes " + to_string((timeNow - nnBegin) / 1000));
     // exit(0);
   }
 
@@ -311,6 +334,8 @@ bool OoOJoin::LinearSVIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     if (aiModeEnum == 0 || aiModeEnum == 2) {
       streamStatisics.rSkewObservations.appendX(streamStatisics.rSkew);
       streamStatisics.rRateObservations.appendX(streamStatisics.rRate);
+
+
     }
     LinearSVIStateOfKeyPtr stateOfKey;timeTrackingStart(tt_index);
     AbstractStateOfKeyPtr stateOfRKey = stateOfKeyTableR->getByKey(tr->key);

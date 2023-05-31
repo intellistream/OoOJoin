@@ -257,7 +257,7 @@ void OoOJoin::AIOperator::endOfWindow() {
         streamStatisics.selObservations.xTensor / (streamStatisics.selObservations.scalingFactor));
     float selMu = streamStatisics.vaeSelectivity.resultMu;
     selMu = selMu * streamStatisics.selObservations.scalingFactor;
-    //INTELLI_INFO("The estimated selectivity is " + to_string(selMu));
+    INTELLI_INFO("The estimated selectivity is " + to_string(selMu));
     /**
      * @brief estimate srate and rrate
      */
@@ -265,13 +265,13 @@ void OoOJoin::AIOperator::endOfWindow() {
         streamStatisics.sRateObservations.xTensor / (streamStatisics.sRateObservations.scalingFactor));
     float sRateMu = streamStatisics.vaeSRate.resultMu;
     sRateMu = sRateMu * streamStatisics.sRateObservations.scalingFactor;
-    //INTELLI_INFO("The estimated sRate is " + to_string(sRateMu));
+    INTELLI_INFO("The estimated sRate is " + to_string(sRateMu));
 
     streamStatisics.vaeRRate.runForward(
         streamStatisics.rRateObservations.xTensor / (streamStatisics.rRateObservations.scalingFactor));
     float rRateMu = streamStatisics.vaeRRate.resultMu;
     rRateMu = rRateMu * streamStatisics.rRateObservations.scalingFactor;
-    //INTELLI_INFO("The estimated rRate is " + to_string(rRateMu));
+    INTELLI_INFO("The estimated rRate is " + to_string(rRateMu));
     float sCnt = windowLen * rRateMu / 1000.0;
     float rCnt = windowLen * sRateMu / 1000.0;
     intermediateResult = sCnt * rCnt * selMu;

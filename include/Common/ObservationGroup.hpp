@@ -24,6 +24,8 @@ class ObservationGroup {
   float finalObservation = 0.0;
   float scalingFactor = 0.0;
   uint64_t xCols, xRows = 0;
+  bool buffFull=false;
+  uint64_t fullCnt=0;
   /**
    * @brief xTensor is the observation, yTensor is the label.
    */
@@ -38,6 +40,16 @@ class ObservationGroup {
    * @param newX
    */
   void appendX(float newX) {
+    if(observationCnt==bufferLen-1)
+    {
+      buffFull=true;
+      fullCnt++;
+    }
+    else
+    {
+      buffFull=false;
+    }
+
     if (observationCnt >= bufferLen) {
       observationCnt = 0;
       xRows++;

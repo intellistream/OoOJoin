@@ -28,7 +28,7 @@ TEST_CASE("Test SVI class in continue learning step")
 
   REQUIRE(a == 1);
 }
-/*TEST_CASE("Test SVI class in disk io")
+TEST_CASE("Test SVI class in disk io")
 {
   int a = 1;
   torch::manual_seed(114514);
@@ -61,7 +61,7 @@ TEST_CASE("Test SVI class in continue learning step")
 
   std::cout << "2nd :" << diskSvi.resultMu << "," << diskSvi.resultSigma << endl;
   REQUIRE(a == 1);
-}*/
+}
 
 TEST_CASE("Test python compatability")
 {
@@ -71,8 +71,9 @@ TEST_CASE("Test python compatability")
   torch::Tensor x = torch::tensor({5.0, 4.9, 5.1, 4.8, 5.2,5.0, 4.9, 5.1, 4.8, 5.2});
   x = x.reshape({1, 10});
   diskSvi.loadModule("torchscripts/linearSVI/linearSVI_selectivity.pt");
-  diskSvi.loadPriorDist(0.1, torch::var(x).item<float>());
   diskSvi.runForward(x);
+  //diskSvi.loadPriorDist(0.1, torch::var(x).item<float>());
+ diskSvi.runForward(x);
   std::cout << "disk :" << diskSvi.resultMu << "," << diskSvi.resultSigma << endl;
   x = x + 1.0;
   diskSvi.learnStep(x);

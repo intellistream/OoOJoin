@@ -1,5 +1,6 @@
 #include <Common/LinearSVI.h>
 #include <torch/optim/adam.h>
+#include <Utils/IntelliLog.h>
 using namespace TROCHPACK_SVI;
 using namespace std;
 using namespace torch;
@@ -157,13 +158,23 @@ void TROCHPACK_SVI::LinearSVI::loadModule(std::string path) {
   /**
  * @brief manmually load the tensors
  */
+  torch::Tensor lz;
   // Manually load the latentZ tensor
-  archive.read("latentZ", latentZ);
+  archive.read("latentZ", lz);
   archive.read("mu", mu);
   archive.read("tau", tau);
+  loadPriorDist(0.1,1);
+  latentZ=lz;
   latentDimension=(uint64_t)latentZ.size(1);
   inputDimension= latentDimension;
-  this->register_parameter("latentZ", latentZ);
+  if (!this->named_parameters().contains("latentZ")) {
+    this->register_parameter("latentZ", latentZ);
+  }
+  else
+  {
+    INTELLI_ERROR("The parameter has already been loaded");
+  }
+  //this->register_parameter("latentZ", latentZ);
   auto parameters = this->parameters();
   //create the optimiser
   vector<torch::Tensor> params_vec;
