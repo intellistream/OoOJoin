@@ -15,7 +15,8 @@ namespace TROCHPACK_SVI {
 typedef std::shared_ptr<torch::jit::Method> torchMethodPtr;
 #define  newtorchOptimiser std::make_shared<torch::optim::Adam>
 typedef std::shared_ptr<torch::optim::Adam> torchOptimiserPtr;
-/**
+/**@ingroup INTELLI_COMMON_BASIC Basic Definitions and Data Structures
+ * @{
 * @defgroup TROCHPACK_SVI The SVI classes
 * @{
  * This package covers SVI classes
@@ -25,35 +26,33 @@ typedef std::shared_ptr<torch::optim::Adam> torchOptimiserPtr;
  * @class LinearSVI  LinearSVI.hpp
  * @brief The SVI Modeled under linear distortion
 */
-class LinearSVI: public torch::nn::Module
-{
+class LinearSVI : public torch::nn::Module {
  private:
   /* data */
-  torch::jit::script::Module module;
-  uint64_t inputDimension,latentDimension;
+  uint64_t inputDimension, latentDimension;
   //torchMethodPtr getDimensionMethod,getMuEstimationMethod,loadPriorDistMethod;
   //torchMethodPtr lossUnderNormalMethod,lossUnderPretrain;
   void getDimension();
   void getMuEstimation();
   torchOptimiserPtr myOpt;
   int latent_dim_;
-  torch::Tensor mu,irMu;
+  torch::Tensor mu, irMu;
   //torch::Tensor logVar;
-  torch::Tensor tau,irTau;
+  torch::Tensor tau, irTau;
   torch::Tensor latentZ;
 
   //
  public:
-  LinearSVI(){
+  LinearSVI() {
 
   }
-  ~LinearSVI(){
+  ~LinearSVI() {
 
   }
-  void setEvalMode(){
+  void setEvalMode() {
     //module.eval();
   }
-  void setTrainMode(){
+  void setTrainMode() {
     //module.train();
   }
   torch::Tensor forwardMu(torch::Tensor data);
@@ -66,7 +65,7 @@ class LinearSVI: public torch::nn::Module
  * @brief To compute the -elbo given observation x and return
  * @return the elbo
  */
-  torch::Tensor minusELBO(torch::Tensor& x);
+  torch::Tensor minusELBO(torch::Tensor &x);
   void updateEstimations();
   /**
    * @brief init the parameters and register them to be recognized by optimizer
@@ -79,24 +78,29 @@ class LinearSVI: public torch::nn::Module
   */
   void loadModule(std::string path);
   /**
+  *  @brief store the module to [path]
+  * @param path the string to indicate the loaded path
+ */
+  void storeModule(std::string path);
+  /**
    * @brief run an NN forward on data
    * @param data the data stored in plain std vector, will be automatically converted to the suitable shape
    * @note please read the @ref resultMu and @ref resultSigma after this
   */
   void runForward(std::vector<float> data);
-      /**
-    * @brief run an NN forward on data
-    * @param data the data stored in tensor
-    * @note please read the @ref resultMu and @ref resultSigma after this
-    */
+  /**
+* @brief run an NN forward on data
+* @param data the data stored in tensor
+* @note please read the @ref resultMu and @ref resultSigma after this
+*/
   void runForward(torch::Tensor data);
-  float resultMu,resultSigma;
+  float resultMu, resultSigma;
   /**
  * @brief load the prior distribution
  * @param pmu
  * @param psigma
 */
-  void loadPriorDist(float pmu,float psigma);
+  void loadPriorDist(float pmu, float psigma);
   /**
   * @brief to perform one step learning on data
   * @param data the data stored in plain std vector, will be automatically converted to the suitable shape
@@ -111,16 +115,22 @@ class LinearSVI: public torch::nn::Module
 * @brief to perform one step pretrain on data
 * @param data the data stored in plain std vector, will be automatically converted to the suitable shape
 */
-  void pretrainStep(std::vector<float> data,std::vector<float> label);
+  void pretrainStep(std::vector<float> data, std::vector<float> label);
   /**
    * @brief to perform one step pretrain on data
    * @param data the data stored as tensor, should check size outside
   */
-  void pretrainStep(torch::Tensor data,torch::Tensor label);
+  void pretrainStep(torch::Tensor data, torch::Tensor label);
   float resultLoss;
+  /***
+   * @brief return the value of inputDimension
+   * @return copy of inputDimension
+   */
+  uint64_t getXDimension() { return inputDimension; }
 };
 
 /**
+ *@}
  *@}
 */
 

@@ -154,11 +154,7 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
 
   tb.setDataLoader(loaderTag, cfg);
 
-  if (operatorTag == "MSWJ") {
-    tb.setOperator(mswj, cfg);
-  } else {
-    tb.setOperator(iawj, cfg);
-  }
+  tb.setOperator(newIAWJOperator(), cfg);
 
   realRu = tb.inOrderTest(true);
 

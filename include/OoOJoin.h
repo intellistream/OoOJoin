@@ -118,6 +118,7 @@
 #include <Operator/OperatorTable.h>
 #include <Operator/MSWJOperator.h>
 #include <Operator/AIOperator.h>
+#include <Operator/LinearSVIOperator.h>
 #include <Operator/IAWJSelOperator.h>
 /**
  * @}

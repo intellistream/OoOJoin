@@ -10,12 +10,15 @@
 #include <torch/script.h>
 #include <string>
 #include <memory>
+
 namespace TROCHPACK_VAE {
 #define  newtorchMethod std::make_shared<torch::jit::Method>
 typedef std::shared_ptr<torch::jit::Method> torchMethodPtr;
 #define  newtorchOptimiser std::make_shared<torch::optim::Adam>
 typedef std::shared_ptr<torch::optim::Adam> torchOptimiserPtr;
-/**
+
+/**@ingroup INTELLI_COMMON_BASIC Basic Definitions and Data Structures
+ * @{
 * @defgroup TROCHPACK_VAE The VAE warp classes
 * @{
  * This package covers the warp function to call libtorch VAE
@@ -106,6 +109,7 @@ class LinearVAE {
 
 /**
  *@}
+ * @}
 */
 
 }
