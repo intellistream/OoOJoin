@@ -10,8 +10,7 @@
 #include <Utils/IntelliLog.h>
 #include <optional>
 #include <filesystem>
-namespace OBSERVAYION_GROUP
-{
+namespace OBSERVAYION_GROUP {
 /**
   * @class ObservationGroup Operator/LinearSVIOperator.h
   * @ingroup INTELLI_COMMON_BASIC Basic Definitions and Data Structures
@@ -24,8 +23,9 @@ class ObservationGroup {
   float finalObservation = 0.0;
   float scalingFactor = 0.0;
   uint64_t xCols, xRows = 0;
-  bool buffFull=false;
-  uint64_t fullCnt=0;
+  bool buffFull = false;
+  uint64_t fullCnt = 0;
+  bool noNormalize = false;
   /**
    * @brief xTensor is the observation, yTensor is the label.
    */
@@ -40,14 +40,11 @@ class ObservationGroup {
    * @param newX
    */
   void appendX(float newX) {
-    if(observationCnt==bufferLen-1)
-    {
-      buffFull=true;
+    if (observationCnt == bufferLen - 1) {
+      buffFull = true;
       fullCnt++;
-    }
-    else
-    {
-      buffFull=false;
+    } else {
+      buffFull = false;
     }
 
     if (observationCnt >= bufferLen) {
@@ -138,8 +135,12 @@ class ObservationGroup {
       // Get the size of tensor A
       //torch::IntArrayRef size = xTensor.sizes();
       int numElements = torch::numel(xTensor);
-      float sum = torch::sum(xTensor).item<float>(); // Calculate the sum of all elements in the tensor
-      scalingFactor = sum / numElements;
+      if (noNormalize) {
+        scalingFactor = 1.0;
+      } else {
+        float sum = torch::sum(xTensor).item<float>(); // Calculate the sum of all elements in the tensor
+        scalingFactor = sum / numElements;
+      }
       auto saveScaling = torch::ones({1, 1}) * scalingFactor;
       torch::save({saveScaling}, ptPrefix + "_s.pt");
       INTELLI_WARNING("create scaling factor " + to_string(scalingFactor));
@@ -161,7 +162,11 @@ class ObservationGroup {
     /**
      * @brief 3. normalize x and y
      */
+    if (noNormalize) {
+      scalingFactor = 1.0;
+    }
     tryAndSaveScalingFactor(ptPrefix);
+
     normalizeXY();
     /***
      * @brief 4. sava x and y

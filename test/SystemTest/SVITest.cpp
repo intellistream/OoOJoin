@@ -67,13 +67,13 @@ TEST_CASE("Test python compatability")
 {
   int a = 1;
   torch::manual_seed(114514);
-  TROCHPACK_SVI::LinearSVI  diskSvi;
-  torch::Tensor x = torch::tensor({5.0, 4.9, 5.1, 4.8, 5.2,5.0, 4.9, 5.1, 4.8, 5.2});
+  TROCHPACK_SVI::LinearSVI diskSvi;
+  torch::Tensor x = torch::tensor({5.0, 4.9, 5.1, 4.8, 5.2, 5.0, 4.9, 5.1, 4.8, 5.2});
   x = x.reshape({1, 10});
   diskSvi.loadModule("torchscripts/linearSVI/linearSVI_selectivity.pt");
   diskSvi.runForward(x);
   //diskSvi.loadPriorDist(0.1, torch::var(x).item<float>());
- diskSvi.runForward(x);
+  diskSvi.runForward(x);
   std::cout << "disk :" << diskSvi.resultMu << "," << diskSvi.resultSigma << endl;
   x = x + 1.0;
   diskSvi.learnStep(x);

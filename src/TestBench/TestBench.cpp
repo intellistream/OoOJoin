@@ -134,12 +134,13 @@ size_t OoOJoin::TestBench::inOrderTest(bool additionalSort) {
    */
   opConfig->edit("appendTensor", (uint64_t) 0);
   opConfig->edit("operator", "IAWJ");
-  forceInOrder(rTuple);
+  /*forceInOrder(rTuple);
   forceInOrder(sTuple);
   if (additionalSort) {
     inOrderSort(rTuple);
     inOrderSort(sTuple);
-  }
+  }*/
+  std::cout << additionalSort;
   uint64_t sMax = sTuple[sTuple.size() - 1]->arrivalTime;
   uint64_t rMax = sTuple[sTuple.size() - 1]->arrivalTime;
   uint64_t wmTime = sMax;

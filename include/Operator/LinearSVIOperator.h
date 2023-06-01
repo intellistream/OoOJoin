@@ -54,7 +54,6 @@ class LinearSVIOperator : public MeanAQPIAWJOperator {
    */
   uint64_t selLen = 0;
 
-
   class LinearSVIStateOfKey : public MeanStateOfKey {
    public:
     double lastUnarrivedTuples = 0;

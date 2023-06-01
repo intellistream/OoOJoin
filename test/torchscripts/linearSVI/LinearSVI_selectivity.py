@@ -22,7 +22,7 @@ class TransformerEncoder(nn.Module):
 
 #
 class LinearSVI(nn.Module):
-   def __init__(self, latentDimension):
+    def __init__(self, latentDimension):
         super(LinearSVI, self).__init__()
 
         # Initialize custom parameter tensor
@@ -32,10 +32,11 @@ class LinearSVI(nn.Module):
         self.mu = torch.nn.Parameter(torch.zeros(1))
         self.tau = torch.nn.Parameter(torch.zeros(1))
         # Register the custom parameter tensor
-        #self.register_parameter("latentZ", self.latentZ)
-        #self.register_parameter("mu", self.mu)
-        #self.register_parameter("tau", self.tau)
-   def forward(self, data):
+        # self.register_parameter("latentZ", self.latentZ)
+        # self.register_parameter("mu", self.mu)
+        # self.register_parameter("tau", self.tau)
+
+    def forward(self, data):
         n = data.size(1)
         rows = data.size(0)
         rowX = data[0]
@@ -52,46 +53,54 @@ class LinearSVI(nn.Module):
                 (1 + 0.5 * torch.sum(xzPmu2) + torch.mul(irMu - self.mu, irMu - self.mu))
             )
             tempTau[i] = irTau
-        return tempMu,tempTau
-   def setPrior(self,tmu,sigma2):
-       self.mu=tmu
-       self.tau=1/sigma2
-    # a loss function to force mu aligned with pmu
-   def save_model(self,path):
-        tensor_dict = {
-        "latentZ": self.latentZ,
-        "mu": (self.mu),
-        "tau": (self.tau),
-        }
-        torch.save(tensor_dict, path,pickle_protocol=torch.serialization.DEFAULT_PROTOCOL)
-    # Add more tensors with appropriate tags
-def supervisedTrain(model, X, Y, batch_size, learningRate, epochs, device):
-        optimizer = optim.Adam(model.parameters(), lr=learningRate)
-        num_samples, input_dim = X.shape
-        for epoch in range(1, epochs + 1):
-            train_loss = 0
-            for batch_idx in range(0, num_samples, batch_size):
-                model.train()
+        return tempMu, tempTau
 
-                # x = X[batch_idx:batch_idx+batch_size].to('cuda')
-                x = X[batch_idx:batch_idx + batch_size].to(device)
-                y = Y[batch_idx:batch_idx + batch_size].to(device)
-                optimizer.zero_grad()
-                mu,tau = model(x)
-                # loss = model.loss_function(x_recon, x, muZ, logvarZ, mu, logvar)
-                loss = torch.nn.functional.mse_loss(mu,y)
-                loss.backward()
-                optimizer.step()
-                train_loss += loss.item()
-                # optimizer.step()
-                if batch_idx % 100 == 0:
-                    print('Epoch {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                        epoch, batch_idx, num_samples,
-                        100. * batch_idx / num_samples,
-                        loss.item() / len(x)))
+    def setPrior(self, tmu, sigma2):
+        self.mu = tmu
+        self.tau = 1 / sigma2
+
+    # a loss function to force mu aligned with pmu
+    def save_model(self, path):
+        tensor_dict = {
+            "latentZ": self.latentZ,
+            "mu": (self.mu),
+            "tau": (self.tau),
+        }
+        torch.save(tensor_dict, path, pickle_protocol=torch.serialization.DEFAULT_PROTOCOL)
+    # Add more tensors with appropriate tags
+
+
+def supervisedTrain(model, X, Y, batch_size, learningRate, epochs, device):
+    optimizer = optim.Adam(model.parameters(), lr=learningRate)
+    num_samples, input_dim = X.shape
+    for epoch in range(1, epochs + 1):
+        train_loss = 0
+        for batch_idx in range(0, num_samples, batch_size):
+            model.train()
+
+            # x = X[batch_idx:batch_idx+batch_size].to('cuda')
+            x = X[batch_idx:batch_idx + batch_size].to(device)
+            y = Y[batch_idx:batch_idx + batch_size].to(device)
+            optimizer.zero_grad()
+            mu, tau = model(x)
+            # loss = model.loss_function(x_recon, x, muZ, logvarZ, mu, logvar)
+            loss = torch.nn.functional.mse_loss(mu, y)
+            loss.backward()
+            optimizer.step()
+            train_loss += loss.item()
+            # optimizer.step()
+            if batch_idx % 100 == 0:
+                print('Epoch {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+                    epoch, batch_idx, num_samples,
+                    100. * batch_idx / num_samples,
+                    loss.item() / len(x)))
+
+
 def loadCppTensorFile(fname):
     cppModule = torch.jit.load(fname)
     return getattr(cppModule, "0")
+
+
 def save_model(model, path, X):
     tx = X.to('cpu')
     # tx=X
@@ -104,6 +113,7 @@ def save_model(model, path, X):
     ru = traced_model(tx)
     # export the self-defined functions here
     traced_model.save(path)
+
 
 def main():
     # Set the device
@@ -128,12 +138,12 @@ def main():
     num_samples = 1000
     X = loadCppTensorFile(prefixTag + '_x.pt').to(device)
     Y = loadCppTensorFile(prefixTag + '_y.pt').to(device)
-    model=LinearSVI(latent_dim)
-    supervisedTrain(model,X, Y, batch_size, 1e-3, 100, device)
+    model = LinearSVI(latent_dim)
+    supervisedTrain(model, X, Y, batch_size, 1e-3, 100, device)
     print(model.latentZ)
-    #save_model("linearSVI_selectivity.pt")
+    # save_model("linearSVI_selectivity.pt")
     save_model(model.to('cpu'), "linearSVI_selectivity.pt", X.to('cpu'))
-    
+
     # print(t.size())
     # print(logvar)
 

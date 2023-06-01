@@ -77,7 +77,7 @@ auto TupleProductivityProfiler::getRequirementRecall() -> double {
 
   int nTrueL = 0;
   int temp = -1;
-  for (int d = 0; d < maxD; d++) {
+  for (int d = 0; d < std::min(maxD, joinResultPos.size()); d++) {
     if (temp == joinResultPos[d])continue;
     temp = joinResultPos[d];
     nTrueL += joinResultMap[joinResultPos[d]];

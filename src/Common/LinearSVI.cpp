@@ -9,7 +9,7 @@ using namespace torch;
 //
 void TROCHPACK_SVI::LinearSVI::initSVIParameters(uint64_t latentD) {
   latentDimension = latentD;
-  inputDimension= latentDimension;
+  inputDimension = latentDimension;
   /**
    * @brief register parameters
    */
@@ -92,7 +92,7 @@ void TROCHPACK_SVI::LinearSVI::learnStep(torch::Tensor data) {
   mElboLoss.backward({}, true);
   myOpt->step();
   updateEstimations();
-  resultLoss=mElboLoss.item<float>();
+  resultLoss = mElboLoss.item<float>();
   //
 }
 void TROCHPACK_SVI::LinearSVI::resetLearningRate(double lr) {
@@ -135,7 +135,7 @@ void TROCHPACK_SVI::LinearSVI::pretrainStep(torch::Tensor data, torch::Tensor la
   mse.backward({}, true);
   myOpt->step();
   updateEstimations();
-  resultLoss=mse.item<float>();
+  resultLoss = mse.item<float>();
   //std::cout<<"mse= "<<mse.sum().item<float>()<<std::endl;
 }
 void TROCHPACK_SVI::LinearSVI::storeModule(std::string path) {
@@ -163,15 +163,13 @@ void TROCHPACK_SVI::LinearSVI::loadModule(std::string path) {
   archive.read("latentZ", lz);
   archive.read("mu", mu);
   archive.read("tau", tau);
-  loadPriorDist(0.1,1);
-  latentZ=lz;
-  latentDimension=(uint64_t)latentZ.size(1);
-  inputDimension= latentDimension;
+  loadPriorDist(0.1, 1);
+  latentZ = lz;
+  latentDimension = (uint64_t) latentZ.size(1);
+  inputDimension = latentDimension;
   if (!this->named_parameters().contains("latentZ")) {
     this->register_parameter("latentZ", latentZ);
-  }
-  else
-  {
+  } else {
     INTELLI_ERROR("The parameter has already been loaded");
   }
   //this->register_parameter("latentZ", latentZ);
