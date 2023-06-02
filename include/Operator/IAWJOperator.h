@@ -25,6 +25,7 @@ namespace OoOJoin {
  * - "algo" String: The specific join algorithm (optional, default nested loop)
  * - "threads" U64: The threads to conduct intra window join (optional, default 1)
  * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
+ * - "joinSum" U64, whether or not conduct join sum, default=0
  * @note In current version, the computation will block feeding
  * @note operator tag = "IAWJ"
  */

@@ -22,7 +22,14 @@ void NPJ_thread::inlineMain() {
   //probe r
   //tp.start();
   for (size_t i = 0; i < rLen; i++) {
-    result += table->probeTuple(tr[i]);
+    if(joinSum)
+    {
+      result += table->probeTuple(tr[i])*tr[i]->payload;
+    }
+    else
+    {
+      result += table->probeTuple(tr[i]);
+    }
     tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
   //tp.end();
@@ -68,6 +75,7 @@ size_t NPJ::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
                     table, \
                     buildBar
     );
+    workers[i].setJoinSum(joinSum);
     workers[i].syncTimeStruct(timeBaseStruct);
     //workers[i].setTimeStep(timeStep);
     sBegin += partitionS[i];
@@ -94,7 +102,16 @@ size_t NPJSingle::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
   MultiThreadHashTable table(tsLen / 2 + 1);
   table.buildTable(ts, tsLen);
   for (size_t i = 0; i < trLen; i++) {
-    result += table.probeTuple(tr[i]);
+    if(joinSum)
+    {
+      result += table.probeTuple(tr[i])*tr[i]->payload;
+    }
+    else
+    {
+      result += table.probeTuple(tr[i]);
+    }
+
+
     tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
   return result;

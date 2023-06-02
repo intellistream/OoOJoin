@@ -77,7 +77,7 @@ class AbstractOperator {
   int threads = 0;
   tsType timeStep = 0;
   tsType timeBreakDownAll = 0;
-
+  uint64_t joinSum=0;
   /**
    *@brief set the final processed time for all tuples
    */

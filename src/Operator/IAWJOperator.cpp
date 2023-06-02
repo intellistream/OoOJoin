@@ -9,10 +9,7 @@ bool OoOJoin::IAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
     return false;
   }
-  // read the algorithm name
-  if (config->existString("algo")) {
-    algoTag = config->getString("algo");
-  }
+  algoTag=config->tryString("algo", "NPJSingle", true);
   // OP_INFO("selected join algorithm=" + algoTag);
   if (config->existU64("threads")) {
     joinThreads = config->getU64("threads");
@@ -24,6 +21,7 @@ bool OoOJoin::IAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
     return false;
   }
+  joinSum=config->tryU64("joinSum",0, true);
   INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
   // OP_INFO("selected join threads=" + to_string(joinThreads));
   return true;
