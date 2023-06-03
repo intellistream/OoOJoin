@@ -198,7 +198,7 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
             {
                 sk = newIMAStateOfKey();
                 sk->key = trackTuple->key;
-                sk->value = trackTuple->value;
+                sk->value = trackTuple->payload;
                 stateOfKeyTableS->insert(sk);
             } else {
                 sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
@@ -263,7 +263,7 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
             {
                 sk = newIMAStateOfKey();
                 sk->key = trackTuple->key;
-                sk->value = trackTuple->value;
+                sk->value = trackTuple->payload;
                 stateOfKeyTableR->insert(sk);
             } else {
                 sk = ImproveStateOfKeyTo(IMAStateOfKey, skrf);
