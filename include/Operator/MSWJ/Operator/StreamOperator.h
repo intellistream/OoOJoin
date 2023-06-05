@@ -70,7 +70,7 @@ namespace MSWJ {
          * @brief Get the joinSum result
          * @return The result
          */
-        size_t getJoinSumResult(keyType key) override;
+        size_t getJoinSumResult(keyType key);
 
         class IMAStateOfKey : public MeanStateOfKey {
         public:
