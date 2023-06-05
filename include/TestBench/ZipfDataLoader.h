@@ -64,6 +64,24 @@ namespace OoOJoin {
                 zipfDataLoader_zipfSkewFactor;
         MicroDataSet md;
 
+        vector<TrackTuplePtr> keyValueRTuple{};
+        vector<TrackTuplePtr> keyValueSTuple{};
+        bool generateByKV{};
+
+        void spilt(const std::string s, const std::string &c, vector<std::string> &v) {
+            std::string::size_type pos1, pos2;
+            pos2 = s.find(c);
+            pos1 = 0;
+            while (std::string::npos != pos2) {
+                v.push_back(s.substr(pos1, pos2 - pos1));
+
+                pos1 = pos2 + c.size();
+                pos2 = s.find(c, pos1);
+            }
+            if (pos1 != s.length())
+                v.push_back(s.substr(pos1));
+        }
+
         static vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
             vector<tsType> ru = vector<tsType>(eventTime.size());
             size_t len = (eventTime.size() > arrivalSkew.size()) ? arrivalSkew.size() : eventTime.size();
@@ -97,6 +115,18 @@ namespace OoOJoin {
         }
 
         /**
+        * @brief load a key value dataset from csv file
+        * @param fname The name of file
+        * @param separator The separator in .csv, default is ","
+        * @param newLine THe indicator of a new line. default is "\n"
+        * @return The vector of TrackTuplePtr
+        */
+        std::vector<TrackTuplePtr> loadDataFromCsv(std::string fname,
+                                                   std::string separator = ",",
+                                                   std::string newLine = "\n");
+
+
+        /**
          * @brief generate the vector of key
          */
         void generateKey();
@@ -123,9 +153,6 @@ namespace OoOJoin {
         void generateFinal();
 
     public:
-        vector<TrackTuplePtr> keyValueData;
-        bool generateByKV{};
-
         ConfigMapPtr cfgGlobal;
         vector<TrackTuplePtr> sTuple, rTuple;
 

@@ -3,6 +3,7 @@
 //
 
 #include <TestBench/ZipfDataLoader.h>
+#include <filesystem>
 
 using namespace INTELLI;
 using namespace OoOJoin;
@@ -107,8 +108,8 @@ void ZipfDataLoader::generateArrival() {
 
 void ZipfDataLoader::generateFinal() {
     if (generateByKV) {
-        sTuple = genTuplesByKV(keyValueData, eventS, arrivalS);
-        rTuple = genTuplesByKV(keyValueData, eventR, arrivalR);
+        sTuple = genTuplesByKV(keyValueSTuple, eventS, arrivalS);
+        rTuple = genTuplesByKV(keyValueRTuple, eventR, arrivalR);
     } else {
         sTuple = genTuples(keyS, valueS, eventS, arrivalS);
         rTuple = genTuples(keyR, valueR, eventR, arrivalR);
@@ -129,6 +130,12 @@ bool ZipfDataLoader::setConfig(ConfigMapPtr cfg) {
     eventRateKTps = cfg->tryU64("eventRateKTps", 10);
     keyRange = cfg->tryU64("keyRange", 10, true);
     valueRange = cfg->tryU64("valueRange", 1000, true);
+    generateByKV = cfg->tryU64("generateByKV", 0, true);
+    string fnameR, fnameS;
+    fnameR = cfg->tryString("fileDataLoader_rFile", "../../benchmark/datasets/rTuple.csv", true);
+    fnameS = cfg->tryString("fileDataLoader_sFile", "../../benchmark/datasets/sTuple.csv", true);
+    keyValueSTuple = loadDataFromCsv(fnameS);
+    keyValueRTuple = loadDataFromCsv(fnameR);
     testSize = (windowLenMs + maxArrivalSkewMs) * eventRateKTps;
     generateKey();
     generateValue();
@@ -146,3 +153,86 @@ vector<TrackTuplePtr> ZipfDataLoader::getTupleVectorR() {
     return rTuple;
 }
 
+
+std::vector<TrackTuplePtr> ZipfDataLoader::loadDataFromCsv(std::string fname,
+                                                           std::string separator,
+                                                           std::string newLine) {
+    std::vector<TrackTuplePtr> ru;
+    ifstream ins;
+    ins.open(fname);
+    assert(separator.data());
+    assert(newLine.data());
+    if (ins.fail()) {
+        INTELLI_ERROR("Can't open file [" + fname + "]");
+        return ru;
+    }
+    std::string readStr;
+    /**
+     * header is of << "key,value,eventTime,arrivalTime,processedTime\n";
+     * should read the first line
+     */
+    std::getline(ins, readStr, newLine.data()[0]);
+    vector<std::string> cols;
+    // readStr.erase(readStr.size()-1);
+    spilt(readStr, separator, cols);
+    size_t idxKey = 0, idxValue = 0, idxEventTime = 0, idxArrivalTime = 0;
+    size_t validCols = 4;
+    size_t validRows = 0;
+    if (cols.size() < validCols) {
+        INTELLI_ERROR("Invalid csv header [" + fname + "] return nothing");
+        return ru;
+    }
+
+    /**
+     * @note parase the first row here
+     */
+    for (size_t i = 0; i < cols.size(); i++) {
+        if (cols[i] == "key") {
+            idxKey = i;
+        }
+        if (cols[i] == "value") {
+            idxValue = i;
+        }
+    }
+    /**
+     * @note deciding the valid rows
+     */
+    while (std::getline(ins, readStr, newLine.data()[0])) {
+        if (cols.size() >= validCols) {
+            validRows++;
+        }
+    }
+    INTELLI_INFO("valid rows=" + to_string(validRows));
+    // cout<<"valid rows="<<validRows<<endl;
+    ru = std::vector<TrackTuplePtr>(validRows);
+    /**
+     * re-open file
+     */
+    ins.close();
+    ins.open(fname);
+    /**
+     * jump the header,
+     */
+    size_t loadRow = 0;
+    std::getline(ins, readStr, newLine.data()[0]);
+    while (std::getline(ins, readStr, newLine.data()[0])) {
+        vector<std::string> cols2;
+        // readStr.erase(readStr.size()-1);
+        spilt(readStr, separator, cols2);
+        if (cols.size() >= validCols) {
+            keyType k;
+            valueType v;
+            tsType et, at;
+            istringstream k_ss(cols2[idxKey]);
+            k_ss >> k;
+            istringstream v_ss(cols2[idxValue]);
+            v_ss >> v;
+            TrackTuplePtr tp = newTrackTuple(k, v, et, at);
+            tp->processedTime = 0;
+            ru[loadRow] = tp;
+            loadRow++;
+        }
+    }
+    ins.close();
+    return ru;
+}
