@@ -137,8 +137,10 @@ bool ZipfDataLoader::setConfig(ConfigMapPtr cfg) {
     keyValueSTuple = loadDataFromCsv(fnameS);
     keyValueRTuple = loadDataFromCsv(fnameR);
     testSize = (windowLenMs + maxArrivalSkewMs) * eventRateKTps;
-    generateKey();
-    generateValue();
+    if (!generateByKV) {
+        generateKey();
+        generateValue();
+    }
     generateEvent();
     generateArrival();
     generateFinal();
