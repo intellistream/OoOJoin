@@ -5,6 +5,7 @@ bool OoOJoin::MSWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
     return false;
   }
+  joinSum=cfg->tryU64("joinSum",0,true);
   streamOperator->setConfig(cfg);
 
   return true;

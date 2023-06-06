@@ -50,103 +50,147 @@ namespace OoOJoin {
  * - eventRateKTps U64 The real-world rate of spawn event, in KTuples/s
  * - keyRange U64 The range of Key
  * - valueRange U64 The range of value
+ * - generateByKV U64 Whether generate by using existing kv from file, default 0
+ * - fileDataLoader_rFile String The file name of r tuple, valid under generateByKV=1
+ * - fileDataLoader_sFile String The file name of s tuple, valid under generateByKV=1
  */
-class ZipfDataLoader : public AbstractDataLoader {
- protected:
-  tsType windowLenMs, timeStepUs, watermarkTimeMs, maxArrivalSkewMs, eventRateKTps;
-  uint64_t zipfDataLoader_zipfKey, zipfDataLoader_zipfValue, zipfDataLoader_zipfEvent, zipfDataLoader_zipfSkew;
-  vector<keyType> keyS, keyR;
-  vector<valueType> valueS, valueR;
-  vector<tsType> eventS, eventR;
-  vector<tsType> arrivalS, arrivalR;
-  size_t testSize, keyRange, valueRange;
-  double zipfDataLoader_zipfKeyFactor, zipfDataLoader_zipfValueFactor, zipfDataLoader_zipfEventFactor,
-      zipfDataLoader_zipfSkewFactor;
-  MicroDataSet md;
+    class ZipfDataLoader : public AbstractDataLoader {
+    protected:
+        tsType windowLenMs, timeStepUs, watermarkTimeMs, maxArrivalSkewMs, eventRateKTps;
+        uint64_t zipfDataLoader_zipfKey, zipfDataLoader_zipfValue, zipfDataLoader_zipfEvent, zipfDataLoader_zipfSkew;
+        vector<keyType> keyS, keyR;
+        vector<valueType> valueS, valueR;
+        vector<tsType> eventS, eventR;
+        vector<tsType> arrivalS, arrivalR;
+        size_t testSize, keyRange, valueRange;
+        double zipfDataLoader_zipfKeyFactor, zipfDataLoader_zipfValueFactor, zipfDataLoader_zipfEventFactor,
+                zipfDataLoader_zipfSkewFactor;
+        MicroDataSet md;
 
-  static vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
-    vector<tsType> ru = vector<tsType>(eventTime.size());
-    size_t len = (eventTime.size() > arrivalSkew.size()) ? arrivalSkew.size() : eventTime.size();
-    for (size_t i = 0; i < len; i++) {
-      ru[i] = eventTime[i] + arrivalSkew[i];
-    }
-    return ru;
-  }
+        vector<TrackTuplePtr> keyValueRTuple{};
+        vector<TrackTuplePtr> keyValueSTuple{};
+        bool generateByKV{};
 
-  static vector<OoOJoin::TrackTuplePtr> genTuples(vector<keyType> keyS,
-                                                  vector<valueType> valueS,
-                                                  vector<tsType> eventS,
-                                                  vector<tsType> arrivalS) {
-    size_t len = keyS.size();
-    vector<OoOJoin::TrackTuplePtr> ru = vector<OoOJoin::TrackTuplePtr>(len);
-    for (size_t i = 0; i < len; i++) {
-      ru[i] = newTrackTuple(keyS[i], valueS[i], eventS[i], arrivalS[i]);
-    }
-    return ru;
-  }
+        void spilt(const std::string s, const std::string &c, vector<std::string> &v) {
+            std::string::size_type pos1, pos2;
+            pos2 = s.find(c);
+            pos1 = 0;
+            while (std::string::npos != pos2) {
+                v.push_back(s.substr(pos1, pos2 - pos1));
 
-  /**
-   * @brief generate the vector of key
-   */
-  void generateKey();
+                pos1 = pos2 + c.size();
+                pos2 = s.find(c, pos1);
+            }
+            if (pos1 != s.length())
+                v.push_back(s.substr(pos1));
+        }
 
-  /**
-   * @brief enerate the vector of key
-   */
-  void generateValue();
+        static vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
+            vector<tsType> ru = vector<tsType>(eventTime.size());
+            size_t len = (eventTime.size() > arrivalSkew.size()) ? arrivalSkew.size() : eventTime.size();
+            for (size_t i = 0; i < len; i++) {
+                ru[i] = eventTime[i] + arrivalSkew[i];
+            }
+            return ru;
+        }
 
-  /**
-   *
-   *  @brief generate the vector of event
-   */
-  void generateEvent();
+        static vector<OoOJoin::TrackTuplePtr> genTuples(vector<keyType> keyS,
+                                                        vector<valueType> valueS,
+                                                        vector<tsType> eventS,
+                                                        vector<tsType> arrivalS) {
+            size_t len = keyS.size();
+            vector<OoOJoin::TrackTuplePtr> ru = vector<OoOJoin::TrackTuplePtr>(len);
+            for (size_t i = 0; i < len; i++) {
+                ru[i] = newTrackTuple(keyS[i], valueS[i], eventS[i], arrivalS[i]);
+            }
+            return ru;
+        }
 
-  /**
-   * @brief  generate the vector of arrival
-   */
-  void generateArrival();
+        static vector<OoOJoin::TrackTuplePtr> genTuplesByKV(std::vector<TrackTuplePtr> keyValueData,
+                                                            vector<tsType> eventS,
+                                                            vector<tsType> arrivalS) {
+            size_t len = keyValueData.size();
+            vector<OoOJoin::TrackTuplePtr> ru = vector<OoOJoin::TrackTuplePtr>(len);
+            for (size_t i = 0; i < len; i++) {
+                ru[i] = newTrackTuple(keyValueData[i]->key, keyValueData[i]->payload, eventS[i], arrivalS[i]);
+            }
+            return ru;
+        }
 
-  /**
-   * @brief generate the final result of s and r
-   */
-  void generateFinal();
+        /**
+        * @brief load a key value dataset from csv file
+        * @param fname The name of file
+        * @param separator The separator in .csv, default is ","
+        * @param newLine THe indicator of a new line. default is "\n"
+        * @return The vector of TrackTuplePtr
+        */
+        std::vector<TrackTuplePtr> loadDataFromCsv(std::string fname,
+                                                   std::string separator = ",",
+                                                   std::string newLine = "\n");
 
- public:
-  ConfigMapPtr cfgGlobal;
-  vector<TrackTuplePtr> sTuple, rTuple;
 
-  ZipfDataLoader() = default;
+        /**
+         * @brief generate the vector of key
+         */
+        void generateKey();
 
-  ~ZipfDataLoader() = default;
+        /**
+         * @brief enerate the vector of key
+         */
+        void generateValue();
 
-  /**
- * @brief Set the GLOBAL config map related to this loader
- * @param cfg The config map
-  * @return bool whether the config is successfully set
- */
-  bool setConfig(ConfigMapPtr cfg) override;
+        /**
+         *
+         *  @brief generate the vector of event
+         */
+        void generateEvent();
 
-  /**
-* @brief Set the modification config map related to this loader
-* @param cfg The config map
-* @return bool whether the config is successfully set
-*/
-  bool setModConfig(ConfigMapPtr cfg) override {
-    return AbstractDataLoader::setModConfig(cfg);
-  }
+        /**
+         * @brief  generate the vector of arrival
+         */
+        void generateArrival();
 
-  /**
-   * @brief get the vector of s tuple
-   * @return the vector
-   */
-  vector<TrackTuplePtr> getTupleVectorS() override;
+        /**
+         * @brief generate the final result of s and r
+         */
+        void generateFinal();
 
-  /**
-  * @brief get the vector of R tuple
-  * @return the vector
-  */
-  vector<TrackTuplePtr> getTupleVectorR() override;
-};
+    public:
+        ConfigMapPtr cfgGlobal;
+        vector<TrackTuplePtr> sTuple, rTuple;
+
+        ZipfDataLoader() = default;
+
+        ~ZipfDataLoader() = default;
+
+        /**
+       * @brief Set the GLOBAL config map related to this loader
+       * @param cfg The config map
+        * @return bool whether the config is successfully set
+       */
+        bool setConfig(ConfigMapPtr cfg) override;
+
+        /**
+      * @brief Set the modification config map related to this loader
+      * @param cfg The config map
+      * @return bool whether the config is successfully set
+      */
+        bool setModConfig(ConfigMapPtr cfg) override {
+            return AbstractDataLoader::setModConfig(cfg);
+        }
+
+        /**
+         * @brief get the vector of s tuple
+         * @return the vector
+         */
+        vector<TrackTuplePtr> getTupleVectorS() override;
+
+        /**
+        * @brief get the vector of R tuple
+        * @return the vector
+        */
+        vector<TrackTuplePtr> getTupleVectorR() override;
+    };
 
 /**
  * @ingroup ADB_TESTBENCH_DATALOADERS
@@ -154,7 +198,7 @@ class ZipfDataLoader : public AbstractDataLoader {
  * @brief The class to describe a shared pointer to @ref ZipfDataLoader
 
  */
-typedef std::shared_ptr<class ZipfDataLoader> ZipfDataLoaderPtr;
+    typedef std::shared_ptr<class ZipfDataLoader> ZipfDataLoaderPtr;
 /**
  * @ingroup ADB_TESTBENCH_DATALOADERS
  * @def newZipfDataLoader
