@@ -125,7 +125,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
             (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
                 (py->lastUnarrivedTuples + py->arrivedTupleCnt);
         preU=preU*py->rvAvgPrediction;
-        intermediateResult+=(uint64_t)preU;
+        intermediateResult+=(uint64_t)((preU+tc)/2);
       }
       else
       {
@@ -171,13 +171,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     } else {
       stateOfKey = ImproveStateOfKeyTo(IMAStateOfKey, stateOfRKey);
     }
-    /**
-    * @brief rvalue estimation
-    */
-    stateOfKey->joinedRValueSum+=(int64_t)tr->payload;
-    stateOfKey->joinedRValueCnt++;
-    stateOfKey->joinedRValueAvg=stateOfKey->joinedRValueSum/stateOfKey->joinedRValueCnt;
-    stateOfKey->rvAvgPrediction=stateOfKey->joinedRValuePredictor.update(stateOfKey->joinedRValueAvg);
+
     timeBreakDownIndex += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
     updateStateOfKey(stateOfKey, tr);
     double futureTuplesR = MeanAQPIAWJOperator::predictUnarrivedTuples(stateOfKey);
@@ -186,12 +180,19 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     timeTrackingStart(tt_join);
     AbstractStateOfKeyPtr probrPtr = stateOfKeyTableS->getByKey(tr->key);
     if (probrPtr != nullptr) {
-
+      /**
+            * @brief rvalue estimation
+        */
+      stateOfKey->joinedRValueSum+=(int64_t)tr->payload;
+      stateOfKey->joinedRValueCnt++;
+      stateOfKey->joinedRValueAvg=stateOfKey->joinedRValueSum/stateOfKey->joinedRValueCnt;
+      stateOfKey->rvAvgPrediction=stateOfKey->joinedRValuePredictor.update(stateOfKey->joinedRValueAvg);
       IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
       if(joinSum)
       { /**
          * @brief we are dealing with r.value, so here is stateOfKey->xxx
          */
+
         double tc=(int64_t)py->arrivedTupleCnt*stateOfKey->joinedRValueAvg;
         confirmedResult+=(uint64_t)tc;
         auto preU=(futureTuplesR + stateOfKey->arrivedTupleCnt) *
@@ -199,7 +200,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
             (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
                 (py->lastUnarrivedTuples + py->arrivedTupleCnt);
         preU=preU*stateOfKey->rvAvgPrediction;
-        intermediateResult+=(uint64_t)preU;
+        intermediateResult+=(uint64_t)((preU+tc)/2);
       }
       else
       {

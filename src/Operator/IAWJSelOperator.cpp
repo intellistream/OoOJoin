@@ -213,15 +213,39 @@ size_t OoOJoin::IAWJSelOperator::getResult() {
 size_t OoOJoin::IAWJSelOperator::getAQPResult() {
   // size_t intermediateResult = (selectivityR + selectivityS) * (noR * noS);
   //selPrediction=selObservation;
+  uint64_t lastSArrival=noSTrace->lastArrivalTuple->arrivalTime+noSTrace->lastEventTuple->eventTime;
+  uint64_t lastRArrival=noRTrace->lastArrivalTuple->arrivalTime+noRTrace->lastEventTuple->eventTime;
+  double lastWindowArrival=(lastSArrival+lastRArrival)/2;
+  double expectedLastArrival=2*myWindow.getEnd()-myWindow.getStart()+(noSTrace->arrivalSkew+noRTrace->arrivalSkew)/2;
   size_t ru;
+  double compensationWeight;
+  if(lastWindowArrival>expectedLastArrival)
+  {
+    compensationWeight=0.0;
+  }
+  else
+  { if( (lastSArrival+lastRArrival)/2>=2*myWindow.getEnd()-myWindow.getStart())
+    {
+      compensationWeight=0.2;
+    }
+    else
+    {
+      compensationWeight=0.5;
+    }
+  }
   if(joinSum)
   {
-    ru=selPrediction*noS*noR*noRTrace->rvAvgPrediction;
-    ru=(ru+getResult())/2;
+    auto compensated=selPrediction*noS*noR*noRTrace->rvAvgPrediction;
+    double raw=getResult();
+    auto temp=compensated;
+    ru=(size_t)(temp*compensationWeight+raw*(1-compensationWeight));
   }
   else
   {
     ru = selPrediction * noS * noR;
   }
+
+  INTELLI_INFO("last arrival: "+ to_string(lastWindowArrival)+", window end"+ to_string(myWindow.getEnd()+noSTrace->arrivalSkew));
   return ru;
+  //return ru;
 }

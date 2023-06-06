@@ -226,8 +226,10 @@ void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
           double unarrivedR = predictUnarrivedTuples(py);
           if(joinSum)
           {
-            intermediateResult += (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR)*px->rvAvgPrediction;
-            confirmedResult += (px->arrivedTupleCnt) * (py->arrivedTupleCnt)*px->joinedRValueAvg;
+            uint64_t cIR= (px->arrivedTupleCnt) * (py->arrivedTupleCnt)*px->joinedRValueAvg;
+            uint64_t pIR=(px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR)*px->rvAvgPrediction;
+            intermediateResult += (cIR+pIR)/2;
+            confirmedResult +=cIR;
           }
           else
           {
