@@ -198,7 +198,7 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
             {
                 sk = newMSWJStateOfKey();
                 sk->key = trackTuple->key;
-                sk-> value = trackTuple->payload;
+                sk->value = trackTuple->payload;
                 stateOfKeyTableS->insert(sk);
             } else {
                 sk = ImproveStateOfKeyTo(MSWJStateOfKey, skrf);
@@ -223,9 +223,20 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
 
                 if (!mswjCompensation) {
                     intermediateResult += py->arrivedTupleCnt;
-                    joinCountMap[sk->key] = {{joinCountMap[sk->key].first.first + py->arrivedTupleCnt,
-                                              joinCountMap[sk->key].first.second + sk->value},
-                                             joinCountMap[sk->key].second + 1};
+
+                    if (joinConfirmCountMap.find(sk->key) == joinConfirmCountMap.end()) {
+                        joinConfirmCountMap[sk->key] = {{0, 0}, 0};
+                    }
+                    if (joinAQPCountMap.find(sk->key) == joinAQPCountMap.end()) {
+                        joinAQPCountMap[sk->key] = {{0, 0}, 0};
+                    }
+
+                    joinAQPCountMap[sk->key] = {{joinAQPCountMap[sk->key].first.first + py->arrivedTupleCnt,
+                                                 joinAQPCountMap[sk->key].first.second + sk->value},
+                                                joinAQPCountMap[sk->key].second + 1};
+                    joinConfirmCountMap[sk->key] = {{joinConfirmCountMap[sk->key].first.first + py->arrivedTupleCnt,
+                                                     joinConfirmCountMap[sk->key].first.second + sk->value},
+                                                    joinConfirmCountMap[sk->key].second + 1};
                     productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
                                                         py->arrivedTupleCnt);
                 } else {
@@ -234,9 +245,20 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
                                         (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
                                         (py->lastUnarrivedTuples + py->arrivedTupleCnt);
                     intermediateResult += resultPlus;
-                    joinCountMap[sk->key] = {{joinCountMap[sk->key].first.first + resultPlus,
-                                              joinCountMap[sk->key].first.second + sk->value},
-                                             joinCountMap[sk->key].second + 1};
+
+                    if (joinConfirmCountMap.find(sk->key) == joinConfirmCountMap.end()) {
+                        joinConfirmCountMap[sk->key] = {{0, 0}, 0};
+                    }
+                    if (joinAQPCountMap.find(sk->key) == joinAQPCountMap.end()) {
+                        joinAQPCountMap[sk->key] = {{0, 0}, 0};
+                    }
+
+                    joinAQPCountMap[sk->key] = {{joinAQPCountMap[sk->key].first.first + resultPlus,
+                                                 joinAQPCountMap[sk->key].first.second + sk->value},
+                                                joinAQPCountMap[sk->key].second + 1};
+                    joinConfirmCountMap[sk->key] = {{joinConfirmCountMap[sk->key].first.first + py->arrivedTupleCnt,
+                                                     joinConfirmCountMap[sk->key].first.second + sk->value},
+                                                    joinConfirmCountMap[sk->key].second + 1};
                     productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
                                                         (futureTuplesS + sk->arrivedTupleCnt) *
                                                         (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
@@ -282,9 +304,20 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
                 confirmedResult += py->arrivedTupleCnt;
                 if (!mswjCompensation) {
                     intermediateResult += py->arrivedTupleCnt;
-                    joinCountMap[sk->key] = {{joinCountMap[sk->key].first.first + py->arrivedTupleCnt,
-                                              joinCountMap[sk->key].first.second + sk->value},
-                                             joinCountMap[sk->key].second + 1};
+
+                    if (joinConfirmCountMap.find(sk->key) == joinConfirmCountMap.end()) {
+                        joinConfirmCountMap[sk->key] = {{0, 0}, 0};
+                    }
+                    if (joinAQPCountMap.find(sk->key) == joinAQPCountMap.end()) {
+                        joinAQPCountMap[sk->key] = {{0, 0}, 0};
+                    }
+
+                    joinAQPCountMap[sk->key] = {{joinAQPCountMap[sk->key].first.first + py->arrivedTupleCnt,
+                                                 joinAQPCountMap[sk->key].first.second + sk->value},
+                                                joinAQPCountMap[sk->key].second + 1};
+                    joinConfirmCountMap[sk->key] = {{joinConfirmCountMap[sk->key].first.first + py->arrivedTupleCnt,
+                                                     joinConfirmCountMap[sk->key].first.second + sk->value},
+                                                    joinConfirmCountMap[sk->key].second + 1};
                     productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
                                                         py->arrivedTupleCnt);
                 } else {
@@ -293,9 +326,20 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
                                         (sk->arrivedTupleCnt + sk->lastUnarrivedTuples - 1) *
                                         (py->lastUnarrivedTuples + py->arrivedTupleCnt);
                     intermediateResult += resultPlus;
-                    joinCountMap[sk->key] = {{joinCountMap[sk->key].first.first + resultPlus,
-                                              joinCountMap[sk->key].first.second + sk->value},
-                                             joinCountMap[sk->key].second + 1};
+
+                    if (joinConfirmCountMap.find(sk->key) == joinConfirmCountMap.end()) {
+                        joinConfirmCountMap[sk->key] = {{0, 0}, 0};
+                    }
+                    if (joinAQPCountMap.find(sk->key) == joinAQPCountMap.end()) {
+                        joinAQPCountMap[sk->key] = {{0, 0}, 0};
+                    }
+
+                    joinAQPCountMap[sk->key] = {{joinAQPCountMap[sk->key].first.first + resultPlus,
+                                                 joinAQPCountMap[sk->key].first.second + sk->value},
+                                                joinAQPCountMap[sk->key].second + 1};
+                    joinConfirmCountMap[sk->key] = {{joinConfirmCountMap[sk->key].first.first + py->arrivedTupleCnt,
+                                                     joinConfirmCountMap[sk->key].first.second + sk->value},
+                                                    joinConfirmCountMap[sk->key].second + 1};
                     productivityProfiler->updateJoinRes(get_D(trackTuple->delay),
                                                         (futureTuplesR + sk->arrivedTupleCnt) *
                                                         (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
@@ -317,6 +361,7 @@ auto StreamOperator::setConfig(INTELLI::ConfigMapPtr cfg) -> bool {
     if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
         return false;
     }
+    joinSum = cfg->tryU64("joinSum", 0, true);
     std::string wmTag = config->tryString("wmTag", "arrival", true);
     WMTablePtr wmTable = newWMTable();
     wmGen = wmTable->findWM(wmTag);
@@ -324,23 +369,47 @@ auto StreamOperator::setConfig(INTELLI::ConfigMapPtr cfg) -> bool {
         INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
         return false;
     }
-    joinSum=cfg->tryU64("joinSum",0,true);
     INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
     return true;
 }
 
 size_t StreamOperator::getResult() {
+    if (joinSum) {
+        uint64_t result = 0;
+        for (auto it: joinConfirmCountMap) {
+            result += getConfirmJoinSumResult(it.first);
+        }
+        return result;
+    }
     return confirmedResult;
 }
 
 size_t StreamOperator::getAQPResult() {
+    if (joinSum) {
+        uint64_t result = 0;
+        for (auto it: joinAQPCountMap) {
+            result += getAQPJoinSumResult(it.first);
+        }
+        return result;
+    }
     return intermediateResult;
 }
 
-size_t StreamOperator::getJoinSumResult(keyType key) {
-    return joinCountMap[key].first.first * joinCountMap[key].first.second / joinCountMap[key].second;
+size_t StreamOperator::getAQPJoinSumResult(keyType key) {
+    //judge if sum of value is zero
+    if(joinAQPCountMap[key].first.second == 0){
+        INTELLI_ERROR("The sum of value of key " + to_string(key) + " dataset should not be zero");
+    }
+    return joinAQPCountMap[key].first.first * joinAQPCountMap[key].first.second / joinAQPCountMap[key].second;
 }
 
+size_t StreamOperator::getConfirmJoinSumResult(keyType key) {
+    if(joinConfirmCountMap[key].first.second == 0){
+        INTELLI_ERROR("The sum of value of key " + to_string(key) + " dataset should not be zero");
+    }
+    return joinConfirmCountMap[key].first.first * joinConfirmCountMap[key].first.second /
+           joinConfirmCountMap[key].second;
+}
 
 
 

@@ -70,7 +70,13 @@ namespace MSWJ {
          * @brief Get the joinSum result
          * @return The result
          */
-        size_t getJoinSumResult(keyType key);
+        size_t getAQPJoinSumResult(keyType key);
+
+        /**
+         * @brief Get the joinSum result
+         * @return The result
+         */
+        size_t getConfirmJoinSumResult(keyType key);
 
         class MSWJStateOfKey : public MeanStateOfKey {
         public:
@@ -81,7 +87,8 @@ namespace MSWJ {
             // The last seen time
             // The last estimate all tuples
             double lastUnarrivedTuples = 0;
-            valueType value=0;
+            valueType value = 0;
+
             // The last added number
             // The default constructor of IMAStateOfKey
             MSWJStateOfKey() = default;
@@ -98,16 +105,18 @@ namespace MSWJ {
     private:
         // The tag of MSWJ algorithm
         string algoTag = " NestedLoopJoin";
-        /**
-         *
-         */
+        //be used to calculate joinsum
+        bool joinSum{};
+        //The flag of MSWJ compensation
         uint64_t mswjCompensation = 0;
         // The pointer to the configuration map
         INTELLI::ConfigMapPtr config;
         // The pointer to the tuple productivity profiler
         TupleProductivityProfiler *productivityProfiler;
         //record key-join count and value, format: key,  {{ joinCount, value}, valueCount}
-        std::unordered_map<keyType, std::pair<std::pair<int, int>, int>> joinCountMap{};
+        std::unordered_map<keyType, std::pair<std::pair<uint64_t, uint64_t>, uint64_t>> joinAQPCountMap{};
+        //record key-join count and value, format: key,  {{ joinCount, value}, valueCount}
+        std::unordered_map<keyType, std::pair<std::pair<uint64_t, uint64_t>, uint64_t>> joinConfirmCountMap{};
     };
 }
 
