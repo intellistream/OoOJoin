@@ -14,7 +14,18 @@ size_t NestedLoopJoin::join(C20Buffer<OoOJoin::TrackTuplePtr> windS, OoOJoin::Tr
   size_t tsLen = windS.size();
   for (size_t i = 0; i < tsLen; i++) {
     if (windS.data(i)[0]->key == tr->key) {
-      result++;
+      /**
+       * @brief handle join sum here
+       */
+      if(joinSum)
+      {
+        result+=tr->payload;
+      }
+      else
+      {
+        result++;
+      }
+
     }
   }
   return result;

@@ -1,4 +1,4 @@
-BRANCH=svi_cl
+BRANCH=join_sum_sel
 git init
 git checkout -b $BRANCH
 git add .

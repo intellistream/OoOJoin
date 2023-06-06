@@ -15,6 +15,7 @@ bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     return false;
   }
   INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
+  joinSum=cfg->tryU64("joinSum",0,true);
   return true;
 }
 
@@ -100,6 +101,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
       stateOfKey = ImproveStateOfKeyTo(IMAStateOfKey, stateOfSKey);
     }
     timeBreakDownIndex += timeTrackingEnd(tt_index);
+
     /**
      *
      */
@@ -112,12 +114,29 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     AbstractStateOfKeyPtr probrPtr = stateOfKeyTableR->getByKey(ts->key);
     if (probrPtr != nullptr) {
       IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
-      confirmedResult += py->arrivedTupleCnt;
+      if(joinSum)
+      { /**
+         * @brief we are dealing with r.value, so here is py->xxx
+         */
+        double tc=(int64_t)py->arrivedTupleCnt*py->joinedRValueAvg;
+        confirmedResult+=(uint64_t)tc;
+        auto preU=(futureTuplesS + stateOfKey->arrivedTupleCnt) *
+            (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+            (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
+                (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+        preU=preU*py->rvAvgPrediction;
+        intermediateResult+=(uint64_t)preU;
+      }
+      else
+      {
+        confirmedResult += py->arrivedTupleCnt;
 //            intermediateResult += py->arrivedTupleCnt;
-      intermediateResult += (futureTuplesS + stateOfKey->arrivedTupleCnt) *
-          (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
-          (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
-              (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+        intermediateResult += (futureTuplesS + stateOfKey->arrivedTupleCnt) *
+            (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+            (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
+                (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+      }
+
     }
     timeBreakDownJoin += timeTrackingEnd(tt_join);
     stateOfKey->lastUnarrivedTuples = futureTuplesS;
@@ -142,6 +161,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     IMAStateOfKeyPtr stateOfKey;timeTrackingStart(tt_index);
     AbstractStateOfKeyPtr stateOfRKey = stateOfKeyTableR->getByKey(tr->key);
 
+
     // lastTimeR=tr->arrivalTime;
     if (stateOfRKey == nullptr) // this key does'nt exist
     {
@@ -151,6 +171,13 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     } else {
       stateOfKey = ImproveStateOfKeyTo(IMAStateOfKey, stateOfRKey);
     }
+    /**
+    * @brief rvalue estimation
+    */
+    stateOfKey->joinedRValueSum+=(int64_t)tr->payload;
+    stateOfKey->joinedRValueCnt++;
+    stateOfKey->joinedRValueAvg=stateOfKey->joinedRValueSum/stateOfKey->joinedRValueCnt;
+    stateOfKey->rvAvgPrediction=stateOfKey->joinedRValuePredictor.update(stateOfKey->joinedRValueAvg);
     timeBreakDownIndex += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
     updateStateOfKey(stateOfKey, tr);
     double futureTuplesR = MeanAQPIAWJOperator::predictUnarrivedTuples(stateOfKey);
@@ -159,13 +186,32 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     timeTrackingStart(tt_join);
     AbstractStateOfKeyPtr probrPtr = stateOfKeyTableS->getByKey(tr->key);
     if (probrPtr != nullptr) {
+
       IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
-      confirmedResult += py->arrivedTupleCnt;
+      if(joinSum)
+      { /**
+         * @brief we are dealing with r.value, so here is stateOfKey->xxx
+         */
+        double tc=(int64_t)py->arrivedTupleCnt*stateOfKey->joinedRValueAvg;
+        confirmedResult+=(uint64_t)tc;
+        auto preU=(futureTuplesR + stateOfKey->arrivedTupleCnt) *
+            (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+            (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
+                (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+        preU=preU*stateOfKey->rvAvgPrediction;
+        intermediateResult+=(uint64_t)preU;
+      }
+      else
+      {
+        confirmedResult += py->arrivedTupleCnt;
 //            intermediateResult += py->arrivedTupleCnt;
-      intermediateResult += (futureTuplesR + stateOfKey->arrivedTupleCnt) *
-          (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
-          (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
-              (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+        intermediateResult += (futureTuplesR + stateOfKey->arrivedTupleCnt) *
+            (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
+            (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
+                (py->lastUnarrivedTuples + py->arrivedTupleCnt);
+      }
+
+
     }
     timeBreakDownJoin += timeTrackingEnd(tt_join);
     stateOfKey->lastUnarrivedTuples = futureTuplesR;
@@ -175,6 +221,8 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 }
 
 size_t OoOJoin::IMAIAWJOperator::getResult() {
+
+
   return confirmedResult;
 }
 

@@ -15,6 +15,7 @@ bool OoOJoin::IAWJSelOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
   noRTrace = newIMAStateOfKey();
   noSTrace = newIMAStateOfKey();
+  joinSum=cfg->tryU64("joinSum",0,true);
   return true;
 }
 
@@ -128,6 +129,7 @@ bool OoOJoin::IAWJSelOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
       noRObservation = myWindow.windowR.size();
       selObservation = confirmedResult * 1.0 / (noSObservation * noRObservation);
       selPrediction = selPredictor.update(selObservation);
+
     }
     timeBreakDownJoin += timeTrackingEnd(tt_join);
     stateOfKey->lastUnarrivedTuples = futureTuplesS;
@@ -184,6 +186,13 @@ bool OoOJoin::IAWJSelOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
       noRObservation = myWindow.windowR.size();
       selObservation = confirmedResult * 1.0 / (noSObservation * noRObservation);
       selPrediction = selPredictor.update(selObservation);
+      /**
+       * @brief rvalue observations here
+       */
+      noRTrace->joinedRValueSum+=(int64_t)tr->payload;
+      noRTrace->joinedRValueCnt++;
+      noRTrace->joinedRValueAvg=noRTrace->joinedRValueSum/noRTrace->joinedRValueCnt;
+      noRTrace->rvAvgPrediction=noRTrace->joinedRValuePredictor.update(noRTrace->joinedRValueAvg);
     }
     timeBreakDownJoin += timeTrackingEnd(tt_join);
     stateOfKey->lastUnarrivedTuples = futureTuplesR;
@@ -193,12 +202,26 @@ bool OoOJoin::IAWJSelOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 }
 
 size_t OoOJoin::IAWJSelOperator::getResult() {
+  if(joinSum)
+  {
+    return confirmedResult*noRTrace->joinedRValueAvg;
+  }
+
   return confirmedResult;
 }
 
 size_t OoOJoin::IAWJSelOperator::getAQPResult() {
   // size_t intermediateResult = (selectivityR + selectivityS) * (noR * noS);
   //selPrediction=selObservation;
-  size_t intermediateResult = selPrediction * noS * noR;
-  return intermediateResult;
+  size_t ru;
+  if(joinSum)
+  {
+    ru=selPrediction*noS*noR*noRTrace->rvAvgPrediction;
+    ru=(ru+getResult())/2;
+  }
+  else
+  {
+    ru = selPrediction * noS * noR;
+  }
+  return ru;
 }

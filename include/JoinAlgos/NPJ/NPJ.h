@@ -45,6 +45,7 @@ class NPJ_thread : public AbstractC20Thread {
   BarrierPtr buildBar = nullptr;
   std::shared_ptr<std::thread> threadPtr;
   struct timeval timeBaseStruct;
+  uint64_t joinSum=0;
   //tsType timeStep = 1;
  protected:
   /**
@@ -102,6 +103,10 @@ class NPJ_thread : public AbstractC20Thread {
     if (buildBar) {
       buildBar->arrive_and_wait();
     }
+  }
+  void setJoinSum(uint64_t js)
+  {
+    joinSum=js;
   }
 };
 

@@ -15,6 +15,7 @@ bool OoOJoin::MeanAQPIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     return false;
   }
   INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
+  joinSum=cfg->tryU64("joinSum",0,true);
   return true;
 }
 
@@ -147,14 +148,21 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   if (isInWindow) {
     MeanStateOfKeyPtr sk;timeTrackingStart(tt_index);
     AbstractStateOfKeyPtr skrf = stateOfKeyTableR->getByKey(tr->key);
+
     if (skrf == nullptr) // this key does'nt exist
     {
       sk = newMeanStateOfKey();
       sk->key = tr->key;
       stateOfKeyTableR->insert(sk);
+
     } else {
       sk = ImproveStateOfKeyTo(MeanStateOfKey, skrf);
     }
+    sk->joinedRValueSum+=(int64_t)tr->payload;
+    sk->joinedRValueCnt++;
+    sk->joinedRValueAvg=sk->joinedRValueSum/sk->joinedRValueCnt;
+    sk->rvAvgPrediction=sk->joinedRValuePredictor.update(sk->joinedRValueAvg);
+
     timeBreakDownIndex += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
     updateStateOfKey(sk, tr);
     timeBreakDownPrediction += timeTrackingEnd(tt_prediction);
@@ -212,12 +220,20 @@ void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
         MeanStateOfKeyPtr px = ImproveStateOfKeyTo(MeanStateOfKey, iter);
         probrPtr = stateOfKeyTableS->getByKey(px->key);
         if (probrPtr != nullptr) {
+
           double unarrivedS = predictUnarrivedTuples(px);
           MeanStateOfKeyPtr py = ImproveStateOfKeyTo(MeanStateOfKey, probrPtr);
           double unarrivedR = predictUnarrivedTuples(py);
-
-          intermediateResult += (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR);
-          confirmedResult += (px->arrivedTupleCnt) * (py->arrivedTupleCnt);
+          if(joinSum)
+          {
+            intermediateResult += (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR)*px->rvAvgPrediction;
+            confirmedResult += (px->arrivedTupleCnt) * (py->arrivedTupleCnt)*px->joinedRValueAvg;
+          }
+          else
+          {
+            intermediateResult += (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR);
+            confirmedResult += (px->arrivedTupleCnt) * (py->arrivedTupleCnt);
+          }
 
         }
       }

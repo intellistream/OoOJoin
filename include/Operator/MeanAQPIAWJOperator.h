@@ -71,15 +71,50 @@ class MeanAQPIAWJOperator : public AbstractOperator {
    * @brief for time breakdown of join
    */
   tsType timeBreakDownJoin{};
+  /**
+   * @brief adaptive linear filter for prediction
+   */
+  class AEWMAPredictor {
+   protected:
+    double alpha = 0.2;
+    double minAlpha = 0.01;        // Minimum allowed alpha
+    double maxAlpha = 0.99;        // Maximum allowed alpha
+    double previousValue;   // Previous observed value
+   public:
+    AEWMAPredictor() = default;
+    ~AEWMAPredictor() = default;
+    void reset(void) {
+      alpha = 0.2;
+      previousValue = 0.0;
+    }
+    double update(double observedValue) {
+      double smoothedValue = alpha * observedValue + (1 - alpha) * previousValue;
+      previousValue = observedValue;
 
+      // Adjust alpha based on the deviation between observed and smoothed values
+      double deviation = std::abs(observedValue - smoothedValue);
+      if (deviation > 0) {
+        double adjustment = 1.0 / deviation;
+        alpha = std::max(minAlpha, std::min(maxAlpha, alpha * adjustment));
+      }
+
+      return smoothedValue;
+    }
+
+  };
   class MeanStateOfKey : public AbstractStateOfKey {
    public:
     size_t arrivedTupleCnt = 0;
     double arrivalSkew = 0, sigmaArrivalSkew = 0;
     TrackTuplePtr lastEventTuple = nullptr, lastArrivalTuple = nullptr;
-
+    AEWMAPredictor joinedRValuePredictor;
+    double joinedRValueSum=0,joinedRValueAvg=0;
+    int64_t joinedRValueCnt=0;
+    double rvAvgPrediction=0;
     // tsType  lastSeenTime=0;
-    MeanStateOfKey() = default;
+    MeanStateOfKey() {
+      joinedRValuePredictor.reset();
+    }
 
     ~MeanStateOfKey() = default;
   };

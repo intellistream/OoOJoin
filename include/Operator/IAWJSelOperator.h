@@ -42,34 +42,7 @@ class IAWJSelOperator : public MeanAQPIAWJOperator {
 
     ~IMAStateOfKey() = default;
   };
-  class AEWMAPredictor {
-   protected:
-    double alpha = 0.2;
-    double minAlpha = 0.01;        // Minimum allowed alpha
-    double maxAlpha = 0.99;        // Maximum allowed alpha
-    double previousValue;   // Previous observed value
-   public:
-    AEWMAPredictor() = default;
-    ~AEWMAPredictor() = default;
-    void reset(void) {
-      alpha = 0.2;
-      previousValue = 0.0;
-    }
-    double update(double observedValue) {
-      double smoothedValue = alpha * observedValue + (1 - alpha) * previousValue;
-      previousValue = observedValue;
 
-      // Adjust alpha based on the deviation between observed and smoothed values
-      double deviation = std::abs(observedValue - smoothedValue);
-      if (deviation > 0) {
-        double adjustment = 1.0 / deviation;
-        alpha = std::max(minAlpha, std::min(maxAlpha, alpha * adjustment));
-      }
-
-      return smoothedValue;
-    }
-
-  };
 
 #define newIMAStateOfKey std::make_shared<IMAStateOfKey>
   using IMAStateOfKeyPtr = std::shared_ptr<IMAStateOfKey>;
