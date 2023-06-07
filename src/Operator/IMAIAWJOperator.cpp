@@ -125,7 +125,9 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
             (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
                 (py->lastUnarrivedTuples + py->arrivedTupleCnt);
         preU=preU*py->rvAvgPrediction;
-        intermediateResult+=(uint64_t)((preU+tc)/2);
+       // intermediateResult+=(uint64_t)((preU+tc)/2);
+        double  cRate= 1-getCompensationWeight(stateOfKey,py);
+        intermediateResult+=(uint64_t)(((1-cRate)*tc+cRate*preU));
       }
       else
       {
@@ -144,7 +146,29 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   }
   return true;
 }
-
+double OoOJoin::IMAIAWJOperator::getCompensationWeight(OoOJoin::IMAIAWJOperator::IMAStateOfKeyPtr noSTrace,OoOJoin::IMAIAWJOperator::IMAStateOfKeyPtr noRTrace) {
+  //return 0.5;
+  uint64_t lastSArrival=noSTrace->lastArrivalTuple->arrivalTime+noSTrace->lastEventTuple->eventTime;
+  uint64_t lastRArrival=noRTrace->lastArrivalTuple->arrivalTime+noRTrace->lastEventTuple->eventTime;
+  double lastWindowArrival=(lastSArrival+lastRArrival)/2;
+  double expectedLastArrival=2*myWindow.getEnd()-myWindow.getStart()+(noSTrace->arrivalSkew+noRTrace->arrivalSkew)/2;
+  double compensationWeight;
+  if(lastWindowArrival>expectedLastArrival)
+  {
+    compensationWeight=0.0;
+  }
+  else
+  { if( (lastSArrival+lastRArrival)/2>=2*myWindow.getEnd()-myWindow.getStart())
+    {
+      compensationWeight=0.2;
+    }
+    else
+    {
+      compensationWeight=0.5;
+    }
+  }
+  return compensationWeight;
+}
 bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   bool shouldGenWM, isInWindow;
   if (lockedByWaterMark) {
@@ -200,7 +224,8 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
             (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
                 (py->lastUnarrivedTuples + py->arrivedTupleCnt);
         preU=preU*stateOfKey->rvAvgPrediction;
-        intermediateResult+=(uint64_t)((preU+tc)/2);
+        double  cRate= 1-getCompensationWeight(stateOfKey,py);
+        intermediateResult+=(uint64_t)(((1-cRate)*tc+cRate*preU));
       }
       else
       {
