@@ -48,7 +48,7 @@ class IMAIAWJOperator : public MeanAQPIAWJOperator {
 
 #define newIMAStateOfKey std::make_shared<IMAStateOfKey>
   using IMAStateOfKeyPtr = std::shared_ptr<IMAStateOfKey>;
-
+  double getCompensationWeight(IMAStateOfKeyPtr noSTrace,IMAStateOfKeyPtr noRTrace);
  public:
   IMAIAWJOperator() = default;
 
