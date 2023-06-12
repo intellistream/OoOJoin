@@ -124,9 +124,7 @@ def main():
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    methodTags = ["k-slack", "watermark", "pecj", "theoretical best"]
-    resultPaths = ["ks", "wa", "pecj_ks", "pec_ai"]
-    csvTemplates = ["config_yuanzhen.csv", "config_waterMark.csv", "config_pecjyuanzhen.csv", "config_pecjAI.csv"]
+   
     # run
     reRun = 0
     if (len(sys.argv) < 2):
@@ -135,22 +133,17 @@ def main():
         reRun = 1
         # runPeriodVector(exeSpace, periodVec, resultPath)
 
-    lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
-    lat95Temp = lat95All
-    lat95Temp[3] = lat95Temp[2]
-    groupLine.DrawFigureYnormal(lat95Temp, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "fig1E2E",
-                                True)
     # os.system("mkdir " + figPath)
     # print(lat95All)
-    print(lat95All)
+    #print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "pecj-alf", "(pecj-vae)/7.5", "svi","svi_CL"]
-    resultPaths = ["wa", "pecj_ks", "pec_ai", "svi","svi_CL"]
-    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv", "config_svi.csv","config_sviCL.csv"]
+    methodTags = [ "svi","svi_CL"]
+    resultPaths = [ "svi","svi_CL"]
+    csvTemplates = [ "config_svi.csv","config_sviCL.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
-    npLat[2] = npLat[2] / 7.5
-    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "e2ESmall", True)
+    #npLat[2] = npLat[2] / 7.5
+    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "e2ESmallSvi", True)
 
 
 if __name__ == "__main__":

@@ -55,6 +55,7 @@ void OoOJoin::LinearSVIOperator::preparePretrain() {
   streamStatisics.rRateObservations.initObservationBuffer(selLen);
 }
 void OoOJoin::LinearSVIOperator::prepareInference() {
+  torch::manual_seed(114514);
   /**
    * @brief 1. init all observation tensors
    */
@@ -77,8 +78,8 @@ void OoOJoin::LinearSVIOperator::prepareInference() {
    * @brief 3. set the small learning rate
    */
   streamStatisics.sviSelectivity.resetLearningRate(0.001);
-  streamStatisics.sviSRate.resetLearningRate(0.001);
-  streamStatisics.sviRRate.resetLearningRate(0.001);
+  streamStatisics.sviSRate.resetLearningRate(0.01);
+  streamStatisics.sviRRate.resetLearningRate(0.01);
 }
 
 bool OoOJoin::LinearSVIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
@@ -204,10 +205,9 @@ bool OoOJoin::LinearSVIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     if (aiModeEnum != 255) {
       streamStatisics.sSkewObservations.appendX(streamStatisics.sSkew);
       streamStatisics.sRateObservations.appendX(streamStatisics.sRate);
-      if (streamStatisics.sRateObservations.buffFull && (streamStatisics.sRateObservations.fullCnt % 20 == 5)) {
-        updateEstimation(streamStatisics.sRateObservations, streamStatisics.sviSRate);
 
-      }
+      updateEstimation(streamStatisics.sRateObservations, streamStatisics.sviSRate);
+
     }
     /**
      * @brief First get the index of hash table
@@ -244,6 +244,7 @@ bool OoOJoin::LinearSVIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
       if (aiModeEnum != 255) {
         streamStatisics.selObservations.setFinalObservation(streamStatisics.selectivity);
         streamStatisics.selObservations.appendX(streamStatisics.selectivity);
+        updateEstimation(streamStatisics.selObservations, streamStatisics.sviSelectivity);
       }
 
 //            intermediateResult += py->arrivedTupleCnt;
@@ -259,23 +260,36 @@ bool OoOJoin::LinearSVIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   return true;
 }
 void OoOJoin::LinearSVIOperator::updateEstimation(ObservationGroup &observation, TROCHPACK_SVI::LinearSVI &estimator) {
-  if (aiModeEnum != 1) {
+
+
+  if (aiModeEnum==0) {
     return;
   }
-  auto tx = (observation.xTensor / observation.scalingFactor).clone();
-  float oldMu = estimator.resultMu;
-  estimator.runForward(tx);
-  float newMu = estimator.resultMu;
-  float loss = 1.0;
-  uint16_t iterations = 0;
-  if (std::abs(oldMu - newMu) > 0.1 * std::abs(oldMu)) {
-    while (loss < -0.8 && iterations < 10) {
-      estimator.learnStep(tx);
-      loss = estimator.resultLoss;
-      iterations++;
+  if(observation.buffFull) {
+    observation.tempXTensor=observation.xTensor.clone();
+    if(aiModeEnum==2)
+    {
+      return;
     }
 
-    estimator.runForward(tx);
+    if (observation.fullCnt) {
+      auto tx = (observation.tempXTensor).clone();
+      float oldMu = estimator.resultMu;
+      estimator.runForward(tx);
+      float newMu = estimator.resultMu;
+      float loss = 1.0;
+      uint16_t iterations = 0;
+      if (std::abs(oldMu - newMu) > 0.1 * std::abs(oldMu)) {
+        while (loss > -0.8 && iterations < 10) {
+          estimator.learnStep(tx);
+          loss = estimator.resultLoss;
+          iterations++;
+          INTELLI_INFO("Run continue learning, iteration="+ to_string(iterations)+"loss ="+ to_string(loss));
+        }
+
+        estimator.runForward(tx);
+      }
+    }
   }
   //INTELLI_INFO("Run continue learning");
 }
@@ -291,35 +305,32 @@ void OoOJoin::LinearSVIOperator::endOfWindow() {
     */
     tsType nnBegin = UtilityFunctions::timeLastUs(timeBaseStruct);
     streamStatisics.sviSelectivity.runForward(
-        streamStatisics.selObservations.xTensor / (streamStatisics.selObservations.scalingFactor));
+        streamStatisics.selObservations.tempXTensor / (streamStatisics.selObservations.scalingFactor));
     float selMu = streamStatisics.sviSelectivity.resultMu;
     selMu = selMu * streamStatisics.selObservations.scalingFactor;
     INTELLI_INFO("The estimated selectivity is " + to_string(selMu));
-    /**
-     * @brief estimate srate and rrate
-     */
 
     /**
-     * @brief do some continual learning
-     */
-    updateEstimation(streamStatisics.sRateObservations, streamStatisics.sviSRate);
-    updateEstimation(streamStatisics.rRateObservations, streamStatisics.sviRRate);
-    /* auto tx=(streamStatisics.sRateObservations.xTensor/streamStatisics.sRateObservations.scalingFactor).clone();
-      streamStatisics.sviSRate.learnStep(tx);
-      tx=(streamStatisics.rRateObservations.xTensor/streamStatisics.rRateObservations.scalingFactor).clone();
-      streamStatisics.sviRRate.learnStep(tx);*/
+    * @brief do some continual learning
+    */
+    /*if(aiModeEnum==1)
+    {
+      updateEstimation(streamStatisics.sRateObservations, streamStatisics.sviSRate);
+      updateEstimation(streamStatisics.rRateObservations, streamStatisics.sviRRate);
+    }*/
+    /* */
     /**
      * @brief forward
      */
-    streamStatisics.sviSRate.runForward(
-        streamStatisics.sRateObservations.xTensor);
+   streamStatisics.sviSRate.runForward(
+        streamStatisics.sRateObservations.tempXTensor);
     float sRateMu = streamStatisics.sviSRate.resultMu;
     sRateMu = sRateMu;
     INTELLI_INFO("The estimated sRate is " + to_string(sRateMu));
     //streamStatisics.rRateObservations.scalingFactor=1.0;
     // streamStatisics.sviSRate.learnStep(streamStatisics.sRateObservations.xTensor);
     streamStatisics.sviRRate.runForward(
-        streamStatisics.rRateObservations.xTensor);
+        streamStatisics.rRateObservations.tempXTensor);
     float rRateMu = streamStatisics.sviRRate.resultMu;
     rRateMu = rRateMu;
     INTELLI_INFO("The estimated rRate is " + to_string(rRateMu));
@@ -362,10 +373,10 @@ bool OoOJoin::LinearSVIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     if (aiModeEnum != 255) {
       streamStatisics.rSkewObservations.appendX(streamStatisics.rSkew);
       streamStatisics.rRateObservations.appendX(streamStatisics.rRate);
-      if (streamStatisics.rRateObservations.buffFull && (streamStatisics.rRateObservations.fullCnt % 10 == 5)) {
-        updateEstimation(streamStatisics.rRateObservations, streamStatisics.sviRRate);
 
-      }
+      updateEstimation(streamStatisics.rRateObservations, streamStatisics.sviRRate);
+
+
 
     }
     LinearSVIStateOfKeyPtr stateOfKey;timeTrackingStart(tt_index);
@@ -401,6 +412,7 @@ bool OoOJoin::LinearSVIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
       if (aiModeEnum != 255) {
         streamStatisics.selObservations.setFinalObservation(streamStatisics.selectivity);
         streamStatisics.selObservations.appendX(streamStatisics.selectivity);
+        updateEstimation(streamStatisics.selObservations, streamStatisics.sviSelectivity);
       }
       //streamStatisics.updateSelectivity(confirmedResult);
       // appendSelectivityTensorX();
@@ -423,5 +435,10 @@ size_t OoOJoin::LinearSVIOperator::getResult() {
 }
 
 size_t OoOJoin::LinearSVIOperator::getAQPResult() {
+// return (intermediateResult+confirmedResult)/2;
+/*if(aiModeEnum==1)
+{
   return intermediateResult;
+}*/
+  return (intermediateResult+confirmedResult)/2;
 }
