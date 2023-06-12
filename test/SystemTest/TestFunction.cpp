@@ -212,9 +212,9 @@ int runTestBenchAdj(const ConfigMapPtr &cfg, const string &configName = "config.
   tb.setDataLoader(loaderTag, cfg);
 
   if (operatorTag == "MSWJ") {
-    tb.setOperator(mswj, cfg);
+    tb.setOperator(newIAWJOperator(), cfg);
   } else {
-    tb.setOperator(iawj, cfg);
+    tb.setOperator(newIAWJOperator(), cfg);
   }
 
   realRu = tb.inOrderTest(true);
