@@ -302,7 +302,7 @@ TEST_CASE("Test MSWJ running on random, watermarkTime = 16", "[short]")
   REQUIRE(a == 1);
 }
 
-TEST_CASE("Test MSWJ running on random with compensation, watermarkTime = 16", "[short]")
+TEST_CASE("Test MSWJ joinSumResult running on random, watermarkTime = 16", "[short]")
 {
   int a = 0;
   string configName, outPrefix = "";
@@ -310,7 +310,7 @@ TEST_CASE("Test MSWJ running on random with compensation, watermarkTime = 16", "
   ConfigMapPtr cfg = newConfigMap();
   cfg->fromFile(configName);
   cfg->edit("operator", "MSWJ");
-  cfg->edit("mswjCompensation", (uint64_t) 1);
+  cfg->edit("joinSum", (uint64_t)1);
   cfg->edit("watermarkTimeMs", (uint64_t) 16);
   a = runTestBenchAdj(cfg, configName, outPrefix);
   REQUIRE(a == 1);
@@ -365,4 +365,23 @@ TEST_CASE("Test MSWJ running on crazy random dataset, windowLenMs = 10, watermar
   cfg->edit("maxArrivalSkewMs", (uint64_t) 1000);
   a = runTestBenchAdj(cfg, configName, outPrefix);
   REQUIRE(a == 1);
+}
+
+TEST_CASE("Test MSWJ running on dataLoader for joinSum result , windowLenMs = 2000, watermarkTime = 200", "[short]")
+{
+    int a = 0;
+    string configName, outPrefix = "";
+    configName = "config_IMA.csv";
+    ConfigMapPtr cfg = newConfigMap();
+    cfg->fromFile(configName);
+    cfg->edit("windowLenMs", (uint64_t) 2000);
+    cfg->edit("operator", "MSWJ");
+    cfg->edit("watermarkTimeMs", (uint64_t) 200);
+    cfg->edit("dataLoader", "file");
+    cfg->edit("joinSum",(uint64_t)1);
+    //Dataset files
+    cfg->edit("fileDataLoader_rFile", "../datasets/sb_1000ms_1tMidDelayData.csv");
+    cfg->edit("fileDataLoader_sFile", "../datasets/cj_1000ms_1tLowDelayData.csv");
+    a = runTestBenchAdj(cfg, configName, outPrefix);
+    REQUIRE(a == 1);
 }
