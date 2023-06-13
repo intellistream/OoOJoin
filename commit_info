@@ -1,2 +1,1 @@
-1. join-sum of IAWJ
-2. join-sum of IAWJSel
+1. fix bugs of LinearVAE, so that we can load different modules for different purposes
