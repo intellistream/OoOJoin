@@ -1,4 +1,4 @@
-BRANCH=vae_bug_fix
+BRANCH=sec_4_5
 git init
 git checkout -b $BRANCH
 git add .
