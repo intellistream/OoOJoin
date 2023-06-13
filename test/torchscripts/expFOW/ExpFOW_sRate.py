@@ -64,6 +64,7 @@ class FOW(nn.Module):
             nn.ReLU()
         )
         self.latent_dim = latent_dim
+        self.hiddenDim=hidden_dim
         self.inputDim = input_dim
         # for mu
         self.priorMu = torch.tensor([0.0])
@@ -73,6 +74,7 @@ class FOW(nn.Module):
         self.lastTau=1/self.lastSigma
         self.pMu=torch.tensor([0.0])
         self.pTau=torch.tensor([0.0])
+        self.pTauShadow=self.pTau
         self.pA=torch.tensor([0.0])
         self.pLambda=torch.tensor([0.0])
         # for tau, exp(-logvar)
@@ -109,10 +111,11 @@ class FOW(nn.Module):
         xPattern = self.xPattern(x)
         eLambda =self.lambdaLayer(xPattern)
         muAndARaw=self.muAndALayer(xPattern)
-        eA=self.ALayer(xPattern)
+        eA=self.ALayer(muAndARaw[:,0:int(self.hiddenDim)])
         #let's update eMu and eTau then, first emu
         #a little bit putting rotten, can also use the eqn31 32 instead of deep dark here
-        eTau = self.tauLayer(xPattern)
+        eTau = self.tauLayer(muAndARaw[:,int(self.hiddenDim):])
+        eMu=self.muLayer(muAndARaw[:,int(self.hiddenDim):])
         eMu=self.muLayer(xPattern)
         self.pMu=self.lastMu
         self.pTau=self.lastTau
@@ -123,7 +126,7 @@ class FOW(nn.Module):
         self.lastTau=eTau
         self.lastLambda=eLambda
         self.lastAi=eA
-        return eMu,eTau,eLambda,eA,self.pMu
+        return eMu,eTau,eLambda,eA,self.pTau
 
     @torch.jit.export
     def getDimension(self):
@@ -134,25 +137,18 @@ class FOW(nn.Module):
     def lossUnderNormal(self, x_recon, x, mu, logvar):
         #log likely hood
         logLikelyHoodVec=torch.log(self.lastLambda)+(-self.lastLambda*(x-self.lastAi))+(-(self.lastAi-self.lastMu)*(self.lastAi-self.lastMu)*self.lastTau/2)+0.5*torch.log(self.lastTau)
+        #logLikelyHoodVec=torch.log(self.lastLambda)+(-self.lastLambda*(x-self.lastAi))
         logLikelyHood=torch.sum(logLikelyHoodVec)
         logPMu=torch.log(self.pMu)
-        logPTau=torch.log(self.pTau)
-        # a and lambda
+        logEMu=torch.log(self.lastMu)
+        logPTau=torch.log(logvar)
         logPAVec=torch.log(self.pA)
         logPA=torch.sum(logPAVec)
         logLambdaVec=torch.log(self.pLambda)
         logPLambda=torch.sum(logLambdaVec)
-        # the E() items
-        logEMu=torch.log(self.lastMu)
-        logETau=torch.log(self.lastTau)
-        # a and lambda
-        logEAVec=torch.log(self.lastAi)
-        logEA=torch.sum(logEAVec)
-        logELambdaVec=torch.log(self.lastLambda)
-        logELambda=torch.sum(logLambdaVec)
-        ELBO=torch.sigmoid(logLikelyHood+logPMu+logPTau+logPA+logPLambda-(logEMu+logETau+logEA+logELambda))
+        ELBO=torch.sigmoid(logLikelyHood)+torch.sigmoid(logPMu-logEMu)
         
-        return -ELBO 
+        return -torch.sum(ELBO) 
 
     @torch.jit.export
     def lossUnderPretrain(self, x_recon, x, pmu, mu):
@@ -160,24 +156,6 @@ class FOW(nn.Module):
         recon_loss = 0
         mu_loss = F.mse_loss(mu, pmu, reduction='mean')
         return mu_loss + recon_loss
-
-    def loss_function(self, x_recon, x, muZ, logvarZ, mu, logvar):
-        recon_loss = F.mse_loss(x_recon, x, reduction='mean')
-        mu_prior = self.priorMu
-        sigma_prior = self.priorSigma
-        a = self.priorA0
-        b = self.priorB0
-        # print(a)
-        # print(b)
-        kl_div = -0.5 * torch.sum(
-            1 + logvar - torch.log(sigma_prior.pow(2)) - ((mu - mu_prior).pow(2) + logvar.exp()) / sigma_prior.pow(2))
-        kl_div += -0.5 * torch.sum(
-            1 + logvar - torch.log(b) - torch.lgamma(a) + (a - 1) * (torch.digamma(a) - torch.log(mu)) - (
-                    mu / b) - a * torch.exp(torch.log(mu) - torch.log(b)))
-        # kl_divergence = -0.5 * torch.sum(1 + logvarZ - muZ.pow(2) - logvarZ.exp())
-        # kl_divergence = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
-        return recon_loss + kl_div
-    # a loss function to force mu aligned with pmu
 
 
 def save_model(model, path, X):
@@ -254,6 +232,7 @@ def supervisedTrain(model, X, Y, batch_size, learningRate, epochs, device):
 
 def unSupervisedTrain(model, X, batch_size, learningRate, epochs, device):
     optimizer = optim.Adam(model.parameters(), lr=learningRate)
+    
     num_samples, input_dim = X.shape
     for epoch in range(1, epochs + 1):
         train_loss = 0
@@ -263,11 +242,12 @@ def unSupervisedTrain(model, X, batch_size, learningRate, epochs, device):
             # x = X[batch_idx:batch_idx+batch_size].to('cuda')
             x = X[batch_idx:batch_idx + batch_size].to(device)
             model.loadPriorDist(torch.mean(x[0]), torch.std(x[0]), torch.tensor(1.0), torch.tensor(1.0))
-            optimizer.zero_grad()
+           
             x_recon, muZ, logvarZ, mu, logvar = model(x)
             # loss = model.loss_function(x_recon, x, muZ, logvarZ, mu, logvar)
             loss = model.lossUnderNormal(x_recon, x, mu, logvar)
-            loss.backward()
+            optimizer.zero_grad()
+            loss.backward(retain_graph=True)
             optimizer.step()
             train_loss += loss.item()
             # optimizer.step()
@@ -310,7 +290,7 @@ def pretrainModel(device, prefixTag, saveTag):
 
     # Note: first learn the certainties, then get the uncertainties
     supervisedTrain(model, X, Y, batch_size, 1e-3, 200, device)
-    # unSupervisedTrain(model, X, batch_size, 1e-3, 1, device)
+    unSupervisedTrain(model, X, batch_size, 1e-3, 2, device)
     # model.eval()
     # model=model.to('cpu')
     # X, Y = genX(1, input_dim, 10, 0.2)
