@@ -1,1 +1,2 @@
-1. fix bugs of LinearVAE, so that we can load different modules for different purposes
+1. back up the progress in implementing sec4_5 (see benchmark/torchscripts/expFOW)
+2. also tries sec4_6

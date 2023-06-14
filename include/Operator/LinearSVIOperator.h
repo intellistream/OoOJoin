@@ -32,8 +32,7 @@ namespace OoOJoin {
  * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
  * - "aiMode" String: The tag to indicate working mode of ai, can be pretrain (0), continual_learning (1) or inference (2)
  * = "ptPrefix" String: The prefix of svi *.pt, such as linearVAE
- * - "ptPrefixSel" String: The specific prefix to estimate Sel, if specified, will overwrite ptPrefix in loading Sel MODULE
- * - "ptPrefixSel" String: The specific prefix to estimate Sel, if specified, will overwrite ptPrefix in loading Sel MODULE
+ * - "ptPrefixSel" String: The specific prefix to estimate Sel, if specified, will overwrite ptPrefix in loading Sel MODUL
  * - "ptPrefixSRate" String: The specific prefix to estimate rate of S, if specified, will overwrite ptPrefix in loading SRate MODULE
  * - "ptPrefixRRate" String: The specific prefix to estimate rate of R, if specified, will overwrite ptPrefix in loading RRate MODULE
  * - "appendSel", U64, whether append sel observations to stored tensor, 0
