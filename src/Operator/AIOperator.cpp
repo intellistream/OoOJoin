@@ -77,14 +77,17 @@ bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   std::string wmTag = config->tryString("wmTag", "arrival", true);
   aiMode = config->tryString("aiMode", "pretrain", true);
   ptPrefix = config->tryString("ptPrefix", "linearVAE", true);
+  ptPrefixSel = config->tryString("ptPrefixSel", ptPrefix, true);
+  ptPrefixSRate = config->tryString("ptPrefixSRate", ptPrefix, true);
+  ptPrefixRRate = config->tryString("ptPrefixRRate", ptPrefix, true);
   appendSel = config->tryU64("appendSel", 0, true);
   appendSkew = config->tryU64("appendSkew", 0, true);
   appendRate = config->tryU64("appendRate", 0, true);
   exitAfterPretrain = config->tryU64("exitAfterPretrain", 1, true);
 
-  streamStatisics.vaeSelectivity.loadModule("torchscripts/" + ptPrefix + "/" + ptPrefix + "_selectivity.pt");
-  streamStatisics.vaeSRate.loadModule("torchscripts/" + ptPrefix + "/" + ptPrefix + "_sRate.pt");
-  streamStatisics.vaeRRate.loadModule("torchscripts/" + ptPrefix + "/" + ptPrefix + "_rRate.pt");
+  streamStatisics.vaeSelectivity.loadModule("torchscripts/" + ptPrefixSel + "/" + ptPrefixSel + "_selectivity.pt");
+  streamStatisics.vaeSRate.loadModule("torchscripts/" + ptPrefixSRate + "/" + ptPrefixSRate + "_sRate.pt");
+  streamStatisics.vaeRRate.loadModule("torchscripts/" + ptPrefixRRate + "/" + ptPrefixRRate + "_rRate.pt");
   // INTELLI_WARNING("The dimension of DAN is "+to_string(streamStatisics.vaeSelectivity.getXDimension()));
   if (aiMode == "pretrain") {
     aiModeEnum = 0;

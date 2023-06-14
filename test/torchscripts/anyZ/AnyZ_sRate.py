@@ -29,15 +29,17 @@ class ANYZ(nn.Module):
         self.xPattern = nn.Sequential(
             # TransformerEncoder(input_dim, hidden_dim, num_layers, num_heads),
             nn.Linear(input_dim, hidden_dim),
-            # nn.ReLU(),
+            #nn.Sigmoid(),
             nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),
+            #nn.Sigmoid(),
             # nn.Linear(hidden_dim, latent_dim*2 + 2),
         )
         # for fitting a complex function
         self.funtionFitting=nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim*2),
-            nn.Linear(hidden_dim*2,hidden_dim),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.Linear(hidden_dim,hidden_dim),
+            nn.Linear(hidden_dim,hidden_dim),
             nn.Linear(hidden_dim,latent_dim),
             nn.ReLU(),
         )
@@ -128,7 +130,7 @@ class ANYZ(nn.Module):
         likelyHoodExpect=torch.ones_like(pmu)
         likelyHoodLoss=F.mse_loss(likelyHoodExpect,likelyHood)
         mu_loss = F.mse_loss(mu, pmu, reduction='mean')
-        return mu_loss 
+        return mu_loss+likelyHoodLoss
 
 
 def save_model(model, path, X):
@@ -189,7 +191,7 @@ def supervisedTrain(model, X, Y, batch_size, learningRate, epochs, device):
             y = Y[batch_idx:batch_idx + batch_size].to(device)
             model.loadPriorDist(torch.mean(x[0]), torch.std(x[0]), torch.tensor(1.0), torch.tensor(1.0))
             optimizer.zero_grad()
-            x_recon, muZ, logvarZ, mu, likelyHood = model(x)
+            mu, muZ, logvarZ, ptau, likelyHood = model(x)
             # loss = model.loss_function(x_recon, x, muZ, logvarZ, mu, logvar)
             loss = model.lossUnderPretrain(likelyHood, x, y, mu)
             loss.backward()
@@ -263,7 +265,7 @@ def pretrainModel(device, prefixTag, saveTag):
 
     # Note: first learn the certainties, then get the uncertainties
     supervisedTrain(model, X, Y, batch_size, 1e-3, 200, device)
-    unSupervisedTrain(model, X, batch_size, 1e-3, 2, device)
+    #unSupervisedTrain(model, X, batch_size, 1e-3, 2, device)
     # model.eval()
     # model=model.to('cpu')
     # X, Y = genX(1, input_dim, 10, 0.2)
@@ -289,7 +291,7 @@ def main():
     # return X,Y
     device = 'cpu'
     prefixTag = 'tensor_sRate'
-    pretrainModel(device, prefixTag, "linearANYZ_sRate.pt")
+    pretrainModel(device, prefixTag, "anyZ_sRate.pt")
 
     # print(logvar)
 

@@ -323,7 +323,7 @@ def main():
     # Train the model
     batch_idx = 0
     # Note: first learn the certainties, then get the uncertainties
-    supervisedTrain(model, X, Y, batch_size, 1e-3, 100, device)
+    supervisedTrain(model, X, Y, batch_size, 1e-3, 200, device)
     # unSupervisedTrain(model, X, batch_size, 1e-3, 10, device)
     # model.eval()
     # model=model.to('cpu')
@@ -335,7 +335,7 @@ def main():
     x_recon, muZ, logvarZ, mu, logvar = model(x)
     # print(mu,logvar.exp(),muZ)
     tmu, tsigma = model.getMuEstimation()
-    print(tmu)
+    # print(tmu)
 
     # [ru,mu,logvar]=model.forward(t)
     # draw_model(model,Y,"linearVAE")

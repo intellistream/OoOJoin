@@ -54,6 +54,7 @@ class VAE(nn.Module):
             nn.Linear(latent_dim, hidden_dim),
             nn.ReLU(),
             nn.Linear(hidden_dim, input_dim),
+            nn.Linear(input_dim, input_dim),
         )
         self.latent_dim = latent_dim
         self.inputDim = input_dim
@@ -122,7 +123,7 @@ class VAE(nn.Module):
         z = self.reparameterize(kMu, kLogVar)
         z = z * muZ
         # z=z*muZ
-        x_recon = z
+        x_recon = self.decoder(z)
 
         return x_recon, muZ, logvarZ, mu, logvar
 
@@ -303,7 +304,7 @@ def pretrainModel(device, prefixTag, saveTag):
 
     # Note: first learn the certainties, then get the uncertainties
     supervisedTrain(model, X, Y, batch_size, 1e-3, 200, device)
-    # unSupervisedTrain(model, X, batch_size, 1e-3, 10, device)
+    # unSupervisedTrain(model, X, batch_size, 1e-3, 50, device)
     # model.eval()
     # model=model.to('cpu')
     # X, Y = genX(1, input_dim, 10, 0.2)

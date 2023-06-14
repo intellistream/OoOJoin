@@ -32,6 +32,9 @@ namespace OoOJoin {
  * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
  * - "aiMode" String: The tag to indicate working mode of ai, can be pretrain (0), continual_learning (1) or inference (2)
  * = "ptPrefix" String: The prefix of vae *.pt, such as linearVAE
+ * - "ptPrefixSel" String: The specific prefix to estimate Sel, if specified, will overwrite ptPrefix in loading Sel MODUL
+ * - "ptPrefixSRate" String: The specific prefix to estimate rate of S, if specified, will overwrite ptPrefix in loading SRate MODULE
+ * - "ptPrefixRRate" String: The specific prefix to estimate rate of R, if specified, will overwrite ptPrefix in loading RRate MODULE
  * - "appendSel", U64, whether append sel observations to stored tensor, 0
  * - "appendSkew", U64, whether append skew (of r and s) observations to stored tensor, 0
  * - "appendRate", U64, whether append rate (of r and s) observations to stored tensor, 0
@@ -48,7 +51,7 @@ class AIOperator : public MeanAQPIAWJOperator {
   std::string aiMode;
   uint8_t aiModeEnum = 0;
   uint64_t appendSel = 0, appendSkew = 0, appendRate, exitAfterPretrain;
-  std::string ptPrefix;
+  std::string ptPrefix,ptPrefixSel,ptPrefixSRate,ptPrefixRRate;;
   /**
    * @brief The pre-allocated length of seletivity observations, only valid for pretrain
    */
