@@ -1,4 +1,4 @@
-BRANCH=yunzhen_js_bug_fix
+BRANCH=zipf_sel_bug_fix
 git init
 git checkout -b $BRANCH
 git add .

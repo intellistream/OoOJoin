@@ -213,6 +213,15 @@ size_t OoOJoin::IAWJSelOperator::getResult() {
 size_t OoOJoin::IAWJSelOperator::getAQPResult() {
   // size_t intermediateResult = (selectivityR + selectivityS) * (noR * noS);
   //selPrediction=selObservation;
+  if(noSTrace->lastArrivalTuple== nullptr)
+  {
+    return getResult();
+  }
+  if(noRTrace->lastArrivalTuple== nullptr)
+  {
+    return getResult();
+  }
+
   uint64_t lastSArrival=noSTrace->lastArrivalTuple->arrivalTime+noSTrace->lastEventTuple->eventTime;
   uint64_t lastRArrival=noRTrace->lastArrivalTuple->arrivalTime+noRTrace->lastEventTuple->eventTime;
   double lastWindowArrival=(lastSArrival+lastRArrival)/2;

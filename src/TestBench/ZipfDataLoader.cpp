@@ -134,16 +134,39 @@ bool ZipfDataLoader::setConfig(ConfigMapPtr cfg) {
     string fnameR, fnameS;
     fnameR = cfg->tryString("fileDataLoader_rFile", "../../benchmark/datasets/rTuple.csv", true);
     fnameS = cfg->tryString("fileDataLoader_sFile", "../../benchmark/datasets/sTuple.csv", true);
-    keyValueSTuple = loadDataFromCsv(fnameS);
-    keyValueRTuple = loadDataFromCsv(fnameR);
-    testSize = (windowLenMs + maxArrivalSkewMs) * eventRateKTps;
-    if (!generateByKV) {
-        generateKey();
-        generateValue();
+    if(generateByKV)
+    { testSize = (windowLenMs + maxArrivalSkewMs) * eventRateKTps;
+      keyValueSTuple = loadDataFromCsvCheckSize(testSize,fnameS);
+      keyValueRTuple = loadDataFromCsvCheckSize(testSize,fnameR);
+      size_t minSRSize=keyValueSTuple.size();
+      if(minSRSize<keyValueRTuple.size())
+      {
+        minSRSize=keyValueRTuple.size();
+      }
+      INTELLI_INFO("load "+ to_string(keyValueSTuple.size())+" s Tuples, and "+ to_string(keyValueRTuple.size())+" R tuples");
+
+      INTELLI_INFO("expect test size ="+ to_string(testSize));
+      if(testSize>minSRSize)
+      {
+        INTELLI_ERROR("Too few data, ");
+        exit(-1);
+      }
+      generateEvent();
+      generateArrival();
+      generateFinal();
+      //exit(-1);
     }
-    generateEvent();
-    generateArrival();
-    generateFinal();
+    else
+    {
+      testSize = (windowLenMs + maxArrivalSkewMs) * eventRateKTps;
+      generateKey();
+      generateValue();
+      generateEvent();
+      generateArrival();
+      generateFinal();
+    }
+
+
     return true;
 }
 
@@ -237,4 +260,23 @@ std::vector<TrackTuplePtr> ZipfDataLoader::loadDataFromCsv(std::string fname,
     }
     ins.close();
     return ru;
+}
+
+
+std::vector<TrackTuplePtr> ZipfDataLoader::loadDataFromCsvCheckSize(size_t size,
+                                                                    std::string fname,
+                                                                    std::string separator,
+                                                                    std::string newLine)
+{
+  std::vector<TrackTuplePtr> ru0,ru1;
+  ru0= loadDataFromCsv(fname,separator,newLine);
+  ru1=std::vector<TrackTuplePtr>(size);
+  size_t ru0Size=ru0.size();
+  for(size_t i=0;i<size;i++)
+  {  size_t idx=i%ru0Size;
+    TrackTuplePtr tp = newTrackTuple(ru0[idx]->key,ru0[idx]->payload,ru0[idx]->eventTime,ru0[idx]->arrivalTime);
+    tp->processedTime=0;
+    ru1[i]=tp;
+  }
+  return ru1;
 }

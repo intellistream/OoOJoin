@@ -182,7 +182,7 @@ class TrackTuple : public OoOTuple {
    * @param at the arrival time
  */
   TrackTuple(keyType k, valueType v, tsType et, tsType at) : OoOTuple(k, v, et, at) {}
-
+  TrackTuple(const TrackTuple &tr) : OoOTuple(tr.key,tr.payload, tr.eventTime, tr.arrivalTime) {}
   /**
    * @brief convert the tuple into std string
    * @return the std string for this tuple
