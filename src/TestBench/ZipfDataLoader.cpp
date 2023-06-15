@@ -148,7 +148,7 @@ bool ZipfDataLoader::setConfig(ConfigMapPtr cfg) {
       INTELLI_INFO("expect test size ="+ to_string(testSize));
       if(testSize>minSRSize)
       {
-        INTELLI_ERROR("Too few data, ");
+        INTELLI_ERROR("Too few data, exit");
         exit(-1);
       }
       generateEvent();
