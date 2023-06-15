@@ -46,6 +46,7 @@ class MeanAQPIAWJOperator : public AbstractOperator {
   Window myWindow;
   size_t intermediateResult = 0;
   size_t confirmedResult = 0;
+  size_t confirmedResultJS=0;
   uint64_t windowBound = 0;
   // double alphaArrivalRate=0.125;
   double alphaArrivalSkew = 0.125;

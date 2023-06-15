@@ -216,11 +216,15 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
             AbstractStateOfKeyPtr probrPtr = stateOfKeyTableR->getByKey(trackTuple->key);
 
             if (probrPtr != nullptr) {
-                // std::string compensation = config->tryString("compensation", "false");
+                // std::stringif(joinSum) compensation = config->tryString("compensation", "false");
 
-                MSWJStateOfKeyPtr py = ImproveStateOfKeyTo(MSWJStateOfKey, probrPtr);
+              MSWJStateOfKeyPtr py = ImproveStateOfKeyTo(MSWJStateOfKey, probrPtr);
                 confirmedResult += py->arrivedTupleCnt;
-
+                if(joinSum)
+                {
+                  double tc=(int64_t)py->arrivedTupleCnt*py->joinedRValueAvg;
+                  confirmedResultJS+=(uint64_t)tc;
+                }
                 if (!mswjCompensation) {
                     intermediateResult += py->arrivedTupleCnt;
 
@@ -299,9 +303,21 @@ auto StreamOperator::mswjExecution(const TrackTuplePtr &trackTuple) -> bool {
             AbstractStateOfKeyPtr probrPtr = stateOfKeyTableS->getByKey(trackTuple->key);
             if (probrPtr != nullptr) {
                 // std::string compensation = config->tryString("compensation", "false");
-
+              /**
+               * @brief update the avg value of R
+               */
+              sk->joinedRValueSum+=(int64_t)trackTuple->payload;
+              sk->joinedRValueCnt++;
+              sk->joinedRValueAvg=sk->joinedRValueSum/sk->joinedRValueCnt;
+              sk->rvAvgPrediction=sk->joinedRValuePredictor.update(sk->joinedRValueAvg);
                 MSWJStateOfKeyPtr py = ImproveStateOfKeyTo(MSWJStateOfKey, probrPtr);
                 confirmedResult += py->arrivedTupleCnt;
+                if(joinSum)
+                {
+                  double tc=(int64_t)py->arrivedTupleCnt*sk->joinedRValueAvg;
+                  confirmedResultJS+=(uint64_t)tc;
+                }
+
                 if (!mswjCompensation) {
                     intermediateResult += py->arrivedTupleCnt;
 
@@ -375,22 +391,24 @@ auto StreamOperator::setConfig(INTELLI::ConfigMapPtr cfg) -> bool {
 
 size_t StreamOperator::getResult() {
     if (joinSum) {
-        uint64_t result = 0;
+        /*uint64_t result = 0;
         for (auto it: joinConfirmCountMap) {
             result += getConfirmJoinSumResult(it.first);
         }
-        return result;
+        return result;*/
+      return confirmedResultJS;
     }
     return confirmedResult;
 }
 
 size_t StreamOperator::getAQPResult() {
     if (joinSum) {
-        uint64_t result = 0;
+        /*uint64_t result = 0;
         for (auto it: joinAQPCountMap) {
             result += getAQPJoinSumResult(it.first);
         }
-        return result;
+        return result;*/
+      return confirmedResultJS;
     }
     return intermediateResult;
 }
