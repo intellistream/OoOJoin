@@ -85,7 +85,7 @@ namespace OoOJoin {
                 v.push_back(s.substr(pos1));
         }
 
-        static vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
+         vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
             vector<tsType> ru = vector<tsType>(eventTime.size());
             size_t len = (eventTime.size() > arrivalSkew.size()) ? arrivalSkew.size() : eventTime.size();
             for (size_t i = 0; i < len; i++) {
@@ -94,7 +94,7 @@ namespace OoOJoin {
             return ru;
         }
 
-        static vector<OoOJoin::TrackTuplePtr> genTuples(vector<keyType> keyS,
+        vector<OoOJoin::TrackTuplePtr> genTuples(vector<keyType> keyS,
                                                         vector<valueType> valueS,
                                                         vector<tsType> eventS,
                                                         vector<tsType> arrivalS) {
@@ -106,10 +106,14 @@ namespace OoOJoin {
             return ru;
         }
 
-        static vector<OoOJoin::TrackTuplePtr> genTuplesByKV(std::vector<TrackTuplePtr> keyValueData,
+         vector<OoOJoin::TrackTuplePtr> genTuplesByKV(std::vector<TrackTuplePtr> keyValueData,
                                                             vector<tsType> eventS,
                                                             vector<tsType> arrivalS) {
             size_t len = keyValueData.size();
+            if(len>=testSize)
+            {
+              len=testSize;
+            }
             vector<OoOJoin::TrackTuplePtr> ru = vector<OoOJoin::TrackTuplePtr>(len);
             for (size_t i = 0; i < len; i++) {
                 ru[i] = newTrackTuple(keyValueData[i]->key, keyValueData[i]->payload, eventS[i], arrivalS[i]);
@@ -127,7 +131,17 @@ namespace OoOJoin {
         std::vector<TrackTuplePtr> loadDataFromCsv(std::string fname,
                                                    std::string separator = ",",
                                                    std::string newLine = "\n");
-
+      /**
+     * @brief load a key value dataset from csv file and check the size to be aligned with
+       *  @param size The size to be checked
+     * @param fname The name of file
+     * @param separator The separator in .csv, default is ","
+     * @param newLine THe indicator of a new line. default is "\n"
+     * @return The vector of TrackTuplePtr
+     */
+      std::vector<TrackTuplePtr> loadDataFromCsvCheckSize(size_t size,std::string fname,
+                                                 std::string separator = ",",
+                                                 std::string newLine = "\n");
 
         /**
          * @brief generate the vector of key

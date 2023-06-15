@@ -1,1 +1,2 @@
-1. fix the join sum bug of yuanzhen's (the yuanzhen+pecj is currently unavailable for join sum)
+1. fix bugs of zipf dataloader
+2. fix bugs of IAWJSelOperator
