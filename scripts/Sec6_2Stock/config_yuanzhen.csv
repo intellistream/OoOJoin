@@ -11,5 +11,3 @@ Energy,12.3,Double
 algo,NPJSingle,String
 operator,MSWJ,String
 mswjCompensation,0,U64
-joinSum,1,U64
-dataLoader,zipf,String

@@ -116,14 +116,17 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
-    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/figE2EJS/"
+    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/e2ELargeSkew/"
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [6,7, 8, 9, 10, 11, 12]
+    periodVec = [10, 50, 100, 200, 300, 400, 500,600,700]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
+    methodTags = ["watermark", "pecj-alf", "pecj-svi-w/cl","pecj-svi-w/o.cl"]
+    resultPaths = ["wa", "pecj_ks", "pec_svi","pec_svi_nocl"]
+    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_sviCL.csv","config_svi.csv"]
     # run
     reRun = 0
     if (len(sys.argv) < 2):
@@ -131,13 +134,13 @@ def main():
         os.system("mkdir " + commonBasePath)
         reRun = 1
         # runPeriodVector(exeSpace, periodVec, resultPath)
-    # lat95All[3]=ts
-    methodTags = ["watermark","k-slack","pecj-alf", "pecj-sel"]
-    resultPaths = ["wa","ks", "pecj_alf", "pec_sel"]
-    csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv","config_ima.csv", "config_sel.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
-    npLat = np.array(lat95All)
-    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "e2EJS", True)
+    # os.system("mkdir " + figPath)
+    # print(lat95All)
+    print(lat95All)
+    # lat95All[3]=lat95All[2]
+    groupLine.DrawFigureYnormal(lat95All, errAll, methodTags, "95% latency (ms)", "Error", 0, 1,
+                                figPath + "e2ELargeSkewSVI", True)
 
 
 if __name__ == "__main__":

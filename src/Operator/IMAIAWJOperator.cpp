@@ -7,7 +7,7 @@ bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     return false;
   }
   std::string wmTag = config->tryString("wmTag", "arrival", true);
-
+  imaDisableCompensation=config->tryU64("imaDisableCompensation",0, false);
   WMTablePtr wmTable = newWMTable();
   wmGen = wmTable->findWM(wmTag);
   if (wmGen == nullptr) {
@@ -253,5 +253,9 @@ size_t OoOJoin::IMAIAWJOperator::getResult() {
 }
 
 size_t OoOJoin::IMAIAWJOperator::getAQPResult() {
+  if(imaDisableCompensation)
+  {
+    return getResult();
+  }
   return intermediateResult;
 }

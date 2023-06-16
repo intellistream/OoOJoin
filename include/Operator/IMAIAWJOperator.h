@@ -27,6 +27,7 @@ namespace OoOJoin {
  * - "sLen" U64: The length of S buffer
  * - "rLen" U64: The length of R buffer
  * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
+ * - "imaDisableCompensation" U64: set to 1 to disable compensation (So I will be a simple eager join), default 0
  * @warning This implementation is putting rotten, just to explore a basic idea of AQP by using historical mean to predict future
  * @warning The predictor and watermarker are currently NOT seperated in this operator, split them in the future!
  * @note In current version, the computation will block feeding
@@ -36,7 +37,7 @@ namespace OoOJoin {
 class IMAIAWJOperator : public MeanAQPIAWJOperator {
  protected:
   void conductComputation();
-
+  uint64_t  imaDisableCompensation=0;
   class IMAStateOfKey : public MeanStateOfKey {
    public:
     double lastUnarrivedTuples = 0;

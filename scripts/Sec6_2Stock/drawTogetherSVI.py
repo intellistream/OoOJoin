@@ -116,14 +116,15 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
-    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/figE2EJS/"
+    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/figE2E/"
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [6,7, 8, 9, 10, 11, 12]
+    periodVec = [7, 8, 9, 10, 11, 12]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
+   
     # run
     reRun = 0
     if (len(sys.argv) < 2):
@@ -131,13 +132,18 @@ def main():
         os.system("mkdir " + commonBasePath)
         reRun = 1
         # runPeriodVector(exeSpace, periodVec, resultPath)
+
+    # os.system("mkdir " + figPath)
+    # print(lat95All)
+    #print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark","k-slack","pecj-alf", "pecj-sel"]
-    resultPaths = ["wa","ks", "pecj_alf", "pec_sel"]
-    csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv","config_ima.csv", "config_sel.csv"]
+    methodTags = [ "svi","svi_CL"]
+    resultPaths = [ "svi","svi_CL"]
+    csvTemplates = [ "config_svi.csv","config_sviCL.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
-    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "e2EJS", True)
+    #npLat[2] = npLat[2] / 7.5
+    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "e2ESmallSvi", True)
 
 
 if __name__ == "__main__":

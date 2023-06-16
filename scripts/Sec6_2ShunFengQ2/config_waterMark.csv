@@ -9,7 +9,7 @@ keyRange,10,U64
 threads,4,U64
 Energy,12.3,Double
 algo,NPJSingle,String
-operator,IAWJ,String
+operator,IMA,String
 dataLoader,zipf,String
 generateByKV,1,U64
 fileDataLoader_rFile,datasets/shunfeng/bo_shunfeng_hislabel/bo_shunfeng_hislabelHighDelay2_short.csv,String
@@ -18,3 +18,4 @@ zipfDataLoader_zipfEvent,0,U64
 zipfDataLoader_zipfSkew,0,U64
 zipfDataLoader_zipfKey,0,U64
 joinSum,1,U64
+imaDisableCompensation,1,U64
