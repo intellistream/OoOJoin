@@ -1,4 +1,4 @@
-BRANCH=zipf_sel_bug_fix
+BRANCH=nightly_version
 git init
 git checkout -b $BRANCH
 git add .
