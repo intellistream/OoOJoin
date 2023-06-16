@@ -1,2 +1,1 @@
-1. fix bugs of zipf dataloader
-2. fix bugs of IAWJSelOperator
+3. add an eager version of watermark

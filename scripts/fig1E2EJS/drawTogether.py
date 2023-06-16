@@ -132,9 +132,9 @@ def main():
         reRun = 1
         # runPeriodVector(exeSpace, periodVec, resultPath)
     # lat95All[3]=ts
-    methodTags = ["watermark", "pecj-alf", "pecj-sel"]
-    resultPaths = ["wa", "pecj_alf", "pec_sel"]
-    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_sel.csv"]
+    methodTags = ["watermark","k-slack","pecj-alf", "pecj-sel"]
+    resultPaths = ["wa","ks", "pecj_alf", "pec_sel"]
+    csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv","config_ima.csv", "config_sel.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
     groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "e2EJS", True)
