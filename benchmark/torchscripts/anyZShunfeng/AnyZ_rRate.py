@@ -291,7 +291,7 @@ def main():
     # return X,Y
     device = 'cpu'
     prefixTag = 'tensor_rRate'
-    pretrainModel(device, prefixTag, "anyZ_rRate.pt")
+    pretrainModel(device, prefixTag, "anyZShunfeng_rRate.pt")
 
     # print(logvar)
 

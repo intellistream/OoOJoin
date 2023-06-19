@@ -3,6 +3,7 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import accuBar as accuBar
+import groupBar as groupBar
 import groupBar2 as groupBar2
 import groupLine as groupLine
 from autoParase import *
@@ -115,48 +116,33 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
-    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/Sec6_2Shunfengq3/"
+    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/figE2E/"
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    #periodVec = [7, 8, 9, 10, 11, 12]
-    periodVec = [200,300,600]
+    periodVec = [7, 8, 9, 10, 11, 12]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    
-    # run
+   
     reRun = 0
     if (len(sys.argv) < 2):
         os.system("rm -rf " + commonBasePath)
         os.system("mkdir " + commonBasePath)
         reRun = 1
         # runPeriodVector(exeSpace, periodVec, resultPath)
-
     # os.system("mkdir " + figPath)
     # print(lat95All)
+    #print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "k-slack", "pecj"]
-    resultPaths = ["wa", "ks","pec_ai"]
-    csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_pecjAI.csv"]
+    methodTags = ["watermark", "pecj-alf", "(pecj-vae)/7.5","svi"]
+    resultPaths = ["wa", "pecj_ks", "pec_ai","svi"]
+    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv","config_svi.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
-    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "sec6_2_shunfeng_q3", True)
-    gbXvalues=periodVec.copy()
-  
-    #groupBar.DrawFigure(periodVec,npLat.T,methodTags,"tuning knob "+r"$t_c$","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
-    #raw
-    groupBar2.DrawFigure(periodVec,npLat,methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q3_lat", True)
-    groupBar2.DrawFigure(periodVec,np.array(errAll)*100.0,methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)",5,15,figPath + "sec6_2_shunfeng_q3_err", True)
-    periodVecS100 = [100,200,500]
-    resultPathS100 = ["pec_ai_s100"]
-    csvTemplateS100 = ["config_pecjAI.csv"]
-    lat95AllPecS100, errAllPecS100, periodAll = compareMethod(exeSpace, commonBasePath, resultPathS100, csvTemplateS100, periodVecS100, reRun)
-    lat95All.append(lat95AllPecS100[0])
-    errAll.append(errAllPecS100[0])
-    methodTags = ["watermark", "k-slack", "pecj","pecj"+r"$(t_c-100)$"]
-    groupBar2.DrawFigure(periodVec,lat95All,methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q3_lat_p4", True)
-    groupBar2.DrawFigure(periodVec,np.array(errAll)*100.0,methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)",5,15,figPath + "sec6_2_shunfeng_q3_err_p4", True)
-    print(lat95All)
+    npLat[2] = npLat[2] / 7.5
+    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "svie2ESmall", True)
+
+
 if __name__ == "__main__":
     main()

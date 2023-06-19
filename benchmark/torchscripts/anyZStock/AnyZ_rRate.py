@@ -290,8 +290,8 @@ def main():
     # print(X,Y)
     # return X,Y
     device = 'cpu'
-    prefixTag = 'tensor_sRate'
-    pretrainModel(device, prefixTag, "anyZShunfeng_sRate.pt")
+    prefixTag = 'tensor_rRate'
+    pretrainModel(device, prefixTag, "anyZStock_rRate.pt")
 
     # print(logvar)
 
