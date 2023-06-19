@@ -1,4 +1,4 @@
-BRANCH=nightly_version
+BRANCH=stockq123
 git init
 git checkout -b $BRANCH
 git add .
