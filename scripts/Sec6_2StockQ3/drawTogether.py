@@ -115,7 +115,7 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
-    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/Sec6_2Shunfengq3/"
+    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/Sec6_2Stockq3/"
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
@@ -141,13 +141,13 @@ def main():
     csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_pecjAI.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
-    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "sec6_2_shunfeng_q3", True)
+    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "sec6_2_stock_q3", True)
     gbXvalues=periodVec.copy()
   
     #groupBar.DrawFigure(periodVec,npLat.T,methodTags,"tuning knob "+r"$t_c$","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
     #raw
-    groupBar2.DrawFigure(periodVec,npLat,methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q3_lat", True)
-    groupBar2.DrawFigure(periodVec,np.array(errAll)*100.0,methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)",5,15,figPath + "sec6_2_shunfeng_q3_err", True)
+    groupBar2.DrawFigure(periodVec,npLat,methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)",5,15,figPath + "sec6_2_stock_q3_lat", True)
+    groupBar2.DrawFigure(periodVec,np.array(errAll)*100.0,methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)",5,15,figPath + "sec6_2_stock_q3_err", True)
     periodVecS100 = [100,200,500]
     resultPathS100 = ["pec_ai_s100"]
     csvTemplateS100 = ["config_pecjAI.csv"]
@@ -155,8 +155,8 @@ def main():
     lat95All.append(lat95AllPecS100[0])
     errAll.append(errAllPecS100[0])
     methodTags = ["watermark", "k-slack", "pecj","pecj"+r"$(t_c-100)$"]
-    groupBar2.DrawFigure(periodVec,lat95All,methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q3_lat_p4", True)
-    groupBar2.DrawFigure(periodVec,np.array(errAll)*100.0,methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)",5,15,figPath + "sec6_2_shunfeng_q3_err_p4", True)
+    groupBar2.DrawFigure(periodVec,lat95All,methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)",5,15,figPath + "sec6_2_stock_q3_lat_p4", True)
+    groupBar2.DrawFigure(periodVec,np.array(errAll)*100.0,methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)",5,15,figPath + "sec6_2_stock_q3_err_p4", True)
     print(lat95All)
 if __name__ == "__main__":
     main()
