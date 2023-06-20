@@ -1,4 +1,4 @@
-BRANCH=stockq123
+BRANCH=sec6_3
 git init
 git checkout -b $BRANCH
 git add .
