@@ -1,4 +1,4 @@
-BRANCH=elite_gui
+BRANCH=elite_gui_v2
 git init
 git checkout -b $BRANCH
 git add .
