@@ -11,10 +11,10 @@ bool OoOJoin::MeanAQPIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   WMTablePtr wmTable = newWMTable();
   wmGen = wmTable->findWM(wmTag);
   if (wmGen == nullptr) {
-    INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
+   // INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
     return false;
   }
-  INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
+  //INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
   joinSum=cfg->tryU64("joinSum",0,true);
   return true;
 }
@@ -85,10 +85,10 @@ bool OoOJoin::MeanAQPIAWJOperator::stop() {
   /**
    */
   if (lockedByWaterMark) {
-    WM_INFO("early terminate by watermark, already have results");
+   // WM_INFO("early terminate by watermark, already have results");
   }
   if (!lockedByWaterMark) {
-    WM_INFO("No watermark encountered, compute now");
+  //  WM_INFO("No watermark encountered, compute now");
   }
   lazyComputeOfAQP();
   timeBreakDownAll = timeTrackingEnd(timeBreakDownAll);

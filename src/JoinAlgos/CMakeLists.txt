@@ -3,4 +3,3 @@ add_sources(
         NestedLoopJoin.cpp
         JoinAlgoTable.cpp
 )
-add_subdirectory(NPJ)

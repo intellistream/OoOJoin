@@ -1,4 +1,4 @@
-BRANCH=sec6_3
+BRANCH=elite_gui
 git init
 git checkout -b $BRANCH
 git add .

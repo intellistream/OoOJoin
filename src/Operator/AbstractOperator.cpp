@@ -9,59 +9,69 @@
 using namespace OoOJoin;
 
 bool OoOJoin::AbstractOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
-  assert(ts);
-  return true;
+    assert(ts);
+    return true;
 }
 
 bool OoOJoin::AbstractOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
-  assert(tr);
-  return true;
+    assert(tr);
+    return true;
 }
 
 bool OoOJoin::AbstractOperator::start() {
-  return true;
+    return true;
 }
 
 bool OoOJoin::AbstractOperator::stop() {
-  return true;
+    return true;
 }
 
 size_t OoOJoin::AbstractOperator::getResult() {
-  return 0;
+    return 0;
 }
 
 size_t OoOJoin::AbstractOperator::getAQPResult() {
-  return getResult();
+    return getResult();
 }
 
 bool OoOJoin::AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
-  config = std::move(cfg);
-  if (config == nullptr) {
-    return false;
-  }
-  if (config->existU64("windowLen")) {
-    windowLen = config->getU64("windowLen");
-  }
-  if (config->existU64("slideLen")) {
-    slideLen = config->getU64("slideLen");
-  }
-  if (config->existU64("sLen")) {
-    sLen = config->getU64("sLen");
-  } else {
-    OP_ERROR("empty buffer for S stream \n");
+    config = std::move(cfg);
+    if (config == nullptr) {
+        return false;
+    }
+    if (config->existU64("windowLen")) {
+        windowLen = config->getU64("windowLen");
+    }
+    if (config->existU64("slideLen")) {
+        slideLen = config->getU64("slideLen");
+    }
+    if (config->existU64("sLen")) {
+        sLen = config->getU64("sLen");
+    } else {
 
-    return false;
-  }
-  if (config->existU64("rLen")) {
-    rLen = config->getU64("rLen");
-  } else {
+        //printf("sLen not set\r\n");
+        OP_ERROR("empty buffer for S stream \n");
 
-    OP_ERROR("empty buffer for R stream \n");
-    return false;
-  }
-  return true;
+        return false;
+    }
+    if (config->existU64("rLen")) {
+        rLen = config->getU64("rLen");
+    } else {
+
+        OP_ERROR("empty buffer for R stream \n");
+        return false;
+    }
+    /*if (config->existU64("timeStep")) {
+      timeStep = config->getU64("timeStep");
+    }
+    else
+    {
+      OP_WARNNING("No setting of timeStep, use 1\n");
+      timeStep=1;
+    }*/
+    return true;
 }
 
 ConfigMapPtr OoOJoin::AbstractOperator::getTimeBreakDown() {
-  return nullptr;
+    return nullptr;
 }

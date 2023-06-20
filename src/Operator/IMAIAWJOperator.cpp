@@ -11,10 +11,10 @@ bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   WMTablePtr wmTable = newWMTable();
   wmGen = wmTable->findWM(wmTag);
   if (wmGen == nullptr) {
-    INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
+    //INTELLI_ERROR("NO such a watermarker named [" + wmTag + "]");
     return false;
   }
-  INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
+ // INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
   joinSum=cfg->tryU64("joinSum",0,true);
   return true;
 }
@@ -56,10 +56,10 @@ void OoOJoin::IMAIAWJOperator::conductComputation() {
 
 bool OoOJoin::IMAIAWJOperator::stop() {
   if (lockedByWaterMark) {
-    WM_INFO("early terminate by watermark, already have results");
+    //WM_INFO("early terminate by watermark, already have results");
   }
   if (!lockedByWaterMark) {
-    WM_INFO("No watermark encountered, compute now");
+   // WM_INFO("No watermark encountered, compute now");
   }
   timeBreakDownAll = timeTrackingEnd(timeBreakDownAll);
 
@@ -83,7 +83,7 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   shouldGenWM = wmGen->reportTupleS(ts, 1);
   if (shouldGenWM) {
     lockedByWaterMark = true;
-    WM_INFO("water mark in S");
+    //WM_INFO("water mark in S");
   }
   if (isInWindow) {
     IMAStateOfKeyPtr stateOfKey;
