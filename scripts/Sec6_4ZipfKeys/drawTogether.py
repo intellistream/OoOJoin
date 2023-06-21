@@ -31,7 +31,7 @@ TICK_FP = FontProperties(style='normal', size=TICK_FONT_SIZE)
 MARKERS = (['*', '|', 'v', "^", "", "h", "<", ">", "+", "d", "<", "|", "", "+", "_"])
 # you may want to change the color map for different figures
 COLOR_MAP = (
-    '#0000FF', '#2874A6', '#00FF56', '#7D3C98', '#FFFFFF', '#F1C40F', '#F5CBA7', '#82E0AA', '#AEB6BF', '#AA4499')
+    '#B03A2E', '#2874A6', '#239B56', '#7D3C98', '#FFFFFF', '#F1C40F', '#F5CBA7', '#82E0AA', '#AEB6BF', '#AA4499')
 # you may want to change the patterns for different figures
 PATTERNS = (["////", "o", "", "||", "-", "//", "\\", "o", "O", "////", ".", "|||", "o", "---", "+", "\\\\", "*"])
 LABEL_WEIGHT = 'bold'
@@ -56,7 +56,7 @@ def runPeriod(exePath, period, resultPath, configTemplate="config.csv"):
     os.system("cd " + exePath + "&& rm *.csv")
 
     # editConfig(configTemplate, exePath + configFname, "earlierEmitMs", 0)
-    editConfig(configTemplate, exePath + configFname, "watermarkTimeMs", period)
+    editConfig(configTemplate, exePath + configFname, "zipfDataLoader_zipfKeyFactor", period)
     # prepare new file
     # run
     os.system("cd " + exePath + "&& ./benchmark " + configFname)
@@ -115,12 +115,12 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
-    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/Sec6_2Shunfengq1/"
+    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/Sec6_4ZipfKeys/"
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
     #periodVec = [7, 8, 9, 10, 11, 12]
-    periodVec = [7, 10, 12]
+    periodVec = [0.2,0.4,0.6,0.8,1.0]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
@@ -136,16 +136,20 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "k-slack", "pecj"]
-    resultPaths = ["wa", "ks","pec_sel"]
-    csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_pecjSel.csv"]
+    methodTags = ["baseline w/o pecj","pecj","pecj-per key"]
+    resultPaths = ["ks","pec_sel","pec_perKey"]
+    csvTemplates = [ "config_yuanzhen.csv", "config_pecjSel.csv","config_pecjIMA.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
-    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "sec6_2_shunfeng_q1", True)
+    #groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "sec6_2_stock_q1", True)
     gbXvalues=periodVec.copy()
   
     #groupBar.DrawFigure(periodVec,npLat.T,methodTags,"tuning knob "+r"$t_c$","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
-    groupBar2.DrawFigure(periodVec,npLat,methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
-    groupBar2.DrawFigure(periodVec,np.array(errAll)*100.0,methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)",5,15,figPath + "sec6_2_shunfeng_q1_err", True)
+    #groupBar2.DrawFigure(periodVec,npLat,methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)",5,15,figPath + "sec6_2_stock_q1_lat", True)
+    #groupBar2.DrawFigure(periodVec,np.array(errAll)*100.0,methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)",5,15,figPath + "sec6_2_stock_q1_err", True)
+    groupLine.DrawFigureYnormal(periodAll, np.array(errAll)*100.0, methodTags,"Zipf Factor","Error (%)" , 0, 1, figPath + "sec6_4_ZipfKey_err",
+                                True)
+    groupLine.DrawFigureYnormal(periodAll, np.array(lat95All), methodTags,"Zipf Factor","95% latency (ms)", 0, 1, figPath + "sec6_4_ZipfKey_lat",
+                                True)
 if __name__ == "__main__":
     main()

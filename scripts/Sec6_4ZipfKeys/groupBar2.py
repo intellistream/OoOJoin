@@ -19,7 +19,7 @@ TICK_FP = FontProperties(style='normal', size=TICK_FONT_SIZE)
 MARKERS = (["+", 'o', 's', 'v', "^", "", "h", "<", ">", "+", "d", "<", "|", "", "+", "_"])
 # you may want to change the color map for different figures
 COLOR_MAP = (
-    '#7F00FF', '#FF74A6', '#00FF56', '#239B56', '#7D3C98', '#00FFFF', '#F1C40F', '#F5CBA7', '#82E0AA', '#AEB6BF',
+    '#AA4499', '#B03A2E', '#2874A6', '#239B56', '#7D3C98', '#00FFFF', '#F1C40F', '#F5CBA7', '#82E0AA', '#AEB6BF',
     '#AA4499')
 # you may want to change the patterns for different figures
 PATTERNS = (
@@ -121,7 +121,7 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
     # plt.yscale('log')
     #
     # plt.grid(axis='y', color='gray')
-    figure.yaxis.set_major_locator(LinearLocator(5))
+    figure.yaxis.set_major_locator(LinearLocator(10))
     # figure.xaxis.set_major_locator(LinearLocator(5))
     figure.get_xaxis().set_tick_params(direction='in', pad=10)
     figure.get_yaxis().set_tick_params(direction='in', pad=10)
