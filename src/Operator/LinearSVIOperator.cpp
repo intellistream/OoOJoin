@@ -443,5 +443,6 @@ size_t OoOJoin::LinearSVIOperator::getAQPResult() {
 {
   return intermediateResult;
 }*/
-  return (intermediateResult+confirmedResult)/2;
+  return intermediateResult;
+  //return (intermediateResult+confirmedResult)/2;
 }

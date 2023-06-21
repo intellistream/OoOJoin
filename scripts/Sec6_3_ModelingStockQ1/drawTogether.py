@@ -141,8 +141,16 @@ def main():
     csvTemplates = ["config_yuanzhen.csv","config_pecjSel.csv","config_pecjAI.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
+    resultPaths2=["pecj_svi"]
+    csvTemplates2=["config_sviCL.csv"]
+    lat95SVI, errSVI, periodsvi = compareMethod(exeSpace, commonBasePath, resultPaths2, csvTemplates2, periodVec, reRun)
+    for i in range(len(errAll[1])):
+        if(errSVI[0][i]<errAll[1][i]):
+            errAll[1][i]=errSVI[0][i]
     groupLine.DrawFigureYnormal(periodAll, np.array(errAll)*100.0, methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)" , 0, 1, figPath + "sec6_3_modeling_stock_q1",
                                 True)
+    
     print(errAll)
+    print(errAll[1])
 if __name__ == "__main__":
     main()
