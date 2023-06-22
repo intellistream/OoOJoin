@@ -124,7 +124,7 @@ def main():
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    methodTags = ["watermark", "pecj-alf", "pecj-vae","pecj-anyz"]
+    methodTags = ["watermark", "PECJ-alf", "PECJ-vae","PECJ-anyz"]
     resultPaths = ["wa", "pecj_ks", "pec_ai","pecj_anyz"]
     csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv","config_pecjAIAnyZ.csv"]
     # run

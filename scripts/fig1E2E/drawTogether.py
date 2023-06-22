@@ -124,7 +124,7 @@ def main():
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    methodTags = ["k-slack", "watermark", "pecj", "theoretical best"]
+    methodTags = ["k-slack", "watermark", "PECJ", "theoretical best"]
     resultPaths = ["ks", "wa", "pecj_ks", "pec_ai"]
     csvTemplates = ["config_yuanzhen.csv", "config_waterMark.csv", "config_pecjyuanzhen.csv", "config_pecjAI.csv"]
     # run
@@ -144,7 +144,7 @@ def main():
     # print(lat95All)
     print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "pecj-alf", "(pecj-vae)/7.5", "svi","svi_CL"]
+    methodTags = ["watermark", "PECJ-alf", "(PECJ-vae)/7.5", "svi","svi_CL"]
     resultPaths = ["wa", "pecj_ks", "pec_ai", "svi","svi_CL"]
     csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv", "config_svi.csv","config_sviCL.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)

@@ -136,7 +136,7 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["baseline w/o pecj" ,"pecj-adaptive filter","pecj-SVI","pecj-DNN/6.0"]
+    methodTags = ["baseline w/o pecj" ,"PECJ-adaptive filter","PECJ-SVI","PECJ-DNN/6.0"]
     resultPaths = ["ks","pec_sel","pec_svi","pec_dnn"]
     csvTemplates = ["config_yuanzhen.csv","config_pecjSel.csv","config_sviCL.csv","config_pecjAI.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
@@ -144,7 +144,7 @@ def main():
     npLat[3]=npLat[3]/6.0
     groupLine.DrawFigureYnormal(periodAll,npLat, methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)", 0, 1, figPath + "sec6_3_implementation_stock_q1",
                                 True)
-    methodTags = ["baseline w/o pecj" ,"pecj-adaptive filter","pecj-SVI","pecj-DNN"]
+    methodTags = ["baseline w/o pecj" ,"PECJ-adaptive filter","PECJ-SVI","PECJ-DNN"]
     groupLine.DrawFigureYnormalErr(periodAll,np.array(errAll)*100.0, methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)", 0, 1, figPath + "sec6_3_implementation_stock_q1_err",
                                 True)
     print(errAll)

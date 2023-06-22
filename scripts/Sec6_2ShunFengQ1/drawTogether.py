@@ -136,7 +136,7 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "k-slack", "pecj"]
+    methodTags = ["watermark", "k-slack", "PECJ"]
     resultPaths = ["wa", "ks","pec_sel"]
     csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_pecjSel.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)

@@ -136,7 +136,7 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["baseline w/o pecj" ,"pecj-linear","pecj-any"]
+    methodTags = ["baseline w/o pecj" ,"PECJ-linear","PECJ-any"]
     resultPaths = ["ks","pec_sel","pec_any"]
     csvTemplates = ["config_yuanzhen.csv","config_pecjSel.csv","config_pecjAI.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
