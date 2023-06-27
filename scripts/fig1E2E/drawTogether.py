@@ -144,9 +144,9 @@ def main():
     # print(lat95All)
     print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "PECJ-alf", "(PECJ-vae)/7.5", "svi","svi_CL"]
-    resultPaths = ["wa", "pecj_ks", "pec_ai", "svi","svi_CL"]
-    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv", "config_svi.csv","config_sviCL.csv"]
+    methodTags = ["watermark", "PECJ-alf", "(PECJ-vae)/7.5", "svi", "svi_CL"]
+    resultPaths = ["wa", "pecj_ks", "pec_ai", "svi", "svi_CL"]
+    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv", "config_svi.csv", "config_sviCL.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
     npLat[2] = npLat[2] / 7.5

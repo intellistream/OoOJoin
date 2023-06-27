@@ -46,7 +46,7 @@ class MeanAQPIAWJOperator : public AbstractOperator {
   Window myWindow;
   size_t intermediateResult = 0;
   size_t confirmedResult = 0;
-  size_t confirmedResultJS=0;
+  size_t confirmedResultJS = 0;
   uint64_t windowBound = 0;
   // double alphaArrivalRate=0.125;
   double alphaArrivalSkew = 0.125;
@@ -109,9 +109,9 @@ class MeanAQPIAWJOperator : public AbstractOperator {
     double arrivalSkew = 0, sigmaArrivalSkew = 0;
     TrackTuplePtr lastEventTuple = nullptr, lastArrivalTuple = nullptr;
     AEWMAPredictor joinedRValuePredictor;
-    double joinedRValueSum=0,joinedRValueAvg=0;
-    int64_t joinedRValueCnt=0;
-    double rvAvgPrediction=0;
+    double joinedRValueSum = 0, joinedRValueAvg = 0;
+    int64_t joinedRValueCnt = 0;
+    double rvAvgPrediction = 0;
     // tsType  lastSeenTime=0;
     MeanStateOfKey() {
       joinedRValuePredictor.reset();

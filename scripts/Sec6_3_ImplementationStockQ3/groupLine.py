@@ -171,7 +171,7 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
 
     # you may control the limits on your own.
 
-    #plt.ylim(0, 100)
+    # plt.ylim(0, 100)
 
     plt.grid(axis='y', color='gray')
     figure.yaxis.set_major_locator(LinearLocator(5))

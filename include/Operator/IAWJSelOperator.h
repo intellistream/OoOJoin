@@ -43,7 +43,6 @@ class IAWJSelOperator : public MeanAQPIAWJOperator {
     ~IMAStateOfKey() = default;
   };
 
-
 #define newIMAStateOfKey std::make_shared<IMAStateOfKey>
   using IMAStateOfKeyPtr = std::shared_ptr<IMAStateOfKey>;
   /**

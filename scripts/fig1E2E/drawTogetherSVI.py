@@ -124,7 +124,7 @@ def main():
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-   
+
     # run
     reRun = 0
     if (len(sys.argv) < 2):
@@ -135,14 +135,14 @@ def main():
 
     # os.system("mkdir " + figPath)
     # print(lat95All)
-    #print(lat95All)
+    # print(lat95All)
     # lat95All[3]=ts
-    methodTags = [ "svi","svi_CL"]
-    resultPaths = [ "svi","svi_CL"]
-    csvTemplates = [ "config_svi.csv","config_sviCL.csv"]
+    methodTags = ["svi", "svi_CL"]
+    resultPaths = ["svi", "svi_CL"]
+    csvTemplates = ["config_svi.csv", "config_sviCL.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
-    #npLat[2] = npLat[2] / 7.5
+    # npLat[2] = npLat[2] / 7.5
     groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "e2ESmallSvi", True)
 
 

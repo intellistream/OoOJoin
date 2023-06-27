@@ -15,7 +15,8 @@ bool OoOJoin::IAWJSelOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
   noRTrace = newIMAStateOfKey();
   noSTrace = newIMAStateOfKey();
-  joinSum=cfg->tryU64("joinSum",0,true);
+  joinSum = cfg->tryU64("joinSum", 0, true);
+  wmGen->setConfig(config);
   return true;
 }
 
@@ -24,7 +25,7 @@ bool OoOJoin::IAWJSelOperator::start() {
   * @brief set watermark generator
   */
   //wmGen = newPeriodicalWM();
-  wmGen->setConfig(config);
+
   wmGen->syncTimeStruct(timeBaseStruct);
   /**
    * @note:
@@ -189,10 +190,10 @@ bool OoOJoin::IAWJSelOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
       /**
        * @brief rvalue observations here
        */
-      noRTrace->joinedRValueSum+=(int64_t)tr->payload;
+      noRTrace->joinedRValueSum += (int64_t) tr->payload;
       noRTrace->joinedRValueCnt++;
-      noRTrace->joinedRValueAvg=noRTrace->joinedRValueSum/noRTrace->joinedRValueCnt;
-      noRTrace->rvAvgPrediction=noRTrace->joinedRValuePredictor.update(noRTrace->joinedRValueAvg);
+      noRTrace->joinedRValueAvg = noRTrace->joinedRValueSum / noRTrace->joinedRValueCnt;
+      noRTrace->rvAvgPrediction = noRTrace->joinedRValuePredictor.update(noRTrace->joinedRValueAvg);
     }
     timeBreakDownJoin += timeTrackingEnd(tt_join);
     stateOfKey->lastUnarrivedTuples = futureTuplesR;
@@ -202,9 +203,8 @@ bool OoOJoin::IAWJSelOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 }
 
 size_t OoOJoin::IAWJSelOperator::getResult() {
-  if(joinSum)
-  {
-    return confirmedResult*noRTrace->joinedRValueAvg;
+  if (joinSum) {
+    return confirmedResult * noRTrace->joinedRValueAvg;
   }
 
   return confirmedResult;
@@ -213,48 +213,40 @@ size_t OoOJoin::IAWJSelOperator::getResult() {
 size_t OoOJoin::IAWJSelOperator::getAQPResult() {
   // size_t intermediateResult = (selectivityR + selectivityS) * (noR * noS);
   //selPrediction=selObservation;
-  if(noSTrace->lastArrivalTuple== nullptr)
-  {
+  if (noSTrace->lastArrivalTuple == nullptr) {
     return getResult();
   }
-  if(noRTrace->lastArrivalTuple== nullptr)
-  {
+  if (noRTrace->lastArrivalTuple == nullptr) {
     return getResult();
   }
 
-  uint64_t lastSArrival=noSTrace->lastArrivalTuple->arrivalTime+noSTrace->lastEventTuple->eventTime;
-  uint64_t lastRArrival=noRTrace->lastArrivalTuple->arrivalTime+noRTrace->lastEventTuple->eventTime;
-  double lastWindowArrival=(lastSArrival+lastRArrival)/2;
-  double expectedLastArrival=2*myWindow.getEnd()-myWindow.getStart()+(noSTrace->arrivalSkew+noRTrace->arrivalSkew)/2;
+  uint64_t lastSArrival = noSTrace->lastArrivalTuple->arrivalTime + noSTrace->lastEventTuple->eventTime;
+  uint64_t lastRArrival = noRTrace->lastArrivalTuple->arrivalTime + noRTrace->lastEventTuple->eventTime;
+  double lastWindowArrival = (lastSArrival + lastRArrival) / 2;
+  double expectedLastArrival =
+      2 * myWindow.getEnd() - myWindow.getStart() + (noSTrace->arrivalSkew + noRTrace->arrivalSkew) / 2;
   size_t ru;
   double compensationWeight;
-  if(lastWindowArrival>expectedLastArrival)
-  {
-    compensationWeight=0.0;
-  }
-  else
-  { if( (lastSArrival+lastRArrival)/2>=2*myWindow.getEnd()-myWindow.getStart())
-    {
-      compensationWeight=0.2;
-    }
-    else
-    {
-      compensationWeight=0.5;
+  if (lastWindowArrival > expectedLastArrival) {
+    compensationWeight = 0.0;
+  } else {
+    if ((lastSArrival + lastRArrival) / 2 >= 2 * myWindow.getEnd() - myWindow.getStart()) {
+      compensationWeight = 0.2;
+    } else {
+      compensationWeight = 0.5;
     }
   }
-  if(joinSum)
-  {
-    auto compensated=selPrediction*noS*noR*noRTrace->rvAvgPrediction;
-    double raw=getResult();
-    auto temp=compensated;
-    ru=(size_t)(temp*compensationWeight+raw*(1-compensationWeight));
-  }
-  else
-  {
+  if (joinSum) {
+    auto compensated = selPrediction * noS * noR * noRTrace->rvAvgPrediction;
+    double raw = getResult();
+    auto temp = compensated;
+    ru = (size_t) (temp * compensationWeight + raw * (1 - compensationWeight));
+  } else {
     ru = selPrediction * noS * noR;
   }
 
-  INTELLI_INFO("last arrival: "+ to_string(lastWindowArrival)+", window end"+ to_string(myWindow.getEnd()+noSTrace->arrivalSkew));
+  INTELLI_INFO("last arrival: " + to_string(lastWindowArrival) + ", window end"
+                   + to_string(myWindow.getEnd() + noSTrace->arrivalSkew));
   return ru;
   //return ru;
 }

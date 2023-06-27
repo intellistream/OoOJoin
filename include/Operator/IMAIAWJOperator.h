@@ -37,7 +37,7 @@ namespace OoOJoin {
 class IMAIAWJOperator : public MeanAQPIAWJOperator {
  protected:
   void conductComputation();
-  uint64_t  imaDisableCompensation=0;
+  uint64_t imaDisableCompensation = 0;
   class IMAStateOfKey : public MeanStateOfKey {
    public:
     double lastUnarrivedTuples = 0;
@@ -49,7 +49,7 @@ class IMAIAWJOperator : public MeanAQPIAWJOperator {
 
 #define newIMAStateOfKey std::make_shared<IMAStateOfKey>
   using IMAStateOfKeyPtr = std::shared_ptr<IMAStateOfKey>;
-  double getCompensationWeight(IMAStateOfKeyPtr noSTrace,IMAStateOfKeyPtr noRTrace);
+  double getCompensationWeight(IMAStateOfKeyPtr noSTrace, IMAStateOfKeyPtr noRTrace);
  public:
   IMAIAWJOperator() = default;
 

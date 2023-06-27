@@ -124,10 +124,20 @@
  * @}
  */
 /**
+*  @defgroup Parallelization The parallelization part
+*  @{
+*/
+#include <Parallelization/KeyPartitionRunner.h>
+#include <Parallelization/RoundRobinRunner.h>
+/**
+ * @}
+ */
+/**
  * @defgroup ADB_TESTBENCH The test bench
  * @{
  */
 #include <TestBench/TestBench.h>
+#include <TestBench/DataLoaderTable.h>
 /**
  * @}
  */

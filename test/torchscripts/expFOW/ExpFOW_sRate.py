@@ -1,4 +1,4 @@
-#FIX ME LATER!!!!
+# FIX ME LATER!!!!
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -25,7 +25,7 @@ class TransformerEncoder(nn.Module):
 class FOW(nn.Module):
     def __init__(self, input_dim, hidden_dim, latent_dim, num_layers, num_heads):
         super(FOW, self).__init__()
-        #linear layers to find the unobsertvered pattern of x
+        # linear layers to find the unobsertvered pattern of x
         self.xPattern = nn.Sequential(
             # TransformerEncoder(input_dim, hidden_dim, num_layers, num_heads),
             nn.Linear(input_dim, hidden_dim),
@@ -34,56 +34,56 @@ class FOW(nn.Module):
             nn.ReLU(),
             # nn.Linear(hidden_dim, latent_dim*2 + 2),
         )
-        #linear lambdai, after analysing x
+        # linear lambdai, after analysing x
         self.lambdaLayer = nn.Sequential(
             # TransformerEncoder(input_dim, hidden_dim, num_layers, num_heads),
-            nn.Linear(hidden_dim,latent_dim),
+            nn.Linear(hidden_dim, latent_dim),
             # nn.ReLU(),
-            #nn.Linear(hidden_dim, hidden_dim),
+            # nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),
             # nn.Linear(hidden_dim, latent_dim*2 + 2),
         )
         # mu and A are dependent, so firstly synthize together
         self.muAndALayer = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim*2),  # muLambda
+            nn.Linear(hidden_dim, hidden_dim * 2),  # muLambda
             nn.ReLU()
         )
         # shortly after the synthized mu and A, we output A
-        self.ALayer = nn.Sequential (
-            nn.Linear(hidden_dim,latent_dim),
+        self.ALayer = nn.Sequential(
+            nn.Linear(hidden_dim, latent_dim),
             nn.ReLU()
         )
         # shortly after the synthized mu and A, we output mu and tau
-        self.tauLayer= nn.Sequential (
-            nn.Linear(hidden_dim,hidden_dim),
-            nn.Linear(hidden_dim,1),
+        self.tauLayer = nn.Sequential(
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.Linear(hidden_dim, 1),
             nn.ReLU()
         )
-        self.muLayer = nn.Sequential (
-            nn.Linear(hidden_dim,1),
+        self.muLayer = nn.Sequential(
+            nn.Linear(hidden_dim, 1),
             nn.ReLU()
         )
         self.latent_dim = latent_dim
-        self.hiddenDim=hidden_dim
+        self.hiddenDim = hidden_dim
         self.inputDim = input_dim
         # for mu
         self.priorMu = torch.tensor([0.0])
         self.priorSigma = torch.tensor([1.0])
         self.lastMu = self.priorMu
         self.lastSigma = self.priorSigma
-        self.lastTau=1/self.lastSigma
-        self.pMu=torch.tensor([0.0])
-        self.pTau=torch.tensor([0.0])
-        self.pTauShadow=self.pTau
-        self.pA=torch.tensor([0.0])
-        self.pLambda=torch.tensor([0.0])
+        self.lastTau = 1 / self.lastSigma
+        self.pMu = torch.tensor([0.0])
+        self.pTau = torch.tensor([0.0])
+        self.pTauShadow = self.pTau
+        self.pA = torch.tensor([0.0])
+        self.pLambda = torch.tensor([0.0])
         # for tau, exp(-logvar)
         self.priorA0 = torch.tensor([0.0])
         self.priorB0 = torch.tensor([1.0])
         self.lastA0 = self.priorA0
         self.lastB0 = self.priorB0
-        self.lastLambda=torch.ones(1,latent_dim)
-        self.lastAi=torch.ones(1,latent_dim)
+        self.lastLambda = torch.ones(1, latent_dim)
+        self.lastAi = torch.ones(1, latent_dim)
 
     @torch.jit.export
     def loadPriorDist(self, pmu, psigma, pa0, pb0):
@@ -97,7 +97,6 @@ class FOW(nn.Module):
         self.priorA0 = pa0
         self.priorB0 = pb0
 
-
     @torch.jit.export
     def getLastDist(self):
         return self.lastMu, (0.5 * self.lastSigma).exp(), self.lastA0, self.lastB0
@@ -109,24 +108,24 @@ class FOW(nn.Module):
 
     def forward(self, x):
         xPattern = self.xPattern(x)
-        eLambda =self.lambdaLayer(xPattern)
-        muAndARaw=self.muAndALayer(xPattern)
-        eA=self.ALayer(muAndARaw[:,0:int(self.hiddenDim)])
-        #let's update eMu and eTau then, first emu
-        #a little bit putting rotten, can also use the eqn31 32 instead of deep dark here
-        eTau = self.tauLayer(muAndARaw[:,int(self.hiddenDim):])
-        eMu=self.muLayer(muAndARaw[:,int(self.hiddenDim):])
-        eMu=self.muLayer(xPattern)
-        self.pMu=self.lastMu
-        self.pTau=self.lastTau
-        self.pA=self.lastAi
-        self.pLambda=self.lastLambda
+        eLambda = self.lambdaLayer(xPattern)
+        muAndARaw = self.muAndALayer(xPattern)
+        eA = self.ALayer(muAndARaw[:, 0:int(self.hiddenDim)])
+        # let's update eMu and eTau then, first emu
+        # a little bit putting rotten, can also use the eqn31 32 instead of deep dark here
+        eTau = self.tauLayer(muAndARaw[:, int(self.hiddenDim):])
+        eMu = self.muLayer(muAndARaw[:, int(self.hiddenDim):])
+        eMu = self.muLayer(xPattern)
+        self.pMu = self.lastMu
+        self.pTau = self.lastTau
+        self.pA = self.lastAi
+        self.pLambda = self.lastLambda
         ##
-        self.lastMu=eMu
-        self.lastTau=eTau
-        self.lastLambda=eLambda
-        self.lastAi=eA
-        return eMu,eTau,eLambda,eA,self.pTau
+        self.lastMu = eMu
+        self.lastTau = eTau
+        self.lastLambda = eLambda
+        self.lastAi = eA
+        return eMu, eTau, eLambda, eA, self.pTau
 
     @torch.jit.export
     def getDimension(self):
@@ -135,20 +134,22 @@ class FOW(nn.Module):
     # this one has problems, fix later
     @torch.jit.export
     def lossUnderNormal(self, x_recon, x, mu, logvar):
-        #log likely hood
-        logLikelyHoodVec=torch.log(self.lastLambda)+(-self.lastLambda*(x-self.lastAi))+(-(self.lastAi-self.lastMu)*(self.lastAi-self.lastMu)*self.lastTau/2)+0.5*torch.log(self.lastTau)
-        #logLikelyHoodVec=torch.log(self.lastLambda)+(-self.lastLambda*(x-self.lastAi))
-        logLikelyHood=torch.sum(logLikelyHoodVec)
-        logPMu=torch.log(self.pMu)
-        logEMu=torch.log(self.lastMu)
-        logPTau=torch.log(logvar)
-        logPAVec=torch.log(self.pA)
-        logPA=torch.sum(logPAVec)
-        logLambdaVec=torch.log(self.pLambda)
-        logPLambda=torch.sum(logLambdaVec)
-        ELBO=torch.sigmoid(logLikelyHood)+torch.sigmoid(logPMu-logEMu)
-        
-        return -torch.sum(ELBO) 
+        # log likely hood
+        logLikelyHoodVec = torch.log(self.lastLambda) + (-self.lastLambda * (x - self.lastAi)) + (
+                    -(self.lastAi - self.lastMu) * (self.lastAi - self.lastMu) * self.lastTau / 2) + 0.5 * torch.log(
+            self.lastTau)
+        # logLikelyHoodVec=torch.log(self.lastLambda)+(-self.lastLambda*(x-self.lastAi))
+        logLikelyHood = torch.sum(logLikelyHoodVec)
+        logPMu = torch.log(self.pMu)
+        logEMu = torch.log(self.lastMu)
+        logPTau = torch.log(logvar)
+        logPAVec = torch.log(self.pA)
+        logPA = torch.sum(logPAVec)
+        logLambdaVec = torch.log(self.pLambda)
+        logPLambda = torch.sum(logLambdaVec)
+        ELBO = torch.sigmoid(logLikelyHood) + torch.sigmoid(logPMu - logEMu)
+
+        return -torch.sum(ELBO)
 
     @torch.jit.export
     def lossUnderPretrain(self, x_recon, x, pmu, mu):
@@ -232,7 +233,7 @@ def supervisedTrain(model, X, Y, batch_size, learningRate, epochs, device):
 
 def unSupervisedTrain(model, X, batch_size, learningRate, epochs, device):
     optimizer = optim.Adam(model.parameters(), lr=learningRate)
-    
+
     num_samples, input_dim = X.shape
     for epoch in range(1, epochs + 1):
         train_loss = 0
@@ -242,7 +243,7 @@ def unSupervisedTrain(model, X, batch_size, learningRate, epochs, device):
             # x = X[batch_idx:batch_idx+batch_size].to('cuda')
             x = X[batch_idx:batch_idx + batch_size].to(device)
             model.loadPriorDist(torch.mean(x[0]), torch.std(x[0]), torch.tensor(1.0), torch.tensor(1.0))
-           
+
             x_recon, muZ, logvarZ, mu, logvar = model(x)
             # loss = model.loss_function(x_recon, x, muZ, logvarZ, mu, logvar)
             loss = model.lossUnderNormal(x_recon, x, mu, logvar)

@@ -51,7 +51,7 @@ class AIOperator : public MeanAQPIAWJOperator {
   std::string aiMode;
   uint8_t aiModeEnum = 0;
   uint64_t appendSel = 0, appendSkew = 0, appendRate, exitAfterPretrain;
-  std::string ptPrefix,ptPrefixSel,ptPrefixSRate,ptPrefixRRate;;
+  std::string ptPrefix, ptPrefixSel, ptPrefixSRate, ptPrefixRRate;;
   /**
    * @brief The pre-allocated length of seletivity observations, only valid for pretrain
    */

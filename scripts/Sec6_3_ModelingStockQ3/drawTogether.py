@@ -119,12 +119,12 @@ def main():
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [50,100,200,300,400,500,600,700]
-    #periodVec = [7, 10, 12]
+    periodVec = [50, 100, 200, 300, 400, 500, 600, 700]
+    # periodVec = [7, 10, 12]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    
+
     # run
     reRun = 0
     if (len(sys.argv) < 2):
@@ -136,19 +136,22 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["baseline w/o pecj" ,"PECJ-linear","PECJ-any"]
-    resultPaths = ["ks","pec_sel","pec_any"]
-    csvTemplates = ["config_yuanzhen.csv","config_pecjSel.csv","config_pecjAI.csv"]
+    methodTags = ["baseline w/o pecj", "PECJ-linear", "PECJ-any"]
+    resultPaths = ["ks", "pec_sel", "pec_any"]
+    csvTemplates = ["config_yuanzhen.csv", "config_pecjSel.csv", "config_pecjAI.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
-    resultPaths2=["pecj_svi"]
-    csvTemplates2=["config_sviCL.csv"]
+    resultPaths2 = ["pecj_svi"]
+    csvTemplates2 = ["config_sviCL.csv"]
     lat95SVI, errSVI, periodsvi = compareMethod(exeSpace, commonBasePath, resultPaths2, csvTemplates2, periodVec, reRun)
     for i in range(len(errAll[1])):
-        if(errSVI[0][i]<errAll[1][i]):
-            errAll[1][i]=errSVI[0][i]
-    groupLine.DrawFigureYnormal(periodAll, np.array(errAll)*100.0, methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)" , 0, 1, figPath + "sec6_3_modeling_stock_q3",
+        if (errSVI[0][i] < errAll[1][i]):
+            errAll[1][i] = errSVI[0][i]
+    groupLine.DrawFigureYnormal(periodAll, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$t_c$ (ms)",
+                                "Error (%)", 0, 1, figPath + "sec6_3_modeling_stock_q3",
                                 True)
     print(errAll)
+
+
 if __name__ == "__main__":
     main()

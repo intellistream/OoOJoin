@@ -119,12 +119,12 @@ def main():
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    #periodVec = [7, 8, 9, 10, 11, 12]
+    # periodVec = [7, 8, 9, 10, 11, 12]
     periodVec = [7, 10, 12]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    
+
     # run
     reRun = 0
     if (len(sys.argv) < 2):
@@ -137,15 +137,20 @@ def main():
     # print(lat95All)
     # lat95All[3]=ts
     methodTags = ["watermark", "k-slack", "PECJ"]
-    resultPaths = ["wa", "ks","pec_sel"]
+    resultPaths = ["wa", "ks", "pec_sel"]
     csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_pecjSel.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
-    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "sec6_2_stock_q1", True)
-    gbXvalues=periodVec.copy()
-  
-    #groupBar.DrawFigure(periodVec,npLat.T,methodTags,"tuning knob "+r"$t_c$","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
-    groupBar2.DrawFigure(periodVec,npLat,methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)",5,15,figPath + "sec6_2_stock_q1_lat", True)
-    groupBar2.DrawFigure(periodVec,np.array(errAll)*100.0,methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)",5,15,figPath + "sec6_2_stock_q1_err", True)
+    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "sec6_2_stock_q1",
+                          True)
+    gbXvalues = periodVec.copy()
+
+    # groupBar.DrawFigure(periodVec,npLat.T,methodTags,"tuning knob "+r"$t_c$","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
+    groupBar2.DrawFigure(periodVec, npLat, methodTags, "Tuning knob " + r"$t_c$ (ms)", "95% latency (ms)", 5, 15,
+                         figPath + "sec6_2_stock_q1_lat", True)
+    groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$t_c$ (ms)", "Error (%)",
+                         5, 15, figPath + "sec6_2_stock_q1_err", True)
+
+
 if __name__ == "__main__":
     main()

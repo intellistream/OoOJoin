@@ -1,4 +1,4 @@
-#FIX ME LATER!!!!
+# FIX ME LATER!!!!
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -25,49 +25,48 @@ class TransformerEncoder(nn.Module):
 class ANYZ(nn.Module):
     def __init__(self, input_dim, hidden_dim, latent_dim, num_layers, num_heads):
         super(ANYZ, self).__init__()
-        #linear layers to find the unobsertvered pattern of x
+        # linear layers to find the unobsertvered pattern of x
         self.xPattern = nn.Sequential(
             # TransformerEncoder(input_dim, hidden_dim, num_layers, num_heads),
             nn.Linear(input_dim, hidden_dim),
-            #nn.Sigmoid(),
+            # nn.Sigmoid(),
             nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),
-            #nn.Sigmoid(),
+            # nn.Sigmoid(),
             # nn.Linear(hidden_dim, latent_dim*2 + 2),
         )
         # for fitting a complex function
-        self.funtionFitting=nn.Sequential(
+        self.funtionFitting = nn.Sequential(
             nn.Linear(hidden_dim, hidden_dim),
-            nn.Linear(hidden_dim,hidden_dim),
-            nn.Linear(hidden_dim,hidden_dim),
-            nn.Linear(hidden_dim,latent_dim),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.Linear(hidden_dim, latent_dim),
             nn.ReLU(),
         )
-         #we need loglikly hood, log(pmu), log(ptau),sum(logp{latent}), log(emu),log(etau),sum(logp{others})
-        #the output in this layer is raw value, not log, should compute log in elbo
-        self.elboOut=nn.Sequential(
-            nn.Linear(latent_dim,7)
+        # we need loglikly hood, log(pmu), log(ptau),sum(logp{latent}), log(emu),log(etau),sum(logp{others})
+        # the output in this layer is raw value, not log, should compute log in elbo
+        self.elboOut = nn.Sequential(
+            nn.Linear(latent_dim, 7)
         )
         self.latent_dim = latent_dim
-        self.hiddenDim=hidden_dim
+        self.hiddenDim = hidden_dim
         self.inputDim = input_dim
         # for mu
         self.priorMu = torch.tensor([0.0])
         self.priorSigma = torch.tensor([1.0])
         self.lastMu = self.priorMu
         self.lastSigma = self.priorSigma
-        self.lastTau=1/self.lastSigma
-        self.pMu=torch.tensor([0.0])
-        self.pTau=torch.tensor([0.0])
-        self.pA=torch.tensor([0.0])
-        self.pLambda=torch.tensor([0.0])
+        self.lastTau = 1 / self.lastSigma
+        self.pMu = torch.tensor([0.0])
+        self.pTau = torch.tensor([0.0])
+        self.pA = torch.tensor([0.0])
+        self.pLambda = torch.tensor([0.0])
         # for tau, exp(-logvar)
         self.priorA0 = torch.tensor([0.0])
         self.priorB0 = torch.tensor([1.0])
         self.lastA0 = self.priorA0
         self.lastB0 = self.priorB0
-        self.lastLambda=torch.tensor([0.0])
-
+        self.lastLambda = torch.tensor([0.0])
 
     @torch.jit.export
     def loadPriorDist(self, pmu, psigma, pa0, pb0):
@@ -81,7 +80,6 @@ class ANYZ(nn.Module):
         self.priorA0 = pa0
         self.priorB0 = pb0
 
-
     @torch.jit.export
     def getLastDist(self):
         return self.lastMu, (0.5 * self.lastSigma).exp(), self.lastA0, self.lastB0
@@ -93,16 +91,16 @@ class ANYZ(nn.Module):
 
     def forward(self, x):
         xPattern = self.xPattern(x)
-        elboVecs=self.elboOut(self.funtionFitting(xPattern))
-        likelyHood=torch.sigmoid(torch.relu(elboVecs[:,0]))
-        self.lastMu=torch.relu(elboVecs[:,1])
-        self.pMu=torch.relu(elboVecs[:,2])
-        self.lastTau=torch.relu(elboVecs[:,3])
-        self.pTau=torch.relu(elboVecs[:,4])
-        self.lastLambda=torch.relu(elboVecs[:,5])
-        self.pLambda=torch.relu(elboVecs[:,6])
-        #let's update eMu and eTau then, first emu
-        return self.lastMu,self.pMu,self.lastTau,self.pTau,likelyHood
+        elboVecs = self.elboOut(self.funtionFitting(xPattern))
+        likelyHood = torch.sigmoid(torch.relu(elboVecs[:, 0]))
+        self.lastMu = torch.relu(elboVecs[:, 1])
+        self.pMu = torch.relu(elboVecs[:, 2])
+        self.lastTau = torch.relu(elboVecs[:, 3])
+        self.pTau = torch.relu(elboVecs[:, 4])
+        self.lastLambda = torch.relu(elboVecs[:, 5])
+        self.pLambda = torch.relu(elboVecs[:, 6])
+        # let's update eMu and eTau then, first emu
+        return self.lastMu, self.pMu, self.lastTau, self.pTau, likelyHood
 
     @torch.jit.export
     def getDimension(self):
@@ -111,26 +109,26 @@ class ANYZ(nn.Module):
     # this one has problems, fix later
     @torch.jit.export
     def lossUnderNormal(self, x_recon, x, mu, likelyHood):
-        #log likely hood
-        logLikelyHood=torch.log(likelyHood+0.001)
-        logPMu=torch.log(self.pMu+0.001)
-        logEMu=torch.log(self.lastMu+0.001)
-        logPTau=torch.log(self.pTau+0.001)
-        logETau=torch.log(self.lastLambda+0.001)
-        logPLambda=torch.log(self.pLambda+0.001)
-        logELambda=torch.log(self.lastLambda+0.001)
-        ELBO=torch.sigmoid(logLikelyHood+logPMu+logPTau+logPLambda-logEMu-logETau-logELambda)
-        
-        return -torch.sum(ELBO) 
+        # log likely hood
+        logLikelyHood = torch.log(likelyHood + 0.001)
+        logPMu = torch.log(self.pMu + 0.001)
+        logEMu = torch.log(self.lastMu + 0.001)
+        logPTau = torch.log(self.pTau + 0.001)
+        logETau = torch.log(self.lastLambda + 0.001)
+        logPLambda = torch.log(self.pLambda + 0.001)
+        logELambda = torch.log(self.lastLambda + 0.001)
+        ELBO = torch.sigmoid(logLikelyHood + logPMu + logPTau + logPLambda - logEMu - logETau - logELambda)
+
+        return -torch.sum(ELBO)
 
     @torch.jit.export
     def lossUnderPretrain(self, likelyHood, x, pmu, mu):
         # recon_loss = F.mse_loss(x_recon, x, reduction='mean')
         #
-        likelyHoodExpect=torch.ones_like(pmu)
-        likelyHoodLoss=F.mse_loss(likelyHoodExpect,likelyHood)
+        likelyHoodExpect = torch.ones_like(pmu)
+        likelyHoodLoss = F.mse_loss(likelyHoodExpect, likelyHood)
         mu_loss = F.mse_loss(mu, pmu, reduction='mean')
-        return mu_loss+likelyHoodLoss
+        return mu_loss + likelyHoodLoss
 
 
 def save_model(model, path, X):
@@ -207,7 +205,7 @@ def supervisedTrain(model, X, Y, batch_size, learningRate, epochs, device):
 
 def unSupervisedTrain(model, X, batch_size, learningRate, epochs, device):
     optimizer = optim.Adam(model.parameters(), lr=learningRate)
-    
+
     num_samples, input_dim = X.shape
     for epoch in range(1, epochs + 1):
         train_loss = 0
@@ -217,7 +215,7 @@ def unSupervisedTrain(model, X, batch_size, learningRate, epochs, device):
             # x = X[batch_idx:batch_idx+batch_size].to('cuda')
             x = X[batch_idx:batch_idx + batch_size].to(device)
             model.loadPriorDist(torch.mean(x[0]), torch.std(x[0]), torch.tensor(1.0), torch.tensor(1.0))
-           
+
             x_recon, muZ, logvarZ, mu, logvar = model(x)
             # loss = model.loss_function(x_recon, x, muZ, logvarZ, mu, logvar)
             loss = model.lossUnderNormal(x_recon, x, mu, logvar)
@@ -265,7 +263,7 @@ def pretrainModel(device, prefixTag, saveTag):
 
     # Note: first learn the certainties, then get the uncertainties
     supervisedTrain(model, X, Y, batch_size, 1e-3, 200, device)
-    #unSupervisedTrain(model, X, batch_size, 1e-3, 2, device)
+    # unSupervisedTrain(model, X, batch_size, 1e-3, 2, device)
     # model.eval()
     # model=model.to('cpu')
     # X, Y = genX(1, input_dim, 10, 0.2)

@@ -15,7 +15,8 @@ bool OoOJoin::MeanAQPIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     return false;
   }
   INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
-  joinSum=cfg->tryU64("joinSum",0,true);
+  joinSum = cfg->tryU64("joinSum", 0, true);
+  wmGen->setConfig(cfg);
   return true;
 }
 
@@ -24,7 +25,7 @@ bool OoOJoin::MeanAQPIAWJOperator::start() {
   * @brief set watermark generator
   */
   // wmGen = newPeriodicalWM();
-  wmGen->setConfig(config);
+
   wmGen->syncTimeStruct(timeBaseStruct);
   /**
    * @note:
@@ -158,10 +159,10 @@ bool OoOJoin::MeanAQPIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     } else {
       sk = ImproveStateOfKeyTo(MeanStateOfKey, skrf);
     }
-    sk->joinedRValueSum+=(int64_t)tr->payload;
+    sk->joinedRValueSum += (int64_t) tr->payload;
     sk->joinedRValueCnt++;
-    sk->joinedRValueAvg=sk->joinedRValueSum/sk->joinedRValueCnt;
-    sk->rvAvgPrediction=sk->joinedRValuePredictor.update(sk->joinedRValueAvg);
+    sk->joinedRValueAvg = sk->joinedRValueSum / sk->joinedRValueCnt;
+    sk->rvAvgPrediction = sk->joinedRValuePredictor.update(sk->joinedRValueAvg);
 
     timeBreakDownIndex += timeTrackingEnd(tt_index);timeTrackingStart(tt_prediction);
     updateStateOfKey(sk, tr);
@@ -224,15 +225,13 @@ void OoOJoin::MeanAQPIAWJOperator::lazyComputeOfAQP() {
           double unarrivedS = predictUnarrivedTuples(px);
           MeanStateOfKeyPtr py = ImproveStateOfKeyTo(MeanStateOfKey, probrPtr);
           double unarrivedR = predictUnarrivedTuples(py);
-          if(joinSum)
-          {
-            uint64_t cIR= (px->arrivedTupleCnt) * (py->arrivedTupleCnt)*px->joinedRValueAvg;
-            uint64_t pIR=(px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR)*px->rvAvgPrediction;
-            intermediateResult += (cIR+pIR)/2;
-            confirmedResult +=cIR;
-          }
-          else
-          {
+          if (joinSum) {
+            uint64_t cIR = (px->arrivedTupleCnt) * (py->arrivedTupleCnt) * px->joinedRValueAvg;
+            uint64_t
+                pIR = (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR) * px->rvAvgPrediction;
+            intermediateResult += (cIR + pIR) / 2;
+            confirmedResult += cIR;
+          } else {
             intermediateResult += (px->arrivedTupleCnt + unarrivedS) * (py->arrivedTupleCnt + unarrivedR);
             confirmedResult += (px->arrivedTupleCnt) * (py->arrivedTupleCnt);
           }

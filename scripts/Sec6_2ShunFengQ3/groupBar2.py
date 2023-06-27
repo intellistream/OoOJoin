@@ -8,6 +8,7 @@ import pylab
 from matplotlib.font_manager import FontProperties
 from matplotlib.ticker import LogLocator, LinearLocator
 import matplotlib.ticker as mtick
+
 OPT_FONT_NAME = 'Helvetica'
 TICK_FONT_SIZE = 24
 LABEL_FONT_SIZE = 28
@@ -23,7 +24,8 @@ COLOR_MAP = (
     '#AA4499')
 # you may want to change the patterns for different figures
 PATTERNS = (
-    ["\\\\", "////", "\\\\", "//", "o", "", "||", "-", "//", "\\", "o", "O", "////", ".", "|||", "o", "---", "+", "\\\\",
+    ["\\\\", "////", "\\\\", "//", "o", "", "||", "-", "//", "\\", "o", "O", "////", ".", "|||", "o", "---", "+",
+     "\\\\",
      "*"])
 LABEL_WEIGHT = 'bold'
 LINE_COLORS = COLOR_MAP
@@ -83,7 +85,7 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
     index = np.arange(len(x_values))
     # the bar width.
     # you may need to tune it to get the best figure.
-    width = 0.6/len(x_values)
+    width = 0.6 / len(x_values)
     # draw the bars
     bars = [None] * (len(FIGURE_LABEL))
     for i in range(len(y_values)):
@@ -109,9 +111,9 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
                    #                     columnspacing=5.5,
                    #                     handlelength=2,
                    )
-    
+
     # you may need to tune the xticks position to get the best figure.
-    plt.xticks(index + len(x_values)/2* width, x_values, rotation=0)
+    plt.xticks(index + len(x_values) / 2 * width, x_values, rotation=0)
 
     # plt.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
     # plt.grid(axis='y', color='gray')

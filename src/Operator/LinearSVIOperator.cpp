@@ -134,7 +134,7 @@ bool OoOJoin::LinearSVIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     return false;
   }
   INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
-
+  wmGen->setConfig(config);
   return true;
 }
 
@@ -143,7 +143,7 @@ bool OoOJoin::LinearSVIOperator::start() {
   * @brief set watermark generator
   */
   //wmGen = newPeriodicalWM();
-  wmGen->setConfig(config);
+
   wmGen->syncTimeStruct(timeBaseStruct);
   /**
    * @note:
@@ -264,14 +264,12 @@ bool OoOJoin::LinearSVIOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
 }
 void OoOJoin::LinearSVIOperator::updateEstimation(ObservationGroup &observation, TROCHPACK_SVI::LinearSVI &estimator) {
 
-
-  if (aiModeEnum==0) {
+  if (aiModeEnum == 0) {
     return;
   }
-  if(observation.buffFull) {
-    observation.tempXTensor=observation.xTensor.clone();
-    if(aiModeEnum==2)
-    {
+  if (observation.buffFull) {
+    observation.tempXTensor = observation.xTensor.clone();
+    if (aiModeEnum == 2) {
       return;
     }
 
@@ -287,7 +285,7 @@ void OoOJoin::LinearSVIOperator::updateEstimation(ObservationGroup &observation,
           estimator.learnStep(tx);
           loss = estimator.resultLoss;
           iterations++;
-          INTELLI_INFO("Run continue learning, iteration="+ to_string(iterations)+"loss ="+ to_string(loss));
+          INTELLI_INFO("Run continue learning, iteration=" + to_string(iterations) + "loss =" + to_string(loss));
         }
 
         estimator.runForward(tx);
@@ -325,7 +323,7 @@ void OoOJoin::LinearSVIOperator::endOfWindow() {
     /**
      * @brief forward
      */
-   streamStatisics.sviSRate.runForward(
+    streamStatisics.sviSRate.runForward(
         streamStatisics.sRateObservations.tempXTensor);
     float sRateMu = streamStatisics.sviSRate.resultMu;
     sRateMu = sRateMu;
@@ -378,8 +376,6 @@ bool OoOJoin::LinearSVIOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
       streamStatisics.rRateObservations.appendX(streamStatisics.rRate);
 
       updateEstimation(streamStatisics.rRateObservations, streamStatisics.sviRRate);
-
-
 
     }
     LinearSVIStateOfKeyPtr stateOfKey;timeTrackingStart(tt_index);

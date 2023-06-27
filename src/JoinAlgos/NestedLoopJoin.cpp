@@ -17,12 +17,9 @@ size_t NestedLoopJoin::join(C20Buffer<OoOJoin::TrackTuplePtr> windS, OoOJoin::Tr
       /**
        * @brief handle join sum here
        */
-      if(joinSum)
-      {
-        result+=tr->payload;
-      }
-      else
-      {
+      if (joinSum) {
+        result += tr->payload;
+      } else {
         result++;
       }
 

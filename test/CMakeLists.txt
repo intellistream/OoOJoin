@@ -28,23 +28,25 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/datasets/sTuple.csv
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/torchscripts
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 #add_executable(simpleTest SystemTest/SimpleTest.cpp)
-add_catch_test(mswjTest SystemTest/MSWJTest.cpp IntelliStream)
-add_catch_test(iawjTest SystemTest/IAWJTest.cpp IntelliStream)
-add_catch_test(imaTest SystemTest/IMATest.cpp IntelliStream)
-add_catch_test(pecjTest SystemTest/PECJTest.cpp IntelliStream)
-add_catch_test(aiPretrainTest SystemTest/AIPretrainTest.cpp IntelliStream)
-add_catch_test(aiInferenceTest SystemTest/AIInferenceTest.cpp IntelliStream)
-add_catch_test(iawjSelTest SystemTest/IAWJSelTest.cpp IntelliStream)
-add_catch_test(sviTest SystemTest/SVITest.cpp IntelliStream)
-add_catch_test(sviInferenceTest SystemTest/LinearSVIInferenceTest.cpp IntelliStream)
-add_catch_test(sviPretrainTest SystemTest/LinearSVIPretrainTest.cpp IntelliStream)
-add_catch_test(sviCLTest SystemTest/LinearSVIContinualLearningTest.cpp IntelliStream)
+add_catch_test(mswjTest SystemTest/MSWJTest.cpp IntelliStreamOoOJoin)
+add_catch_test(iawjTest SystemTest/IAWJTest.cpp IntelliStreamOoOJoin)
+add_catch_test(imaTest SystemTest/IMATest.cpp IntelliStreamOoOJoin)
+add_catch_test(pecjTest SystemTest/PECJTest.cpp IntelliStreamOoOJoin)
+add_catch_test(aiPretrainTest SystemTest/AIPretrainTest.cpp IntelliStreamOoOJoin)
+add_catch_test(aiInferenceTest SystemTest/AIInferenceTest.cpp IntelliStreamOoOJoin)
+add_catch_test(iawjSelTest SystemTest/IAWJSelTest.cpp IntelliStreamOoOJoin)
+add_catch_test(sviTest SystemTest/SVITest.cpp IntelliStreamOoOJoin)
+add_catch_test(sviInferenceTest SystemTest/LinearSVIInferenceTest.cpp IntelliStreamOoOJoin)
+add_catch_test(sviPretrainTest SystemTest/LinearSVIPretrainTest.cpp IntelliStreamOoOJoin)
+add_catch_test(sviCLTest SystemTest/LinearSVIContinualLearningTest.cpp IntelliStreamOoOJoin)
+add_catch_test(keyPartitionTest SystemTest/KeyPartitionTest.cpp IntelliStreamOoOJoin)
+add_catch_test(roundRobinTest SystemTest/RoundRobinTest.cpp IntelliStreamOoOJoin)
 #add_executable(iawjSelTest SystemTest/IAWJSelTest.cpp)
 #add_library(TestFunction SystemTest/TestFunction.cpp)
 
 message(STATUS " Libraries: ${LIBRARIES}")
 #target_link_libraries(TestFunction
-#IntelliStream
+#IntelliStreamOoOJoin
 #)
 
 

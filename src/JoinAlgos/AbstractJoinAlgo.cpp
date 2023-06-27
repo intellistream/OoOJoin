@@ -24,6 +24,6 @@ bool OoOJoin::AbstractJoinAlgo::setConfig(INTELLI::ConfigMapPtr cfg) {
   /**
    * @brief parase the joinSum config here
    */
-  joinSum=cfg->tryU64("joinSum",0, true);
+  joinSum = cfg->tryU64("joinSum", 0, true);
   return true;
 }

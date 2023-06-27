@@ -120,7 +120,7 @@ def main():
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [6,7, 8, 9, 10, 11, 12]
+    periodVec = [6, 7, 8, 9, 10, 11, 12]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
@@ -132,9 +132,9 @@ def main():
         reRun = 1
         # runPeriodVector(exeSpace, periodVec, resultPath)
     # lat95All[3]=ts
-    methodTags = ["watermark","k-slack","PECJ-alf", "PECJ-sel"]
-    resultPaths = ["wa","ks", "pecj_alf", "pec_sel"]
-    csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv","config_ima.csv", "config_sel.csv"]
+    methodTags = ["watermark", "k-slack", "PECJ-alf", "PECJ-sel"]
+    resultPaths = ["wa", "ks", "pecj_alf", "pec_sel"]
+    csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_ima.csv", "config_sel.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
     groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "e2EJS", True)

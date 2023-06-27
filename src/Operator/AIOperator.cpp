@@ -74,6 +74,7 @@ bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
     return false;
   }
+  config = cfg;
   std::string wmTag = config->tryString("wmTag", "arrival", true);
   aiMode = config->tryString("aiMode", "pretrain", true);
   ptPrefix = config->tryString("ptPrefix", "linearVAE", true);
@@ -121,7 +122,7 @@ bool OoOJoin::AIOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     return false;
   }
   INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
-
+  wmGen->setConfig(config);
   return true;
 }
 
@@ -130,7 +131,7 @@ bool OoOJoin::AIOperator::start() {
   * @brief set watermark generator
   */
   //wmGen = newPeriodicalWM();
-  wmGen->setConfig(config);
+
   wmGen->syncTimeStruct(timeBaseStruct);
   /**
    * @note:
