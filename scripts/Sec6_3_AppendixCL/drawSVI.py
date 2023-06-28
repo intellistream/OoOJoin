@@ -3,6 +3,7 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import accuBar as accuBar
+import groupBar as groupBar
 import groupBar2 as groupBar2
 import groupLine as groupLine
 from autoParase import *
@@ -56,7 +57,7 @@ def runPeriod(exePath, period, resultPath, configTemplate="config.csv"):
     os.system("cd " + exePath + "&& rm *.csv")
 
     # editConfig(configTemplate, exePath + configFname, "earlierEmitMs", 0)
-    editConfig(configTemplate, exePath + configFname, "threads", period)
+    editConfig(configTemplate, exePath + configFname, "watermarkTimeMs", period)
     # prepare new file
     # run
     os.system("cd " + exePath + "&& ./benchmark " + configFname)
@@ -100,7 +101,6 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
     lat95All = []
     errAll = []
     periodAll = []
-    thrAll=[]
     for i in range(len(csvTemplates)):
         resultPath = commonPathBase + resultPaths[i]
         if (reRun == 1):
@@ -111,48 +111,38 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
         lat95All.append(lat95Vec)
         errAll.append(errVec)
         periodAll.append(periodVec)
-        thrAll.append(thrVec)
-    return lat95All, errAll, periodAll,thrAll
+    return lat95All, errAll, periodAll
 
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
-    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/Sec6_5InSystemStockQ1j/"
+    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/figE2E/"
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [2,3,4,5,6]
-    # periodVec = [7, 10, 12]
+    periodVec = [7, 8, 9, 10, 11, 12]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-
-    # run
+   
     reRun = 0
     if (len(sys.argv) < 2):
         os.system("rm -rf " + commonBasePath)
         os.system("mkdir " + commonBasePath)
         reRun = 1
         # runPeriodVector(exeSpace, periodVec, resultPath)
-
     # os.system("mkdir " + figPath)
     # print(lat95All)
+    #print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["SHJ (eager)", "NPJ (lazy)", "PECJ-eager","PECJ-lazy"]
-    resultPaths = ["SHJ","NPJ","PECJ","PECJL"]
-    csvTemplates = ["config_shj.csv","config_npj.csv","config_pecjSel.csv","config_pecjSelLazy.csv"]
-    lat95All, errAll, periodAll,thrAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
+    methodTags = ["watermark", "PECJ-alf", "(PECJ-vae)/7.5","svi"]
+    resultPaths = ["wa", "pecj_ks", "pec_ai","svi"]
+    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv","config_svi.csv"]
+    lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
-   
-    groupLine.DrawFigureYnormal(periodAll, npLat, methodTags, "#Threads ", "95% latency (ms)", 0, 1,
-                                figPath + "sec6_5_inSystem_stock_q1_lat",
-                                True)
-    groupLine.DrawFigureYnormal(periodAll, np.array(errAll)*100.0, methodTags, "#Threads ", "Error (%)", 0, 1,
-                                figPath + "sec6_5_inSystem_stock_q1_err",
-                                True)
-    groupLine.DrawFigureYnormal(periodAll, np.array(thrAll), methodTags, "#Threads ", "Throughput (KTuple/s)", 0, 1,
-                                figPath + "sec6_5_inSystem_stock_q1_thr",
-                                True)
+    npLat[2] = npLat[2] / 7.5
+    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "svie2ESmall", True)
+
 
 if __name__ == "__main__":
     main()

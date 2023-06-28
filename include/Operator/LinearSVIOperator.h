@@ -200,13 +200,13 @@ class LinearSVIOperator : public MeanAQPIAWJOperator {
   bool stop() override;
 
   /**
-   * @brief get the joined sum result
+   * @brief get the joined  result
    * @return The result
    */
   size_t getResult() override;
 
   /**
-   * @brief get the joined sum result under AQP
+   * @brief get the joined  result under AQP
    * @return The result
    */
   size_t getAQPResult() override;
