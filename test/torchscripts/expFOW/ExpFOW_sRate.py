@@ -136,7 +136,7 @@ class FOW(nn.Module):
     def lossUnderNormal(self, x_recon, x, mu, logvar):
         # log likely hood
         logLikelyHoodVec = torch.log(self.lastLambda) + (-self.lastLambda * (x - self.lastAi)) + (
-                    -(self.lastAi - self.lastMu) * (self.lastAi - self.lastMu) * self.lastTau / 2) + 0.5 * torch.log(
+                -(self.lastAi - self.lastMu) * (self.lastAi - self.lastMu) * self.lastTau / 2) + 0.5 * torch.log(
             self.lastTau)
         # logLikelyHoodVec=torch.log(self.lastLambda)+(-self.lastLambda*(x-self.lastAi))
         logLikelyHood = torch.sum(logLikelyHoodVec)

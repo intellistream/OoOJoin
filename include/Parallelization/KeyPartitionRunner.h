@@ -125,9 +125,10 @@ typedef std::shared_ptr<class KeyPartitionWorker> KeyPartitionWorkerPtr;
  */
 class KeyPartitionRunner {
  private:
-  std::vector<OoOJoin::KeyPartitionWorkerPtr> myWorker;
+
  protected:
   uint64_t threads = 1;
+  std::vector<OoOJoin::KeyPartitionWorkerPtr> myWorker;
 
   /**
    * @brief the time struct of the whole system

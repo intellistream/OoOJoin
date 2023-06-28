@@ -54,52 +54,56 @@ MSWJOperatorPtr mswjConfiguration(ConfigMapPtr cfg) {
   return mswj;
 }
 
-void parallelPecj(string configName,string outPrefix)
-{
-std::cout<<outPrefix<<std::endl;
+static void OoOSort(std::vector<TrackTuplePtr> &arr) {
+  std::sort(arr.begin(), arr.end(), [](const TrackTuplePtr &t1, const TrackTuplePtr &t2) {
+    return t1->arrivalTime < t2->arrivalTime;
+  });
+}
+void parallelPecj(string configName, string outPrefix) {
+  std::cout << outPrefix << std::endl;
 
 /**
  * @brief pre process on the units
  */
-tsType windowLenMs, timeStepUs, watermarkTimeMs;
-ConfigMapPtr cfg = newConfigMap();
-cfg->fromFile(configName);
+  tsType windowLenMs, timeStepUs, watermarkTimeMs;
+  ConfigMapPtr cfg = newConfigMap();
+  cfg->fromFile(configName);
 //cfg->edit("watermarkTimeMs", (uint64_t) 10);
 //cfg->edit("operator", "IAWJSel");
-windowLenMs = cfg->tryU64("windowLenMs", 10, true);
-timeStepUs = cfg->tryU64("timeStepUs", 40, true);
-watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10, true);
-std::string tag = cfg->tryString("dataLoader", "random");
-DataLoaderTablePtr dt = newDataLoaderTable();
-AbstractDataLoaderPtr dl = dt->findDataLoader(tag);
-dl->setConfig(cfg);
-OoOJoin::KeyPartitionRunnerPtr kr;
+  windowLenMs = cfg->tryU64("windowLenMs", 10, true);
+  timeStepUs = cfg->tryU64("timeStepUs", 40, true);
+  watermarkTimeMs = cfg->tryU64("watermarkTimeMs", 10, true);
+  std::string tag = cfg->tryString("dataLoader", "random");
+  DataLoaderTablePtr dt = newDataLoaderTable();
+  AbstractDataLoaderPtr dl = dt->findDataLoader(tag);
+  dl->setConfig(cfg);
+  OoOJoin::KeyPartitionRunnerPtr kr;
 
-
-cfg->edit("rLen", (uint64_t) dl->getTupleVectorS().size());
-cfg->edit("sLen", (uint64_t) dl->getTupleVectorR().size());
+  cfg->edit("rLen", (uint64_t) dl->getTupleVectorS().size());
+  cfg->edit("sLen", (uint64_t) dl->getTupleVectorR().size());
 
 //Global configs
-cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
-cfg->edit("timeStep", (uint64_t) timeStepUs);
-cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
-  std::string parallelMode=cfg->tryString("parallelMode","none", true);
-  if(parallelMode=="keyPartition")
-  {
-    kr=newKeyPartitionRunner();
+  cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
+  cfg->edit("timeStep", (uint64_t) timeStepUs);
+  cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
+  std::string parallelMode = cfg->tryString("parallelMode", "none", true);
+  if (parallelMode == "keyPartition") {
+    kr = newKeyPartitionRunner();
+  } else {
+    kr = newRoundRobinRunner();
   }
-  else
-  {
-    kr=newRoundRobinRunner();
-  }
-kr->setConfig(cfg);
-kr->setDataSet(dl->getTupleVectorS(), dl->getTupleVectorR());
+  kr->setConfig(cfg);
+  auto ts = dl->getTupleVectorS();
+  OoOSort(ts);
+  auto tr = dl->getTupleVectorR();
+  OoOSort(tr);
+  kr->setDataSet(tr, ts);
 /*gettimeofday(&timeStart, nullptr);
 kr.syncTime(timeStart);*/
-kr->runStreaming();
-std::cout << "parallel raw joined =" + to_string(kr->getResult()) << std::endl;
-std::cout << "parallel compensated joined =" + to_string(kr->getAQPResult()) << std::endl;
-std::cout << "throughput=" + to_string(kr->getThroughput()) << std::endl;
+  kr->runStreaming();
+  std::cout << "parallel raw joined =" + to_string(kr->getResult()) << std::endl;
+  std::cout << "parallel compensated joined =" + to_string(kr->getAQPResult()) << std::endl;
+  std::cout << "throughput=" + to_string(kr->getThroughput()) << std::endl;
   ConfigMap generalStatistics;
   generalStatistics.edit("AvgLatency", (double) kr->getLatencyPercentage(0.95));
   generalStatistics.edit("95%Latency", (double) kr->getLatencyPercentage(0.95));
@@ -119,7 +123,7 @@ std::cout << "throughput=" + to_string(kr->getThroughput()) << std::endl;
   double err = kr->getResult();
   err = (err - realRu) / realRu;
   generalStatistics.edit("Error", (double) err);
-  generalStatistics.edit("threads", (uint64_t) cfg->tryU64("threads",1));
+  generalStatistics.edit("threads", (uint64_t) cfg->tryU64("threads", 1));
   generalStatistics.edit("parallelMode", parallelMode);
   INTELLI_DEBUG("OoO AQP joined " + to_string(kr->getAQPResult()));
 
@@ -130,7 +134,7 @@ std::cout << "throughput=" + to_string(kr->getThroughput()) << std::endl;
   INTELLI_DEBUG("Error = " + to_string(err));
 
   generalStatistics.toFile(outPrefix + "_general.csv");
-  std::cout<<generalStatistics.toString()<<std::endl;
+  std::cout << generalStatistics.toString() << std::endl;
 }
 /**
  * @defgroup OJ_BENCHMARK The benchmark program
@@ -152,10 +156,9 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
   OperatorTablePtr opTable = newOperatorTable();
   ConfigMapPtr cfg = newConfigMap();
   cfg->fromFile(configName);
-  std::string parallelMode=cfg->tryString("parallelMode","none", true);
-  if(parallelMode!="none")
-  {
-    parallelPecj(configName,outPrefix);
+  std::string parallelMode = cfg->tryString("parallelMode", "none", true);
+  if (parallelMode != "none") {
+    parallelPecj(configName, outPrefix);
     return;
   }
   size_t OoORu = 0, realRu = 0;

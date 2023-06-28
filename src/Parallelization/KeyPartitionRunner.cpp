@@ -4,9 +4,19 @@
 
 #include <Parallelization/KeyPartitionRunner.h>
 #include <string>
+#include <chrono>
 void OoOJoin::KeyPartitionWorker::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<TrackTuplePtr> _s) {
-  rTuple = std::move(_r);
-  sTuple = std::move(_s);
+  size_t sLen = _s.size();
+  size_t rLen = _r.size();
+  rTuple = std::vector<TrackTuplePtr>(rLen);
+  sTuple = std::vector<TrackTuplePtr>(sLen);
+  for (size_t i = 0; i < rLen; i++) {
+    rTuple[i] = newTrackTuple(*_r[i]);
+  }
+  for (size_t i = 0; i < sLen; i++) {
+    sTuple[i] = newTrackTuple(*_s[i]);
+  }
+
 }
 void OoOJoin::KeyPartitionWorker::setConfig(INTELLI::ConfigMapPtr _cfg) {
   OoOJoin::OperatorTable opt;
@@ -50,11 +60,21 @@ void OoOJoin::KeyPartitionWorker::decentralizedMain() {
   gettimeofday(&tSystem, nullptr);
   testOp->syncTimeStruct(tSystem);
   testOp->start();
+  auto start = std::chrono::high_resolution_clock::now();
+
   //testOp->start();
   while (tNow < tMax) {
-    tNow = UtilityFunctions::timeLastUs(tSystem);
+    // tNow = UtilityFunctions::timeLastUs(tSystem);
+    auto end = std::chrono::high_resolution_clock::now();
 
-    while (tNow >= tNextS) {
+    // Compute the duration in microseconds
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+    // Print the duration
+    tNow = duration.count();
+    //printf("%ld\r\n",tNow);
+
+    if (tNow >= tNextS) {
       if (sPos <= testSize - 1) {
         auto newTs = sTuple[sPos];
         if (isMySTuple(newTs)) {
@@ -72,8 +92,13 @@ void OoOJoin::KeyPartitionWorker::decentralizedMain() {
       }
 
     }
-    tNow = UtilityFunctions::timeLastUs(tSystem);
-    while (tNow >= tNextR) {
+    end = std::chrono::high_resolution_clock::now();
+
+    // Compute the duration in microseconds
+    duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    // Print the duration
+    tNow = duration.count();
+    if (tNow >= tNextR) {
 
       if (rPos <= testSize - 1) {
         auto newTr = rTuple[rPos];
@@ -204,15 +229,23 @@ size_t OoOJoin::KeyPartitionRunner::getAQPResult() {
 
 double OoOJoin::KeyPartitionRunner::getThroughput() {
   double ru = 0;
+  uint64_t nz = 0;
   for (uint64_t i = 0; i < threads; i++) {
     ru += myWorker[i]->getThroughput();
+    if (myWorker[i]->getThroughput() != 0) {
+      nz++;
+    }
   }
-  return ru / threads;
+  return ru / nz;
 }
 double OoOJoin::KeyPartitionRunner::getLatencyPercentage(double fraction) {
   double ru = 0;
+  uint64_t nz = 0;
   for (uint64_t i = 0; i < threads; i++) {
     ru += myWorker[i]->getLatencyPercentage(fraction);
+    if (myWorker[i]->getLatencyPercentage(fraction) != 0) {
+      nz++;
+    }
   }
-  return ru / threads;
+  return ru / nz;
 }

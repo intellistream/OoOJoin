@@ -19,9 +19,16 @@ void OoOJoin::RoundRobinWorker::decentralizedMain() {
   gettimeofday(&tSystem, nullptr);
   testOp->syncTimeStruct(tSystem);
   testOp->start();
+  auto start = std::chrono::high_resolution_clock::now();
   //testOp->start();
   while (tNow < tMax) {
-    tNow = UtilityFunctions::timeLastUs(tSystem);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    // Compute the duration in microseconds
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+    // Print the duration
+    tNow = duration.count();
 
     while (tNow >= tNextS) {
       if (sPos <= testSize - 1) {
@@ -38,13 +45,20 @@ void OoOJoin::RoundRobinWorker::decentralizedMain() {
       }
 
     }
-    tNow = UtilityFunctions::timeLastUs(tSystem);
+    end = std::chrono::high_resolution_clock::now();
+
+    // Compute the duration in microseconds
+    duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+    // Print the duration
+    tNow = duration.count();
     while (tNow >= tNextR) {
 
       if (rPos <= testSize - 1) {
         auto newTr = rTuple[rPos];
         if (rPos % workers == myId) {
           testOp->feedTupleR(newTr);
+          //INTELLI_INFO("TID " + to_string(myId) + "it's my turn");
         }
         rPos++;
         if (rPos <= testSize - 1) {
@@ -55,7 +69,7 @@ void OoOJoin::RoundRobinWorker::decentralizedMain() {
         }
       }
     }
-    //usleep(20);
+    usleep(20);
   }
   testOp->stop();
   INTELLI_INFO("End tid" + to_string(myId) + " run");
@@ -68,7 +82,7 @@ void OoOJoin::RoundRobinWorker::inlineMain() {
 void OoOJoin::RoundRobinRunner::setConfig(INTELLI::ConfigMapPtr _cfg) {
   cfg = _cfg;
   threads = cfg->tryU64("threads", 1, true);
-  myWorker = std::vector<OoOJoin::RoundRobinWorkerPtr>(threads);
+  myWorker = std::vector<OoOJoin::KeyPartitionWorkerPtr>(threads);
   for (uint64_t i = 0; i < threads; i++) {
     myWorker[i] = newRoundRobinWorker();
     myWorker[i]->setConfig(cfg);
@@ -112,15 +126,24 @@ size_t OoOJoin::RoundRobinRunner::getAQPResult() {
 
 double OoOJoin::RoundRobinRunner::getThroughput() {
   double ru = 0;
+  uint64_t nz = 0;
   for (uint64_t i = 0; i < threads; i++) {
     ru += myWorker[i]->getThroughput();
+    if (myWorker[i]->getThroughput() != 0) {
+      nz++;
+    }
   }
-  return ru / threads;
+  return ru / nz;
 }
+
 double OoOJoin::RoundRobinRunner::getLatencyPercentage(double fraction) {
   double ru = 0;
+  uint64_t nz = 0;
   for (uint64_t i = 0; i < threads; i++) {
     ru += myWorker[i]->getLatencyPercentage(fraction);
+    if (myWorker[i]->getLatencyPercentage(fraction) != 0) {
+      nz++;
+    }
   }
-  return ru / threads;
+  return ru / nz;
 }

@@ -3,7 +3,7 @@
 #include <Utils/UtilityFunctions.hpp>
 #include <iostream>
 #include <numeric>
-
+#include <chrono>
 using namespace std;
 
 std::shared_ptr<std::barrier<>> INTELLI::UtilityFunctions::createBarrier(int count) {

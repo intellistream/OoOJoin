@@ -60,7 +60,7 @@ typedef std::shared_ptr<class RoundRobinWorker> RoundRobinWorkerPtr;
  */
 class RoundRobinRunner : public KeyPartitionRunner {
  protected:
-  std::vector<OoOJoin::RoundRobinWorkerPtr> myWorker;
+  //std::vector<OoOJoin::RoundRobinWorkerPtr> myWorker;
 
  public:
   RoundRobinRunner() {}

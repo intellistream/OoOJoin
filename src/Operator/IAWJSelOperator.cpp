@@ -88,6 +88,7 @@ bool OoOJoin::IAWJSelOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   if (shouldGenWM) {
     lockedByWaterMark = true;
     WM_INFO("water mark in S");
+    lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
   if (isInWindow) {
     IMAStateOfKeyPtr stateOfKey;
@@ -134,7 +135,6 @@ bool OoOJoin::IAWJSelOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     }
     timeBreakDownJoin += timeTrackingEnd(tt_join);
     stateOfKey->lastUnarrivedTuples = futureTuplesS;
-    lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
   return true;
 }
@@ -149,6 +149,7 @@ bool OoOJoin::IAWJSelOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   if (shouldGenWM) {
     lockedByWaterMark = true;
     WM_INFO("water mark in R");
+    lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
   if (isInWindow) {
 
@@ -197,7 +198,6 @@ bool OoOJoin::IAWJSelOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
     }
     timeBreakDownJoin += timeTrackingEnd(tt_join);
     stateOfKey->lastUnarrivedTuples = futureTuplesR;
-    lastTimeOfR = UtilityFunctions::timeLastUs(timeBaseStruct);
   }
   return true;
 }
