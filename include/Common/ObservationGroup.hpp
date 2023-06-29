@@ -29,12 +29,12 @@ class ObservationGroup {
   /**
    * @brief xTensor is the observation, yTensor is the label.
    */
-  torch::Tensor xTensor, yTensor,tempXTensor;
+  torch::Tensor xTensor, yTensor, tempXTensor;
   uint64_t bufferLen = 0, observationCnt = 0;
   void initObservationBuffer(uint64_t _bufferLen) {
     bufferLen = _bufferLen;
     xTensor = torch::zeros({1, (long) bufferLen});
-    tempXTensor=torch::zeros({1, (long) bufferLen});
+    tempXTensor = torch::zeros({1, (long) bufferLen});
   }
   /**
    * @brief to append a new observation to tensor X

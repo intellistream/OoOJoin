@@ -124,7 +124,7 @@ def main():
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-   
+
     reRun = 0
     if (len(sys.argv) < 2):
         os.system("rm -rf " + commonBasePath)
@@ -133,11 +133,11 @@ def main():
         # runPeriodVector(exeSpace, periodVec, resultPath)
     # os.system("mkdir " + figPath)
     # print(lat95All)
-    #print(lat95All)
+    # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "pecj-alf", "(pecj-vae)/7.5","svi"]
-    resultPaths = ["wa", "pecj_ks", "pec_ai","svi"]
-    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv","config_sviCL.csv"]
+    methodTags = ["watermark", "PECJ-alf", "(PECJ-vae)/7.5", "svi"]
+    resultPaths = ["wa", "pecj_ks", "pec_ai", "svi"]
+    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv", "config_sviCL.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
     npLat[2] = npLat[2] / 7.5

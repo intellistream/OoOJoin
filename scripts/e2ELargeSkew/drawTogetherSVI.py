@@ -120,13 +120,13 @@ def main():
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [10, 50, 100, 200, 300, 400, 500,600,700]
+    periodVec = [10, 50, 100, 200, 300, 400, 500, 600, 700]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    methodTags = ["watermark", "pecj-alf", "pecj-svi-w/cl","pecj-svi-w/o.cl"]
-    resultPaths = ["wa", "pecj_ks", "pec_svi","pec_svi_nocl"]
-    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_sviCL.csv","config_svi.csv"]
+    methodTags = ["watermark", "PECJ-alf", "PECJ-svi-w/cl", "PECJ-svi-w/o.cl"]
+    resultPaths = ["wa", "pecj_ks", "pec_svi", "pec_svi_nocl"]
+    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_sviCL.csv", "config_svi.csv"]
     # run
     reRun = 0
     if (len(sys.argv) < 2):

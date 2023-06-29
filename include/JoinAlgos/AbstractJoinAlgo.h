@@ -40,7 +40,7 @@ namespace OoOJoin {
 class AbstractJoinAlgo {
  protected:
   std::string nameTag;
-  uint64_t joinSum=0;
+  uint64_t joinSum = 0;
   struct timeval timeBaseStruct{};
 
   //tsType timeStep;

@@ -6,8 +6,9 @@ bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::MeanAQPIAWJOperator::setConfig(cfg)) {
     return false;
   }
+  config = cfg;
   std::string wmTag = config->tryString("wmTag", "arrival", true);
-  imaDisableCompensation=config->tryU64("imaDisableCompensation",0, false);
+  imaDisableCompensation = config->tryU64("imaDisableCompensation", 0, false);
   WMTablePtr wmTable = newWMTable();
   wmGen = wmTable->findWM(wmTag);
   if (wmGen == nullptr) {
@@ -15,7 +16,8 @@ bool OoOJoin::IMAIAWJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
     return false;
   }
   INTELLI_INFO("Using the watermarker named [" + wmTag + "]");
-  joinSum=cfg->tryU64("joinSum",0,true);
+  joinSum = cfg->tryU64("joinSum", 0, true);
+  wmGen->setConfig(config);
   return true;
 }
 
@@ -24,7 +26,7 @@ bool OoOJoin::IMAIAWJOperator::start() {
   * @brief set watermark generator
   */
   //wmGen = newPeriodicalWM();
-  wmGen->setConfig(config);
+
   wmGen->syncTimeStruct(timeBaseStruct);
   /**
    * @note:
@@ -114,23 +116,20 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
     AbstractStateOfKeyPtr probrPtr = stateOfKeyTableR->getByKey(ts->key);
     if (probrPtr != nullptr) {
       IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
-      if(joinSum)
-      { /**
+      if (joinSum) { /**
          * @brief we are dealing with r.value, so here is py->xxx
          */
-        double tc=(int64_t)py->arrivedTupleCnt*py->joinedRValueAvg;
-        confirmedResult+=(uint64_t)tc;
-        auto preU=(futureTuplesS + stateOfKey->arrivedTupleCnt) *
+        double tc = (int64_t) py->arrivedTupleCnt * py->joinedRValueAvg;
+        confirmedResult += (uint64_t) tc;
+        auto preU = (futureTuplesS + stateOfKey->arrivedTupleCnt) *
             (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
             (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
                 (py->lastUnarrivedTuples + py->arrivedTupleCnt);
-        preU=preU*py->rvAvgPrediction;
-       // intermediateResult+=(uint64_t)((preU+tc)/2);
-        double  cRate= 1-getCompensationWeight(stateOfKey,py);
-        intermediateResult+=(uint64_t)(((1-cRate)*tc+cRate*preU));
-      }
-      else
-      {
+        preU = preU * py->rvAvgPrediction;
+        // intermediateResult+=(uint64_t)((preU+tc)/2);
+        double cRate = 1 - getCompensationWeight(stateOfKey, py);
+        intermediateResult += (uint64_t) (((1 - cRate) * tc + cRate * preU));
+      } else {
         confirmedResult += py->arrivedTupleCnt;
 //            intermediateResult += py->arrivedTupleCnt;
         intermediateResult += (futureTuplesS + stateOfKey->arrivedTupleCnt) *
@@ -146,25 +145,22 @@ bool OoOJoin::IMAIAWJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   }
   return true;
 }
-double OoOJoin::IMAIAWJOperator::getCompensationWeight(OoOJoin::IMAIAWJOperator::IMAStateOfKeyPtr noSTrace,OoOJoin::IMAIAWJOperator::IMAStateOfKeyPtr noRTrace) {
+double OoOJoin::IMAIAWJOperator::getCompensationWeight(OoOJoin::IMAIAWJOperator::IMAStateOfKeyPtr noSTrace,
+                                                       OoOJoin::IMAIAWJOperator::IMAStateOfKeyPtr noRTrace) {
   //return 0.5;
-  uint64_t lastSArrival=noSTrace->lastArrivalTuple->arrivalTime+noSTrace->lastEventTuple->eventTime;
-  uint64_t lastRArrival=noRTrace->lastArrivalTuple->arrivalTime+noRTrace->lastEventTuple->eventTime;
-  double lastWindowArrival=(lastSArrival+lastRArrival)/2;
-  double expectedLastArrival=2*myWindow.getEnd()-myWindow.getStart()+(noSTrace->arrivalSkew+noRTrace->arrivalSkew)/2;
+  uint64_t lastSArrival = noSTrace->lastArrivalTuple->arrivalTime + noSTrace->lastEventTuple->eventTime;
+  uint64_t lastRArrival = noRTrace->lastArrivalTuple->arrivalTime + noRTrace->lastEventTuple->eventTime;
+  double lastWindowArrival = (lastSArrival + lastRArrival) / 2;
+  double expectedLastArrival =
+      2 * myWindow.getEnd() - myWindow.getStart() + (noSTrace->arrivalSkew + noRTrace->arrivalSkew) / 2;
   double compensationWeight;
-  if(lastWindowArrival>expectedLastArrival)
-  {
-    compensationWeight=0.0;
-  }
-  else
-  { if( (lastSArrival+lastRArrival)/2>=2*myWindow.getEnd()-myWindow.getStart())
-    {
-      compensationWeight=0.2;
-    }
-    else
-    {
-      compensationWeight=0.5;
+  if (lastWindowArrival > expectedLastArrival) {
+    compensationWeight = 0.0;
+  } else {
+    if ((lastSArrival + lastRArrival) / 2 >= 2 * myWindow.getEnd() - myWindow.getStart()) {
+      compensationWeight = 0.2;
+    } else {
+      compensationWeight = 0.5;
     }
   }
   return compensationWeight;
@@ -207,28 +203,25 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
       /**
             * @brief rvalue estimation
         */
-      stateOfKey->joinedRValueSum+=(int64_t)tr->payload;
+      stateOfKey->joinedRValueSum += (int64_t) tr->payload;
       stateOfKey->joinedRValueCnt++;
-      stateOfKey->joinedRValueAvg=stateOfKey->joinedRValueSum/stateOfKey->joinedRValueCnt;
-      stateOfKey->rvAvgPrediction=stateOfKey->joinedRValuePredictor.update(stateOfKey->joinedRValueAvg);
+      stateOfKey->joinedRValueAvg = stateOfKey->joinedRValueSum / stateOfKey->joinedRValueCnt;
+      stateOfKey->rvAvgPrediction = stateOfKey->joinedRValuePredictor.update(stateOfKey->joinedRValueAvg);
       IMAStateOfKeyPtr py = ImproveStateOfKeyTo(IMAStateOfKey, probrPtr);
-      if(joinSum)
-      { /**
+      if (joinSum) { /**
          * @brief we are dealing with r.value, so here is stateOfKey->xxx
          */
 
-        double tc=(int64_t)py->arrivedTupleCnt*stateOfKey->joinedRValueAvg;
-        confirmedResult+=(uint64_t)tc;
-        auto preU=(futureTuplesR + stateOfKey->arrivedTupleCnt) *
+        double tc = (int64_t) py->arrivedTupleCnt * stateOfKey->joinedRValueAvg;
+        confirmedResult += (uint64_t) tc;
+        auto preU = (futureTuplesR + stateOfKey->arrivedTupleCnt) *
             (py->lastUnarrivedTuples + py->arrivedTupleCnt) -
             (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
                 (py->lastUnarrivedTuples + py->arrivedTupleCnt);
-        preU=preU*stateOfKey->rvAvgPrediction;
-        double  cRate= 1-getCompensationWeight(stateOfKey,py);
-        intermediateResult+=(uint64_t)(((1-cRate)*tc+cRate*preU));
-      }
-      else
-      {
+        preU = preU * stateOfKey->rvAvgPrediction;
+        double cRate = 1 - getCompensationWeight(stateOfKey, py);
+        intermediateResult += (uint64_t) (((1 - cRate) * tc + cRate * preU));
+      } else {
         confirmedResult += py->arrivedTupleCnt;
 //            intermediateResult += py->arrivedTupleCnt;
         intermediateResult += (futureTuplesR + stateOfKey->arrivedTupleCnt) *
@@ -236,7 +229,6 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
             (stateOfKey->arrivedTupleCnt + stateOfKey->lastUnarrivedTuples - 1) *
                 (py->lastUnarrivedTuples + py->arrivedTupleCnt);
       }
-
 
     }
     timeBreakDownJoin += timeTrackingEnd(tt_join);
@@ -248,13 +240,11 @@ bool OoOJoin::IMAIAWJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 
 size_t OoOJoin::IMAIAWJOperator::getResult() {
 
-
   return confirmedResult;
 }
 
 size_t OoOJoin::IMAIAWJOperator::getAQPResult() {
-  if(imaDisableCompensation)
-  {
+  if (imaDisableCompensation) {
     return getResult();
   }
   return intermediateResult;

@@ -64,10 +64,10 @@ torch::Tensor TROCHPACK_SVI::LinearSVI::minusELBO(torch::Tensor &x) {
     auto logEqz = torch::sum(logMuRecX);
     //elbo += torch::sigmoid(logLikelyHood) +torch::sigmoid(logPmu0) + torch::sigmoid(logPtau0) + torch::sigmoid(logPz0) - torch::sigmoid(logEqmu + logEqtau + logEqz);
     //elbo+=torch::sigmoid(logLikelyHood)+torch::sigmoid(logPmu0+logPtau0+logPz0-logEqmu-logEqtau-logEqz);
-    elbo+=torch::sigmoid(logLikelyHood+logPmu0+logPtau0+logPz0-logEqmu-logEqtau-logEqz);
+    elbo += torch::sigmoid(logLikelyHood + logPmu0 + logPtau0 + logPz0 - logEqmu - logEqtau - logEqz);
   }
- // auto ru = -torch::sigmoid(elbo);
-auto ru=-elbo;
+  // auto ru = -torch::sigmoid(elbo);
+  auto ru = -elbo;
   // std::cout<<"elbo="+to_string(ru.item<float>())+" ,mu="+to_string(irMu.item<float>())+ " ,tau="+to_string(irTau.item<float>())<<std::endl;
   /*auto sigma2=torch::reciprocal(irTau);
   auto tSum=ru+sigma2;*/

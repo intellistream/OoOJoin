@@ -10,6 +10,9 @@
 #include <Operator/AIOperator.h>
 #include <Operator/LinearSVIOperator.h>
 #include <Operator/IAWJSelOperator.h>
+#include <Operator/LazyIAWJSelOperator.h>
+#include <Operator/RawNPJOperator.h>
+#include <Operator/RawSHJOperator.h>
 namespace OoOJoin {
 OperatorTable::OperatorTable() {
   operatorMap["IAWJ"] = newIAWJOperator();
@@ -19,5 +22,8 @@ OperatorTable::OperatorTable() {
   operatorMap["AI"] = newAIOperator();
   operatorMap["LinearSVI"] = newLinearSVIOperator();
   operatorMap["IAWJSel"] = newIAWJSelOperator();
+  operatorMap["LazyIAWJSel"] = newLazyIAWJSelOperator();
+  operatorMap["SHJ"] = newRawSHJOperator();
+  operatorMap["NPJ"] = newRawNPJOperator();
 }
 } // OoOJoin

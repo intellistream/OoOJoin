@@ -1,4 +1,4 @@
-#FIX ME LATER!!!!
+# FIX ME LATER!!!!
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -42,11 +42,11 @@ class VAE(nn.Module):
             # nn.ReLU()
         )
         self.muALayer = nn.Sequential(
-            nn.Linear(hidden_dim, 1+latent_dim), # mu and ai
+            nn.Linear(hidden_dim, 1 + latent_dim),  # mu and ai
             nn.ReLU()
         )
         self.logVarLayer = nn.Sequential(
-            nn.Linear(1+latent_dim, hidden_dim),
+            nn.Linear(1 + latent_dim, hidden_dim),
             nn.Linear(hidden_dim, hidden_dim),
             nn.Linear(hidden_dim, 1),
             nn.ReLU()
@@ -106,8 +106,8 @@ class VAE(nn.Module):
         logvarZ = lambdaEvaluate[:, self.latent_dim:(self.latent_dim * 2)]
         # global
         muA = self.muALayer(xWarp)
-        mu=muA[:,0]
-        EA= muA[:,1:]
+        mu = muA[:, 0]
+        EA = muA[:, 1:]
         logvar = self.logVarLayer(xWarp)
         # update mu
         self.lastMu = mu
@@ -116,8 +116,8 @@ class VAE(nn.Module):
         # logvar=xWarp[:, self.latent_dim*2+1
         # z = torch.cat((z, mu.unsqueeze(1), logvar.unsqueeze(1)), dim=1)
         kMu = torch.ones_like(muLambda) * torch.mean(mu)
-        #self.lastA0 = (self.priorA0 + self.inputDim / 2)
-        #self.lastB0 = (self.priorB0 + 0.5 * (torch.sum(x / muZ - kMu)).pow(2))
+        # self.lastA0 = (self.priorA0 + self.inputDim / 2)
+        # self.lastB0 = (self.priorB0 + 0.5 * (torch.sum(x / muZ - kMu)).pow(2))
         # kMu=self.eMu(kMu)
         # print(mu[0])
         kLogVar = torch.ones_like(muLambda) * torch.mean(logvar)

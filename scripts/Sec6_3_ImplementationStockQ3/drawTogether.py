@@ -119,12 +119,12 @@ def main():
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [50,100,200,300,400,500,600,700]
-    #periodVec = [7, 10, 12]
+    periodVec = [50, 100, 200, 300, 400, 500, 600, 700]
+    # periodVec = [7, 10, 12]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    
+
     # run
     reRun = 0
     if (len(sys.argv) < 2):
@@ -136,14 +136,17 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["baseline w/o pecj" ,"pecj-adaptive filter","pecj-SVI","pecj-DNN"]
-    resultPaths = ["ks","pec_sel","pec_svi","pec_dnn"]
-    csvTemplates = ["config_yuanzhen.csv","config_pecjSel.csv","config_sviCL.csv","config_pecjAI.csv"]
+    methodTags = ["baseline w/o pecj", "PECJ-adaptive filter", "PECJ-SVI", "PECJ-DNN"]
+    resultPaths = ["ks", "pec_sel", "pec_svi", "pec_dnn"]
+    csvTemplates = ["config_yuanzhen.csv", "config_pecjSel.csv", "config_sviCL.csv", "config_pecjAI.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
-    npLat[3]=npLat[3]
-    groupLine.DrawFigureYnormal(periodAll,npLat, methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)", 0, 1, figPath + "sec6_3_implementation_stock_q3",
+    npLat[3] = npLat[3]
+    groupLine.DrawFigureYnormal(periodAll, npLat, methodTags, "Tuning knob " + r"$t_c$ (ms)", "95% latency (ms)", 0, 1,
+                                figPath + "sec6_3_implementation_stock_q3",
                                 True)
     print(errAll)
+
+
 if __name__ == "__main__":
     main()

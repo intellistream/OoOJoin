@@ -11,6 +11,9 @@ add_sources(
         AIOperator.cpp
         LinearSVIOperator.cpp
         IAWJSelOperator.cpp
+        RawNPJOperator.cpp
+        RawSHJOperator.cpp
+        LazyIAWJSelOperator.cpp
         MSWJ/KSlack/KSlack.cpp
         MSWJ/Manager/BufferSizeManager.cpp
         MSWJ/Manager/StatisticsManager.cpp

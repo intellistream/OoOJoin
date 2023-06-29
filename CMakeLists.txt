@@ -72,10 +72,10 @@ find_package(Torch REQUIRED)
 message(STATUS "TORCH_INCLUDE_DIRS: ${TORCH_INCLUDE_DIRS}")
 message(STATUS "TORCH_LIBRARIES: ${TORCH_LIBRARIES}")
 
-add_library(IntelliStream SHARED ${IntelliStream_SOURCE_FILES} ${IntelliStream_HEADER_FILES} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+add_library(IntelliStreamOoOJoin SHARED ${IntelliStream_SOURCE_FILES} ${IntelliStream_HEADER_FILES} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-target_include_directories(IntelliStream PUBLIC "include" ${TORCH_INCLUDE_DIRS})
-target_link_libraries(IntelliStream PUBLIC ${LIBRARIES} ${TORCH_LIBRARIES})
+target_include_directories(IntelliStreamOoOJoin PUBLIC "include" ${TORCH_INCLUDE_DIRS})
+target_link_libraries(IntelliStreamOoOJoin PUBLIC ${LIBRARIES} ${TORCH_LIBRARIES})
 
 
 include_directories(${OOO_JOIN_INCLUDE_DIR})
@@ -96,7 +96,7 @@ if (ENABLE_UNIT_TESTS)
     add_subdirectory(test)
 endif (ENABLE_UNIT_TESTS)
 
-install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStream)
+install(DIRECTORY "include" DESTINATION "/IntelliStream" COMPONENT IntelliStreamOoOJoin)
 # copy scripts
 file(GLOB allCopyFiles "${PROJECT_SOURCE_DIR}/scripts/*")
 file(COPY ${allCopyFiles} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/benchmark/scripts)

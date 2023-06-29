@@ -51,7 +51,7 @@ class LinearSVIOperator : public MeanAQPIAWJOperator {
   std::string aiMode;
   uint8_t aiModeEnum = 0;
   uint64_t appendSel = 0, appendSkew = 0, appendRate, exitAfterPretrain;
-  std::string ptPrefix,ptPrefixSel,ptPrefixSRate,ptPrefixRRate;
+  std::string ptPrefix, ptPrefixSel, ptPrefixSRate, ptPrefixRRate;
   /**
    * @brief The pre-allocated length of seletivity observations, only valid for pretrain
    */
@@ -200,13 +200,13 @@ class LinearSVIOperator : public MeanAQPIAWJOperator {
   bool stop() override;
 
   /**
-   * @brief get the joined sum result
+   * @brief get the joined  result
    * @return The result
    */
   size_t getResult() override;
 
   /**
-   * @brief get the joined sum result under AQP
+   * @brief get the joined  result under AQP
    * @return The result
    */
   size_t getAQPResult() override;

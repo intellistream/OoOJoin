@@ -1,4 +1,4 @@
-BRANCH=sec6_3
+BRANCH=parallelization
 git init
 git checkout -b $BRANCH
 git add .
