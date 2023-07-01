@@ -13,78 +13,180 @@
 #include <Utils/ConfigMap.hpp>
 #include <Common/Tuples.h>
 
+/**
+ * @namespace MSWJ
+ * @brief Namespace for the MSWJ operator implementation
+ */
 using namespace OoOJoin;
+
 namespace MSWJ {
 
-class StatisticsManager {
- public:
+    class StatisticsManager {
+    public:
+        /**
+         * @brief Constructor with required parameters
+         *
+         * @param profiler Pointer to the TupleProductivityProfiler object
+         * @param config Pointer to the ConfigMap object
+         */
+        explicit StatisticsManager(TupleProductivityProfiler* profiler, INTELLI::ConfigMapPtr config);
 
-  explicit StatisticsManager(TupleProductivityProfiler *profiler, INTELLI::ConfigMapPtr config);
+        /**
+         * @brief Destructor
+         */
+        ~StatisticsManager() = default;
 
-  ~StatisticsManager() = default;
+        /**
+         * @brief Get the maximum delay of tuples in a stream
+         *
+         * @param streamId The stream ID
+         * @return int The maximum delay in the stream
+         */
+        auto getMaxD(int streamId) -> int;
 
-  // Get the maximum delay of tuples in a stream
-  auto getMaxD(int streamId) -> int;
+        /**
+         * @brief Probability density function fDiK for discrete random variable Dik
+         *
+         * This function calculates the probability density function fDiK for a given delay d, stream ID, and buffer size K.
+         * It is used in the paper to estimate the size of the sliding window for a stream.
+         *
+         * @param d The delay value
+         * @param streamId The stream ID
+         * @param K The buffer size
+         * @return double The probability density function value
+         */
+        auto fDk(int d, int streamId, int K) -> double;
 
-  // Probability density function fDiK for discrete random variable Dik, where Dik represents the coarse-grained delay of a tuple from the corresponding stream accepted by the join operator under k setting
-  auto fDk(int d, int streamId, int K) -> double;
+        /**
+         * @brief Estimate the size of the sliding window for a stream
+         *
+         * This function estimates the size of the sliding window for a given stream ID, delay value, and buffer size K.
+         * It is used in the paper to determine the buffer size for the K-Slack operator.
+         *
+         * @param l The delay value
+         * @param streamId The stream ID
+         * @param K The buffer size
+         * @return int The estimated size of the sliding window
+         */
+        auto wil(int l, int streamId, int K) -> int;
 
-  // Estimate the size of the sliding window for stream l
-  auto wil(int l, int streamId, int K) -> int;
+        /**
+         * @brief Add a tuple record to the corresponding stream's recordMap
+         *
+         * This function adds a tuple record to the corresponding stream's recordMap.
+         * It is used to keep track of the input history of a stream.
+         *
+         * @param streamId The stream ID
+         * @param tuple Pointer to the incoming tuple
+         */
+        auto addRecord(int streamId, const TrackTuplePtr& tuple) -> void;
 
-  // Add a tuple record to the corresponding stream's recordMap
-  auto addRecord(int streamId, const TrackTuplePtr &tuple) -> void;
+        /**
+         * @brief Add a T and K record to the corresponding stream's tMap and kMap
+         *
+         * This function adds a T and K record to the corresponding stream's tMap and kMap.
+         * It is used to keep track of the T and K values of a stream for the adaptive buffer size algorithm.
+         *
+         * @param streamId The stream ID
+         * @param T The tuple arrival rate
+         * @param K The buffer size
+         */
+        auto addRecord(int streamId, int T, int K) -> void;
 
-  // Add a T and K record to the corresponding stream's tMap and kMap
-  auto addRecord(int streamId, int T, int K) -> void;
+        /**
+         * @brief Sets the configuration for the StatisticsManager
+         *
+         * @param config Pointer to the ConfigMap object
+         */
+        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
 
-  auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+        /**
+         * @brief Get the value of discrete random variable Di
+         *
+         * This function calculates the value of discrete random variable Di for a given delay value.
+         * It is used in the paper to calculate the histogram for a stream.
+         *
+         * @param delay The delay value
+         * @return int The value of discrete random variable Di
+         */
+        auto inline getD(int delay) -> int {
+            return delay % g == 0 ? delay / g : delay / g + 1;
+        }
 
-  // Get the value of discrete random variable Di, where delay(ei) ∈(kg,(k+1)g]，then Di=k+1
-  auto inline getD(int delay) -> int {
-    return delay % g == 0 ? delay / g : delay / g + 1;
-  }
+    private:
+        /**
+         * @brief Get the value of Ksync for a stream
+         *
+         * This function calculates the value of Ksync for a given stream ID.
+         * It is used in the adaptive buffer size algorithm.
+         *
+         * @param streamId The stream ID
+         * @return int The value of Ksync
+         */
+        auto getKsync(int streamId) -> int;
 
- private:
-  // Get the value of Ksync for a stream
-  auto getKsync(int streamId) -> int;
+        /**
+         * @brief Get the average value of Ksync for a stream
+         *
+         * This function calculates the average value of Ksync for a given stream ID.
+         * It is used in the adaptive buffer size algorithm.
+         *
+         * @param streamId The stream ID
+         * @return int The average value of Ksync
+         */
+        auto getAvgKsync(int streamId) -> int;
 
-  // Get the average value of Ksync for a stream
-  auto getAvgKsync(int streamId) -> int;
+        /**
+         * @brief Estimate the future value of Ksync for a stream
+         *
+         * This function estimates the future value of Ksync for a given stream ID.
+         * It is usedin the adaptive buffer size algorithm to predict the future buffer size.
+         *
+         * @param stream_id The stream ID
+         * @return int The estimated future value of Ksync
+         */
+        auto getFutureKsync(int stream_id) -> int;
 
-  // Estimate the future value of Ksync for a stream
-  auto getFutureKsync(int stream_id) -> int;
+        /**
+         * @brief Apply the adaptive window method described in reference [25], with the main parameters yet to be determined
+         *
+         * This function applies the adaptive window method described in reference [25] to estimate the size of the sliding window for a stream.
+         * The main parameters of the method are yet to be determined in the paper.
+         *
+         * @param streamId The stream ID
+         * @return int The estimated size of the sliding window
+         */
+        auto getRStat(int streamId) -> int;
 
-  // Apply the adaptive window method described in reference [25], with the main parameters yet to be determined
-  auto getRStat(int streamId) -> int;
+        /**
+         * @brief Probability density function fDi for discrete random variable Di
+         *
+         * This function calculates the probability density function fDi for a given delay value and stream ID.
+         * It is used in the paper to calculate the histogram for a stream.
+         *
+         * @param d The delay value
+         * @param stream_id The stream ID
+         * @return double The probability density function value
+         */
+        auto fD(int d, int stream_id) -> double;
 
-  // Probability density function fDi for discrete random variable Di
-  auto fD(int d, int stream_id) -> double;
+        INTELLI::ConfigMapPtr cfg{};  // Configuration object
 
-  INTELLI::ConfigMapPtr cfg{};
+        std::vector<int> RStatMap{0};  // Map recording the RStat values for each stream
 
-  // Size of Rstat window
-  std::vector<int> RStatMap{0};
+        std::vector<std::vector<TrackTuple>> recordMap{};  // Map recording the input history of each stream
 
-  // Map recording the input history of stream Si
-  std::vector<std::vector<TrackTuple>> recordMap{};
+        std::vector<int> tMap{0};  // Map recording the T values of each stream
 
-  // Map recording the T values of stream Si
-  std::vector<int> tMap{0};
+        std::vector<int> kMap{0};  // Map recording the K values of each stream
 
-  // Map recording the K values of stream Si
-  std::vector<int> kMap{0};
+        std::vector<std::vector<int>> kSyncMap{};  // Map recording all K_sync values, for sampling and predicting future ksync
 
-  // Map recording all K_sync values, for sampling and predicting future ksync
-  std::vector<std::vector<int>> kSyncMap{};
+        std::vector<std::vector<double>> histogramMap{};  // Histogram map
+        std::vector<std::vector<int>> histogramPos{};  // Map recording the histogram positions for each stream
 
-  // Histogram map
-  std::vector<std::vector<double>> histogramMap{};
-  std::vector<std::vector<int>> histogramPos{};
-
-  // Tuple productivity profiler
-  TupleProductivityProfiler *productivityProfiler;
-};
+        TupleProductivityProfiler* productivityProfiler;  // Tuple productivity profiler
+    };
 
 }
 

@@ -8,30 +8,68 @@
 #include <Operator/MSWJ/Manager/StatisticsManager.h>
 #include <Operator/MSWJ/Profiler/TupleProductivityProfiler.h>
 
+/**
+ * @class BufferSizeManager
+ * @ingroup ADB_OPERATORS
+ * @class MSWJOperator Operator/BufferSizeManager.h
+ * @brief Implementation of the BufferSizeManager for adaptive buffer size management
+ */
 namespace MSWJ {
-class BufferSizeManager {
- public:
-  explicit BufferSizeManager(StatisticsManager *statisticsManager, TupleProductivityProfiler *profiler);
 
-  ~BufferSizeManager() = default;
+    class BufferSizeManager {
+    public:
+        /**
+         * @brief Constructor with required parameters
+         *
+         * @param statisticsManager Pointer to the StatisticsManager object
+         * @param profiler Pointer to the TupleProductivityProfiler object
+         */
+        explicit BufferSizeManager(StatisticsManager* statisticsManager, TupleProductivityProfiler* profiler);
 
-  // Adaptive K algorithm
-  auto kSearch(int stream_id) -> int;
+        /**
+         * @brief Destructor
+         */
+        ~BufferSizeManager() = default;
 
-  auto setConfig(INTELLI::ConfigMapPtr config) -> void;
+        /**
+         * @brief Adaptive K algorithm
+         *
+         * This function implements the adaptive K algorithm described in the paper "Quality-Driven Disorder Handling for M-way Sliding Window Stream Joins".
+         * It returns the recommended buffer size K for the given stream ID.
+         *
+         * @param stream_id The stream ID
+         * @return int The recommended buffer size K
+         */
+        auto kSearch(int stream_id) -> int;
 
- private:
-  // Function γ(L,T) in the paper
-  auto y(int K) -> double;
+        /**
+         * @brief Sets the configuration for the BufferSizeManager
+         *
+         * @param config Pointer to the ConfigMap object
+         */
+        auto setConfig(INTELLI::ConfigMapPtr config) -> void;
 
-  INTELLI::ConfigMapPtr cfg = nullptr;
+    private:
+        /**
+         * @brief Function γ(L,T) in the paper
+         *
+         * This function calculates the value of γ(L,T) for a given buffer size L and tuple arrival rate T.
+         * It is used in the adaptive K algorithm to calculate the recommended buffer size K for a stream.
+         *
+         * @param K The buffer size L
+         * @return double The value of γ(L,T)
+         */
+        auto y(int K) -> double;
 
-  // Data statistics manager
-  StatisticsManager *statisticsManager;
+        // Configuration object
+        INTELLI::ConfigMapPtr cfg = nullptr;
 
-  // Tuple productivity profiler
-  TupleProductivityProfiler *productivityProfiler;
-};
+        // Data statistics manager
+        StatisticsManager* statisticsManager;
+
+        // Tuple productivity profiler
+        TupleProductivityProfiler* productivityProfiler;
+    };
 }
 
 #endif //DISORDERHANDLINGSYSTEM_BUFFER_SIZE_MANAGER_H

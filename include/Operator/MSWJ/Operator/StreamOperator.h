@@ -19,6 +19,24 @@
 #include <JoinAlgos/NPJ/MultiThreadHashTable.h>
 
 using namespace OoOJoin;
+/**
+ * @class StreamOperator
+ * @ingroup MSWJ_OPERATORS
+ * @brief The intra window join (MSWJ) operator, only considers a single window
+ * @note This operator implements the MSWJ algorithm. It joins two streams (R and S) based on a specified join condition.
+ * @note The operator only considers a single window and uses a sliding window approach.
+ * @note require configurations:
+ * - "windowLen" U64: The length of window
+ * - "slideLen" U64: The length of slide
+ * - "sLen" U64: The length of S buffer,
+ * - "rLen" U64: The length of R buffer
+ * - "algo" String: The specific join algorithm (optional, default nested loop)
+ * - "threads" U64: The threads to conduct intra window join (optional, default 1)
+ * - "wmTag" String: The tag of watermarker, default is arrival for @ref ArrivalWM
+ * - "mswjCompensation" U64, whether or not use linear compensation in mswj, default 0
+ * @note In the current version, the computation will block feeding.
+ * @note operator tag = "MSWJ"
+ */
 
 namespace MSWJ {
 class StreamOperator : public MeanAQPIAWJOperator {

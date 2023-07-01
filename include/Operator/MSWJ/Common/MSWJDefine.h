@@ -11,29 +11,44 @@
 
 //SystemParam of yuanzhen's paper
 namespace MSWJ {
-// Search granularity
-extern int g;
+    /**
+     * @brief The search granularity value used in yuanzhen's paper.
+     */
+    extern int g;
 
-// Adaptive interval
-extern int L;
+    /**
+     * @brief The adaptive interval value used in yuanzhen's paper.
+     */
+    extern int L;
 
-// Maximum delay
-extern int maxDelay;
+    /**
+     * @brief The maximum delay value used in yuanzhen's paper.
+     */
+    extern int maxDelay;
 
-// User expected recall rate
-extern double userRecall;
+    /**
+     * @brief The user expected recall rate value used in yuanzhen's paper.
+     */
+    extern double userRecall;
 
-// User defined time P
-extern int P;
+    /**
+     * @brief The user defined time P value used in yuanzhen's paper.
+     */
+    extern int P;
 
-// Basic window size
-extern int b;
+    /**
+     * @brief The basic window size value used in yuanzhen's paper.
+     */
+    extern int b;
 
-// Confidence value for estimating the credibility of R, range (0,1)
-extern double confidenceValue;
+    /**
+     * @brief The confidence value for estimating the credibility of R value used in yuanzhen's paper.
+     */
+    extern double confidenceValue;
 
-// Number of streams
-extern int streamCount;
-
+    /**
+     * @brief The number of streams value used in yuanzhen's paper.
+     */
+    extern int streamCount;
 }
 #endif //DISORDERHANDLINGSYSTEM_DEFINE_H
