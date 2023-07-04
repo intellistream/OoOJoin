@@ -11,7 +11,7 @@ add_sources(
         AIOperator.cpp
         LinearSVIOperator.cpp
         IAWJSelOperator.cpp
-        RawNPJOperator.cpp
+        RawPRJOperator.cpp
         RawSHJOperator.cpp
         LazyIAWJSelOperator.cpp
         MSWJ/KSlack/KSlack.cpp

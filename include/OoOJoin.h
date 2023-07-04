@@ -128,6 +128,7 @@
 *  @{
 */
 #include <Parallelization/KeyPartitionRunner.h>
+#include <Parallelization/KeyPartitionInfiniteRunner.h>
 #include <Parallelization/RoundRobinRunner.h>
 /**
  * @}

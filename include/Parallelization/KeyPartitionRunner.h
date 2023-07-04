@@ -147,7 +147,7 @@ class KeyPartitionRunner {
   * @param _r The r tuples
   * @param _s The s tuples
   */
-  void setDataSet(std::vector<TrackTuplePtr> _r, std::vector<TrackTuplePtr> _s);
+  virtual void setDataSet(std::vector<TrackTuplePtr> _r, std::vector<TrackTuplePtr> _s);
   /**
  * @brief to compute the throughput after run a test
  * @return the throughput in tuples/s

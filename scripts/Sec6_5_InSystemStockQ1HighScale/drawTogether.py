@@ -22,8 +22,8 @@ from OoOCommon import *
 
 OPT_FONT_NAME = 'Helvetica'
 TICK_FONT_SIZE = 22
-LABEL_FONT_SIZE = 22
-LEGEND_FONT_SIZE = 22
+LABEL_FONT_SIZE = 28
+LEGEND_FONT_SIZE = 30
 LABEL_FP = FontProperties(style='normal', size=LABEL_FONT_SIZE)
 LEGEND_FP = FontProperties(style='normal', size=LEGEND_FONT_SIZE)
 TICK_FP = FontProperties(style='normal', size=TICK_FONT_SIZE)
@@ -56,7 +56,7 @@ def runPeriod(exePath, period, resultPath, configTemplate="config.csv"):
     os.system("cd " + exePath + "&& rm *.csv")
 
     # editConfig(configTemplate, exePath + configFname, "earlierEmitMs", 0)
-    editConfig(configTemplate, exePath + configFname, "watermarkTimeMs", period)
+    editConfig(configTemplate, exePath + configFname, "threads", period)
     # prepare new file
     # run
     os.system("cd " + exePath + "&& ./benchmark " + configFname)
@@ -100,6 +100,7 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
     lat95All = []
     errAll = []
     periodAll = []
+    thrAll=[]
     for i in range(len(csvTemplates)):
         resultPath = commonPathBase + resultPaths[i]
         if (reRun == 1):
@@ -110,66 +111,18 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
         lat95All.append(lat95Vec)
         errAll.append(errVec)
         periodAll.append(periodVec)
-    return lat95All, errAll, periodAll
-def draw2yBar(NAME,R1,R2,l1,l2,fname):
-    fig, ax1 = plt.subplots(figsize=(10,4)) 
-    width = 0.2  # 柱形的宽度  
-    x1_list = []
-    x2_list = []
-    bars=[]
-    index = np.arange(len(NAME))
-    for i in range(len(R1)):
-        x1_list.append(i)
-        x2_list.append(i + width)
-    #ax1.set_ylim(0, 1)
-    bars.append(ax1.bar(x1_list, R1, width=width, color=COLOR_MAP[0], hatch=PATTERNS[0], align='edge',edgecolor='black', linewidth=3))
-    ax1.set_ylabel("ms",fontproperties=LABEL_FP)
-    ax1.set_xticklabels(ax1.get_xticklabels())  # 设置共用的x轴
-    ax2 = ax1.twinx()
-    
-    #ax2.set_ylabel('latency/us')
-    #ax2.set_ylim(0, 0.5)
-    bars.append(ax2.bar(x2_list, R2, width=width,  color=COLOR_MAP[1], hatch=PATTERNS[1], align='edge', tick_label=NAME,edgecolor='black', linewidth=3))
-  
-    ax2.set_ylabel("%",fontproperties=LABEL_FP)
-    # plt.grid(axis='y', color='gray')
+        thrAll.append(thrVec)
+    return lat95All, errAll, periodAll,thrAll
 
-    #style = dict(size=10, color='black')
-    #ax2.hlines(tset, 0, x2_list[len(x2_list)-1]+width, colors = "r", linestyles = "dashed",label="tset") 
-    #ax2.text(4, tset, "$T_{set}$="+str(tset)+"us", ha='right', **style)
-    if (1):
-        plt.legend(bars, [l1,l2],
-                   prop=LEGEND_FP,
-                   ncol=2,
-                   loc='upper center',
-                   #                     mode='expand',
-                   shadow=False,
-                   bbox_to_anchor=(0.55, 1.45),
-                   columnspacing=0.1,
-                   handletextpad=0.2,
-                borderaxespad=-1,
-                   #                     bbox_transform=ax.transAxes,
-                   #                     frameon=True,
-                   #                     columnspacing=5.5,
-                   #                     handlelength=2,
-                   )
-    plt.xlabel(NAME, fontproperties=LABEL_FP)
-    plt.xticks(size=TICK_FONT_SIZE)
-    ax1.yaxis.set_major_locator(LinearLocator(5))
-    ax2.yaxis.set_major_locator(LinearLocator(5))
-    ax1.yaxis.set_major_formatter(mtick.FormatStrFormatter('%.1f'))
-    ax2.yaxis.set_major_formatter(mtick.FormatStrFormatter('%.1f'))
-    plt.tight_layout()
-    plt.savefig(fname+".pdf")
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
-    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/Sec6_5Stockq1Normal/"
+    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/Sec6_5InSystemStockQ1High/"
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    # periodVec = [7, 8, 9, 10, 11, 12]
-    periodVec = [10]
+    periodVec = [1,3,4,5,6,8,10,12]
+    # periodVec = [7, 10, 12]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
@@ -184,14 +137,21 @@ def main():
 
     # os.system("mkdir " + figPath)
     # print(lat95All)
-    # lat95All[3]=ts
     methodTags = ["SHJ (eager)", "PRJ (lazy)", "PECJ-eager","PECJ-lazy"]
     resultPaths = ["SHJ","PRJ","PECJ","PECJL"]
     csvTemplates = ["config_shj.csv","config_prj.csv","config_pecjSel.csv","config_pecjSelLazy.csv"]
-    lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
-    print(lat95All[0][0])
-    errAll=np.array(errAll)*100.0
-    draw2yBar(methodTags,[lat95All[0][0],lat95All[1][0],lat95All[2][0],lat95All[3][0]],[errAll[0][0],errAll[1][0],errAll[2][0],errAll[3][0]],'95% latency (ms)','Error (%)',figPath + "sec6_5_stock_q1_normal")
+    lat95All, errAll, periodAll,thrAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
+    npLat = np.array(lat95All)
+   
+    groupLine.DrawFigureYnormal(periodAll, npLat, methodTags, "#Threads ", "95% latency (ms)", 0, 1,
+                                figPath + "hs_sec6_5_inSystem_stock_q1_lat",
+                                True)
+    groupLine.DrawFigureYnormalErr(periodAll, np.array(errAll)*100.0, methodTags, "#Threads ", "Error (%)", 0, 1,
+                                figPath + "hs_sec6_5_inSystem_stock_q1_err",
+                                True)
+    groupLine.DrawFigureYnormalThr(periodAll, np.array(thrAll), methodTags, "#Threads ", "Throughput (KTuple/s)", 0, 1,
+                                figPath + "hs_sec6_5_inSystem_stock_q1_thr",
+                                True)
 
 if __name__ == "__main__":
     main()

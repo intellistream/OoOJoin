@@ -1,10 +1,10 @@
-/*! \file   RawNPJOperator.h*/
+/*! \file   RawPRJOperator.h*/
 //
 // Created by tony on 22/11/22.
 //
 
-#ifndef INTELLISTREAM_INCLUDE_OPERATOR_RawNPJOPERATOR_H_
-#define INTELLISTREAM_INCLUDE_OPERATOR_RAWNPJOPERATOR_H_
+#ifndef INTELLISTREAM_INCLUDE_OPERATOR_RawPRJOPERATOR_H_
+#define INTELLISTREAM_INCLUDE_OPERATOR_RawPRJOPERATOR_H_
 
 #include <Operator/AbstractOperator.h>
 #include <Common/Window.h>
@@ -13,10 +13,10 @@
 
 namespace OoOJoin {
 /**
- * @class RawNPJOperator
+ * @class RawPRJOperator
  * @ingroup ADB_OPERATORS
- * @class RawNPJOperator Operator/RawNPJOperator.h
- * @brief The raw NPJ operator, without OoO mechanism
+ * @class RawPRJOperator Operator/RawPRJOperator.h
+ * @brief The raw PRJ operator, without OoO mechanism
  * @note require configurations:
  * - "windowLen" U64: The length of window
  * - "slideLen" U64: The length of slide
@@ -28,7 +28,7 @@ namespace OoOJoin {
  * @note In current version, the computation will block feeding
  * @note operator tag = "NPJ"
  */
-class RawNPJOperator : public AbstractOperator {
+class RawPRJOperator : public AbstractOperator {
  protected:
   Window myWindow;
   size_t intermediateResult = 0;
@@ -44,9 +44,9 @@ class RawNPJOperator : public AbstractOperator {
   void conductComputation();
 
  public:
-  RawNPJOperator() = default;
+  RawPRJOperator() = default;
 
-  ~RawNPJOperator() = default;
+  ~RawPRJOperator() = default;
 
   /**
   * @brief Set the config map related to this operator
@@ -93,15 +93,15 @@ class RawNPJOperator : public AbstractOperator {
 
 /**
  * @ingroup ADB_OPERATORS
- * @typedef RawNPJOperatorPtr
- * @brief The class to describe a shared pointer to @ref RawNPJOperator
+ * @typedef RawPRJOperatorPtr
+ * @brief The class to describe a shared pointer to @ref RawPRJOperator
  */
-typedef std::shared_ptr<class RawNPJOperator> RawNPJOperatorPtr;
+typedef std::shared_ptr<class RawPRJOperator> RawPRJOperatorPtr;
 /**
  * @ingroup ADB_OPERATORS
- * @def newRawNPJOperator
- * @brief (Macro) To creat a new @ref RawNPJOperator under shared pointer.
+ * @def newRawPRJOperator
+ * @brief (Macro) To creat a new @ref RawPRJOperator under shared pointer.
  */
-#define newRawNPJOperator std::make_shared<OoOJoin::RawNPJOperator>
+#define newRawPRJOperator std::make_shared<OoOJoin::RawPRJOperator>
 }
 #endif //INTELLISTREAM_INCLUDE_OPERATOR_IAWJOPERATOR_H_

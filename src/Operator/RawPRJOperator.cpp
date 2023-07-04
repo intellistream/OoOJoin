@@ -2,10 +2,10 @@
 // Created by tony on 22/11/22.
 //
 
-#include <Operator/RawNPJOperator.h>
+#include <Operator/RawPRJOperator.h>
 #include <JoinAlgos/JoinAlgoTable.h>
 
-bool OoOJoin::RawNPJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
+bool OoOJoin::RawPRJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
     return false;
   }
@@ -19,7 +19,7 @@ bool OoOJoin::RawNPJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   return true;
 }
 
-bool OoOJoin::RawNPJOperator::start() {
+bool OoOJoin::RawPRJOperator::start() {
 
   /**
    * @brief set window
@@ -31,7 +31,7 @@ bool OoOJoin::RawNPJOperator::start() {
   return true;
 }
 
-void OoOJoin::RawNPJOperator::conductComputation() {
+void OoOJoin::RawPRJOperator::conductComputation() {
   JoinAlgoTable jt;
   AbstractJoinAlgoPtr algo = jt.findAlgo(algoTag);
   //NestedLoopJoin nj;
@@ -41,7 +41,7 @@ void OoOJoin::RawNPJOperator::conductComputation() {
   intermediateResult = algo->join(myWindow.windowS, myWindow.windowR, joinThreads);
 }
 
-bool OoOJoin::RawNPJOperator::stop() {
+bool OoOJoin::RawPRJOperator::stop() {
   if (lockedByWaterMark) {
     WM_INFO("early terminate by watermark, already have results");
   }
@@ -53,7 +53,7 @@ bool OoOJoin::RawNPJOperator::stop() {
   return true;
 }
 
-bool OoOJoin::RawNPJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
+bool OoOJoin::RawPRJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   bool shouldGenWM;
   if (lockedByWaterMark) {
     return false;
@@ -73,7 +73,7 @@ bool OoOJoin::RawNPJOperator::feedTupleS(OoOJoin::TrackTuplePtr ts) {
   return true;
 }
 
-bool OoOJoin::RawNPJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
+bool OoOJoin::RawPRJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   bool shouldGenWM;
   if (lockedByWaterMark) {
     return false;
@@ -90,6 +90,6 @@ bool OoOJoin::RawNPJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
   return true;
 }
 
-size_t OoOJoin::RawNPJOperator::getResult() {
+size_t OoOJoin::RawPRJOperator::getResult() {
   return intermediateResult;
 }
