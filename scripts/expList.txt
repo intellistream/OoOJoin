@@ -12,4 +12,5 @@ Sec6_3_ModelingStockSynth
 Sec6_4EventRate
 Sec6_4NumberOfKeys
 Sec6_4ZipfKeys
-
+Sec6_5StockQ1SystemNormalCase
+Sec6_5_InSystemStockQ1HighScale
