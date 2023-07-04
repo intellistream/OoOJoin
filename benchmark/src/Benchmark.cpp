@@ -89,7 +89,13 @@ void parallelPecj(string configName, string outPrefix) {
   std::string parallelMode = cfg->tryString("parallelMode", "none", true);
   if (parallelMode == "keyPartition") {
     kr = newKeyPartitionRunner();
-  } else {
+  }
+  else if(parallelMode == "keyPartitionInfinite")
+  {
+      kr=newKeyPartitionInfiniteRunner();
+  }
+  else
+  {
     kr = newRoundRobinRunner();
   }
   kr->setConfig(cfg);

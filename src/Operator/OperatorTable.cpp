@@ -11,7 +11,7 @@
 #include <Operator/LinearSVIOperator.h>
 #include <Operator/IAWJSelOperator.h>
 #include <Operator/LazyIAWJSelOperator.h>
-#include <Operator/RawNPJOperator.h>
+#include <Operator/RawPRJOperator.h>
 #include <Operator/RawSHJOperator.h>
 namespace OoOJoin {
 OperatorTable::OperatorTable() {
@@ -24,6 +24,6 @@ OperatorTable::OperatorTable() {
   operatorMap["IAWJSel"] = newIAWJSelOperator();
   operatorMap["LazyIAWJSel"] = newLazyIAWJSelOperator();
   operatorMap["SHJ"] = newRawSHJOperator();
-  operatorMap["NPJ"] = newRawNPJOperator();
+  operatorMap["PRJ"] = newRawPRJOperator();
 }
 } // OoOJoin
