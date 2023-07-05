@@ -136,9 +136,9 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "k-slack", "PECJ", "PECJ-per key"]
-    resultPaths = ["wa", "ks", "pec_sel", "pec_perKey"]
-    csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_pecjSel.csv", "config_pecjIMA.csv"]
+    methodTags = ["WMJ", "KSJ", "PECJ"]
+    resultPaths = ["wa", "ks", "pec_sel"]
+    csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_pecjSel.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
     # groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "sec6_2_stock_q1", True)
