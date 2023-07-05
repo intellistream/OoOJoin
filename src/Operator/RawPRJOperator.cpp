@@ -4,7 +4,7 @@
 
 #include <Operator/RawPRJOperator.h>
 #include <JoinAlgos/JoinAlgoTable.h>
-
+#include <chrono>
 bool OoOJoin::RawPRJOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
     return false;
@@ -38,7 +38,15 @@ void OoOJoin::RawPRJOperator::conductComputation() {
   algo->setConfig(config);
   algo->syncTimeStruct(timeBaseStruct);
   // OP_INFO("Invoke algorithm=" + algo->getAlgoName());
+  auto lazyStart = std::chrono::high_resolution_clock::now();
   intermediateResult = algo->join(myWindow.windowS, myWindow.windowR, joinThreads);
+  auto lazyEnd = std::chrono::high_resolution_clock::now();
+
+  // Compute the duration in microseconds
+  auto lazyDuration = std::chrono::duration_cast<std::chrono::microseconds>(lazyEnd - lazyStart);
+
+  lazyRunningTime=lazyDuration.count();
+  algo->labelProceesedTime(myWindow.windowR);
 }
 
 bool OoOJoin::RawPRJOperator::stop() {
@@ -92,4 +100,9 @@ bool OoOJoin::RawPRJOperator::feedTupleR(OoOJoin::TrackTuplePtr tr) {
 
 size_t OoOJoin::RawPRJOperator::getResult() {
   return intermediateResult;
+}
+
+double OoOJoin::RawPRJOperator::getLazyRunningThroughput() {
+  double cnt=myWindow.windowR.size()*1e6;
+  return cnt/lazyRunningTime;
 }

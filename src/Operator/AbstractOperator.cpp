@@ -65,3 +65,6 @@ bool OoOJoin::AbstractOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
 ConfigMapPtr OoOJoin::AbstractOperator::getTimeBreakDown() {
   return nullptr;
 }
+double OoOJoin::AbstractOperator::getLazyRunningThroughput() {
+  return 0;
+}

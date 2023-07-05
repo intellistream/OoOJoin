@@ -67,6 +67,7 @@ class UtilityFunctions {
      }*/
     return ru;
   }
+
 };
 }
 #endif //IntelliStream_SRC_UTILS_UTILITYFUNCTIONS_HPP_
