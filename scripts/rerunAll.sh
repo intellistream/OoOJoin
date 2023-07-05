@@ -1,3 +1,5 @@
+mkdir ../results
+mkdir ../figures
 mapfile expNames <expList.txt
 for element in ${expNames[@]}
 #也可以写成for element in ${array[*]}

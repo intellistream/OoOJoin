@@ -5,6 +5,7 @@
 #include <Operator/LazyIAWJSelOperator.h>
 #include <JoinAlgos/JoinAlgoTable.h>
 #include <cmath>
+#include <chrono>
 bool OoOJoin::LazyIAWJSelOperator::setConfig(INTELLI::ConfigMapPtr cfg) {
   if (!OoOJoin::AbstractOperator::setConfig(cfg)) {
     return false;
@@ -99,15 +100,23 @@ void OoOJoin::LazyIAWJSelOperator::conductComputation() {
   //NestedLoopJoin nj;
   algo->setConfig(config);
   algo->syncTimeStruct(timeBaseStruct);
+  auto lazyStart = std::chrono::high_resolution_clock::now();
   // OP_INFO("Invoke algorithm=" + algo->getAlgoName());
   LazyStatistics();
   double unarrivedS=LazyPredictFutureTuples(avgSkewS,myWindow.windowS.size());
   double unarrivedR=LazyPredictFutureTuples(avgSkewR,myWindow.windowR.size());
   intermediateResult = algo->join(myWindow.windowS, myWindow.windowR, joinThreads);
+  auto lazyEnd = std::chrono::high_resolution_clock::now();
+
+  // Compute the duration in microseconds
+  auto lazyDuration = std::chrono::duration_cast<std::chrono::microseconds>(lazyEnd - lazyStart);
+
+  lazyRunningTime=lazyDuration.count();
   double sel=intermediateResult;
   sel=sel/myWindow.windowR.size()/myWindow.windowS.size();
   double aqpRu=sel*(myWindow.windowS.size()+unarrivedS)*(myWindow.windowR.size()+unarrivedR);
   compensatedRu=aqpRu;
+  algo->labelProceesedTime(myWindow.windowR);
 }
 
 bool OoOJoin::LazyIAWJSelOperator::stop() {
@@ -162,4 +171,9 @@ size_t OoOJoin::LazyIAWJSelOperator::getResult() {
 size_t OoOJoin::LazyIAWJSelOperator::getAQPResult()  {
   return compensatedRu;
 
+}
+
+double OoOJoin::LazyIAWJSelOperator::getLazyRunningThroughput() {
+  double cnt=myWindow.windowR.size()*1e6;
+  return cnt/lazyRunningTime;
 }
