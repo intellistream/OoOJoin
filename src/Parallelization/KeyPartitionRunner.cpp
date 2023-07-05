@@ -5,6 +5,8 @@
 #include <Parallelization/KeyPartitionRunner.h>
 #include <string>
 #include <chrono>
+#include <Utils/UtilityFunctions.hpp>
+static inline uint64_t elfHash(uint64_t x, uint32_t bits) { return (x * 2654435761U) >> (32 - bits); }
 void OoOJoin::KeyPartitionWorker::setDataSet(std::vector<TrackTuplePtr> _r, std::vector<TrackTuplePtr> _s) {
   size_t sLen = _s.size();
   size_t rLen = _r.size();
@@ -28,20 +30,24 @@ void OoOJoin::KeyPartitionWorker::setConfig(INTELLI::ConfigMapPtr _cfg) {
     exit(-1);
   }
   testOp->setConfig(_cfg);
-
+  if(opTag=="PRJ"||opTag=="LazyIAWJSel")
+  {
+    isLazy= true;
+  }
+ windowLen = _cfg->getU64("windowLen");
 }
 void OoOJoin::KeyPartitionWorker::prepareRunning() {
 
   // testOp->start();
 }
 bool OoOJoin::KeyPartitionWorker::isMySTuple(OoOJoin::TrackTuplePtr ts) {
-  if (ts->key % workers == myId) {
+  if (elfHash(ts->key,10) % workers == myId) {
     return true;
   }
   return false;
 }
 bool OoOJoin::KeyPartitionWorker::isMyRTuple(OoOJoin::TrackTuplePtr tr) {
-  if (tr->key % workers == myId) {
+  if (elfHash(tr->key,10)% workers == myId) {
     return true;
   }
   return false;
@@ -123,6 +129,11 @@ void OoOJoin::KeyPartitionWorker::decentralizedMain() {
 }
 
 double OoOJoin::KeyPartitionWorker::getThroughput() {
+  if(isLazy)
+  {
+   // INTELLI_INFO("this is lazy worker");
+   return testOp->getLazyRunningThroughput()*workers;
+  }
   size_t rLen = rTuple.size();
   tsType minArrival = rTuple[0]->arrivalTime;
   tsType maxProcessed = 0;

@@ -171,6 +171,11 @@ class AbstractOperator {
    * @return The ConfigMapPtr which contains breakdown information, null if no breakdown supported
    */
   virtual ConfigMapPtr getTimeBreakDown();
+  /**
+   * @brief get the throughput under lazy running
+   * @return the throughput
+   */
+  virtual double getLazyRunningThroughput();
 };
 
 }

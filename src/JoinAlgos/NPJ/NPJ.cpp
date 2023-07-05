@@ -105,8 +105,8 @@ size_t NPJSingle::join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
       result += table.probeTuple(tr[i]);
     }
   }
-  for (size_t i = 0; i < trLen; i++) {
-    tr[i]->processedTime = UtilityFunctions::timeLastUs(timeBaseStruct);
-  }
+  auto tNow=UtilityFunctions::timeLastUs(timeBaseStruct);
+  processedTime=tNow;
+
   return result;
 }

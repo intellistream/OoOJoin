@@ -56,6 +56,7 @@ void OoOJoin::IAWJOperator::conductComputation() {
   algo->syncTimeStruct(timeBaseStruct);
   // OP_INFO("Invoke algorithm=" + algo->getAlgoName());
   intermediateResult = algo->join(myWindow.windowS, myWindow.windowR, joinThreads);
+  algo->labelProceesedTime(myWindow.windowR);
 }
 
 bool OoOJoin::IAWJOperator::stop() {

@@ -40,7 +40,7 @@ class RawPRJOperator : public AbstractOperator {
    */
   atomic_bool lockedByWaterMark = false;
   AbstractWaterMarkerPtr wmGen = nullptr;
-
+  uint64_t lazyRunningTime=0;
   void conductComputation();
 
  public:
@@ -88,7 +88,12 @@ class RawPRJOperator : public AbstractOperator {
    * @return The result
    */
   size_t getResult() override;
-
+  /**
+    * @brief get the throughput under lazy running
+    * @param waitTimeUs the waiting time for lazily gather data in us
+    * @return the throughput
+    */
+   double getLazyRunningThroughput() override;
 };
 
 /**

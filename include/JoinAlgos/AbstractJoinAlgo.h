@@ -42,7 +42,7 @@ class AbstractJoinAlgo {
   std::string nameTag;
   uint64_t joinSum = 0;
   struct timeval timeBaseStruct{};
-
+  uint64_t processedTime=0;
   //tsType timeStep;
  public:
   //元组生产力监视器
@@ -74,7 +74,7 @@ class AbstractJoinAlgo {
   virtual size_t join(C20Buffer<OoOJoin::TrackTuplePtr> windS,
                       C20Buffer<OoOJoin::TrackTuplePtr> windR,
                       int threads = 1);
-
+  virtual void labelProceesedTime( C20Buffer<OoOJoin::TrackTuplePtr> windR);
   /**
    * @brief set the name of algorithm
    * @param name Algorithm name

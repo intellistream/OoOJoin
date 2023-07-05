@@ -27,3 +27,10 @@ bool OoOJoin::AbstractJoinAlgo::setConfig(INTELLI::ConfigMapPtr cfg) {
   joinSum = cfg->tryU64("joinSum", 0, true);
   return true;
 }
+void OoOJoin::AbstractJoinAlgo::labelProceesedTime(C20Buffer<OoOJoin::TrackTuplePtr> windR) {
+  size_t trLen = windR.size();
+  TrackTuplePtr *tr = windR.data();
+  for (size_t i = 0; i < trLen; i++) {
+    tr[i]->processedTime = processedTime;
+  }
+}

@@ -24,6 +24,8 @@ class KeyPartitionWorker : public INTELLI::AbstractC20Thread {
    */
   struct timeval tSystem;
   virtual void inlineMain();
+  bool isLazy=false;
+  uint64_t windowLen=0;
   /**
    * @brief the inline main function of decentralized mode, assume there is no central distributor of datastream
    */

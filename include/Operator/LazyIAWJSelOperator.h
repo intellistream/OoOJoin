@@ -44,6 +44,7 @@ class LazyIAWJSelOperator : public AbstractOperator {
   tsType lastArriveTime=0;
   double avgSkewS=0,avgSkewR=0;
   size_t compensatedRu=0;
+  uint64_t lazyRunningTime=0;
   void conductComputation();
 
  public:
@@ -101,6 +102,12 @@ class LazyIAWJSelOperator : public AbstractOperator {
    * @return The result
    */
   size_t getAQPResult() override;
+  /**
+  * @brief get the throughput under lazy running
+  * @param waitTimeUs the waiting time for lazily gather data in us
+  * @return the throughput
+  */
+   double getLazyRunningThroughput() override;
 };
 
 /**
