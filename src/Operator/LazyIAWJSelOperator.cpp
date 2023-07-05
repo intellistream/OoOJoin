@@ -116,7 +116,7 @@ void OoOJoin::LazyIAWJSelOperator::conductComputation() {
   sel=sel/myWindow.windowR.size()/myWindow.windowS.size();
   double aqpRu=sel*(myWindow.windowS.size()+unarrivedS)*(myWindow.windowR.size()+unarrivedR);
   compensatedRu=aqpRu;
-  algo->labelProceesedTime(myWindow.windowR);
+  algo->labelProceesedTime(myWindow.windowR)
 }
 
 bool OoOJoin::LazyIAWJSelOperator::stop() {
