@@ -19,7 +19,7 @@ import os
 import pandas as pd
 import sys
 from OoOCommon import *
-
+import math
 OPT_FONT_NAME = 'Helvetica'
 TICK_FONT_SIZE = 22
 LABEL_FONT_SIZE = 28
@@ -89,7 +89,10 @@ def readResultVectorPeriod(periodVec, resultPath):
     for i in periodVec:
         avgLat, lat95, thr, err = readResultPeriod(i, resultPath)
         avgLatVec.append(float(avgLat) / 1000.0)
-        lat95Vec.append(float(lat95) / 1000.0)
+        tl=float(lat95)
+        if(math.isnan(tl)):
+            tl=40.0*1000.0
+        lat95Vec.append(float(tl) / 1000.0)
         thrVec.append(float(thr) / 1000.0)
         errVec.append(abs(float(err)))
         compVec.append(1 - abs(float(err)))
@@ -152,6 +155,7 @@ def main():
     groupLine.DrawFigureYnormalThr(periodAll, np.array(thrAll), methodTags, "#Threads ", "Throughput (KTuple/s)", 0, 1,
                                 figPath + "hs_sec6_5_inSystem_stock_q1_thr",
                                 True)
-
+    print(npLat)
+    print(errAll)
 if __name__ == "__main__":
     main()

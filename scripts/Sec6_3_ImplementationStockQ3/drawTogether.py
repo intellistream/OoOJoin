@@ -136,9 +136,9 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["baseline w/o pecj", "PECJ-adaptive filter", "PECJ-SVI", "PECJ-DNN"]
-    resultPaths = ["ks", "pec_sel", "pec_svi", "pec_dnn"]
-    csvTemplates = ["config_yuanzhen.csv", "config_pecjSel.csv", "config_sviCL.csv", "config_pecjAI.csv"]
+    methodTags = ["WMJ","KSJ", "PECJ-ALF", "PECJ-SVI", "PECJ-DNN"]
+    resultPaths = ["wa","ks", "pec_sel", "pec_svi", "pec_dnn"]
+    csvTemplates = ["config_waterMark.csv","config_yuanzhen.csv", "config_pecjSel.csv", "config_sviCL.csv", "config_pecjAI.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
     npLat[3] = npLat[3]
