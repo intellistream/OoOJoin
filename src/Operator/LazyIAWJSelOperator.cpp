@@ -116,7 +116,7 @@ void OoOJoin::LazyIAWJSelOperator::conductComputation() {
   sel=sel/myWindow.windowR.size()/myWindow.windowS.size();
   double aqpRu=sel*(myWindow.windowS.size()+unarrivedS)*(myWindow.windowR.size()+unarrivedR);
   compensatedRu=aqpRu;
-  algo->labelProceesedTime(myWindow.windowR)
+  algo->labelProceesedTime(myWindow.windowR);
 }
 
 bool OoOJoin::LazyIAWJSelOperator::stop() {
@@ -175,5 +175,22 @@ size_t OoOJoin::LazyIAWJSelOperator::getAQPResult()  {
 
 double OoOJoin::LazyIAWJSelOperator::getLazyRunningThroughput() {
   double cnt=myWindow.windowR.size()*1e6;
-  return cnt/lazyRunningTime;
+  NPJTuplePtr *tr = myWindow.windowR.data();
+  size_t tRlen=myWindow.windowR.size();
+  uint64_t minArrival=99999;
+  uint64_t maxArrival=0;
+  for (size_t i = 0; i < tRlen; i++) {
+    if (tr[i]->processedTime>0) {
+      if(tr[i]->arrivalTime>maxArrival)
+      {
+        maxArrival=tr[i]->arrivalTime;
+      }
+      if(tr[i]->arrivalTime<minArrival)
+      {
+        minArrival=tr[i]->arrivalTime;
+      }
+    }
+  }
+  INTELLI_INFO(to_string(myWindow.windowR.size())+"tuples");
+  return 2*cnt/(lazyRunningTime+(maxArrival-minArrival));
 }
