@@ -134,6 +134,7 @@ bool ZipfDataLoader::setConfig(ConfigMapPtr cfg) {
   string fnameR, fnameS;
   fnameR = cfg->tryString("fileDataLoader_rFile", "../../benchmark/datasets/rTuple.csv", true);
   fnameS = cfg->tryString("fileDataLoader_sFile", "../../benchmark/datasets/sTuple.csv", true);
+
   if (generateByKV) {
     testSize = (windowLenMs + maxArrivalSkewMs) * eventRateKTps;
     keyValueSTuple = loadDataFromCsvCheckSize(testSize, fnameS);
@@ -271,5 +272,6 @@ std::vector<TrackTuplePtr> ZipfDataLoader::loadDataFromCsvCheckSize(size_t size,
     tp->processedTime = 0;
     ru1[i] = tp;
   }
+  INTELLI_INFO(fname+"is read");
   return ru1;
 }

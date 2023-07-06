@@ -205,9 +205,6 @@ void runTestBenchAdj(const string &configName = "config.csv", const string &outP
   cfg->edit("timeStep", (uint64_t) timeStepUs);
   cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
 
-  //Dataset files
-  cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/sb_1000ms_1tMidDelayData.csv");
-  cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/cj_1000ms_1tLowDelayData.csv");
 
   TestBench tb, tbOoO;
   tbOoO.setDataLoader(loaderTag, cfg);
