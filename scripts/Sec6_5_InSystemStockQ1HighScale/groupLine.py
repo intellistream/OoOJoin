@@ -224,7 +224,7 @@ def DrawFigureYnormalThr(xvalues, yvalues, legend_labels, x_label, y_label, y_mi
 
     # you may control the limits on your own.
 
-    plt.ylim(0, 1800)
+    plt.ylim(0, 3800)
 
     plt.grid(axis='y', color='gray')
     figure.yaxis.set_major_locator(LinearLocator(5))

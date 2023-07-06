@@ -124,7 +124,7 @@ def main():
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [1,3,4,5,6,8,10,12]
+    periodVec = [1,3,4,5,6,8,10,12,14,18,24]
     # periodVec = [7, 10, 12]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
