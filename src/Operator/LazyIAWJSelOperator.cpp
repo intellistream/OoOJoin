@@ -175,7 +175,7 @@ size_t OoOJoin::LazyIAWJSelOperator::getAQPResult()  {
 
 double OoOJoin::LazyIAWJSelOperator::getLazyRunningThroughput() {
   double cnt=myWindow.windowR.size()*1e6;
-  NPJTuplePtr *tr = myWindow.windowR.data();
+  /*NPJTuplePtr *tr = myWindow.windowR.data();
   size_t tRlen=myWindow.windowR.size();
   uint64_t minArrival=99999;
   uint64_t maxArrival=0;
@@ -191,6 +191,6 @@ double OoOJoin::LazyIAWJSelOperator::getLazyRunningThroughput() {
       }
     }
   }
-  INTELLI_INFO(to_string(myWindow.windowR.size())+"tuples");
-  return 2*cnt/(lazyRunningTime+(maxArrival-minArrival));
+  INTELLI_INFO(to_string(myWindow.windowR.size())+"tuples");*/
+  return cnt/(lazyRunningTime);
 }
