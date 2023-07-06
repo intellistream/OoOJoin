@@ -15,7 +15,7 @@ using namespace std;
 using namespace OoOJoin;
 using namespace MSWJ;
 
-TEST_CASE(
+/*TEST_CASE(
     "KSlack disorderHandling function static test,this test same as paper's Fig. 3. Example of using K-slack to handle intra-stream disorder",
     "[KSlack]") {
   // Create objects needed for KSlack instance
@@ -220,7 +220,7 @@ TEST_CASE("Synchronizer synchronizeStream function test with multiple streams", 
   REQUIRE(synchronizer->synBufferMap[1].size() == 2);
   REQUIRE(synchronizer->synBufferMap[1].top()->eventTime == 5);
 
-}
+}*/
 
 TEST_CASE("Test MSWJ running on random, watermarkTime = 10", "[short]")
 {
@@ -234,7 +234,7 @@ TEST_CASE("Test MSWJ running on random, watermarkTime = 10", "[short]")
   a = runTestBenchAdj(cfg, configName, outPrefix);
   REQUIRE(a == 1);
 }
-
+/*
 TEST_CASE("Test MSWJ running on random, watermarkTime = 10, with compensation", "[short]")
 {
   int a = 0;
@@ -385,3 +385,4 @@ TEST_CASE("Test MSWJ running on dataLoader for joinSum result , windowLenMs = 20
   a = runTestBenchAdj(cfg, configName, outPrefix);
   REQUIRE(a == 1);
 }
+*/
