@@ -168,9 +168,7 @@ int runTestBenchAdj(const ConfigMapPtr &cfg, const string &configName = "config.
   cfg->edit("timeStep", (uint64_t) timeStepUs);
   cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
 
-  //Dataset files
-  cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/sb_1000ms_1tMidDelayData.csv");
-  cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/cj_1000ms_1tLowDelayData.csv");
+
 
   TestBench tb, tbOoO;
   tbOoO.setDataLoader(loaderTag, cfg);
@@ -278,10 +276,6 @@ int runTestBenchPretrain(const ConfigMapPtr &cfg,
   cfg->edit("windowLen", (uint64_t) windowLenMs * 1000);
   cfg->edit("timeStep", (uint64_t) timeStepUs);
   cfg->edit("watermarkTime", (uint64_t) watermarkTimeMs * 1000);
-
-  //Dataset files
-  cfg->edit("fileDataLoader_rFile", "../../benchmark/datasets/sb_1000ms_1tMidDelayData.csv");
-  cfg->edit("fileDataLoader_sFile", "../../benchmark/datasets/cj_1000ms_1tLowDelayData.csv");
 
   TestBench tbOoO;
   tbOoO.setDataLoader(loaderTag, cfg);
