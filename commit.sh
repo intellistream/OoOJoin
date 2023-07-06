@@ -1,4 +1,4 @@
-BRANCH=scripts_fix
+BRANCH=mswj_patch
 git init
 git checkout -b $BRANCH
 git add .
