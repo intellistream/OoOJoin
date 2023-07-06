@@ -1,6 +1,6 @@
-BRANCH=parallelization
+BRANCH=scripts_fix
 git init
-git checkout $BRANCH
+git checkout -b $BRANCH
 git add .
 git commit -F commit_info
 git push origin $BRANCH
