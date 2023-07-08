@@ -1,6 +1,6 @@
-BRANCH=reproduce
+BRANCH=Figure_4p
 git init
-git checkout -b $BRANCH
+git checkout  $BRANCH
 git add .
 git commit -F commit_info
 git push origin $BRANCH
