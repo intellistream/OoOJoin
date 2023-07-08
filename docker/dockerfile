@@ -31,7 +31,7 @@ RUN apt-get update &&\
       python3-pip
 RUN apt-get clean
 RUN apt-get install -y sudo
-RUN pip3 install torch==1.13.0 torchvision torchaudio
+RUN pip3 install torch==1.13.0 torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 # 添加用户并配置密码/Add user and config passwd
 RUN useradd -m ${USER} && yes ${PASSWD} | passwd ${USER}
 
