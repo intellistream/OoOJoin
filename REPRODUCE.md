@@ -34,6 +34,7 @@ cd docker/AllianceDB_X64
 ./docker_est.sh
 ```
 In the docker command line, you will find everything at /home/OoOJoin/projects/OoOJoin
+You are also able to run `git pull` under /home/OoOJoin/projects/OoOJoin to make it updated
 
 ## Third-party Lib
 
