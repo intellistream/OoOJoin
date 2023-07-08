@@ -14,7 +14,7 @@ pip3 install matplotlib pandas numpy
 # build
 mkdir build && cd build
 cmake -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'` ..
-make
+make -j24
 # reproduce
 cd benchmark/scripts
 ./rerunAll.sh
