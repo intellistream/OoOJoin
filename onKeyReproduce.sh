@@ -2,7 +2,7 @@
 #assume you have already acquired the ubuntu 22.04
 #1. install tool chain
 sudo apt update
-sudo apt install gcc g++ python3 pip -y
+sudo apt install gcc g++ python3 pip cmake make -y
 #2. install doxygen for docs
 sudo apt-get install doxygen -y
 sudo apt-get install graphviz -y
