@@ -28,7 +28,12 @@ cd docker
 ./docker_est.sh
 ```
 Upon seeing the docker command line, you may cd to home, proceed to manually clone this repo and then run the `onKeyReproduce.sh`.
-We are still working on the hands-free docker packages.
+There is also a hands-free X64 version with precompiled AllianceDB_OoOJoin, please run the following
+```shell
+cd docker/AllianceDB_X64
+./docker_est.sh
+```
+In the docker command line, you will find everything at /home/OoOJoin/projects/OoOJoin
 
 ## Third-party Lib
 
