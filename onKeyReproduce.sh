@@ -2,10 +2,10 @@
 #assume you have already acquired the ubuntu 22.04
 #1. install tool chain
 sudo apt update
-sudo apt install gcc g++ python3 pip
+sudo apt install gcc g++ python3 pip -y
 #2. install doxygen for docs
-sudo apt-get install doxygen
-sudo apt-get install graphviz
+sudo apt-get install doxygen -y
+sudo apt-get install graphviz -y
 doxygen Doxyfile
 # install lib torch, cpu only
 pip3 install torch==1.13.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
