@@ -12,11 +12,15 @@ pip3 install torch==1.13.0 torchvision torchaudio --index-url https://download.p
 #other oython pkgs dor plotting
 pip3 install matplotlib pandas numpy
 # build
-mkdir build && cd build
+mkdir build
+cd build
 cmake -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'` ..
 make -j24
 # reproduce
-cd benchmark/scripts
+cd benchmark
+mkdir figures
+mkdir results
+cd scripts
 ./rerunAll.sh
 cd ../../..
 rm -rf results
