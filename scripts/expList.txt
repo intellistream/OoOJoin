@@ -12,4 +12,3 @@ Sec6_4ZipfKeys
 Sec6_5Q1OtherDataSets
 Sec6_5_InSystemStockQ1HighScale
 Sec6_5StockQ1SystemNormalCase
-Sec6_5_InSystemStockQ1HighScale

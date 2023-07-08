@@ -17,7 +17,7 @@ cmake -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_pref
 make
 # reproduce
 cd benchmark/scripts
-./reRunAll.sh
+./rerunAll.sh
 cd ../../..
 rm -rf results
 rm -rf figures
