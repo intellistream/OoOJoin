@@ -1,0 +1,7 @@
+FROM alliancedbadmin/alliancedb_ooo:latest
+ENV USER=OoOJoin
+ENV PASSWD=OoOJoin
+ENV WORKDIR=projects
+
+USER ${USER}
+

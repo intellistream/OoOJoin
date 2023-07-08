@@ -4,12 +4,3 @@
 use in Clion
 *To MANULLAY envoke the docker, run docker_run.sh'
 *To delete the container and image, run docker_del.sh
-
-## Hands-free prebuilt dockers
-X64: 
-
-```shell
-  cd AllianceDB_X64
-  ./docker_est.sh
-```
-You will find everything at /home/OoOJoin/projects/OoOJoin
