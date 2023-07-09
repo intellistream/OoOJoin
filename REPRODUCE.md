@@ -22,19 +22,31 @@ This will also copy figures and results to `figures` and `results` folder at the
 
 3. The torch installation command is designed for X64, and also works for ARM64, but may need some changes on other architectures like RISCV.
 
-4. We provide docker scripts to install Ubuntu22.04 environment, please do the following to set it up
+4. Docker scripts which only set up os and dependencies:
+We provide docker scripts to install Ubuntu22.04 environment, please do the following to set it up
 ```shell
 cd docker
 ./docker_est.sh
 ```
 Upon seeing the docker command line, you may cd to home, proceed to manually clone this repo and then run the `onKeyReproduce.sh`.
-There is also a hands-free X64 version with precompiled AllianceDB_OoOJoin, please run the following
+5. Hands-free docker with precompiled AllianceDB_OoOJoin and its source:
+We have merged the docker into AllianceDB docker repo, so far support X64 and ARM64(v8).
+In the docker command line, you will find everything at /home/OoOJoin/projects/OoOJoin
+You are also able to run `git pull` under /home/OoOJoin/projects/OoOJoin to make it updated
+- X64 version: docker tag is `alliancedbadmin/alliancedb_ooo:latest`
+A template setup command: 
 ```shell
 cd docker/AllianceDB_X64
 ./docker_est.sh
 ```
-In the docker command line, you will find everything at /home/OoOJoin/projects/OoOJoin
-You are also able to run `git pull` under /home/OoOJoin/projects/OoOJoin to make it updated
+- ARM64 version (EXPERIMENTAL): docker tag is `alliancedbadmin/alliancedb_ooo:arm64`
+A template setup command: 
+```shell
+cd docker/AllianceDB_ARM64
+./docker_est.sh
+```
+:warning: The ARM64 version can be built successfully, and basically able to run, but we have not yet
+placed it into ARM64 servers with more than 24 core.
 
 ## Third-party Lib
 
