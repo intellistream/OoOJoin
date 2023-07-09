@@ -29,6 +29,7 @@ cd docker
 ./docker_est.sh
 ```
 Upon seeing the docker command line, you may cd to home, proceed to manually clone this repo and then run the `onKeyReproduce.sh`.
+
 5. Hands-free docker with precompiled AllianceDB_OoOJoin and its source:
 We have merged the docker into AllianceDB docker repo, so far support X64 and ARM64(v8).
 In the docker command line, you will find everything at /home/OoOJoin/projects/OoOJoin
