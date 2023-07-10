@@ -18,6 +18,8 @@ This will also copy figures and results to `figures` and `results` folder at the
    | Memory             | 384 GB                                 |
    | OS & Compiler      | Ubuntu22.04 (Physical or Docker) g++11 |
 
+It's worth noting that if your version of Ubuntu does not match the above specifications, you can try using the onKeyReproduce20.04.sh script in the directory. If that still doesn't work, you may need to use Docker.
+
 2. To make the scalability evaluation work as expected, please make sure that the core id 0~23 represent 24 physical cores at the same NUMA node (if there is some NUMA platform).
 
 3. The torch installation command is designed for X64, and also works for ARM64, but may need some changes on other architectures like RISCV.
