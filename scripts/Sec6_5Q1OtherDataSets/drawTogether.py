@@ -14,7 +14,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pylab
 from matplotlib.font_manager import FontProperties
+from matplotlib import ticker
 from matplotlib.ticker import LogLocator, LinearLocator
+
 import os
 import pandas as pd
 import sys

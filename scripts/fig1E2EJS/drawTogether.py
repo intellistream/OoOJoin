@@ -132,7 +132,7 @@ def main():
         reRun = 1
         # runPeriodVector(exeSpace, periodVec, resultPath)
     # lat95All[3]=ts
-    methodTags = ["watermark", "k-slack", "PECJ-alf", "PECJ-sel"]
+    methodTags = ["WMJ", "KSJ", "PECJ-alf", "PECJ-sel"]
     resultPaths = ["wa", "ks", "pecj_alf", "pec_sel"]
     csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_ima.csv", "config_sel.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)

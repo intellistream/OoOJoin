@@ -138,56 +138,44 @@ def DrawFigure2(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max,
 
 # draw a line chart
 def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
-    # you may change the figure size on your own.
-    fig = plt.figure(figsize=(10, 3))
-    figure = fig.add_subplot(111)
+    # 定义图像大小和字体样式
+    fig = plt.figure(figsize=(10, 4))
+    LABEL_FP = FontProperties(family='Arial', size=12)
+    TICK_FONT_SIZE = 12
+
+    # 定义线条样式和颜色
+    LINE_WIDTH = 2
+    MARKER_SIZE = 9
+    LINE_COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf', '#1f77b4']
+    MARKERS = ['s', 'o', '^', 'v', '+', '*', ',', 'x', 'p', '1', '2']
 
     FIGURE_LABEL = legend_labels
-
     x_values = xvalues
     y_values = yvalues
 
+    # 绘制折线图
     lines = [None] * (len(FIGURE_LABEL))
     for i in range(len(y_values)):
-        lines[i], = figure.plot(x_values[i], y_values[i], color=LINE_COLORS[i], \
-                                linewidth=LINE_WIDTH, marker=MARKERS[i], \
-                                markersize=MARKER_SIZE, label=FIGURE_LABEL[i], markeredgecolor='k')
+        lines[i], = plt.plot(x_values[i], y_values[i], color=LINE_COLORS[i], linewidth=LINE_WIDTH, \
+                             marker=MARKERS[i], markersize=MARKER_SIZE, label=FIGURE_LABEL[i], markeredgecolor='k')
 
-    # sometimes you may not want to draw legends.
-    if allow_legend == True:
-        plt.legend(lines,
-                   FIGURE_LABEL,
-                   prop=LEGEND_FP,
-                   loc='upper center',
-                   ncol=4,
-                   bbox_to_anchor=(0.55, 1.5), shadow=False,
-                   columnspacing=0.1,
-                   frameon=True, borderaxespad=0, handlelength=1.2,
-                   handletextpad=0.1,
-                   labelspacing=0.1)
-    #plt.xscale('log')
-    # plt.yscale('log')
-    # plt.yscale('log')
+    # 绘制图例
+    if allow_legend:
+        plt.legend(lines, FIGURE_LABEL, prop=LABEL_FP, loc='upper center', ncol=4, bbox_to_anchor=(0.55, 1.5), \
+                   shadow=False, columnspacing=0.1, frameon=True, borderaxespad=0, handlelength=1.2, handletextpad=0.1, labelspacing=0.1)
 
-    # you may control the limits on your own.
+    # 设置坐标轴范围和网格线
+    plt.ylim(y_min, y_max)
+    plt.grid(axis='y', color='gray', alpha=0.5, linewidth=0.5)
 
-    #plt.ylim(0, 100)
-
-    plt.grid(axis='y', color='gray')
-    #figure.yaxis.set_major_locator(LinearLocator(5))
-    # figure.xaxis.set_major_locator(LogLocator(base=10))
+    # 设置坐标轴标签和刻度字体大小
+    plt.xlabel(x_label, fontproperties=20)
+    plt.ylabel(y_label, fontproperties=20)
     plt.xticks(fontsize=TICK_FONT_SIZE)
-    figure.get_xaxis().set_tick_params(direction='in', pad=10)
-    figure.get_yaxis().set_tick_params(direction='in', pad=10)
-   
-    plt.xlabel(x_label, fontproperties=LABEL_FP)
-    plt.ylabel(y_label, fontproperties=LABEL_FP)
+    plt.yticks(fontsize=TICK_FONT_SIZE)
 
-    size = fig.get_size_inches()
-    dpi = fig.get_dpi()
-
-    plt.savefig(filename + ".pdf", bbox_inches='tight')
-
+    # 保存图像
+    fig.savefig(filename + ".pdf", bbox_inches='tight')
 
 # example for reading csv file
 def ReadFile():

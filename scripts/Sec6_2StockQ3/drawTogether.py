@@ -136,7 +136,7 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "k-slack", "PECJ"]
+    methodTags = ["WMJ", "KSJ", "PECJ"]
     resultPaths = ["wa", "ks", "pec_ai"]
     csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_pecjAI.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
@@ -158,7 +158,7 @@ def main():
                                                               periodVecS100, reRun)
     lat95All.append(lat95AllPecS100[0])
     errAll.append(errAllPecS100[0])
-    methodTags = ["watermark", "k-slack", "PECJ", "PECJ" + r"$(t_c-100)$"]
+    methodTags = ["WMJ", "KSJ", "PECJ", "PECJ" + r"$(t_c-100)$"]
     groupBar2.DrawFigure(periodVec, lat95All, methodTags, "Tuning knob " + r"$t_c$ (ms)", "95% latency (ms)", 5, 15,
                          figPath + "sec6_2_stock_q3_lat_p4", True)
     groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$t_c$ (ms)", "Error (%)",
