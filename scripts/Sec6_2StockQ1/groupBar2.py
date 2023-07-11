@@ -77,7 +77,7 @@ def DrawLegend(legend_labels, filename):
 
 
 def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
-    fig = plt.figure(figsize=(10, 6))
+    fig = plt.figure(figsize=(10, 4))
 
     figure = fig.add_subplot(111)
 
@@ -97,10 +97,10 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
 
     if allow_legend == True:
         plt.legend(bars, FIGURE_LABEL,
-                   prop={'size': 16},
+                   prop={'size': 22},
                    ncol=3,
                    loc='upper center',
-                   bbox_to_anchor=(0.5, 1.2),
+                   bbox_to_anchor=(0.5, 1.25),
                    frameon=False)
 
     plt.xticks(index + len(x_values) / 2 * width, x_values, rotation=0)

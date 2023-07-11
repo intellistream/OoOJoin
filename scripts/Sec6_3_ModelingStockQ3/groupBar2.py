@@ -77,7 +77,7 @@ def DrawLegend(legend_labels, filename):
 
 
 def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
-    fig = plt.figure(figsize=(10, 6))
+    fig = plt.figure(figsize=(10, 4))
 
     LINE_COLORS = ['#FAF0E6', '#EE82EE', '#B0E0E6', '#F4B400']
     HATCH_PATTERNS = ['/', '-', 'o', '///']
@@ -98,7 +98,7 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
                    prop={'size': 16},
                    ncol=3,
                    loc='upper center',
-                   bbox_to_anchor=(0.5, 1.2),
+                   bbox_to_anchor=(0.5, 1.25),
                    frameon=False)
 
     plt.xlabel(x_label, fontsize=20)

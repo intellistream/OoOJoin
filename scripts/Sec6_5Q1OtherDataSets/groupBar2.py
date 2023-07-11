@@ -77,10 +77,10 @@ def DrawLegend(legend_labels, filename):
 
 
 def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
-    fig = plt.figure(figsize=(10, 6))
+    fig = plt.figure(figsize=(10, 4))
     figure = fig.add_subplot(111)
 
-    LINE_COLORS = ['#FAF0E6', '#EE82EE', '#B0E0E6', '#F4B400']
+    LINE_COLORS = ['#FF8C00', '#FFE4C4', '#00FFFF', '#E0FFFF']
     HATCH_PATTERNS = ['/', '-', 'o', '///']
 
     FIGURE_LABEL = legend_labels
@@ -96,10 +96,11 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
 
     if allow_legend == True:
         plt.legend(bars, FIGURE_LABEL,
-                   prop={'size': 16},
-                   ncol=3,
+                   prop={'size': 20},
+                   ncol=4,
                    loc='upper center',
-                   bbox_to_anchor=(0.5, 1.2),
+                   columnspacing=0.5,
+                   bbox_to_anchor=(0.5, 1.25),
                    frameon=False)
     plt.xticks(index + len(x_values) / 2 * width, x_values, rotation=0)
     figure.yaxis.set_major_locator(LinearLocator(5))

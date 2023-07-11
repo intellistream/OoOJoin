@@ -140,7 +140,7 @@ def main():
 
     # os.system("mkdir " + figPath)
     # print(lat95All)
-    methodTags = ["SHJ (eager)", "PRJ (lazy)", "PECJ-eager","PECJ-lazy"]
+    methodTags = ["SHJ (eager)", "PRJ (lazy)", "PECJ-SHJ","PECJ-PRJ"]
     resultPaths = ["SHJ","PRJ","PECJ","PECJL"]
     csvTemplates = ["config_shj.csv","config_prj.csv","config_pecjSel.csv","config_pecjSelLazy.csv"]
     lat95All, errAll, periodAll,thrAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)

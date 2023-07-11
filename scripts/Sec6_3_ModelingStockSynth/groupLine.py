@@ -237,7 +237,7 @@ def DrawFigureYnormalErr(xvalues, yvalues, legend_labels, x_label, y_label, y_mi
                    fontsize=12,
                    loc='upper center',
                    ncol=5,
-                   bbox_to_anchor=(0.5, 1.15), shadow=False,
+                   bbox_to_anchor=(0.5, 1.25), shadow=False,
                    columnspacing=0.1,
                    frameon=True, borderaxespad=0, handlelength=1.2,
                    handletextpad=0.1,
