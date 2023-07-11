@@ -145,11 +145,11 @@ def main():
                           True)
     gbXvalues = periodVec.copy()
 
-    # groupBar.DrawFigure(periodVec,npLat.T,methodTags,"tuning knob "+r"$t_c$","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
+    # groupBar.DrawFigure(periodVec,npLat.T,methodTags,"tuning knob "+r"$\omega$","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
     # raw
-    groupBar2.DrawFigure(periodVec, npLat, methodTags, "Tuning knob " + r"$t_c$ (ms)", "95% latency (ms)", 5, 15,
+    groupBar2.DrawFigure(periodVec, npLat, methodTags, "Tuning knob " + r"$\omega$ (ms)", "95% latency (ms)", 5, 15,
                          figPath + "sec6_2_stock_q3_lat", True)
-    groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$t_c$ (ms)", "Error (%)",
+    groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$\omega$ (ms)", "Error (%)",
                          5, 15, figPath + "sec6_2_stock_q3_err", True)
     periodVecS100 = [100, 200, 500]
     resultPathS100 = ["pec_ai_s100"]
@@ -159,9 +159,9 @@ def main():
     lat95All.append(lat95AllPecS100[0])
     errAll.append(errAllPecS100[0])
     methodTags = ["WMJ", "KSJ", "PECJ", "PECJ" + r"$(t_c-100)$"]
-    groupBar2.DrawFigure(periodVec, lat95All, methodTags, "Tuning knob " + r"$t_c$ (ms)", "95% latency (ms)", 5, 15,
+    groupBar2.DrawFigure(periodVec, lat95All, methodTags, "Tuning knob " + r"$\omega$ (ms)", "95% latency (ms)", 5, 15,
                          figPath + "sec6_2_stock_q3_lat_p4", True)
-    groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$t_c$ (ms)", "Error (%)",
+    groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$\omega$ (ms)", "Error (%)",
                          5, 15, figPath + "sec6_2_stock_q3_err_p4", True)
     print(lat95All)
 

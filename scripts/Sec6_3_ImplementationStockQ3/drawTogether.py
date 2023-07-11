@@ -142,7 +142,7 @@ def main():
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
     npLat[3] = npLat[3]
-    groupLine.DrawFigureYnormal(periodAll, npLat, methodTags, "Tuning knob " + r"$t_c$ (ms)", "95% latency (ms)", 0, 1,
+    groupLine.DrawFigureYnormal(periodAll, npLat, methodTags, "Tuning knob " + r"$\omega$ (ms)", "95% latency (ms)", 0, 1,
                                 figPath + "sec6_3_implementation_stock_q3",
                                 True)
     print(errAll)

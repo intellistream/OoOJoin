@@ -142,11 +142,11 @@ def main():
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
     #npLat[3] = npLat[3] / 6.0
-    groupLine.DrawFigureYnormal(periodAll, npLat, methodTags, "Tuning knob " + r"$t_c$ (ms)", "95% latency (ms)", 0, 1,
+    groupLine.DrawFigureYnormal(periodAll, npLat, methodTags, "Tuning knob " + r"$\omega$ (ms)", "95% latency (ms)", 0, 1,
                                 figPath + "sec6_3_implementation_stock_q1",
                                 True)
     #methodTags = ["baseline w/o pecj", "PECJ-adaptive filter", "PECJ-SVI", "PECJ-DNN"]
-    groupLine.DrawFigureYnormalErr(periodAll, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$t_c$ (ms)",
+    groupLine.DrawFigureYnormalErr(periodAll, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$\omega$ (ms)",
                                    "Error (%)", 0, 1, figPath + "sec6_3_implementation_stock_q1_err",
                                    True)
     print(errAll)
