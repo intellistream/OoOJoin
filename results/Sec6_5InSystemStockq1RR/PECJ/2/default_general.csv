@@ -1,8 +1,0 @@
-key,value,type
-threads,2,U64
-95%Latency,27174.000000,Double
-AQPError,0.166517,Double
-AvgLatency,27174.000000,Double
-Error,-0.504982,Double
-Throughput,416253.370323,Double
-parallelMode,roundRobin,String

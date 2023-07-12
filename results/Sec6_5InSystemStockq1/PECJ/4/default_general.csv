@@ -1,8 +1,0 @@
-key,value,type
-threads,4,U64
-95%Latency,17757.750000,Double
-AQPError,0.096929,Double
-AvgLatency,17757.750000,Double
-Error,-0.377958,Double
-Throughput,613376.896523,Double
-parallelMode,keyPartition,String
