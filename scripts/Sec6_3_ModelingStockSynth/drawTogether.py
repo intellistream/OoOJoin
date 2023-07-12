@@ -136,7 +136,7 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["WMJ","KSJ", "PECJ-CF", "PECJ-BB"]
+    methodTags = ["WMJ","KSJ", r"$PECJ_{analytical}$", r"$PECJ_{learning}$"]
     resultPaths = ["wa","ks", "pec_sel", "pec_any"]
     csvTemplates = ["config_waterMark.csv","config_yuanzhen.csv", "config_pecjSel.csv", "config_pecjAI.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
@@ -147,7 +147,7 @@ def main():
     for i in range(len(errAll[1])):
         if (errSVI[0][i] < errAll[2][i]):
             errAll[2][i] = errSVI[0][i]
-    groupLine.DrawFigureYnormal(periodAll, np.array(errAll) * 100.0, methodTags, "max" + r"$(t_a-t_e)$ (ms)",
+    groupLine.DrawFigureYnormal(periodAll, np.array(errAll) * 100.0, methodTags, r"$\Delta$ (ms)",
                                 "Error (%)", 0, 1, figPath + "sec6_3_modeling_stock_synth",
                                 True)
     print(errAll)

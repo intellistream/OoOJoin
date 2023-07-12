@@ -118,17 +118,17 @@ def DrawFigure2(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max,
 
     # you may control the limits on your own.
 
-    # lt.ylim(y_min, y_max)
+    plt.ylim(0, 100)
 
     plt.grid(axis='y', color='gray')
-    # figure.yaxis.set_major_locator(LogLocator(base=10))
+    figure.yaxis.set_major_locator(LinearLocator(10))
     # figure.xaxis.set_major_locator(LogLocator(base=10))
 
     # figure.get_xaxis().set_tick_params(direction='in', pad=10)
     # figure.get_yaxis().set_tick_params(direction='in', pad=10)
 
-    plt.xlabel(x_label, fontproperties=LABEL_FP)
-    plt.ylabel(y_label, fontproperties=LABEL_FP)
+    plt.xlabel(x_label, fontproperties=20)
+    plt.ylabel(y_label, fontproperties=20)
 
     size = fig.get_size_inches()
     dpi = fig.get_dpi()
@@ -139,28 +139,42 @@ def DrawFigure2(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max,
 # draw a line chart
 def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
     # you may change the figure size on your own.
-    fig = plt.figure(figsize=(10, 3))
+    fig = plt.figure(figsize=(10, 4))
     figure = fig.add_subplot(111)
+    markers = ['s', 'o', '^', 'v', '+', '*', ',', 'x', 'p', '1', '2', 'o']
+    linestyles = ['-.', '-.', 'dotted', 'dotted', 'dotted', 'dotted', 'dotted', ':', 'dashed', 'dotted', 'dotted', '-']
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+              '#17becf', '#1f77b4']
+    linewidth = 2
 
     FIGURE_LABEL = legend_labels
 
     x_values = xvalues
     y_values = yvalues
 
+
     lines = [None] * (len(FIGURE_LABEL))
     for i in range(len(y_values)):
-        lines[i], = figure.plot(x_values[i], y_values[i], color=LINE_COLORS[i], \
-                                linewidth=LINE_WIDTH, marker=MARKERS[i], \
-                                markersize=MARKER_SIZE, label=FIGURE_LABEL[i], markeredgecolor='k')
+        lines[i], = plt.plot(x_values[i], y_values[i], color=colors[i], \
+                             linewidth=linewidth, marker=markers[i], \
+                             markersize=9, linestyle=linestyles[i], \
+                             label=FIGURE_LABEL[i])
+
+    # lines = [None] * (len(FIGURE_LABEL))
+    # for i in range(len(y_values)):
+    #     lines[i], = figure.plot(x_values[i], y_values[i], color=LINE_COLORS[i], \
+    #                             linewidth=LINE_WIDTH, marker=MARKERS[i], \
+    #                             markersize=MARKER_SIZE, label=FIGURE_LABEL[i], markeredgecolor='k')
 
     # sometimes you may not want to draw legends.
     if allow_legend == True:
         plt.legend(lines,
                    FIGURE_LABEL,
                    prop=LEGEND_FP,
+                   fontsize=12,
                    loc='upper center',
                    ncol=3,
-                   bbox_to_anchor=(0.55, 1.5), shadow=False,
+                   bbox_to_anchor=(0.5, 1.2), shadow=False,
                    columnspacing=0.1,
                    frameon=True, borderaxespad=0, handlelength=1.2,
                    handletextpad=0.1,
@@ -171,23 +185,87 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
 
     # you may control the limits on your own.
 
-    # plt.ylim(y_min, y_max)
+    # plt.ylim(0, 100)
 
-    plt.grid(axis='y', color='gray')
-    # figure.yaxis.set_major_locator(LogLocator(base=10))
-    # figure.xaxis.set_major_locator(LogLocator(base=10))
+    plt.grid(axis='y', color='gray', alpha=0.5, linewidth=0.5)
+
     plt.xticks(fontsize=TICK_FONT_SIZE)
     figure.get_xaxis().set_tick_params(direction='in', pad=10)
     figure.get_yaxis().set_tick_params(direction='in', pad=10)
-    # Create a rectangle with bias lines
 
-    plt.xlabel(x_label, fontproperties=LABEL_FP)
-    plt.ylabel(y_label, fontproperties=LABEL_FP)
+    plt.xlabel(x_label, fontsize=20)
+    plt.ylabel(y_label, fontsize=20)
+
 
     size = fig.get_size_inches()
     dpi = fig.get_dpi()
 
     plt.savefig(filename + ".pdf", bbox_inches='tight')
+
+
+# draw a line chart
+
+def DrawFigureYnormalErr(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
+    # you may change the figure size on your own.
+    fig = plt.figure(figsize=(10, 4))
+    figure = fig.add_subplot(111)
+    markers = ['s', 'o', '^', 'v', '+', '*', ',', 'x', 'p', '1', '2', 'o']
+    linestyles = ['-.', '-.', 'dotted', 'dotted', 'dotted', 'dotted', 'dotted', ':', 'dashed', 'dotted', 'dotted', '-']
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+              '#17becf', '#1f77b4']
+    linewidth = 2
+
+    FIGURE_LABEL = legend_labels
+
+    x_values = xvalues
+    y_values = yvalues
+
+    lines = [None] * (len(FIGURE_LABEL))
+    for i in range(len(y_values)):
+        lines[i], = plt.plot(x_values[i], y_values[i], color=colors[i], \
+                             linewidth=linewidth, marker=markers[i], \
+                             markersize=9, linestyle=linestyles[i], \
+                             label=FIGURE_LABEL[i])
+
+
+    # sometimes you may not want to draw legends.
+    if allow_legend == True:
+        plt.legend(lines,
+                   FIGURE_LABEL,
+                   prop=LEGEND_FP,
+                   fontsize=12,
+                   loc='upper center',
+                   ncol=5,
+                   bbox_to_anchor=(0.5, 1.15), shadow=False,
+                   columnspacing=0.1,
+                   frameon=True, borderaxespad=0, handlelength=1.2,
+                   handletextpad=0.1,
+                   labelspacing=0.1)
+
+    # plt.xscale('log')
+    # plt.yscale('log')
+    # plt.yscale('log')
+
+    # you may control the limits on your own.
+
+    plt.ylim(0, 100)
+
+    plt.grid(axis='y', color='gray', alpha=0.5, linewidth=0.5)
+    figure.yaxis.set_major_locator(LinearLocator(5))
+    # figure.xaxis.set_major_locator(LogLocator(base=10))
+    plt.xticks(fontsize=TICK_FONT_SIZE)
+    figure.get_xaxis().set_tick_params(direction='in', pad=10)
+    figure.get_yaxis().set_tick_params(direction='in', pad=10)
+    figure.yaxis.set_major_formatter(matplotlib.ticker.FormatStrFormatter('%.1f'))
+    plt.xlabel(x_label, fontsize=20)
+    plt.ylabel(y_label, fontsize=20)
+
+
+    size = fig.get_size_inches()
+    dpi = fig.get_dpi()
+
+    plt.savefig(filename + ".pdf", bbox_inches='tight')
+
 
 
 # example for reading csv file

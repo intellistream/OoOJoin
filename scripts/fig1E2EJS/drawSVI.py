@@ -135,7 +135,7 @@ def main():
     # print(lat95All)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "PECJ-alf", "(PECJ-vae)/7.5", "svi"]
+    methodTags = ["WMJ", "PECJ-alf", "(PECJ-vae)/7.5", "svi"]
     resultPaths = ["wa", "pecj_ks", "pec_ai", "svi"]
     csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv", "config_sviCL.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)

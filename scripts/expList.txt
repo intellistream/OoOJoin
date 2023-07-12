@@ -8,7 +8,6 @@ Sec6_3_ModelingStockQ3
 Sec6_3_ModelingStockSynth
 Sec6_4EventRate
 Sec6_4NumberOfKeys
-Sec6_4ZipfKeys
 Sec6_5Q1OtherDataSets
 Sec6_5_InSystemStockQ1HighScale
 Sec6_5StockQ1SystemNormalCase

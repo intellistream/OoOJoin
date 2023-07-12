@@ -142,9 +142,9 @@ def main():
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     npLat = np.array(lat95All)
     
-    groupLine.DrawFigureYnormal(periodAll,npLat, methodTags,"Tuning knob "+r"$t_c$ (ms)","95% latency (ms)", 0, 1, figPath + "sec6_3_appendixCL_stock_q3",
+    groupLine.DrawFigureYnormal(periodAll,npLat, methodTags,"Tuning knob "+r"$\omega$ (ms)","95% latency (ms)", 0, 1, figPath + "sec6_3_appendixCL_stock_q3",
                                 True)
-    groupLine.DrawFigureYnormal(periodAll,np.array(errAll)*100.0, methodTags,"Tuning knob "+r"$t_c$ (ms)","Error (%)", 0, 1, figPath + "sec6_3_appendixCL_stock_q3_err",
+    groupLine.DrawFigureYnormal(periodAll,np.array(errAll)*100.0, methodTags,"Tuning knob "+r"$\omega$ (ms)","Error (%)", 0, 1, figPath + "sec6_3_appendixCL_stock_q3_err",
                                 True)
     print(errAll)
 if __name__ == "__main__":

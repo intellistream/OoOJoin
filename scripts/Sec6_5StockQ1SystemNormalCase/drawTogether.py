@@ -111,9 +111,66 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
         errAll.append(errVec)
         periodAll.append(periodVec)
     return lat95All, errAll, periodAll
+# def draw2yBar(NAME,R1,R2,l1,l2,fname):
+#     fig, ax1 = plt.subplots(figsize=(10,4))
+#     width = 0.2  # 柱形的宽度
+#     x1_list = []
+#     x2_list = []
+#     bars=[]
+#     index = np.arange(len(NAME))
+#     for i in range(len(R1)):
+#         x1_list.append(i)
+#         x2_list.append(i + width)
+#     #ax1.set_ylim(0, 1)
+#     bars.append(ax1.bar(x1_list, R1, width=width, color=COLOR_MAP[0], hatch=PATTERNS[0], align='edge',edgecolor='black', linewidth=3))
+#     ax1.set_ylabel("ms",fontproperties=LABEL_FP)
+#     ax1.set_xticklabels(ax1.get_xticklabels())  # 设置共用的x轴
+#     ax2 = ax1.twinx()
+#
+#     #ax2.set_ylabel('latency/us')
+#     #ax2.set_ylim(0, 0.5)
+#     bars.append(ax2.bar(x2_list, R2, width=width,  color=COLOR_MAP[1], hatch=PATTERNS[1], align='edge', tick_label=NAME,edgecolor='black', linewidth=3))
+#
+#     ax2.set_ylabel("%",fontproperties=LABEL_FP)
+#     # plt.grid(axis='y', color='gray')
+#
+#     #style = dict(size=10, color='black')
+#     #ax2.hlines(tset, 0, x2_list[len(x2_list)-1]+width, colors = "r", linestyles = "dashed",label="tset")
+#     #ax2.text(4, tset, "$T_{set}$="+str(tset)+"us", ha='right', **style)
+#     if (1):
+#         plt.legend(bars, [l1,l2],
+#                    prop=LEGEND_FP,
+#                    ncol=2,
+#                    loc='upper center',
+#                    #                     mode='expand',
+#                    shadow=False,
+#                    bbox_to_anchor=(0.55, 1.45),
+#                    columnspacing=0.1,
+#                    handletextpad=0.2,
+#                 borderaxespad=-1,
+#                    #                     bbox_transform=ax.transAxes,
+#                    #                     frameon=True,
+#                    #                     columnspacing=5.5,
+#                    #                     handlelength=2,
+#                    )
+#     plt.xlabel(NAME, fontproperties=LABEL_FP)
+#     plt.xticks(size=TICK_FONT_SIZE)
+#     ax1.yaxis.set_major_locator(LinearLocator(5))
+#     ax2.yaxis.set_major_locator(LinearLocator(5))
+#     ax1.yaxis.set_major_formatter(mtick.FormatStrFormatter('%.1f'))
+#     ax2.yaxis.set_major_formatter(mtick.FormatStrFormatter('%.1f'))
+#     plt.tight_layout()
+#     plt.savefig(fname+".pdf")
+
 def draw2yBar(NAME,R1,R2,l1,l2,fname):
-    fig, ax1 = plt.subplots(figsize=(10,4)) 
-    width = 0.2  # 柱形的宽度  
+    fig, ax1 = plt.subplots(figsize=(10, 6))
+
+    LINE_COLORS = ['#FAF0E6', '#EE82EE', '#B0E0E6', '#F4B400']
+    HATCH_PATTERNS = ['/', '-', 'o', '///']
+
+    FIGURE_LABEL = [l1, l2]
+
+    width = 0.2  # 柱形的宽度
     x1_list = []
     x2_list = []
     bars=[]
@@ -121,46 +178,44 @@ def draw2yBar(NAME,R1,R2,l1,l2,fname):
     for i in range(len(R1)):
         x1_list.append(i)
         x2_list.append(i + width)
-    #ax1.set_ylim(0, 1)
-    bars.append(ax1.bar(x1_list, R1, width=width, color=COLOR_MAP[0], hatch=PATTERNS[0], align='edge',edgecolor='black', linewidth=3))
-    ax1.set_ylabel("ms",fontproperties=LABEL_FP)
-    ax1.set_xticklabels(ax1.get_xticklabels())  # 设置共用的x轴
-    ax2 = ax1.twinx()
-    
-    #ax2.set_ylabel('latency/us')
-    #ax2.set_ylim(0, 0.5)
-    bars.append(ax2.bar(x2_list, R2, width=width,  color=COLOR_MAP[1], hatch=PATTERNS[1], align='edge', tick_label=NAME,edgecolor='black', linewidth=3))
-  
-    ax2.set_ylabel("%",fontproperties=LABEL_FP)
-    # plt.grid(axis='y', color='gray')
 
-    #style = dict(size=10, color='black')
-    #ax2.hlines(tset, 0, x2_list[len(x2_list)-1]+width, colors = "r", linestyles = "dashed",label="tset") 
-    #ax2.text(4, tset, "$T_{set}$="+str(tset)+"us", ha='right', **style)
-    if (1):
-        plt.legend(bars, [l1,l2],
-                   prop=LEGEND_FP,
+    bars.append(ax1.bar(x1_list, R1, width=width, color=LINE_COLORS[0], hatch=HATCH_PATTERNS[0], align='edge', edgecolor='black', linewidth=3))
+    ax1.set_ylabel("ms", fontsize=20)
+    ax1.set_xticklabels(NAME, fontproperties=LABEL_FP)
+    ax2 = ax1.twinx()
+
+    bars.append(ax2.bar(x2_list, R2, width=width,  color=LINE_COLORS[1], hatch=HATCH_PATTERNS[1], align='edge', tick_label=NAME, edgecolor='black', linewidth=3))
+
+    ax2.set_ylabel("%", fontsize=20)
+
+    if True:
+        plt.legend(bars, FIGURE_LABEL,
+                   prop={'size': 16},
                    ncol=2,
                    loc='upper center',
-                   #                     mode='expand',
-                   shadow=False,
-                   bbox_to_anchor=(0.55, 1.45),
-                   columnspacing=0.1,
-                   handletextpad=0.2,
-                borderaxespad=-1,
-                   #                     bbox_transform=ax.transAxes,
-                   #                     frameon=True,
-                   #                     columnspacing=5.5,
-                   #                     handlelength=2,
-                   )
-    plt.xlabel(NAME, fontproperties=LABEL_FP)
-    plt.xticks(size=TICK_FONT_SIZE)
-    ax1.yaxis.set_major_locator(LinearLocator(5))
-    ax2.yaxis.set_major_locator(LinearLocator(5))
-    ax1.yaxis.set_major_formatter(mtick.FormatStrFormatter('%.1f'))
-    ax2.yaxis.set_major_formatter(mtick.FormatStrFormatter('%.1f'))
+                   bbox_to_anchor=(0.5, 1.2),
+                   frameon=False)
+
+    # ax1.yaxis.set_major_locator(ticker.LinearLocator(5))
+    # ax2.yaxis.set_major_locator(ticker.LinearLocator(5))
+    # ax1.yaxis.set_major_formatter(matplotlib.ticker.FormatStrFormatter('%.1f'))
+    # ax2.yaxis.set_major_formatter(matplotlib.ticker.FormatStrFormatter('%.1f'))
+
+    ax1.yaxis.set_major_locator(plt.MaxNLocator(5))
+    ax2.yaxis.set_major_locator(plt.MaxNLocator(5))
+    ax1.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, pos: f"{x:.1f}"))
+    ax2.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, pos: f"{x:.1f}"))
+
+    plt.xlabel("", fontsize=20)
+    plt.xticks(index+width/2, NAME, fontsize=TICK_FONT_SIZE)
+    plt.ylabel("", fontsize=20)
+
+    plt.grid(axis='y', color='gray', alpha=0.5, linewidth=0.5)
+
     plt.tight_layout()
-    plt.savefig(fname+".pdf")
+    #plt.show()
+
+    fig.savefig(fname+".pdf", bbox_inches='tight')
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
@@ -185,7 +240,7 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["SHJ (eager)", "PRJ (lazy)", "PECJ-eager","PECJ-lazy"]
+    methodTags = ["SHJ", "PRJ", "PECJ-SHJ","PECJ-PRJ"]
     resultPaths = ["SHJ","PRJ","PECJ","PECJL"]
     csvTemplates = ["config_shj.csv","config_prj.csv","config_pecjSel.csv","config_pecjSelLazy.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)

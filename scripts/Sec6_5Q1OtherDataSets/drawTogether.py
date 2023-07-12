@@ -14,7 +14,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pylab
 from matplotlib.font_manager import FontProperties
+from matplotlib import ticker
 from matplotlib.ticker import LogLocator, LinearLocator
+
 import os
 import pandas as pd
 import sys
@@ -195,7 +197,7 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["SHJ (eager)", "PRJ (lazy)", "PECJ-eager","PECJ-lazy"]
+    methodTags = ["SHJ", "PRJ", "PECJ-SHJ","PECJ-PRJ"]
    
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec,pS,pDisplay, reRun)
     print(lat95All[0][0])

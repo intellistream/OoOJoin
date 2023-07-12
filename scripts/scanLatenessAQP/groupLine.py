@@ -150,7 +150,7 @@ def DrawFigure(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, 
     size = fig.get_size_inches()
     dpi = fig.get_dpi()
 
-    plt.show()
+    #plt.show()
     plt.savefig(filename + ".pdf", bbox_inches='tight')
 
 
@@ -205,7 +205,7 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
     size = fig.get_size_inches()
     dpi = fig.get_dpi()
 
-    plt.show()
+    #plt.show()
     plt.savefig(filename + ".pdf", bbox_inches='tight')
 
 
