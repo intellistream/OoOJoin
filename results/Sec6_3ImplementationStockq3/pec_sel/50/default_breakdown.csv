@@ -1,4 +1,4 @@
 key,value,type
-index,101,U64
-join,10,U64
-prediction,116,U64
+index,115,U64
+join,31,U64
+prediction,107,U64

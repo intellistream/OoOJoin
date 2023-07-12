@@ -203,9 +203,9 @@ def main():
     print(lat95All[0][0])
     errAll=np.array(errAll)*100.0
     #draw2yBar(methodTags,[lat95All[0][0],lat95All[1][0],lat95All[2][0],lat95All[3][0]],[errAll[0][0],errAll[1][0],errAll[2][0],errAll[3][0]],'95% latency (ms)','Error (%)',figPath + "sec6_5_stock_q1_normal")
-    groupBar2.DrawFigure(pDisplay, np.array(errAll), methodTags, "dataset", "Error (%)",
+    groupBar2.DrawFigure(pDisplay, np.array(errAll), methodTags, "Datasets", "Error (%)",
                          5, 15, figPath + "sec6_5_datasets_q1_err", True)
-    groupBar2.DrawFigure(pDisplay, np.array(lat95All), methodTags, "dataset", "95% latency (ms)",
+    groupBar2.DrawFigure(pDisplay, np.array(lat95All), methodTags, "Datasets", "95% latency (ms)",
                          5, 15, figPath + "sec6_5_datasets_q1_lat", True)
     print(lat95All,errAll)
 if __name__ == "__main__":
