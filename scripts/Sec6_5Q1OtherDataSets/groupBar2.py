@@ -77,7 +77,7 @@ def DrawLegend(legend_labels, filename):
 
 
 def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
-    fig = plt.figure(figsize=(10, 4))
+    fig = plt.figure(figsize=(10, 3))
     figure = fig.add_subplot(111)
 
     LINE_COLORS = ['#FF8C00', '#FFE4C4', '#00FFFF', '#E0FFFF']
