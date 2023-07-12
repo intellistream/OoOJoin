@@ -1,4 +1,4 @@
-BRANCH=Figure_4p
+BRANCH=Figure_Finals
 git init
 git checkout -b $BRANCH
 git add .
