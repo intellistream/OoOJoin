@@ -1,4 +1,4 @@
-BRANCH=reproduce_bug_fix
+BRANCH=figure
 git init
 git checkout -b $BRANCH
 git add .

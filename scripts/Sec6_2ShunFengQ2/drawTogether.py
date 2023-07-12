@@ -136,7 +136,7 @@ def main():
     # os.system("mkdir " + figPath)
     # print(lat95All)
     # lat95All[3]=ts
-    methodTags = ["watermark", "k-slack", "PECJ"]
+    methodTags = ["WMJ", "KSJ", "PECJ"]
     resultPaths = ["wa", "ks", "pec_sel"]
     csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_pecjSel.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
@@ -145,10 +145,10 @@ def main():
                           True)
     gbXvalues = periodVec.copy()
 
-    # groupBar.DrawFigure(periodVec,npLat.T,methodTags,"tuning knob "+r"$t_c$","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
-    groupBar2.DrawFigure(periodVec, npLat, methodTags, "Tuning knob " + r"$t_c$ (ms)", "95% latency (ms)", 5, 15,
+    # groupBar.DrawFigure(periodVec,npLat.T,methodTags,"tuning knob "+r"$\omega$","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
+    groupBar2.DrawFigure(periodVec, npLat, methodTags, "Tuning knob " + r"$\omega$ (ms)", "95% latency (ms)", 5, 15,
                          figPath + "sec6_2_shunfeng_q2_lat", True)
-    groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$t_c$ (ms)", "Error (%)",
+    groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$\omega$ (ms)", "Error (%)",
                          5, 15, figPath + "sec6_2_shunfeng_q2_err", True)
 
 
