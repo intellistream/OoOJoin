@@ -26,20 +26,26 @@ This will also copy figures and results to `figures` and `results` folder at the
 3. The torch installation command is designed for X64, and also works for ARM64, but may need some changes on other architectures like RISCV.
 
 ### Docker usage
+
 1. Docker scripts which only set up os and dependencies (Tested on X64 and ARM64):
+
 We provide docker scripts to install Ubuntu22.04 environment, please do the following to set it up
 ```shell
 cd docker
 ./docker_est.sh
 ```
 Upon seeing the docker command line, you may cd to home, proceed to **manually clone this repo** and then run the `onKeyReproduce.sh`.
+
 2. Hands-free docker with precompiled program and its source (X64 only):
+
 - First, download the image from https://drive.google.com/file/d/1fccaCwV0IoUlZtgYnS9oh9sCjxom7ksD/view?usp=drive_link
 - cd to the path of downloaded `pecj_x64.tar`, and run the following (may require sudo depending on your docker installation)
+
 ```shell
 docker load --input pecj_x64.tar
 docker run --name="pecj" -h OoOJoin -it  pecj:anomo
 ```
+
 This will switch host command line into that of docker conatiner, namely `pecj`. You will find the sources located at 
 `/home/OoOJoin/projects/OoOJoin`, and the binaries are pre-compiled at `/home/OoOJoin/projects/OoOJoin/build`.
 You can then run 
@@ -51,6 +57,7 @@ which will
    - recompile the project
    - reconduct the evaluations
    - copy the results and figures into `/home/OoOJoin/projects/OoOJoin/results` and `/home/OoOJoin/projects/OoOJoin/figures`
+   
 You may then exit and run `docker cp` to get the data and figures from container `pecj` by aforementioned paths.
 :warning: We have removed the .git folder in docker images which contains our identification data, and source code inside dockers are lastly updated on July 14, 2023.
 It will come back with avaliable `git pull` after the double-blind review is done.
