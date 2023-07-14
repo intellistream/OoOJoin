@@ -38,7 +38,7 @@ Upon seeing the docker command line, you may cd to home, proceed to **manually c
 
 2. Hands-free docker with precompiled program and its source (X64 only):
 
-- First, download the image from https://drive.google.com/file/d/1fccaCwV0IoUlZtgYnS9oh9sCjxom7ksD/view?usp=drive_link
+- First, download the image from https://drive.google.com/file/d/1GC-7thhdvXsleCZhEjIYIyh45SUZdMq8/view?usp=sharing
 - cd to the path of downloaded `pecj_x64.tar`, and run the following (may require sudo depending on your docker installation)
 
 ```shell
@@ -57,7 +57,7 @@ which will
    - recompile the project
    - reconduct the evaluations
    - copy the results and figures into `/home/OoOJoin/projects/OoOJoin/results` and `/home/OoOJoin/projects/OoOJoin/figures`
-   
+
 You may then exit and run `docker cp` to get the data and figures from container `pecj` by aforementioned paths.
 :warning: We have removed the .git folder in docker images which contains our identification data, and source code inside dockers are lastly updated on July 14, 2023.
 It will come back with avaliable `git pull` after the double-blind review is done.
