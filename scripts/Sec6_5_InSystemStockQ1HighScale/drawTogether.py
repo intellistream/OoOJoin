@@ -151,10 +151,10 @@ def main():
                                 True)
     groupLine.DrawFigureYnormalErr(periodAll, np.array(errAll)*100.0, methodTags, "#Threads ", "Error (%)", 0, 1,
                                 figPath + "hs_sec6_5_inSystem_stock_q1_err",
-                                True)
+                                False)
     groupLine.DrawFigureYnormalThr(periodAll, np.array(thrAll), methodTags, "#Threads ", "Throughput (KTuple/s)", 0, 1,
                                 figPath + "hs_sec6_5_inSystem_stock_q1_thr",
-                                True)
+                                False)
     print(npLat)
     print(errAll)
 if __name__ == "__main__":

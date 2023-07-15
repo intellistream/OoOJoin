@@ -158,11 +158,11 @@ def main():
                                                               periodVecS100, reRun)
     lat95All.append(lat95AllPecS100[0])
     errAll.append(errAllPecS100[0])
-    methodTags = ["WMJ", "KSJ", "PECJ", "PECJ" + r"$(\omega-100)$"]
+    methodTags = ["WMJ", "KSJ", "PECJ", "PECJ\n" + r"$(\omega-100)$"]
     groupBar2.DrawFigure(periodVec, lat95All, methodTags, "Tuning knob " + r"$\omega$ (ms)", "95% latency (ms)", 5, 15,
                          figPath + "sec6_2_stock_q3_lat_p4", True)
     groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$\omega$ (ms)", "Error (%)",
-                         5, 15, figPath + "sec6_2_stock_q3_err_p4", True)
+                         5, 15, figPath + "sec6_2_stock_q3_err_p4", False)
     print(lat95All)
 
 

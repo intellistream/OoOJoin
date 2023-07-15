@@ -149,7 +149,7 @@ def main():
             errAll[2][i] = errSVI[0][i]
     groupLine.DrawFigureYnormal(periodAll, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$\omega$ (ms)",
                                 "Error (%)", 0, 1, figPath + "sec6_3_modeling_stock_q3",
-                                True)
+                                False)
     print(errAll)
 
 
