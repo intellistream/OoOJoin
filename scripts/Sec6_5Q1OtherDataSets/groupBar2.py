@@ -97,11 +97,12 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
     if allow_legend == True:
         plt.legend(bars, FIGURE_LABEL,
                    prop={'size': 20},
-                   ncol=4,
+                   ncol=1,
                    loc='upper center',
                    columnspacing=0.5,
-                   bbox_to_anchor=(0.5, 1.25),
-                   frameon=False)
+                   bbox_to_anchor=(-0.3, 0.7),
+                     shadow=True,frameon=True,edgecolor='black',borderaxespad=1,
+                   )
     plt.xticks(index + len(x_values) / 2 * width, x_values, rotation=0)
     figure.yaxis.set_major_locator(LinearLocator(5))
 # figure.xaxis.set_major_locator(LinearLocator(5))

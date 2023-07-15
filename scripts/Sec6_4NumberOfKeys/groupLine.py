@@ -139,7 +139,7 @@ def DrawFigure2(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max,
 # draw a line chart
 def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
     # you may change the figure size on your own.
-    fig = plt.figure(figsize=(10, 3))
+    fig = plt.figure(figsize=(10, 4))
     figure = fig.add_subplot(111)
     markers = ['s', 'o', '^', 'v', '+', '*', ',', 'x', 'p', '1', '2', 'o']
     linestyles = ['-.', '-.', 'dotted', 'dotted', 'dotted', 'dotted', 'dotted', ':', 'dashed', 'dotted', 'dotted', '-']
@@ -173,10 +173,10 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
                    prop=LEGEND_FP,
                    fontsize=12,
                    loc='upper center',
-                   ncol=3,
-                   bbox_to_anchor=(0.5, 1.3), shadow=False,
+                   ncol=1,
+                   bbox_to_anchor=(-0.25, 0.7),
                    columnspacing=0.1,
-                   frameon=True, borderaxespad=0, handlelength=1.2,
+                    shadow=True,frameon=True,edgecolor='black',borderaxespad=1,
                    handletextpad=0.1,
                    labelspacing=0.1)
     plt.xscale('log')

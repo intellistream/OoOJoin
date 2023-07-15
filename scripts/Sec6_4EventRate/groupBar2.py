@@ -96,9 +96,9 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
     if allow_legend == True:
         plt.legend(bars, FIGURE_LABEL,
                    prop={'size': 16},
-                   ncol=3,
+                   ncol=1,
                    loc='upper center',
-                   bbox_to_anchor=(0.5, 1.2),
+                   bbox_to_anchor=(-0.3, 0.7),
                    frameon=False)
 
     plt.xlabel(x_label, fontsize=20)
