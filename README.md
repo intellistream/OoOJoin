@@ -38,7 +38,7 @@ Upon seeing the docker command line, you may cd to home, proceed to **manually c
 
 2. Hands-free docker with precompiled program and its source (X64 only):
 
-- First, download the image from https://drive.google.com/file/d/1GC-7thhdvXsleCZhEjIYIyh45SUZdMq8/view?usp=sharing
+- First, download the image from https://drive.google.com/file/d/145958378seGGaDCS7-pOnDpIOvadsv1h/view?usp=sharing
 - cd to the path of downloaded `pecj_x64.tar`, and run the following (may require sudo depending on your docker installation)
 
 ```shell
