@@ -131,6 +131,7 @@ bool ZipfDataLoader::setConfig(ConfigMapPtr cfg) {
   keyRange = cfg->tryU64("keyRange", 10, true);
   valueRange = cfg->tryU64("valueRange", 1000, true);
   generateByKV = cfg->tryU64("generateByKV", 0, true);
+  inOrderData = cfg->tryU64("inOrderData", 0);
   string fnameR, fnameS;
   fnameR = cfg->tryString("fileDataLoader_rFile", "../../benchmark/datasets/rTuple.csv", true);
   fnameS = cfg->tryString("fileDataLoader_sFile", "../../benchmark/datasets/sTuple.csv", true);

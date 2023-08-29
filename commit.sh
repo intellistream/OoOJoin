@@ -1,5 +1,5 @@
 
-BRANCH=conflict_shunfeng
+BRANCH=Figure_withIno
 git init
 git checkout -b $BRANCH
 git add .
