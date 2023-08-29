@@ -216,10 +216,9 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
                    prop=LEGEND_FP,
                    fontsize=12,
                    loc='upper center',
-                   ncol=5,
-                   bbox_to_anchor=(0.5, 1.15), shadow=False,
-                   columnspacing=0.1,
-                   frameon=True, borderaxespad=0, handlelength=1.2,
+                   ncol=1,
+                   bbox_to_anchor=(-0.3, 0.7), 
+                   shadow=True,frameon=True,edgecolor='black',borderaxespad=1,
                    handletextpad=0.1,
                    labelspacing=0.1)
     # plt.xscale('log')

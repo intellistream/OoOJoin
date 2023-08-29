@@ -149,10 +149,10 @@ def main():
     # groupBar2.DrawFigure(periodVec,np.array(errAll)*100.0,methodTags,"Tuning knob "+r"$\omega$ (ms)","Error (%)",5,15,figPath + "sec6_2_stock_q1_err", True)
     groupLine.DrawFigureYnormal(periodAll, np.array(errAll) * 100.0, methodTags, "Event Rate (KTuple/s)", "Error (%)",
                                 0, 1, figPath + "sec6_4_eventRate_err",
-                                True)
+                                False)
     groupLine.DrawFigureYnormal(periodAll, np.array(lat95All), methodTags, "Event Rate (KTuple/s)", "95% latency (ms)",
                                 0, 1, figPath + "sec6_4_eventRate_lat",
-                                True)
+                                False)
 
 
 if __name__ == "__main__":
