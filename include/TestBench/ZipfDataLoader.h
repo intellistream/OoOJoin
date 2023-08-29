@@ -58,6 +58,7 @@ class ZipfDataLoader : public AbstractDataLoader {
  protected:
   tsType windowLenMs, timeStepUs, watermarkTimeMs, maxArrivalSkewMs, eventRateKTps;
   uint64_t zipfDataLoader_zipfKey, zipfDataLoader_zipfValue, zipfDataLoader_zipfEvent, zipfDataLoader_zipfSkew;
+  uint64_t inOrderData;
   vector<keyType> keyS, keyR;
   vector<valueType> valueS, valueR;
   vector<tsType> eventS, eventR;
@@ -88,9 +89,18 @@ class ZipfDataLoader : public AbstractDataLoader {
   vector<tsType> genArrivalTime(vector<tsType> eventTime, vector<tsType> arrivalSkew) {
     vector<tsType> ru = vector<tsType>(eventTime.size());
     size_t len = (eventTime.size() > arrivalSkew.size()) ? arrivalSkew.size() : eventTime.size();
-    for (size_t i = 0; i < len; i++) {
-      ru[i] = eventTime[i] + arrivalSkew[i];
+    if(inOrderData)
+    {
+      for (size_t i = 0; i < len; i++) {
+      ru[i] = eventTime[i];
+     }
     }
+    else{
+       for (size_t i = 0; i < len; i++) {
+      ru[i] = eventTime[i] + arrivalSkew[i];
+      }
+    }
+   
     return ru;
   }
 
