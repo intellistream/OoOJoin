@@ -1,5 +1,5 @@
 
-BRANCH=Figure_withIno
+BRANCH=Figure_withIno2
 git init
 git checkout -b $BRANCH
 git add .

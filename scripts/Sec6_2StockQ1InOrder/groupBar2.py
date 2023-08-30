@@ -101,7 +101,9 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
                    ncol=3,
                    loc='upper center',
                    bbox_to_anchor=(0.5, 1.25),
-                   frameon=False)
+                   shadow=True, 
+                   frameon=True,
+                   )
 
     plt.xticks(index + len(x_values) / 2 * width, x_values, rotation=0)
 
