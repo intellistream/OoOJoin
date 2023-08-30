@@ -120,13 +120,13 @@ def main():
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [7, 8, 9, 10, 11, 12]
+    periodVec = [7, 8, 9, 10, 11, 12, 14]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    methodTags = ["KSJ", "watermark", "PECJ", "theoretical best"]
+    methodTags = ["WMJ","KSJ", "PECJ", "Theoretical Best"]
     resultPaths = ["ks", "wa", "pecj_ks", "pec_ai"]
-    csvTemplates = ["config_yuanzhen.csv", "config_waterMark.csv", "config_pecjyuanzhen.csv", "config_pecjAI.csv"]
+    csvTemplates = ["config_yuanzhen.csv", "config_waterMark.csv", "config_pecj.csv", "config_pecjAI.csv"]
     # run
     reRun = 0
     if (len(sys.argv) < 2):
@@ -138,20 +138,8 @@ def main():
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     lat95Temp = lat95All
     lat95Temp[3] = lat95Temp[2]
-    groupLine.DrawFigureYnormal(lat95Temp, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "fig1E2E",
+    groupLine.DrawFigureYnormal(lat95Temp, np.array(errAll)*100.0, methodTags, "95% latency (ms)", "Error (%)", 0, 1, figPath + "revised1_tradeoff",
                                 True)
-    # os.system("mkdir " + figPath)
-    # print(lat95All)
-    print(lat95All)
-    # lat95All[3]=ts
-    methodTags = ["WMJ", "PECJ-alf", "(PECJ-vae)/7.5", "svi", "svi_CL"]
-    resultPaths = ["wa", "pecj_ks", "pec_ai", "svi", "svi_CL"]
-    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv", "config_svi.csv", "config_sviCL.csv"]
-    lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
-    npLat = np.array(lat95All)
-    npLat[2] = npLat[2] / 7.5
-    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "e2ESmall", True)
-
 
 if __name__ == "__main__":
     main()
