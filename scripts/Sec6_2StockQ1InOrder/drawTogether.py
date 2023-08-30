@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import accuBar as accuBar
 import groupBar2 as groupBar2
 import groupLine as groupLine
+import draw2yBar as draw2yBar
 from autoParase import *
 import itertools as it
 import os
@@ -120,7 +121,7 @@ def main():
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
     # periodVec = [7, 8, 9, 10, 11, 12]
-    periodVec = [7,8,9,10,11]
+    periodVec = [11]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
@@ -150,7 +151,9 @@ def main():
                          figPath + "sec6_2_stock_q1_InOrder_lat", True)
     groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$\omega$ (ms)", "Error (%)",
                          5, 15, figPath + "sec6_2_stock_q1_InOrder_err", True)
-
+    print(npLat.T,errAll)
+    errTemp= np.array(errAll) * 100.0
+    draw2yBar.DrawFigure(methodTags,npLat.T[0],errTemp.T[0],'95% latency (ms)','Error (%)',figPath + "sec6_2_stock_q1_InOrder_together")
 
 if __name__ == "__main__":
     main()
