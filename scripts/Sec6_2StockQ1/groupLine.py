@@ -82,7 +82,53 @@ def DrawLegend(legend_labels, filename):
     figlegend.savefig(filename + '.pdf')
 
 
+
 # draw a line chart
+
+def DrawFigure2(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
+    fig = plt.figure(figsize=(10, 4))
+
+    markers = ['s', 'o', '^', 'v', '+', '*', ',', 'x', 'p', '1', '2', 'o']
+    linestyles = ['-.', '-.', 'dotted', 'dotted', 'dotted', 'dotted', 'dotted', ':', 'dashed', 'dotted', 'dotted', '-']
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+              '#17becf', '#1f77b4']
+    linewidth = 2
+
+    FIGURE_LABEL = legend_labels
+    x_values = xvalues
+    y_values = yvalues
+
+    lines = [None] * (len(FIGURE_LABEL))
+    for i in range(len(y_values)):
+        lines[i], = plt.plot(x_values[i], y_values[i], color=colors[i], \
+                             linewidth=linewidth, marker=markers[i], \
+                             markersize=9, linestyle=linestyles[i], \
+                             label=FIGURE_LABEL[i])
+
+    # for i in range(len(x_values)):
+    #     plt.axvline(x=x_values[i][0], linestyle='--', color='gray')
+    # plt.xticks(x_values.flatten())
+
+    if allow_legend:
+        plt.legend(lines,
+                   FIGURE_LABEL,
+                   fontsize=LEGEND_FONT_SIZE,
+                   loc='upper center',
+                   ncol=1,
+                   bbox_to_anchor=(-0.3, 0.7),
+                   edgecolor='black',borderaxespad=1,
+                   frameon=True,shadow=True)
+    plt.xlabel(x_label, fontsize=20)
+    plt.ylabel(y_label, fontsize=20)
+
+    #plt.ylim(y_min, y_max)
+    plt.grid(axis='y', color='gray', alpha=0.5, linewidth=0.5)
+
+    #plt.show()
+
+    fig.savefig(filename + ".pdf", bbox_inches='tight')
+
+
 # def DrawFigure2(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
 #     # you may change the figure size on your own.
 #     fig = plt.figure(figsize=(10, 3))
@@ -134,50 +180,6 @@ def DrawLegend(legend_labels, filename):
 #     dpi = fig.get_dpi()
 #
 #     plt.savefig(filename + ".pdf", bbox_inches='tight')
-
-
-def DrawFigure2(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
-    fig = plt.figure(figsize=(10, 4))
-
-    markers = ['s', 'o', '^', 'v', '+', '*', ',', 'x', 'p', '1', '2', 'o']
-    linestyles = ['-.', '-.', 'dotted', 'dotted', 'dotted', 'dotted', 'dotted', ':', 'dashed', 'dotted', 'dotted', '-']
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
-              '#17becf', '#1f77b4']
-    linewidth = 2
-
-    FIGURE_LABEL = legend_labels
-    x_values = xvalues
-    y_values = yvalues
-
-    lines = [None] * (len(FIGURE_LABEL))
-    for i in range(len(y_values)):
-        lines[i], = plt.plot(x_values[i], y_values[i], color=colors[i], \
-                             linewidth=linewidth, marker=markers[i], \
-                             markersize=9, linestyle=linestyles[i], \
-                             label=FIGURE_LABEL[i])
-
-    # for i in range(len(x_values)):
-    #     plt.axvline(x=x_values[i][0], linestyle='--', color='gray')
-    # plt.xticks(x_values.flatten())
-
-    if allow_legend:
-        plt.legend(lines,
-                   FIGURE_LABEL,
-                   fontsize=12,
-                   loc='upper center',
-                   ncol=3,
-                   bbox_to_anchor=(0.5, 1.15),
-                   borderaxespad=0.,
-                   frameon=True)
-    plt.xlabel(x_label, fontsize=20)
-    plt.ylabel(y_label, fontsize=20)
-
-    plt.ylim(y_min, y_max)
-    plt.grid(axis='y', color='gray', alpha=0.5, linewidth=0.5)
-
-    #plt.show()
-
-    fig.savefig(filename + ".pdf", bbox_inches='tight')
 
 
 # draw a line chart
