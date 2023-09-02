@@ -19,7 +19,7 @@ import os
 import pandas as pd
 import sys
 from OoOCommon import *
-
+import myCdfTool as myCdfTool
 OPT_FONT_NAME = 'Helvetica'
 TICK_FONT_SIZE = 22
 LABEL_FONT_SIZE = 28
@@ -73,10 +73,12 @@ def runPeriodVector(exePath, periodVec, resultPath, configTemplate="config.csv")
 
 def readResultPeriod(period, resultPath):
     resultFname = resultPath + "/" + str(period) + "/default_general.csv"
+    
     avgLat = readConfig(resultFname, "AvgLatency")
     lat95 = readConfig(resultFname, "95%Latency")
     thr = readConfig(resultFname, "Throughput")
     err = readConfig(resultFname, "AQPError")
+   
     return avgLat, lat95, thr, err
 
 
@@ -112,6 +114,20 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
         periodAll.append(periodVec)
     return lat95All, errAll, periodAll
 
+def redLatencyCdf(commonBasePath,resultPaths,extraSetting):
+    probAll=[]
+    percentileAll=[]
+    for i in range(len(resultPaths)):
+        tupleLatName= commonBasePath  + str(resultPaths[i])+"/"+ str(extraSetting)+ "/default_tuples.csv"
+        nameList,legendList,ruAll=myCdfTool.getInfoFromCSV(tupleLatName)
+        arrivalTime=myCdfTool.copyCol(ruAll,3)
+        processedTime=myCdfTool.copyCol(ruAll,4)
+        tupleLat=processedTime-arrivalTime
+        tupleLat=tupleLat/1000.0
+        probaCdf,y2=myCdfTool.getCdfProbabilities(tupleLat)
+        probAll.append(probaCdf)
+        percentileAll.append(y2)
+    return np.array(probAll),np.array(percentileAll)
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
@@ -151,6 +167,8 @@ def main():
     groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$\omega$ (ms)", "Error (%)",
                          5, 15, figPath + "sec6_2_stock_q1_err", False)
 
-
+    probAll,percentilAll=redLatencyCdf(commonBasePath,resultPaths,'12')
+    groupLine.DrawFigure2( percentilAll,probAll, methodTags, "Latency (ms)", "Probability (%)", 0, 1, figPath + "sec6_2_stock_q1_cdf",
+                          True)
 if __name__ == "__main__":
     main()
