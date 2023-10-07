@@ -19,7 +19,7 @@ import os
 import pandas as pd
 import sys
 from OoOCommon import *
-
+import myCdfTool
 OPT_FONT_NAME = 'Helvetica'
 TICK_FONT_SIZE = 22
 LABEL_FONT_SIZE = 28
@@ -111,7 +111,20 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
         errAll.append(errVec)
         periodAll.append(periodVec)
     return lat95All, errAll, periodAll
-
+def redLatencyCdf(commonBasePath,resultPaths,extraSetting):
+    probAll=[]
+    percentileAll=[]
+    for i in range(len(resultPaths)):
+        tupleLatName= commonBasePath  + str(resultPaths[i])+"/"+ str(extraSetting)+ "/default_tuples.csv"
+        nameList,legendList,ruAll=myCdfTool.getInfoFromCSV(tupleLatName)
+        arrivalTime=myCdfTool.copyCol(ruAll,3)
+        processedTime=myCdfTool.copyCol(ruAll,4)
+        tupleLat=processedTime-arrivalTime
+        tupleLat=tupleLat/1000.0
+        probaCdf,y2=myCdfTool.getCdfProbabilities(tupleLat)
+        probAll.append(probaCdf)
+        percentileAll.append(y2)
+    return (probAll),(percentileAll)
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
@@ -158,13 +171,18 @@ def main():
                                                               periodVecS100, reRun)
     lat95All.append(lat95AllPecS100[0])
     errAll.append(errAllPecS100[0])
-    methodTags = ["WMJ", "KSJ", "PECJ", "PECJ" + r"$(t_c-100)$"]
+    methodTags = ["WMJ", "KSJ", "PECJ", "PECJ" + r"$(\omega-100)$"]
     groupBar2.DrawFigure(periodVec, lat95All, methodTags, "Tuning knob " + r"$\omega$ (ms)", "95% latency (ms)", 5, 15,
                          figPath + "sec6_2_stock_q3_lat_p4", True)
     groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$\omega$ (ms)", "Error (%)",
-                         5, 15, figPath + "sec6_2_stock_q3_err_p4", True)
+                         5, 15, figPath + "sec6_2_stock_q3_err_p4", False)
     print(lat95All)
-
-
+    probAll,percentilAll=redLatencyCdf(commonBasePath,resultPaths,'600')
+    probS100,percentileS100=redLatencyCdf(commonBasePath,resultPathS100,'500')
+    percentilAll.append(percentileS100[0])
+    probAll.append(probS100[0])
+    groupLine.DrawFigureCdf(percentilAll,probAll, methodTags, "Latency (ms)", "Probability (%)", 0, 100.0, figPath + "sec6_2_stock_q3_cdf",
+                          True)
+    print(probAll,percentilAll)
 if __name__ == "__main__":
     main()

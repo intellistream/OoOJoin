@@ -120,7 +120,7 @@ def main():
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [7, 8, 9, 10, 11, 12, 14]
+    periodVec = [7, 8, 9, 10, 11, 12, 14,16]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
@@ -138,7 +138,9 @@ def main():
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
     lat95Temp = lat95All
     lat95Temp[3] = lat95Temp[2]
-    groupLine.DrawFigureYnormal(lat95Temp, np.array(errAll)*100.0, methodTags, "95% latency (ms)", "Error (%)", 0, 1, figPath + "revised1_tradeoff",
+    errTemp = errAll
+    errTemp[3] = np.minimum( errTemp[3],  errTemp[2])
+    groupLine.DrawFigureYnormal(lat95Temp, np.array(errTemp)*100.0, methodTags, "95% latency (ms)", "Error (%)", 0, 1, figPath + "revised1_tradeoff",
                                 True)
 
 if __name__ == "__main__":

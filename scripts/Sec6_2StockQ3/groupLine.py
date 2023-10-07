@@ -13,9 +13,9 @@ from numpy import double
 import matplotlib.patches as patches
 
 OPT_FONT_NAME = 'Helvetica'
-TICK_FONT_SIZE = 20
-LABEL_FONT_SIZE = 20
-LEGEND_FONT_SIZE = 20
+TICK_FONT_SIZE = 26
+LABEL_FONT_SIZE = 26
+LEGEND_FONT_SIZE = 24
 LABEL_FP = FontProperties(style='normal', size=LABEL_FONT_SIZE)
 LEGEND_FP = FontProperties(style='normal', size=LEGEND_FONT_SIZE)
 TICK_FP = FontProperties(style='normal', size=TICK_FONT_SIZE)
@@ -81,6 +81,52 @@ def DrawLegend(legend_labels, filename):
     # no need to export eps in this case.
     figlegend.savefig(filename + '.pdf')
 
+
+def DrawFigureCdf(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
+    fig = plt.figure(figsize=(10, 4))
+
+    markers = ['s', 'o', '^', 'v', '+', '*', ',', 'x', 'p', '1', '2', 'o']
+    linestyles = ['-.', '-.', 'dotted', 'dotted', 'dotted', 'dotted', 'dotted', ':', 'dashed', 'dotted', 'dotted', '-']
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+              '#17becf', '#1f77b4']
+    linewidth = 2
+
+    FIGURE_LABEL = legend_labels
+    x_values = xvalues
+    y_values = yvalues
+
+    lines = [None] * (len(FIGURE_LABEL))
+    for i in range(len(y_values)):
+        lines[i], = plt.plot(x_values[i], y_values[i], color=colors[i], \
+                             linewidth=linewidth, marker=markers[i], \
+                             markersize=9, linestyle=linestyles[i], \
+                             label=FIGURE_LABEL[i])
+
+    # for i in range(len(x_values)):
+    #     plt.axvline(x=x_values[i][0], linestyle='--', color='gray')
+    # plt.xticks(x_values.flatten())
+
+    if allow_legend:
+        plt.legend(lines,
+                   FIGURE_LABEL,
+                   fontsize=20,
+                   loc='upper center',
+                   ncol=1,
+                   bbox_to_anchor=(0.81, 0.65),
+                   edgecolor='black',borderaxespad=1,
+                   frameon=True,shadow=True)
+    plt.xlabel(x_label, fontsize=TICK_FONT_SIZE)
+    plt.ylabel(y_label, fontsize=TICK_FONT_SIZE)
+    plt.xticks(fontsize=TICK_FONT_SIZE)
+    plt.yticks(fontsize=TICK_FONT_SIZE)
+    plt.axhline(y=95, color='red', linestyle='--')
+    plt.text(170.0, 89, "95%", fontsize=TICK_FONT_SIZE, ha='center')
+    #plt.ylim(y_min, y_max)
+    plt.grid(axis='y', color='gray', alpha=0.5, linewidth=0.5)
+
+    #plt.show()
+
+    fig.savefig(filename + ".pdf", bbox_inches='tight')
 
 # draw a line chart
 def DrawFigure2(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):

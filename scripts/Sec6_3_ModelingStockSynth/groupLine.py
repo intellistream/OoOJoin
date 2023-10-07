@@ -13,9 +13,9 @@ from numpy import double
 import matplotlib.patches as patches
 
 OPT_FONT_NAME = 'Helvetica'
-TICK_FONT_SIZE = 20
-LABEL_FONT_SIZE = 20
-LEGEND_FONT_SIZE = 20
+TICK_FONT_SIZE = 26
+LABEL_FONT_SIZE = 26
+LEGEND_FONT_SIZE = 26
 LABEL_FP = FontProperties(style='normal', size=LABEL_FONT_SIZE)
 LEGEND_FP = FontProperties(style='normal', size=LEGEND_FONT_SIZE)
 TICK_FP = FontProperties(style='normal', size=TICK_FONT_SIZE)
@@ -105,11 +105,10 @@ def DrawFigure2(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max,
                    FIGURE_LABEL,
                    prop=LEGEND_FP,
                    loc='upper center',
-                   ncol=3,
+                   ncol=1,
+                   shadow=True,frameon=True,edgecolor='black',borderaxespad=1,
                    # mode='expand',
-                   bbox_to_anchor=(0.55, 1.6), shadow=False,
-                   columnspacing=0.1,
-                   frameon=True, borderaxespad=0.0, handlelength=1.5,
+                   bbox_to_anchor=(-0.43, 0.7), 
                    handletextpad=0.1,
                    labelspacing=0.1)
     # plt.xscale('log')
@@ -173,10 +172,9 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
                    prop=LEGEND_FP,
                    fontsize=12,
                    loc='upper center',
-                   ncol=4,
-                   bbox_to_anchor=(0.5, 1.25), shadow=False,
-                   columnspacing=0.1,
-                   frameon=True, borderaxespad=0, handlelength=1.2,
+                   ncol=1,
+                   bbox_to_anchor=(-0.35, 0.7),
+                   shadow=True,frameon=True,edgecolor='black',borderaxespad=1,
                    handletextpad=0.1,
                    labelspacing=0.1)
     # plt.xscale('log')
@@ -190,12 +188,15 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
     plt.grid(axis='y', color='gray', alpha=0.5, linewidth=0.5)
     figure.yaxis.set_major_locator(LinearLocator(5))
     # figure.xaxis.set_major_locator(LogLocator(base=10))
-    plt.xticks(fontsize=TICK_FONT_SIZE)
+    #plt.xticks(fontsize=TICK_FONT_SIZE)
     figure.get_xaxis().set_tick_params(direction='in', pad=10)
     figure.get_yaxis().set_tick_params(direction='in', pad=10)
-
-    plt.xlabel(x_label, fontsize=20)
-    plt.ylabel(y_label, fontsize=20)
+    plt.xlabel(x_label, fontsize=TICK_FONT_SIZE)
+    plt.ylabel(y_label, fontsize=TICK_FONT_SIZE)
+    plt.xticks(fontsize=TICK_FONT_SIZE)
+    plt.yticks(fontsize=TICK_FONT_SIZE)
+    #plt.xlabel(x_label, fontsize=20)
+    #plt.ylabel(y_label, fontsize=20)
 
 
     size = fig.get_size_inches()
@@ -237,7 +238,7 @@ def DrawFigureYnormalErr(xvalues, yvalues, legend_labels, x_label, y_label, y_mi
                    fontsize=12,
                    loc='upper center',
                    ncol=5,
-                   bbox_to_anchor=(0.5, 1.25), shadow=False,
+                   bbox_to_anchor=(0.5, 1.15), shadow=False,
                    columnspacing=0.1,
                    frameon=True, borderaxespad=0, handlelength=1.2,
                    handletextpad=0.1,

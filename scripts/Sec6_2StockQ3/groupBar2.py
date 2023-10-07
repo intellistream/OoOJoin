@@ -10,7 +10,7 @@ from matplotlib.ticker import LogLocator, LinearLocator
 import matplotlib.ticker as mtick
 
 OPT_FONT_NAME = 'Helvetica'
-TICK_FONT_SIZE = 24
+TICK_FONT_SIZE = 28
 LABEL_FONT_SIZE = 28
 LEGEND_FONT_SIZE = 30
 LABEL_FP = FontProperties(style='normal', size=LABEL_FONT_SIZE)
@@ -97,16 +97,17 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
 
     if allow_legend == True:
         plt.legend(bars, FIGURE_LABEL,
-                   prop={'size': 20},
-                   ncol=4,
+                   prop={'size': 28},
+                   ncol=1,
                    loc='upper center',
-                   bbox_to_anchor=(0.5, 1.25),
-                   frameon=False)
+                   bbox_to_anchor=(-0.47, 0.7), shadow=True,
+                   frameon=True,edgecolor='black',borderaxespad=1)
 
     plt.xticks(index + len(x_values) / 2 * width, x_values, rotation=0)
-
-    plt.xlabel(x_label, fontsize=20)
-    plt.ylabel(y_label, fontsize=20)
+    plt.xticks(fontsize=TICK_FONT_SIZE)
+    plt.yticks(fontsize=TICK_FONT_SIZE)
+    plt.xlabel(x_label, fontsize=28)
+    plt.ylabel(y_label, fontsize=28)
 
     figure.yaxis.set_major_locator(LinearLocator(5))
     figure.get_xaxis().set_tick_params(direction='in', pad=10)
@@ -119,6 +120,7 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
 
     fig.savefig(filename + ".pdf", bbox_inches='tight')
 
+
 # def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max, filename, allow_legend):
 #     # you may change the figure size on your own.
 #     fig = plt.figure(figsize=(10, 3))
@@ -130,7 +132,7 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
 #     index = np.arange(len(x_values))
 #     # the bar width.
 #     # you may need to tune it to get the best figure.
-#     width = 0.6 / len(x_values)
+#     width = 0.8 / len(x_values)
 #     # draw the bars
 #     bars = [None] * (len(FIGURE_LABEL))
 #     for i in range(len(y_values)):
@@ -144,7 +146,7 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
 #     if allow_legend == True:
 #         plt.legend(bars, FIGURE_LABEL,
 #                    prop=LEGEND_FP,
-#                    ncol=4,
+#                    ncol=3,
 #                    loc='upper center',
 #                    #                     mode='expand',
 #                    shadow=False,
