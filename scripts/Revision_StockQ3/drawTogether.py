@@ -3,7 +3,6 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import accuBar as accuBar
-import groupBar as groupBar
 import groupBar2 as groupBar2
 import groupLine as groupLine
 from autoParase import *
@@ -20,7 +19,7 @@ import os
 import pandas as pd
 import sys
 from OoOCommon import *
-
+import myCdfTool
 OPT_FONT_NAME = 'Helvetica'
 TICK_FONT_SIZE = 22
 LABEL_FONT_SIZE = 28
@@ -112,21 +111,33 @@ def compareMethod(exeSpace, commonPathBase, resultPaths, csvTemplates, periodVec
         errAll.append(errVec)
         periodAll.append(periodVec)
     return lat95All, errAll, periodAll
-
+def redLatencyCdf(commonBasePath,resultPaths,extraSetting):
+    probAll=[]
+    percentileAll=[]
+    for i in range(len(resultPaths)):
+        tupleLatName= commonBasePath  + str(resultPaths[i])+"/"+ str(extraSetting)+ "/default_tuples.csv"
+        nameList,legendList,ruAll=myCdfTool.getInfoFromCSV(tupleLatName)
+        arrivalTime=myCdfTool.copyCol(ruAll,3)
+        processedTime=myCdfTool.copyCol(ruAll,4)
+        tupleLat=processedTime-arrivalTime
+        tupleLat=tupleLat/1000.0
+        probaCdf,y2=myCdfTool.getCdfProbabilities(tupleLat)
+        probAll.append(probaCdf)
+        percentileAll.append(y2)
+    return (probAll),(percentileAll)
 
 def main():
     exeSpace = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/"
-    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/figE2E/"
+    commonBasePath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/results/Sec6_2Stockq3TradeOff/"
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [7, 8, 9, 10, 11, 12, 14,16]
+    # periodVec = [7, 8, 9, 10, 11, 12]
+    periodVec = [50,100,200, 300, 600,700,800,900,1001,1100]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    methodTags = ["WMJ","KSJ", "PECJ", "Theoretical Best","User Demand"]
-    resultPaths = ["ks", "wa", "pecj_ks", "pec_ai"]
-    csvTemplates = ["config_yuanzhen.csv", "config_waterMark.csv", "config_pecj.csv", "config_pecjAI.csv"]
+
     # run
     reRun = 0
     if (len(sys.argv) < 2):
@@ -135,13 +146,29 @@ def main():
         reRun = 1
         # runPeriodVector(exeSpace, periodVec, resultPath)
 
+    # os.system("mkdir " + figPath)
+    # print(lat95All)
+    # lat95All[3]=ts
+    methodTags = ["WMJ", "KSJ", "PECJ"]
+    resultPaths = ["wa", "ks", "pec_ai"]
+    csvTemplates = ["config_waterMark.csv", "config_yuanzhen.csv", "config_pecjAI.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
-    lat95Temp = lat95All
-    lat95Temp[3] = lat95Temp[2]
-    errTemp = errAll
-    errTemp[3] = np.minimum( errTemp[3],  errTemp[2])
-    groupLine.DrawFigureYnormal(lat95Temp, np.array(errTemp)*100.0, methodTags, "95% latency (ms)", "Error (%)", 0, 1, figPath + "revised1_tradeoff",
-                                True)
+    npLat = np.array(lat95All)
+    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "sec6_2_stock_q3",
+                          True)
+    gbXvalues = periodVec.copy()
 
+    # groupBar.DrawFigure(periodVec,npLat.T,methodTags,"tuning knob "+r"$\omega$","95% latency (ms)",5,15,figPath + "sec6_2_shunfeng_q1_lat", True)
+    # raw
+   
+    methodTags2 = ["WMJ","KSJ", "PECJ", "Theoretical Best","User Demand"]
+    lat95All.append(periodVec)
+    tBest=errAll[2]
+    for i in range(len(tBest)):
+        if(tBest[i]>errAll[1][i]):
+            tBest[i]=errAll[1][i]
+    errAll.append(tBest)
+    groupLine.DrawFigureTradeOff(lat95All,np.array(errAll)*100.0, methodTags2, "95% latency (ms)", "Error (%)", 0, 1, figPath + "revisedQ3_tradeoff",
+                                True)
 if __name__ == "__main__":
     main()

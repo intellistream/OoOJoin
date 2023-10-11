@@ -10,7 +10,7 @@ from matplotlib.ticker import LogLocator, LinearLocator
 import matplotlib.ticker as mtick
 
 OPT_FONT_NAME = 'Helvetica'
-TICK_FONT_SIZE = 28
+TICK_FONT_SIZE = 24
 LABEL_FONT_SIZE = 28
 LEGEND_FONT_SIZE = 30
 LABEL_FP = FontProperties(style='normal', size=LABEL_FONT_SIZE)
@@ -86,7 +86,7 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
 
     FIGURE_LABEL = legend_labels
     index = np.arange(len(x_values))
-    width = 0.8 / len(x_values)
+    width = 0.6 / len(x_values)
     bars = [None] * (len(FIGURE_LABEL))
     for i in range(len(y_values)):
         bars[i] = plt.bar(index + i * width + width / 2,
@@ -97,17 +97,16 @@ def DrawFigure(x_values, y_values, legend_labels, x_label, y_label, y_min, y_max
 
     if allow_legend == True:
         plt.legend(bars, FIGURE_LABEL,
-                   prop={'size': 28},
+                   prop={'size': 24},
                    ncol=1,
                    loc='upper center',
-                   bbox_to_anchor=(-0.385, 0.7), shadow=True,
+                   bbox_to_anchor=(-0.4, 0.7), shadow=True,
                    frameon=True,edgecolor='black',borderaxespad=1)
 
     plt.xticks(index + len(x_values) / 2 * width, x_values, rotation=0)
-    plt.xticks(fontsize=TICK_FONT_SIZE)
-    plt.yticks(fontsize=TICK_FONT_SIZE)
-    plt.xlabel(x_label, fontsize=28)
-    plt.ylabel(y_label, fontsize=28)
+
+    plt.xlabel(x_label, fontsize=20)
+    plt.ylabel(y_label, fontsize=20)
 
     figure.yaxis.set_major_locator(LinearLocator(5))
     figure.get_xaxis().set_tick_params(direction='in', pad=10)

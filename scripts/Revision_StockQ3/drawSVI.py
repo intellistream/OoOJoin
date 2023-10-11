@@ -120,28 +120,29 @@ def main():
 
     figPath = os.path.abspath(os.path.join(os.getcwd(), "../..")) + "/figures/"
     configTemplate = exeSpace + "config.csv"
-    periodVec = [7, 8, 9, 10, 11, 12, 14,16]
+    periodVec = [7, 8, 9, 10, 11, 12]
     periodVecDisp = np.array(periodVec)
     periodVecDisp = periodVecDisp
     print(configTemplate)
-    methodTags = ["WMJ","KSJ", "PECJ", "Theoretical Best","User Demand"]
-    resultPaths = ["ks", "wa", "pecj_ks", "pec_ai"]
-    csvTemplates = ["config_yuanzhen.csv", "config_waterMark.csv", "config_pecj.csv", "config_pecjAI.csv"]
-    # run
+
     reRun = 0
     if (len(sys.argv) < 2):
         os.system("rm -rf " + commonBasePath)
         os.system("mkdir " + commonBasePath)
         reRun = 1
         # runPeriodVector(exeSpace, periodVec, resultPath)
-
+    # os.system("mkdir " + figPath)
+    # print(lat95All)
+    # print(lat95All)
+    # lat95All[3]=ts
+    methodTags = ["WMJ", "PECJ-alf", "(PECJ-vae)/7.5", "svi"]
+    resultPaths = ["wa", "pecj_ks", "pec_ai", "svi"]
+    csvTemplates = ["config_waterMark.csv", "config_ima.csv", "config_pecjAI.csv", "config_svi.csv"]
     lat95All, errAll, periodAll = compareMethod(exeSpace, commonBasePath, resultPaths, csvTemplates, periodVec, reRun)
-    lat95Temp = lat95All
-    lat95Temp[3] = lat95Temp[2]
-    errTemp = errAll
-    errTemp[3] = np.minimum( errTemp[3],  errTemp[2])
-    groupLine.DrawFigureYnormal(lat95Temp, np.array(errTemp)*100.0, methodTags, "95% latency (ms)", "Error (%)", 0, 1, figPath + "revised1_tradeoff",
-                                True)
+    npLat = np.array(lat95All)
+    npLat[2] = npLat[2] / 7.5
+    groupLine.DrawFigure2(npLat, errAll, methodTags, "95% latency (ms)", "Error", 0, 1, figPath + "svie2ESmall", True)
+
 
 if __name__ == "__main__":
     main()
