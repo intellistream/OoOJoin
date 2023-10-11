@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import accuBar as accuBar
 import groupBar as groupBar
-import groupBar2 as groupBar2
+import scripts.Sec6_5Q1OtherDataSets.groupBar2_BK as groupBar2_BK
 import groupLine as groupLine
 from autoParase import *
 import itertools as it

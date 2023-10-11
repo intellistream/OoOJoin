@@ -13,9 +13,9 @@ from numpy import double
 import matplotlib.patches as patches
 
 OPT_FONT_NAME = 'Helvetica'
-TICK_FONT_SIZE = 20
-LABEL_FONT_SIZE = 20
-LEGEND_FONT_SIZE = 20
+TICK_FONT_SIZE = 28
+LABEL_FONT_SIZE = 26
+LEGEND_FONT_SIZE = 26
 LABEL_FP = FontProperties(style='normal', size=LABEL_FONT_SIZE)
 LEGEND_FP = FontProperties(style='normal', size=LEGEND_FONT_SIZE)
 TICK_FP = FontProperties(style='normal', size=TICK_FONT_SIZE)
@@ -112,15 +112,19 @@ def DrawFigure2(xvalues, yvalues, legend_labels, x_label, y_label, y_min, y_max,
     if allow_legend:
         plt.legend(lines,
                    FIGURE_LABEL,
+                   prop={'size': 24},
                    fontsize=LEGEND_FONT_SIZE,
                    loc='upper center',
                    ncol=1,
-                   bbox_to_anchor=(-0.3, 0.7),
+                   bbox_to_anchor=(0.8, 0.72),
                    edgecolor='black',borderaxespad=1,
                    frameon=True,shadow=True)
-    plt.xlabel(x_label, fontsize=20)
-    plt.ylabel(y_label, fontsize=20)
-
+    plt.xlabel(x_label, fontsize=TICK_FONT_SIZE)
+    plt.ylabel(y_label, fontsize=TICK_FONT_SIZE)
+    plt.xticks(fontsize=TICK_FONT_SIZE)
+    plt.yticks(fontsize=TICK_FONT_SIZE)
+    plt.axhline(y=95, color='red', linestyle='--')
+    plt.text(7.0, 89, "95%", fontsize=TICK_FONT_SIZE, ha='center')
     #plt.ylim(y_min, y_max)
     plt.grid(axis='y', color='gray', alpha=0.5, linewidth=0.5)
 

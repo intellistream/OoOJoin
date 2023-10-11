@@ -149,7 +149,7 @@ def main():
     groupBar2.DrawFigure(periodVec, npLat, methodTags, "Tuning knob " + r"$\omega$ (ms)", "95% latency (ms)", 5, 15,
                          figPath + "sec6_2_stock_q2_lat", False)
     groupBar2.DrawFigure(periodVec, np.array(errAll) * 100.0, methodTags, "Tuning knob " + r"$\omega$ (ms)", "Error (%)",
-                         5, 15, figPath + "sec6_2_stock_q2_err", False)
+                         5, 15, figPath + "sec6_2_stock_q2_err", True)
 
 
 if __name__ == "__main__":

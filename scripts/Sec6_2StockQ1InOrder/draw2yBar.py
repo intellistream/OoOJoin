@@ -10,9 +10,9 @@ from matplotlib.font_manager import FontProperties
 from matplotlib.ticker import LogLocator,LinearLocator
 import os
 OPT_FONT_NAME = 'Helvetica'
-TICK_FONT_SIZE = 28
-LABEL_FONT_SIZE = 28
-LEGEND_FONT_SIZE = 28
+TICK_FONT_SIZE = 60
+LABEL_FONT_SIZE = 60
+LEGEND_FONT_SIZE = 60
 LABEL_FP = FontProperties(style='normal', size=LABEL_FONT_SIZE)
 LEGEND_FP = FontProperties(style='normal', size=LEGEND_FONT_SIZE)
 TICK_FP = FontProperties(style='normal', size=TICK_FONT_SIZE)
@@ -36,7 +36,7 @@ matplotlib.rcParams['font.family'] = OPT_FONT_NAME
 matplotlib.rcParams['pdf.fonttype'] = 42
 
 def DrawFigure(NAME,R1,R2,l1,l2,fname):
-    fig, ax1 = plt.subplots(figsize=(10,4)) 
+    fig, ax1 = plt.subplots(figsize=(20,8)) 
     width = 0.2  # 柱形的宽度  
     x1_list = []
     x2_list = []
@@ -50,9 +50,11 @@ def DrawFigure(NAME,R1,R2,l1,l2,fname):
     #ax1.set_ylim(0, 1)
     bars.append(ax1.bar(x1_list, R1, width=width, color=LINE_COLORS[0], hatch=HATCH_PATTERNS[0], align='edge',edgecolor='black', linewidth=3))
     ax1.set_ylabel("ms",fontproperties=LABEL_FP)
+    plt.yticks(size=TICK_FONT_SIZE)
+    plt.xticks(size=TICK_FONT_SIZE)
     ax1.set_xticklabels(ax1.get_xticklabels())  # 设置共用的x轴
     ax2 = ax1.twinx()
-    
+   
     #ax2.set_ylabel('latency/us')
     #ax2.set_ylim(0, 0.5)
     bars.append(ax2.bar(x2_list, R2, width=width,  color=LINE_COLORS[1], hatch=HATCH_PATTERNS[1], align='edge', tick_label=NAME,edgecolor='black', linewidth=3))
@@ -69,7 +71,7 @@ def DrawFigure(NAME,R1,R2,l1,l2,fname):
                    ncol=2,
                    loc='upper center',
                    #                     mode='expand',
-                   bbox_to_anchor=(0.55, 1.5),
+                   bbox_to_anchor=(0.5, 1.40),
                    columnspacing=0.1,
                    handletextpad=0.2,
                 shadow=True,frameon=True,edgecolor='black',
@@ -80,6 +82,7 @@ def DrawFigure(NAME,R1,R2,l1,l2,fname):
                    )
     plt.xlabel(NAME, fontproperties=LABEL_FP)
     plt.xticks(size=TICK_FONT_SIZE)
+    plt.yticks(size=TICK_FONT_SIZE)
     ax1.yaxis.set_major_locator(LinearLocator(5))
     ax2.yaxis.set_major_locator(LinearLocator(5))
     ax1.yaxis.set_major_formatter(mtick.FormatStrFormatter('%.1f'))

@@ -13,9 +13,9 @@ from numpy import double
 import matplotlib.patches as patches
 
 OPT_FONT_NAME = 'Helvetica'
-TICK_FONT_SIZE = 20
-LABEL_FONT_SIZE = 20
-LEGEND_FONT_SIZE = 20
+TICK_FONT_SIZE = 26
+LABEL_FONT_SIZE = 26
+LEGEND_FONT_SIZE = 26
 LABEL_FP = FontProperties(style='normal', size=LABEL_FONT_SIZE)
 LEGEND_FP = FontProperties(style='normal', size=LEGEND_FONT_SIZE)
 TICK_FP = FontProperties(style='normal', size=TICK_FONT_SIZE)
@@ -217,7 +217,7 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
                    fontsize=12,
                    loc='upper center',
                    ncol=1,
-                   bbox_to_anchor=(-0.3, 0.7), 
+                   bbox_to_anchor=(-0.35, 0.7), 
                    shadow=True,frameon=True,edgecolor='black',borderaxespad=1,
                    handletextpad=0.1,
                    labelspacing=0.1)
@@ -233,11 +233,12 @@ def DrawFigureYnormal(xvalues, yvalues, legend_labels, x_label, y_label, y_min, 
     figure.yaxis.set_major_locator(LinearLocator(5))
     # figure.xaxis.set_major_locator(LogLocator(base=10))
     plt.xticks(fontsize=TICK_FONT_SIZE)
+    plt.yticks(fontsize=TICK_FONT_SIZE)
     figure.get_xaxis().set_tick_params(direction='in', pad=10)
     figure.get_yaxis().set_tick_params(direction='in', pad=10)
     figure.yaxis.set_major_formatter(matplotlib.ticker.FormatStrFormatter('%.1f'))
-    plt.xlabel(x_label, fontsize=20)
-    plt.ylabel(y_label, fontsize=20)
+    plt.xlabel(x_label, fontsize=TICK_FONT_SIZE)
+    plt.ylabel(y_label, fontsize=TICK_FONT_SIZE)
 
 
     size = fig.get_size_inches()
@@ -292,11 +293,12 @@ def DrawFigureYnormalThr(xvalues, yvalues, legend_labels, x_label, y_label, y_mi
     figure.yaxis.set_major_locator(LinearLocator(5))
     # figure.xaxis.set_major_locator(LogLocator(base=10))
     plt.xticks(fontsize=TICK_FONT_SIZE)
+    plt.yticks(fontsize=TICK_FONT_SIZE)
     figure.get_xaxis().set_tick_params(direction='in', pad=10)
     figure.get_yaxis().set_tick_params(direction='in', pad=10)
     figure.yaxis.set_major_formatter(matplotlib.ticker.FormatStrFormatter('%.1f'))
-    plt.xlabel(x_label, fontsize=20)
-    plt.ylabel(y_label, fontsize=20)
+    plt.xlabel(x_label, fontsize=TICK_FONT_SIZE)
+    plt.ylabel(y_label, fontsize=TICK_FONT_SIZE)
 
 
     size = fig.get_size_inches()
@@ -354,11 +356,12 @@ def DrawFigureYnormalErr(xvalues, yvalues, legend_labels, x_label, y_label, y_mi
     figure.yaxis.set_major_locator(LinearLocator(5))
     # figure.xaxis.set_major_locator(LogLocator(base=10))
     plt.xticks(fontsize=TICK_FONT_SIZE)
+    plt.yticks(fontsize=TICK_FONT_SIZE)
     figure.get_xaxis().set_tick_params(direction='in', pad=10)
     figure.get_yaxis().set_tick_params(direction='in', pad=10)
     figure.yaxis.set_major_formatter(matplotlib.ticker.FormatStrFormatter('%.1f'))
-    plt.xlabel(x_label, fontsize=20)
-    plt.ylabel(y_label, fontsize=20)
+    plt.xlabel(x_label, fontsize=TICK_FONT_SIZE)
+    plt.ylabel(y_label, fontsize=TICK_FONT_SIZE)
 
 
     size = fig.get_size_inches()
